@@ -1,0 +1,23 @@
+@import '../../app/global.scss';
+
+.Navbar{
+    height: 10rem;
+    color: #ffffff;
+    background: $main-grey;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    &__ul{
+        color: #000;
+        display: flex;
+        gap: 1rem;
+        &--li{
+            &:hover{
+
+            }
+            &-gold{
+                background: $main-orange;
+            }
+        }
+    }
+}
