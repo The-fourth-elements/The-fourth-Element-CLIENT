@@ -4,6 +4,7 @@ const Navbar = ()=> {
     const routes = [
         {label: 'Home',route: '/'},
         {label: 'Login', route: '/login'}
+        
     ]
     return (
         <nav>
