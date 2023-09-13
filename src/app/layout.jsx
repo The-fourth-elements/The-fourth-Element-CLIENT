@@ -5,6 +5,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'The fourth elements',
+  description: 'The fourth element is a mental training course'
 }
 
 export default function RootLayout({ children }) {
