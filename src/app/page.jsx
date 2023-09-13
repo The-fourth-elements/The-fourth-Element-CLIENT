@@ -8,21 +8,6 @@ export default function Home() {
 
   return (
     <>
-      <header>
-        <nav>
-          <ul>
-            {routes.map(({ label, route }) => {
-              return (
-                <li key={route}>
-                  <Link href={route}>
-                    {label}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-      </header>
       <h1>HOlid</h1>
     </>
   )
