@@ -1,9 +1,9 @@
-@import '../../app/global.scss';
+@import '../../styles/base';
 
 .Navbar{
     height: 10rem;
     color: #ffffff;
-    // background: $main-grey;
+    background: $grey-1;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
