@@ -80,6 +80,7 @@ const Register = () => {
     </Formik>
   );
 };
+export default Register;
     // const Register = () => {
 
     //     let [message, setMessage] = useState (false)
@@ -163,4 +164,3 @@ const Register = () => {
     //     );
     //     };
 
-export default Register;
