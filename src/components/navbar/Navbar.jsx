@@ -8,7 +8,7 @@ const Navbar = ()=> {
       {label: 'Home',route: '/', className: ''},
       {label: 'About Us', route: '/about', className: ''},
       {label: 'Login', route: '/login', className: 'gold'},
-      {label: 'SignUp', route: '/register', className: ''},
+      {label: 'SignUp', route: '/signup', className: ''},
 
         
     ]
