@@ -1,19 +1,21 @@
 import Link from "next/link"
 import './styles.scss'
+import Image from "next/image"
+import logo from "../../../public/logo.svg"
 
 const Navbar = ()=> {
     const routes = [
-        {label: 'Home',route: '/', className: ''},
-        {label: 'Login', route: '/login', className: 'gold'},
-        {label: 'SignUp', route: '/signup', className: ''}
+      {label: 'Home',route: '/', className: ''},
+      {label: 'About Us', route: '/about', className: ''},
+      {label: 'Login', route: '/login', className: 'gold'},
+      {label: 'SignUp', route: '/register', className: ''},
 
         
     ]
     return (
         <nav className="Navbar">
-          <Link href='/'>
-            {/* logo */}
-            home
+          <Link href='/' className="Navbar__logo">
+            <Image src={logo}></Image>
           </Link>
             <ul className="Navbar__ul">
             {routes.map(({ label, route, className }) => {
@@ -26,11 +28,6 @@ const Navbar = ()=> {
               )
             })}
           </ul>
-          <ul>
-            <li>holi</li>
-            <li>holi</li>
-          </ul>
-          
         </nav>
     )
 }
