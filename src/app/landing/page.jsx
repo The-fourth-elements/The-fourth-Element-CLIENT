@@ -1,16 +1,19 @@
+import Image from "next/image";
+import landingImg from "../../../public/img/landingImg.jpg";
+
 import './styles.scss';
 const Landing = () => {
 	return (
 		<div>
-			<div>
-				<div>
-					<img alt='' src='/undefined6.png' />
-					<div>
-						<p>TU ENTRENAMIENTO</p>
-						<p> MENTAL Y CEREBRAL</p>
-						<p>PARA POTENCIAR</p>
-						<p>TU DESEMPEÑO</p>
-						<p>DEPORTIVO</p>
+			<div className="container">
+				<div className="banner">
+					<Image className="landingBanner" alt='' src={landingImg} />
+					<div className="landingBannerText">
+						<p>TU ENTRENAMIENTO <br />
+						 MENTAL Y CEREBRAL	<br />
+						PARA POTENCIAR	<br />
+						TU DESEMPEÑO	<br />
+						DEPORTIVO</p>
 					</div>
 				</div>
 				<div>
