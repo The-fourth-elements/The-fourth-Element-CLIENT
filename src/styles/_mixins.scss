@@ -1,0 +1,63 @@
+@use "@styles/variables" as *;
+@use "@styles/fonts" as *;
+$screen-sm: 766px;
+$screen-md: 1023px;
+$screen-lg: 1024px;
+
+// Small devices (phones)
+@mixin sm {
+  @media only screen and (max-width: $screen-sm) {
+    @content;
+  }
+}
+
+// Medium devices (tablets)
+@mixin md {
+  @media only screen and (min-width: $screen-sm) and (max-width: $screen-md) {
+    @content;
+  }
+}
+
+// Large devices (desktops)
+@mixin lg {
+  @media only screen and (min-width: $screen-lg) {
+    @content;
+  }
+}
+
+// fuentes
+
+@mixin heading1 {
+  font-family: $font-primary;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-h1;
+  line-height: $font-line-height-h1;
+}
+
+@mixin heading2 {
+  font-family: $font-primary;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-h2;
+  line-height: $font-line-height-h2;
+}
+
+@mixin heading3 {
+  font-family: $font-secondary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-h3;
+  line-height: $font-line-height-h3;
+}
+
+@mixin body {
+  font-family: $font-secondary;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-body;
+  line-height: $font-line-height-body;
+}
+
+@mixin caption {
+  font-family: $font-secondary;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-caption;
+  line-height: $font-line-height-caption;
+}

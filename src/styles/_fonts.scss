@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "Suez One";
+  src: url("/fonts/SuezOne-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Mukta";
+  src: url("/fonts/Mukta-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+$font-primary: "Suez One", sans-serif;
+$font-secondary: "Roboto", Arial, sans-serif;
+$font-size-h1: 40px;
+$font-size-h2: 24px;
+$font-size-h3: 16px;
+$font-size-body: 16px;
+$font-size-caption: 14px;
+$font-line-height-h1: 48px;
+$font-line-height-h2: 32px;
+$font-line-height-h3: 24px;
+$font-line-height-body: 24px;
+$font-line-height-caption: 22px;
+$font-weight-normal: 400;
+$font-weight-bold: 700;

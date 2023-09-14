@@ -3,7 +3,7 @@
 .Navbar{
     height: 10rem;
     color: #ffffff;
-    background: $main-grey;
+    // background: $main-grey;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -33,7 +33,7 @@
                 margin: auto;
                 width: 0%;
                 height: 2px;
-                background: $main-orange;
+                // background: $main-orange;
                 transition: width 0.2s;
             }
             &:hover::after{
@@ -43,7 +43,7 @@
                 padding: 0.3rem;
             }
             &-gold{
-                background: $main-orange;
+                // background: $main-orange;
                 border-radius: 1rem;
 
             }
