@@ -61,3 +61,16 @@ $screen-lg: 1024px;
   font-size: $font-size-caption;
   line-height: $font-line-height-caption;
 }
+
+@mixin Navbar($heightNav, $pd){
+  height:$heightNav;
+  color: #ffffff;
+  background: $grey-1;
+  padding: $pd;
+display: flex;
+justify-content: space-between;
+}
+
+@mixin logoNav($imgSize){
+  height: $imgSize;
+}

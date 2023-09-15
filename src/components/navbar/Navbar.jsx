@@ -9,7 +9,7 @@ const Navbar = () => {
 	const routes = [
 		{ label: 'Home', route: '/', className: '' },
 		{ label: 'About Us', route: '/about', className: '' },
-		{ label: 'Login', route: '/login', className: 'gold' },
+		{ label: 'Login', route: '/login', className: '' },
 		{ label: 'SignUp', route: '/signup', className: '' },
 	];
 	return (
