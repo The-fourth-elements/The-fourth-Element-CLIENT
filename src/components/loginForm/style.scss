@@ -1,4 +1,4 @@
-
+@import '../../styles/base';
 
 .Main {
 	min-height: 100vh;
@@ -9,7 +9,7 @@
 	background-color: #fff;
 
 	&__Form {
-		// background-color: $main-orange;
+		background-color: $orange-1;
 		width: 80%;
         min-height: 40em;
 		position: relative;
