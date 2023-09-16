@@ -1,0 +1,50 @@
+@import '../../styles/base';
+
+@include sm {
+  .Main__Recovery {
+    @include common-container-styles; 
+    height: 100vh;
+    align-items: flex-end;
+
+    &__Form {
+      @include common-form-styles(4%);
+      width: 100%;
+    }
+  }
+}
+
+@include md {
+  .Main__Recovery {
+    @include common-container-styles;
+
+    &__Form {
+      @include common-form-styles(0);
+      width: 80%;
+      min-height: 40em;
+      position: relative;
+      border: 0.2rem solid #000000;
+
+      &--group:first-child {
+        margin-top: 5%;
+      }
+    }
+  }
+}
+
+@include lg {
+  .Main__Recovery {
+    @include common-container-styles;
+
+    &__Form {
+      @include common-form-styles(0);
+      width: 80%;
+      min-height: 40em;
+      position: relative;
+      border: 0.2rem solid #000000;
+
+      &--group:first-child {
+        margin-top: 5%;
+      }
+    }
+  }
+}

@@ -36,8 +36,18 @@
 
 
 
-$font-primary: "Suez One", sans-serif;
-$font-secondary: "Roboto", Arial, sans-serif;
+@font-face {
+  font-family: "RussoOne Regular";
+  src: url("./Fonts/RussoOne-Regular.ttf") format("truetype");
+  font-weight: 1000;
+  font-style: normal;
+}
+
+
+
+
+$font-primary: 'Suez One', sans-serif;
+$font-secondary: 'Roboto', Arial, sans-serif;
 $font-size-h1: 40px;
 $font-size-h2: 24px;
 $font-size-h3: 16px;

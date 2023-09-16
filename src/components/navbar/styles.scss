@@ -1,17 +1,5 @@
 @import '../../styles/base';
 
-@mixin Navbar($heightNav, $pd){
-    height:$heightNav;
-    color: #ffffff;
-    background: $grey-1;
-    padding: $pd;
-	display: flex;
-	justify-content: space-between;
-}
-
-@mixin logoNav($imgSize){
-    height: $imgSize;
-}
 
 
 @include lg {
@@ -65,13 +53,57 @@
 }
 
 @include md {
-    
+    .Navbar {
+		@include Navbar(10rem, 1rem);
+		&__logo {
+			img {
+				@include logoNav(8rem);
+				width: 8rem;
+				transition: filter 0.1s;
+				&:hover {
+					filter: drop-shadow(2px 2px 2px rgb(233, 211, 199));
+				}
+			}
+		}
+		&-div{
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		&__ul {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+
+			&--li {
+				display: inline-block;
+				padding: 0.5rem;
+				transition: border 1s;
+				&::after {
+					display: block;
+					content: '';
+					margin: auto;
+					width: 0%;
+					height: 2px;
+					transition: width 0.2s;
+				}
+				&:hover::after {
+					width: 100%;
+				}
+				a {
+					padding: 0.3rem;
+				}
+			}
+		}
+		#check, .burger {
+			display: none;
+		}
+	}
 }
 
 @include sm{
 	.Navbar{
-		// @include Navbar(6rem, 1rem);
-		// height: 0;
 		height: 5rem;
 		display: flex;
 		padding: 0.5rem;
