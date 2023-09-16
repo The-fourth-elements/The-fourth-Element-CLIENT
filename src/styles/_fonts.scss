@@ -1,30 +1,40 @@
 @font-face {
-  font-family: "Suez One";
-  src: url("/fonts/SuezOne-Regular.ttf") format("truetype");
+  font-family: "Manrope Bold";
+  src: url("./Fonts/Manrope-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
+  font-family: "Manrope ExtraLight Regular";
+  src: url("./Fonts/Manrope-ExtraLight.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Mukta";
-  src: url("/fonts/Mukta-Medium.ttf") format("truetype");
+  font-family: "Roboto Medium Regular";
+  src: url("./Fonts/Roboto-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat.ttf") format("truetype");
+  font-family: "Roboto Mono Bold";
+  src: url("./Fonts/Roboto-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "RussoOne Regular";
+  src: url("./Fonts/RussoOne-Regular.ttf") format("truetype");
+  font-weight: 1000;
+  font-style: normal;
+}
+
+
+
 
 $font-primary: "Suez One", sans-serif;
 $font-secondary: "Roboto", Arial, sans-serif;
