@@ -1,41 +1,44 @@
+@import '../../styles/base';
 
-.Div {
-    height: 80vh;
+@include sm {
+	.Main__Register {
+		display: flex;
+		@include common-container-styles;
+		height: 100vh;
+		align-items: flex-end;
+
+		&__Form {
+			@include common-form-styles(4%);
+		}
+	}
+}
+
+@include md {
+	.Main__Register {
+		display: flex;
+		@include common-container-styles;
+		height: 100vh;
+
+		&__Form {
+			@include common-form-styles(0%);
+			width: 80%;
+		}
+	}
+}
+
+@include lg {
+  .Main__Register{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background: #fff;
-	padding-top: 20px;
-	color: aliceblue;
+		@include common-container-styles;
+		height: 100vh;
 
-  & > form {
-    width: 30%;
-	background-color: rgb(147, 146, 146);
-	border: solid rgb(24, 2, 2) 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-	padding: 20px;
-
-
-    & > div:first-child {
-      margin-top: 5%;
-    }
-
-    button[type="submit"] {
-      color: #fff;
-      background-color: #ce171e;
-      border-radius: 10px;
-      border: solid black ;
-      padding: 8px;
-      cursor: pointer;
-
-
-      &:focus {
-        outline: unset;
+		&__Form {
+			@include common-form-styles(0%);
+			width: 60%;
+      height: 80vh;
+      &--button{
+        background: red;
       }
-    }
+		}
   }
 }

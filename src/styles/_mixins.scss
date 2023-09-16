@@ -102,7 +102,7 @@ $screen-lg: 1024px;
       width: 100%;
       display: block;
     }
-    .error {
+    &--error {
       margin-top: 1rem;
       display: block;
       padding: 1rem;

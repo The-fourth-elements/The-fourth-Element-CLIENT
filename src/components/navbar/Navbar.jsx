@@ -3,7 +3,7 @@ import './styles.scss';
 import Image from 'next/image';
 import logo from '../../../public/logo.svg';
 import burger from '../../assets/svg/burger.svg';
-import x from '../../assets/svg/x-mark.svg'
+import x from '../../assets/svg/x-mark.svg';
 
 const Navbar = () => {
 	const routes = [
@@ -17,10 +17,10 @@ const Navbar = () => {
 			<nav className='Navbar'>
 				<div className='Navbar-div'>
 					<Link href='/' className='Navbar__logo'>
-						<Image src={logo}></Image>
+						<Image src={logo} priority alt='The fourth element logo'></Image>
 					</Link>
-          <input type="checkbox" id="check"/>
-					<label htmlFor="check" className='burger'>
+					<input type='checkbox' id='check' />
+					<label htmlFor='check' className='burger'>
 						<Image src={burger} alt='burger' id='burger' />
 						<Image src={x} alt='x-mark' id='x' />
 					</label>

@@ -1,13 +1,14 @@
 'use client';
 
 import * as Yup from 'yup';
+import {postData} from '../utilsFetch/postData';
 import { useFormik } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
 
 export const LoginForm = () => {
 	const router = useRouter();
-
+	
 	const form = useFormik({
 		initialValues: {
 			email: '',
@@ -15,23 +16,13 @@ export const LoginForm = () => {
 		},
 		onSubmit: async values => {
 			try {
-				const response = await fetch('http://localhost:3001/login', {
-					method: 'POST',
-					mode: 'cors',
-					cache: 'no-cache',
-					credentials: 'include',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					referrerPolicy: 'no-referrer',
-					body: JSON.stringify(values),
-				}).then(response => response.json());
-				if (response.success) {
-					router.push('/');
-				}
-				throw new Error(response, 'error, invalid values');
+				const p = await postData("http://localhost:3001/login", values)
+				alert(JSON.stringify(p,null, 2))
+				router.push('/')
+
 			} catch (error) {
-				console.log('soy el error', error);
+				alert('usuario o contraseña invalidos')
+				console.log(error);
 			}
 		},
 		validationSchema: Yup.object({
