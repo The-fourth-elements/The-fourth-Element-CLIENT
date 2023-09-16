@@ -3,33 +3,33 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import './style.scss';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 export const LoginForm = () => {
-	const router = useRouter()
+	const router = useRouter();
 
 	const form = useFormik({
 		initialValues: {
 			email: '',
 			password: '',
 		},
-		onSubmit: async (values) => {
+		onSubmit: async values => {
 			try {
 				const response = await fetch('http://localhost:3001/login', {
-					method: "POST",
-					mode: "cors",
-					cache: "no-cache",
-					credentials: "include",
-					headers:{
-						"Content-Type": "application/json",
+					method: 'POST',
+					mode: 'cors',
+					cache: 'no-cache',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json',
 					},
-					referrerPolicy: "no-referrer",
+					referrerPolicy: 'no-referrer',
 					body: JSON.stringify(values),
-				}).then(response=>response.json())
-				if(response.success){
-					router.push('/')
+				}).then(response => response.json());
+				if (response.success) {
+					router.push('/');
 				}
-				throw new Error(response, 'error, invalid values')
+				throw new Error(response, 'error, invalid values');
 			} catch (error) {
 				console.log('soy el error', error);
 			}
@@ -38,7 +38,12 @@ export const LoginForm = () => {
 			email: Yup.string()
 				.email('Ingresa un email válido')
 				.required('El email es requerido'),
-			password: Yup.string().matches(/^(?=.*[A-Z])(?=.*\d).{6,}$/, "The password must have a character Capitalizate, a number and a min of 6 characters").required('La contraseña es requerida'),
+			password: Yup.string()
+				.matches(
+					/^(?=.*[A-Z])(?=.*\d).{6,}$/,
+					'The password must have a character Capitalizate, a number and a min of 6 characters'
+				)
+				.required('La contraseña es requerida'),
 		}),
 	});
 
@@ -77,14 +82,11 @@ export const LoginForm = () => {
 						<span className='error'>{form.errors.password}</span>
 					) : null}
 				</div>
-
+				<span className='recovery'>Did you forget your password?</span>
 				<button type='submit' className='Main__Form--button'>
 					Submit
 				</button>
 			</form>
-
-			<p>dji</p>
-			<b>joli</b>
 		</main>
 	);
 };

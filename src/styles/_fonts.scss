@@ -1,33 +1,33 @@
 @font-face {
-  font-family: "Suez One";
-  src: url("/fonts/SuezOne-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Suez One';
+	src: url('/fonts/SuezOne-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Roboto';
+	src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Mukta";
-  src: url("/fonts/Mukta-Medium.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Mukta';
+	src: url('/fonts/Mukta-Medium.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Montserrat';
+	src: url('/fonts/Montserrat.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
-$font-primary: "Suez One", sans-serif;
-$font-secondary: "Roboto", Arial, sans-serif;
+$font-primary: 'Suez One', sans-serif;
+$font-secondary: 'Roboto', Arial, sans-serif;
 $font-size-h1: 40px;
 $font-size-h2: 24px;
 $font-size-h3: 16px;
