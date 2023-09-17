@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link';
 import './styles.scss';
 import Image from 'next/image';
@@ -5,13 +6,14 @@ import logo from '../../../public/logo.svg';
 import burger from '../../assets/svg/burger.svg';
 import x from '../../assets/svg/x-mark.svg';
 
+
 const Navbar = () => {
 	const routes = [
 		{ label: 'Home', route: '/', className: '' },
 		{ label: 'About Us', route: '/about', className: '' },
-		{ label: 'Login', route: '/login', className: '' },
-		{ label: 'SignUp', route: '/signup', className: '' },
+		{ label: 'Login', route: '/auth', className: '' },
 	];
+	
 	return (
 		<>
 			<nav className='Navbar'>

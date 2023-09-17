@@ -7,7 +7,7 @@ import { registerSchema, initialValues } from './validations';
 import { useRouter } from 'next/navigation';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
-const Register = () => {
+const Register = ({ toogleDisplay }) => {
 	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
@@ -17,16 +17,18 @@ const Register = () => {
 			<Formik
 				initialValues={initialValues}
 				validationSchema={registerSchema(country, region)}
-				onSubmit={ async values => {
-					const response = await handleSubmit(values, country, region)
-					alert(JSON.stringify(response, null, 2))
-					router.push('/')
-					}}>
+				onSubmit={async values => {
+					const response = await handleSubmit(values, country, region);
+					alert(JSON.stringify(response, null, 2));
+					router.push('/');
+				}}>
 				{({ errors }) => (
 					<Form className='Main__Register__Form'>
 						<h1 className='Main__Form--title'>SignUp</h1>
 						<div className='Main__Register__Form--group'>
-							<label htmlFor='username' className='Main__Register__Form--group--label'>
+							<label
+								htmlFor='username'
+								className='Main__Register__Form--group--label'>
 								Username:
 							</label>
 							<Field
@@ -45,7 +47,9 @@ const Register = () => {
 						</div>
 
 						<div className='Main__Register__Form--group'>
-							<label htmlFor='email' className='Main__Register__Form--group--label'>
+							<label
+								htmlFor='email'
+								className='Main__Register__Form--group--label'>
 								Email:
 							</label>
 							<Field
@@ -64,7 +68,9 @@ const Register = () => {
 						</div>
 
 						<div className='Main__Register__Form--group'>
-							<label htmlFor='password' className='Main__Register__Form--group--label'>
+							<label
+								htmlFor='password'
+								className='Main__Register__Form--group--label'>
 								Password:
 							</label>
 							<Field
@@ -82,7 +88,9 @@ const Register = () => {
 						</div>
 
 						<div className='Main__Register__Form--group'>
-							<label htmlFor='repeatPassword' className='Main__Register__Form--group--label'>
+							<label
+								htmlFor='repeatPassword'
+								className='Main__Register__Form--group--label'>
 								Repeat Password:
 							</label>
 							<Field
@@ -101,7 +109,9 @@ const Register = () => {
 						</div>
 
 						<div className='Main__Register__Form--group'>
-							<label htmlFor='country' className='Main__Register__Form--group--label'>
+							<label
+								htmlFor='country'
+								className='Main__Register__Form--group--label'>
 								Country:
 							</label>
 							<CountryDropdown
@@ -119,7 +129,9 @@ const Register = () => {
 
 						{country && (
 							<div className='Main__Register__Form--group'>
-								<label htmlFor='state' className='Main__Register__Form--group--label'>
+								<label
+									htmlFor='state'
+									className='Main__Register__Form--group--label'>
 									State/Region:
 								</label>
 								<RegionDropdown
@@ -136,7 +148,9 @@ const Register = () => {
 								/>
 							</div>
 						)}
-
+						<span onClick={toogleDisplay} className='toogle'>
+							¿Ya tienes una cuenta?
+						</span>
 						<button type='submit' className='Main__Register__Form--button'>
 							Register
 						</button>

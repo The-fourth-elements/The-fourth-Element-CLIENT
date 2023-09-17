@@ -29,20 +29,12 @@
 			&--li {
 				display: inline-block;
 				padding: 0.5rem;
-				transition: border 1s;
-				&::after {
-					display: block;
-					content: '';
-					margin: auto;
-					width: 0%;
-					height: 2px;
-					transition: width 0.2s;
-				}
-				&:hover::after {
-					width: 100%;
-				}
 				a {
 					padding: 0.3rem;
+				}
+				&-logOut{
+					background: red;
+					border-radius: 999px;
 				}
 			}
 		}
@@ -79,20 +71,12 @@
 			&--li {
 				display: inline-block;
 				padding: 0.5rem;
-				transition: border 1s;
-				&::after {
-					display: block;
-					content: '';
-					margin: auto;
-					width: 0%;
-					height: 2px;
-					transition: width 0.2s;
-				}
-				&:hover::after {
-					width: 100%;
-				}
 				a {
 					padding: 0.3rem;
+				}
+				&-logOut{
+					background: red;
+					border-radius: 999px;
 				}
 			}
 		}
@@ -143,6 +127,11 @@
 			width: 100%;
 			overflow: hidden;
 			transition: .3s ease;
+			&--li{
+				&-logOut{
+					border-radius: 10%;
+				}
+			}
 		}
 	}
 	#check:checked~.burger #burger {
