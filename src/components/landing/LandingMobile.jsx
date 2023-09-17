@@ -10,10 +10,21 @@ import Facebook from '../../assets/svg/facebook.svg';
 import Instagram from '../../assets/svg/instagram.svg';
 import Linkedin from '../../assets/svg/linkedin.svg';
 import Twitter from '../../assets/svg/twitter.svg';
+import { useEffect } from 'react';
 
 import './LandingMobileStyles.scss';
 import Link from 'next/link';
 const LandingMobile = () => {
+
+	useEffect(() => {
+        // Deshabilita el scroll en el cuerpo de la página cuando se monta el componente
+        document.body.style.overflow = 'hidden';
+
+        // Asegúrate de habilitar el scroll nuevamente cuando el componente se desmonte
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
 	const links = [
 		{
 			label: 'Partners',
