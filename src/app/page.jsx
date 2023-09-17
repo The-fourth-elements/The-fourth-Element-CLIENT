@@ -1,7 +1,8 @@
+
 'use client';
 
-import LandingDesktop from './landing/LandingDesktop';
-import LandingMobile from './landing/LandingMobile';
+import LandingDesktop from '../components/landing/LandingDesktop';
+import LandingMobile from '../components/landing/LandingMobile';
 
 import { useEffect, useState } from 'react';
 import './styles.scss';
@@ -13,8 +14,9 @@ const Landing = () => {
 			setMobile(window.innerWidth < 766 ? true : false);
 		};
 
-		updateMobile();
 		window.addEventListener('resize', updateMobile);
+		updateMobile();
+
 		return () => {
 			window.removeEventListener('resize', updateMobile);
 		};
