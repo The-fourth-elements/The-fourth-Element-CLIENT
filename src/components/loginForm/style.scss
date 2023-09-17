@@ -1,0 +1,55 @@
+@import '../../styles/base';
+
+.recovery {
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@include lg {
+  .Main {
+    @include common-container-styles;
+    &__Form {
+      @include common-form-styles(0); 
+	  width: 60%;
+	  height: 60vh
+    }
+  }
+}
+
+@include md {
+  .Main {
+    @include common-container-styles;
+
+    &__Form {
+      @include common-form-styles(0);
+	  width: 80%;
+	  height: 65vh;
+    }
+  }
+}
+
+@include sm {
+  .Main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    &__Form {
+      @include common-form-styles(0);
+      border-top-left-radius: 4%;
+      border-top-right-radius: 4%;
+      height: 70%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      border: 0.2rem solid #000000;
+    }
+  }
+}

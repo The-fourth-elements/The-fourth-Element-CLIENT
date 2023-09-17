@@ -1,23 +1,157 @@
-@import '../../app/global.scss';
+@import '../../styles/base';
 
-.Navbar{
-    height: 10rem;
-    color: #ffffff;
-    background: $main-grey;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    &__ul{
-        color: #000;
-        display: flex;
-        gap: 1rem;
-        &--li{
-            &:hover{
 
-            }
-            &-gold{
-                background: $main-orange;
-            }
-        }
-    }
+
+@include lg {
+	.Navbar {
+		@include Navbar(10rem, 1rem);
+		&__logo {
+			img {
+				@include logoNav(8rem);
+				width: 8rem;
+				transition: filter 0.1s;
+				&:hover {
+					filter: drop-shadow(2px 2px 2px rgb(233, 211, 199));
+				}
+			}
+		}
+		&-div{
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		&__ul {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+
+			&--li {
+				display: inline-block;
+				padding: 0.5rem;
+				transition: border 1s;
+				&::after {
+					display: block;
+					content: '';
+					margin: auto;
+					width: 0%;
+					height: 2px;
+					transition: width 0.2s;
+				}
+				&:hover::after {
+					width: 100%;
+				}
+				a {
+					padding: 0.3rem;
+				}
+			}
+		}
+		#check, .burger {
+			display: none;
+		}
+	}
+}
+
+@include md {
+    .Navbar {
+		@include Navbar(10rem, 1rem);
+		&__logo {
+			img {
+				@include logoNav(8rem);
+				width: 8rem;
+				transition: filter 0.1s;
+				&:hover {
+					filter: drop-shadow(2px 2px 2px rgb(233, 211, 199));
+				}
+			}
+		}
+		&-div{
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		&__ul {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+
+			&--li {
+				display: inline-block;
+				padding: 0.5rem;
+				transition: border 1s;
+				&::after {
+					display: block;
+					content: '';
+					margin: auto;
+					width: 0%;
+					height: 2px;
+					transition: width 0.2s;
+				}
+				&:hover::after {
+					width: 100%;
+				}
+				a {
+					padding: 0.3rem;
+				}
+			}
+		}
+		#check, .burger {
+			display: none;
+		}
+	}
+}
+
+@include sm{
+	.Navbar{
+		height: 5rem;
+		display: flex;
+		padding: 0.5rem;
+		color: #ffffff;
+		background: $grey-1;
+	
+		&__logo{
+			img{
+			@include logoNav(4rem);
+				width: 100%;
+			}
+		}
+		.Navbar-div{
+			height: 0;
+			#check{
+				display: none;
+			}
+		}
+		.burger{
+			position: absolute;
+			cursor: pointer;
+			top: 1%;
+			right: 1%;
+			display: inline-flex;
+			#x{
+				display: none;
+			}
+		}
+		&__ul{
+			height: 0;
+			position: absolute;
+			background: $grey-2;
+			text-align: center;
+			z-index: 1000;
+			left: 0;
+			display: block;
+			width: 100%;
+			overflow: hidden;
+			transition: .3s ease;
+		}
+	}
+	#check:checked~.burger #burger {
+		display: none;
+	}
+	#check:checked~.burger #x {
+		display: block;
+	}
+	#check:checked~.Navbar__ul{
+		height: 6rem;
+	}
 }

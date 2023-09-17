@@ -1,0 +1,41 @@
+
+.Div {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: #fff;
+	padding-top: 20px;
+	color: aliceblue;
+
+  & > form {
+    width: 30%;
+	background-color: rgb(147, 146, 146);
+	border: solid rgb(24, 2, 2) 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+	padding: 20px;
+
+
+    & > div:first-child {
+      margin-top: 5%;
+    }
+
+    button[type="submit"] {
+      color: #fff;
+      background-color: #ce171e;
+      border-radius: 10px;
+      border: solid black ;
+      padding: 8px;
+      cursor: pointer;
+
+
+      &:focus {
+        outline: unset;
+      }
+    }
+  }
+}
