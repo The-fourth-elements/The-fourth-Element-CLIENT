@@ -4,13 +4,19 @@ import React from 'react';
 import './styles.scss';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useRouter } from 'next/navigation';
+import { postData } from '../utilsFetch/postData';
 
 const RecoveryPass = () => {
+	const router = useRouter();
 	const form = useFormik({
 		initialValues: {
 			email: '',
 		},
-		onSubmit: () => {},
+		onSubmit: async (email) => {
+			const  response = await postData('http://localhost:3001/', email);
+			console.log(response);
+		},
 		validationSchema: Yup.object({
 			email: Yup.string()
 				.email('Debe ingresar un correo valido.')
@@ -34,6 +40,12 @@ const RecoveryPass = () => {
 						onChange={form.handleChange}
 					/>
 				</div>
+				<span
+					onClick={() => {
+						router.push('/auth');
+					}}>
+					¿Volver?
+				</span>
 				<button type='submit' className='Main__Recovery__Form--button'>
 					Send code
 				</button>

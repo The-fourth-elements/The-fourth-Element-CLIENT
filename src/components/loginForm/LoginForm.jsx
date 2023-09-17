@@ -1,14 +1,14 @@
 'use client';
 
 import * as Yup from 'yup';
-import {postData} from '../utilsFetch/postData';
+import { postData } from '../utilsFetch/postData';
 import { useFormik } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
 
-export const LoginForm = () => {
+export const LoginForm = ({ toogleDisplay }) => {
 	const router = useRouter();
-	
+
 	const form = useFormik({
 		initialValues: {
 			email: '',
@@ -16,12 +16,11 @@ export const LoginForm = () => {
 		},
 		onSubmit: async values => {
 			try {
-				const p = await postData("http://localhost:3001/login", values)
-				alert(JSON.stringify(p,null, 2))
-				router.push('/')
-
+				const p = await postData('http://localhost:3001/login', values);
+				alert(JSON.stringify(p, null, 2));
+				router.push('/course');
 			} catch (error) {
-				alert('usuario o contraseña invalidos')
+				alert('usuario o contraseña invalidos');
 				console.log(error);
 			}
 		},
@@ -74,6 +73,14 @@ export const LoginForm = () => {
 					) : null}
 				</div>
 				<span className='recovery'>Did you forget your password?</span>
+				<span
+					className='toogle'
+					onClick={() => {
+						toogleDisplay();
+					}}>
+					¿No tienes una cuenta?
+				</span>
+
 				<button type='submit' className='Main__Form--button'>
 					Submit
 				</button>

@@ -75,70 +75,77 @@ $screen-lg: 1024px;
 	height: $imgSize;
 }
 
-@mixin common-form-styles ($bordRa) {
-  width: 100%;
-  border-top-left-radius: $bordRa;
-  border-top-right-radius: $bordRa;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  height: 70%;
-  background: $orange-1;
+@mixin common-form-styles($bordRa) {
+	width: 100%;
+	border-top-left-radius: $bordRa;
+	border-top-right-radius: $bordRa;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	height: 70%;
+	background: $orange-1;
 
-  &--group {
-    padding: 1rem;
-    width: 70%;
+	&--group {
+		padding: 1rem;
+		width: 70%;
 
-    &--label {
-      display: block;
-      text-align: center;
-    }
-    &--input {
-      margin-top: 0.5rem;
-      padding: 1rem;
-      border-radius: 0.25rem;
-      border: none;
-      width: 100%;
-      display: block;
-    }
-    &--error {
-      margin-top: 1rem;
-      display: block;
-      padding: 1rem;
-      border: $red-1 solid 0.3rem;
-      text-align: center;
-    }
-  }
-  &--button {
-    color: #fff;
-    width: 30%;
-    background-color: #ce171e;
-    border-radius: 0.3rem;
-    border: none;
-    padding: 0.6rem;
-    cursor: pointer;
-    transition: box-shadow 0.3s;
+		&--label {
+			display: block;
+			text-align: center;
+		}
+		&--input {
+			margin-top: 0.5rem;
+			padding: 1rem;
+			border-radius: 0.25rem;
+			border: none;
+			width: 100%;
+			display: block;
+		}
+		&--error {
+			margin-top: 1rem;
+			display: block;
+			padding: 1rem;
+			border: $red-1 solid 0.3rem;
+			text-align: center;
+		}
+	}
+	.toogle {
+		color: white;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	&--button {
+		color: #fff;
+		width: 30%;
+		background-color: #ce171e;
+		border-radius: 0.3rem;
+		border: none;
+		padding: 0.6rem;
+		cursor: pointer;
+		transition: box-shadow 0.3s;
 
-    &:hover {
-      box-shadow: 2px 2px 10px #4a0303;
-    }
+		&:hover {
+			box-shadow: 2px 2px 10px #4a0303;
+		}
 
-    &:focus {
-      outline: unset;
-    }
-    &:active {
-      background: linear-gradient(to bottom, #4a0303, #ce171e);
-    }
-  }
+		&:focus {
+			outline: unset;
+		}
+		&:active {
+			background: linear-gradient(to bottom, #4a0303, #ce171e);
+		}
+	}
 }
 
 // Mixin para estilos comunes de un contenedor
 @mixin common-container-styles {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background-color: #fff;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	background-color: #fff;
 }

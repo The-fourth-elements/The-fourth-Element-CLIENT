@@ -60,13 +60,11 @@
 			padding: 10px 20px;
 			border: none;
 			cursor: pointer;
-            transition: color .2s ease;
-		
-				&:hover {
-                     color: black;
-				
-				}
-	
+			transition: color 0.2s ease;
+
+			&:hover {
+				color: black;
+			}
 		}
 	}
 	.takeATourContainer {
@@ -84,10 +82,10 @@
 		content: '';
 		margin-left: 1%;
 		position: absolute;
-		top: 50%; 
-		width: 103%; 
+		top: 50%;
+		width: 103%;
 		height: 1px;
-		background-color: #ccc; 
+		background-color: #ccc;
 	}
 	.imagesContainer {
 		display: flex;
