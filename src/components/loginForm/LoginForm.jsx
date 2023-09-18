@@ -5,8 +5,30 @@ import { postData } from '../utilsFetch/postData';
 import { useFormik } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
+import { userAuth } from '@/app/context/authContext';
+import Image from 'next/image';
+import googleLogo from '../../assets/svg/google.svg'
 
 export const LoginForm = ({ toogleDisplay }) => {
+	const { user, googleSignIn, logOut } = userAuth();
+
+	console.log(user);
+
+	const handleSignIn = async () => {
+		try {
+			await googleSignIn();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const handleSignOut = async () => {
+		try {
+			await logOut();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const router = useRouter();
 
 	const form = useFormik({
@@ -53,7 +75,9 @@ export const LoginForm = ({ toogleDisplay }) => {
 						value={form.values.email}
 					/>
 					{form.touched.email && form.errors.email ? (
-						<span className='error'>{form.errors.email}</span>
+						<span className='Main__Form--group--error'>
+							{form.errors.email}
+						</span>
 					) : null}
 				</div>
 
@@ -69,10 +93,18 @@ export const LoginForm = ({ toogleDisplay }) => {
 						value={form.values.password}
 					/>
 					{form.touched.password && form.errors.password ? (
-						<span className='error'>{form.errors.password}</span>
+						<span className='Main__Form--group--error'>
+							{form.errors.password}
+						</span>
 					) : null}
 				</div>
-				<span className='recovery'>Did you forget your password?</span>
+				<span
+					className='recovery'
+					onClick={() => {
+						router.push('/auth/reset-password');
+					}}>
+					Did you forget your password?
+				</span>
 				<span
 					className='toogle'
 					onClick={() => {
@@ -84,6 +116,11 @@ export const LoginForm = ({ toogleDisplay }) => {
 				<button type='submit' className='Main__Form--button'>
 					Submit
 				</button>
+				<button type='button' className='loginButton' onClick={handleSignIn}>
+          		<Image src={googleLogo} alt='' className='googleLogo' />
+        </button>
+
+
 			</form>
 		</main>
 	);
