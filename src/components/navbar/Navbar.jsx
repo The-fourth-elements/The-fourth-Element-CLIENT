@@ -8,6 +8,9 @@ import x from '../../assets/svg/x-mark.svg';
 
 
 const Navbar = () => {
+	
+
+
 	const routes = [
 		{ label: 'Home', route: '/', className: '' },
 		{ label: 'About Us', route: '/about', className: '' },
