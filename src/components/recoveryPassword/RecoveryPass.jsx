@@ -6,6 +6,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { postData } from '../utilsFetch/postData';
+import { toast } from 'react-toastify';
+
 
 const RecoveryPass = () => {
 	const router = useRouter();
@@ -14,8 +16,34 @@ const RecoveryPass = () => {
 			email: '',
 		},
 		onSubmit: async (email) => {
-			const  response = await postData('http://localhost:3001/', email);
-			console.log(response);
+			try {
+				const  response = await postData(`${process.env.API_BACKEND}auth/forgot`, email);
+				
+					toast.success('Revisa tu bandeja de entrada', {
+						position: "top-right",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+						});
+				
+			} catch (error) {
+				toast.error('Algo salio mal.', {
+					position: "top-right",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					});
+			}
+			
+
 		},
 		validationSchema: Yup.object({
 			email: Yup.string()

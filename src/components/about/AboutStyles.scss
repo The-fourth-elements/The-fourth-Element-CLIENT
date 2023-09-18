@@ -1,0 +1,55 @@
+@import '../../styles/_base';
+
+@include lg {
+	.Container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: $grey-1;
+        color: white;
+
+		> h1 {
+			color: white;
+            margin-bottom: 2vh;
+		}
+
+        
+
+		> img {
+            position: absolute;
+            top: 17vh;
+            left: 0;
+            width: 50vw;
+			height: auto;
+		}
+
+        &-row{
+            display: flex;
+            margin-bottom: 3vh;
+            gap: 2vw;
+            &-column{
+                padding: 1vw 0 2vw 0;
+                width: 30vw;
+                background-color: rgba($orange-2, 0.8);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                > h3 {
+                    color: white;
+                    text-align: center;
+                    width: 80%;
+                    font-size: 1vw;
+                    margin-bottom: 2vh;
+                }
+
+                > p {
+                    color: $grey-1;
+                    width: 80%;
+                    font-size: 1vw;
+                }
+            }
+
+        }
+	}
+}
