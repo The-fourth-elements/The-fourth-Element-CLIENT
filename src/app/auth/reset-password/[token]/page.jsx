@@ -31,7 +31,7 @@ const ResetPass = ({params})=>{
                 token: params.token
             }
             try {
-              const response = await postData(process.env.API_BACKEND+'reset-password', form);
+              const response = await postData('https://the-forth-element-production.up.railway.app/reset-password', form);
               toast.success('Se ha cambiado su contraseña', {
                 position: "top-right",
                 autoClose: 3000,
