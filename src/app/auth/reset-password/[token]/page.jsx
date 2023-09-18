@@ -1,5 +1,5 @@
 'use client'
-import { postData } from '@/components/utilsFetch/postData';
+import { postData } from '../../../../components/utilsFetch/postData'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';

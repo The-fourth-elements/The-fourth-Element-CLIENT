@@ -5,7 +5,7 @@ import { postData } from '../utilsFetch/postData';
 import { useFormik } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
-import { userAuth } from '@/app/context/authContext';
+import { userAuth } from '../../app/context/authContext';
 import Image from 'next/image';
 import googleLogo from '../../assets/svg/google.svg'
 import { toast } from 'react-toastify';

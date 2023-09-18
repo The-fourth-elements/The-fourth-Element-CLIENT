@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import landingImgMobile from '@/assets/img/landingImgMobile.jpg';
-import landingImgMobile2 from '@/assets/img/landingImgMobile2.jpg';
-import landingImgMobile3 from '@/assets/img/landingImgMobile3.jpg';
-import landingImgMobile4 from '@/assets/img/landingImgMobile4.jpg';
+import landingImgMobile from '../../assets/img/landingImgMobile.jpg';
+import landingImgMobile2 from '../../assets/img/landingImgMobile2.jpg';
+import landingImgMobile3 from '../../assets/img/landingImgMobile3.jpg';
+import landingImgMobile4 from '../../assets/img/landingImgMobile4.jpg';
 
-import videoPlaceholder from '@/assets/img/videoPlaceholder.png';
-
-import FooterMobile from '../footer/FooterMobile';
+import videoPlaceholder from '../../assets/img/videoPlaceholder.png';
 
 
 import './LandingMobileStyles.scss';
