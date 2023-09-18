@@ -53,7 +53,9 @@ export const LoginForm = ({ toogleDisplay }) => {
 						value={form.values.email}
 					/>
 					{form.touched.email && form.errors.email ? (
-						<span className='error'>{form.errors.email}</span>
+						<span className='Main__Form--group--error'>
+							{form.errors.email}
+						</span>
 					) : null}
 				</div>
 
@@ -69,10 +71,18 @@ export const LoginForm = ({ toogleDisplay }) => {
 						value={form.values.password}
 					/>
 					{form.touched.password && form.errors.password ? (
-						<span className='error'>{form.errors.password}</span>
+						<span className='Main__Form--group--error'>
+							{form.errors.password}
+						</span>
 					) : null}
 				</div>
-				<span className='recovery'>Did you forget your password?</span>
+				<span
+					className='recovery'
+					onClick={() => {
+						router.push('/auth/reset-password');
+					}}>
+					Did you forget your password?
+				</span>
 				<span
 					className='toogle'
 					onClick={() => {

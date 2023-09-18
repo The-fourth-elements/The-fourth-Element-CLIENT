@@ -11,7 +11,7 @@ const Register = ({ toogleDisplay }) => {
 	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
-
+	
 	return (
 		<main className='Main__Register'>
 			<Formik
@@ -41,7 +41,7 @@ const Register = ({ toogleDisplay }) => {
 							/>
 							<ErrorMessage
 								name='username'
-								compoennt='span'
+								component='span'
 								className='Main__Register__Form--group--error'
 							/>
 						</div>
@@ -62,7 +62,7 @@ const Register = ({ toogleDisplay }) => {
 							/>
 							<ErrorMessage
 								name='email'
-								compoennt='span'
+								component='span'
 								className='Main__Register__Form--group--error'
 							/>
 						</div>
@@ -82,7 +82,7 @@ const Register = ({ toogleDisplay }) => {
 							/>
 							<ErrorMessage
 								name='password'
-								compoennt='span'
+								component='span'
 								className='Main__Register__Form--group--error'
 							/>
 						</div>
@@ -103,7 +103,7 @@ const Register = ({ toogleDisplay }) => {
 							/>
 							<ErrorMessage
 								name='repeatPassword'
-								compoennt='span'
+								component='span'
 								className='Main__Register__Form--group--error'
 							/>
 						</div>
@@ -143,7 +143,7 @@ const Register = ({ toogleDisplay }) => {
 								/>
 								<ErrorMessage
 									name='state'
-									compoennt='span'
+									component='span'
 									className='Main__Register__Form--group--error'
 								/>
 							</div>
