@@ -1,13 +1,13 @@
 import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/Footer/Footer'
 
-'use client';
+// 'use client';
 
 import { Inter } from 'next/font/google';
 import '../styles/globals.scss';
 import { AuthContextProvider } from './context/authContext';
 import { ToastContainer } from 'react-toastify';
-import {} from 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify/dist/ReactToastify.css'
 
 
 const inter = Inter({ subsets: ['latin'] });
