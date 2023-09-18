@@ -17,7 +17,7 @@ const RecoveryPass = () => {
 		},
 		onSubmit: async (email) => {
 			try {
-				const  response = await postData(`${process.env.API_BACKEND}auth/forgot`, email);
+				const  response = await postData(`https://the-forth-element-production.up.railway.app/auth/forgot`, email);
 				
 					toast.success('Revisa tu bandeja de entrada', {
 						position: "top-right",

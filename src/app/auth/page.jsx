@@ -1,7 +1,7 @@
 'use client';
 
-import { LoginForm } from '@/components/loginForm/LoginForm';
-import Register from '@/components/Register/Register';
+import { LoginForm } from '../../components/loginForm/LoginForm';
+import Register from '../../components/Register/Register';
 import { useState } from 'react';
 
 const page = () => {
