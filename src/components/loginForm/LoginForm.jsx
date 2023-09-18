@@ -8,11 +8,11 @@ import { useRouter } from 'next/navigation';
 import { userAuth } from '@/app/context/authContext';
 import Image from 'next/image';
 import googleLogo from '../../assets/svg/google.svg'
+import { toast } from 'react-toastify';
+
 
 export const LoginForm = ({ toogleDisplay }) => {
-	const { user, googleSignIn, logOut } = userAuth();
-
-	console.log(user);
+	const { user, googleSignIn } = userAuth();
 
 	const handleSignIn = async () => {
 		try {
@@ -21,13 +21,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 			console.log(error);
 		}
 	};
-	const handleSignOut = async () => {
-		try {
-			await logOut();
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	
 
 	const router = useRouter();
 
@@ -38,12 +32,33 @@ export const LoginForm = ({ toogleDisplay }) => {
 		},
 		onSubmit: async values => {
 			try {
-				const p = await postData('http://localhost:3001/login', values);
-				alert(JSON.stringify(p, null, 2));
-				router.push('/course');
+				const p = await postData(`${process.env.API_BACKEND}login`, values);
+				if(p.success){
+					toast.success( 'Login', {
+						position: "top-right",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+						});
+					router.push('/course');
+				}else{
+					throw new Error('Algo ocurrio')
+				}
 			} catch (error) {
-				alert('usuario o contraseña invalidos');
-				console.log(error);
+				toast.error(error, ' El email o la contraseña son invalidos', {
+					position: "top-right",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					});
 			}
 		},
 		validationSchema: Yup.object({
@@ -58,6 +73,9 @@ export const LoginForm = ({ toogleDisplay }) => {
 				.required('La contraseña es requerida'),
 		}),
 	});
+	if(user!=null){
+		router.push('/course')
+	}
 
 	return (
 		<main className='Main'>

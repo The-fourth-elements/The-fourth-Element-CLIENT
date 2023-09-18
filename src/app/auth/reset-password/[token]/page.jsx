@@ -1,6 +1,9 @@
 'use client'
+import { postData } from '@/components/utilsFetch/postData';
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
+import { toast } from 'react-toastify';
+
 
 const ResetPass = ({params})=>{
     const formik = useFormik({
@@ -21,7 +24,37 @@ const ResetPass = ({params})=>{
             .required('Confirmar la nueva contraseña es requerido'),
         }),
         onSubmit: async (values) => {
-          console.log('Valores enviados:', values);
+            const {newPassword} = values
+            console.log(params);
+            const form = {
+                newPassword,
+                token: params.token
+            }
+            try {
+              const response = await postData(process.env.API_BACKEND+'reset-password', form);
+              toast.success('Se ha cambiado su contraseña', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            } catch (error) {
+              toast.error('Algo salio mal', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            }
+          
         },
       });
     

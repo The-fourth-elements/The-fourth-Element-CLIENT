@@ -4,6 +4,9 @@ import Navbar from '@/components/navbar/Navbar';
 import { Inter } from 'next/font/google';
 import '../styles/globals.scss';
 import { AuthContextProvider } from './context/authContext';
+import { ToastContainer } from 'react-toastify';
+import {} from 'react-toastify/dist/ReactToastify.css'
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +25,7 @@ export default function RootLayout({ children }) {
 					</header>
 					{children}
 				</AuthContextProvider>
+				<ToastContainer></ToastContainer>
 			</body>
 		</html>
 	);

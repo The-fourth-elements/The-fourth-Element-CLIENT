@@ -5,7 +5,7 @@ export const postData = async (url, data, token) => {
         };
 
         if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
+            headers["Authorization"] = `${token}`;
         }
 
         const response = await fetch(url, {
@@ -17,13 +17,13 @@ export const postData = async (url, data, token) => {
             referrerPolicy: "no-referrer",
             body: JSON.stringify(data),
         });
-        
+
         const responseParsed = await response.json();
-        
+
         if (responseParsed.error) {
             throw new Error(responseParsed.error);
         }
-        
+
         return responseParsed;
     } catch (error) {
         throw new Error('Error:', error);
