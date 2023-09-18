@@ -1,5 +1,7 @@
+import Navbar from '@/components/navbar/Navbar'
+import Footer from '@/components/Footer/Footer'
+
 'use client';
-import Navbar from '@/components/navbar/Navbar';
 
 import { Inter } from 'next/font/google';
 import '../styles/globals.scss';
@@ -24,8 +26,9 @@ export default function RootLayout({ children }) {
 						<Navbar />
 					</header>
 					{children}
+          <Footer/>
 				</AuthContextProvider>
-				<ToastContainer></ToastContainer>
+				<ToastContainer/>
 			</body>
 		</html>
 	);
