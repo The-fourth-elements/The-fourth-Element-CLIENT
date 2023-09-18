@@ -5,8 +5,30 @@ import { postData } from '../utilsFetch/postData';
 import { useFormik } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
+import { userAuth } from '@/app/context/authContext';
+import Image from 'next/image';
+import googleLogo from '../../assets/svg/google.svg'
 
 export const LoginForm = ({ toogleDisplay }) => {
+	const { user, googleSignIn, logOut } = userAuth();
+
+	console.log(user);
+
+	const handleSignIn = async () => {
+		try {
+			await googleSignIn();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const handleSignOut = async () => {
+		try {
+			await logOut();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const router = useRouter();
 
 	const form = useFormik({
@@ -84,6 +106,11 @@ export const LoginForm = ({ toogleDisplay }) => {
 				<button type='submit' className='Main__Form--button'>
 					Submit
 				</button>
+				<button type='button' className='loginButton' onClick={handleSignIn}>
+          		<Image src={googleLogo} alt='' className='googleLogo' />
+        </button>
+
+
 			</form>
 		</main>
 	);
