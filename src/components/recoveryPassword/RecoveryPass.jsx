@@ -5,7 +5,7 @@ import './styles.scss';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { postData } from '../utilsFetch/postData';
+import { postData } from '../../hooks/postData';
 import { toast } from 'react-toastify';
 
 
@@ -17,7 +17,7 @@ const RecoveryPass = () => {
 		},
 		onSubmit: async (email) => {
 			try {
-				const  response = await postData(`https://the-forth-element-production.up.railway.app/auth/forgot`, email);
+				const  response = await postData(`${process.env.API_BACKEND}auth/forgot`, email);
 				
 					toast.success('Revisa tu bandeja de entrada', {
 						position: "top-right",

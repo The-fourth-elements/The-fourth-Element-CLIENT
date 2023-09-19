@@ -1,7 +1,7 @@
 'use client';
 
 import * as Yup from 'yup';
-import { postData } from '../utilsFetch/postData';
+import { postData } from '../../hooks/postData';
 import { useFormik } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 		},
 		onSubmit: async values => {
 			try {
-				const p = await postData(`https://the-forth-element-production.up.railway.app/login`, values);
+				const p = await postData(`${process.env.API_BACKEND}login`, values);
 				if(p.success){
 					toast.success( 'Login', {
 						position: "top-right",

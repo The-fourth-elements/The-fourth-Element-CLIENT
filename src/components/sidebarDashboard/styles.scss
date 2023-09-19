@@ -1,0 +1,31 @@
+@import "../../styles/base";
+
+@include sm{
+
+    .Sidebar{
+        font-size: 2rem;
+        position: sticky;
+        display: flex;
+        top: 5rem;
+        width: 100%;
+        justify-content: center;
+        height: 100%;
+        backdrop-filter: blur(83px);
+        &__ul{
+            // position: sticky;
+            // top:20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            gap: 1rem;
+            background: $grey-1;
+            &--li{
+                padding: 0.8rem;
+                &-a{
+                    color: white;
+                }
+            }
+        }
+    }
+}
