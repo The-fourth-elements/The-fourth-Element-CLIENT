@@ -4,9 +4,7 @@ import videoPlaceholder from '@/assets/img/videoPlaceholder.png';
 import './LandingDesktopStyles.scss';
 import Link from 'next/link';
 
-
 const LandingDesktop = () => {
-	
 	return (
 		<div>
 			<div className='Container'>
@@ -54,7 +52,6 @@ const LandingDesktop = () => {
 				</div>
 			</div>
 		</div>
-		
 	);
 };
 
