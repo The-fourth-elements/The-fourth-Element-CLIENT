@@ -15,8 +15,6 @@ export const middleware = async request => {
         response.cookies.set('jwt', '', { expires: new Date(0) });
         return response;
     }
-
-
     return NextResponse.next();
 };
 

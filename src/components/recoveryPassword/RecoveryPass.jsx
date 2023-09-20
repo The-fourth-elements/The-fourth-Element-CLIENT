@@ -3,10 +3,11 @@
 import React from 'react';
 import './styles.scss';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { postData } from '../utilsFetch/postData';
+import { postData } from '../../hooks/postData';
 import { toast } from 'react-toastify';
+import { validationSchemaRecovery } from '../../helpers/validations'
+import { toastError, toastSuccess } from '../../helpers/toast'
 
 
 const RecoveryPass = () => {
@@ -17,39 +18,15 @@ const RecoveryPass = () => {
 		},
 		onSubmit: async (email) => {
 			try {
-				const  response = await postData(`https://the-forth-element-production.up.railway.app/auth/forgot`, email);
-				
-					toast.success('Revisa tu bandeja de entrada', {
-						position: "top-right",
-						autoClose: 3000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: "light",
-						});
-				
+				const  response = await postData(`${process.env.API_BACKEND}auth/forgot`, email);
+				toastSuccess('Verifique su bandeja de entrada')
 			} catch (error) {
-				toast.error('Algo salio mal.', {
-					position: "top-right",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "light",
-					});
+				toastError('Algo salio mal')
 			}
 			
 
 		},
-		validationSchema: Yup.object({
-			email: Yup.string()
-				.email('Debe ingresar un correo valido.')
-				.required('Este campo es requerido.'),
-		}),
+		validationSchema: validationSchemaRecovery
 	});
 
 	return (

@@ -1,7 +1,16 @@
-import React from 'react';
+import SideBar from "@/components/sidebarDashboard/Sidebar";
 
 const page = () => {
-	return <>soy la ruta protegida holli</>;
+	return(
+		<main>
+			{/* aqui va el sidebar */}
+			<SideBar></SideBar>
+			<h1>
+				Welcome to the dashboard
+			</h1>
+
+		</main>
+	)
 };
 
 export default page;

@@ -5,7 +5,6 @@ import LandingDesktop from '../components/landing/LandingDesktop';
 import LandingMobile from '../components/landing/LandingMobile';
 
 import { useEffect, useState } from 'react';
-import './styles.scss';
 const Landing = () => {
 	const [mobile, setMobile] = useState(undefined);
 
