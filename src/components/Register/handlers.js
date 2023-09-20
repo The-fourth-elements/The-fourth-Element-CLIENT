@@ -10,12 +10,14 @@ export const handleSubmit = async ({ username, email, password }, country, regio
       nationality: country,
     }
 
-    const response = await postData(`${process.env.API_BACKEND}user`, form);
+    const response = await postData(`https://the-forth-element-production.up.railway.app/user`, form);
     return response
   } catch (error) {
     alert('Ocurrió un error al registrar.', error);
   }
 };
+
+//hola 
 
 
 

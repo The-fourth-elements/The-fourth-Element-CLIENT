@@ -19,7 +19,7 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					const response = await handleSubmit(values, country, region);
-					alert(JSON.stringify(response, null, 2));
+					
 					router.push('/');
 				}}>
 				{({ errors }) => (

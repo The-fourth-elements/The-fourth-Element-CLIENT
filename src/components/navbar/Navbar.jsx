@@ -6,7 +6,7 @@ import Image from 'next/image';
 import logo from '../../../public/logo.svg';
 import burger from '../../assets/svg/burger.svg';
 import x from '../../assets/svg/x-mark.svg';
-import { userAuth } from '@/app/context/authContext';
+import { userAuth } from '../../app/context/authContext';
 import { useRouter } from 'next/navigation';
 
 const Navbar = () => {

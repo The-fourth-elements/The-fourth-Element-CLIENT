@@ -1,4 +1,4 @@
-import RecoveryPass from '@/components/recoveryPassword/RecoveryPass';
+import RecoveryPass from '../../../components/recoveryPassword/RecoveryPass'
 
 const Reset = () => {
 	return (
