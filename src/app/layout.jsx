@@ -1,12 +1,12 @@
-import Navbar from '../components/navbar/Navbar'
-import Footer from '../components/footer/Footer'
-
+import Navbar from '../components/navbar/Navbar';
+import Footer from '../components/footer/Footer';
+import './global.css';
 import { Inter } from 'next/font/google';
+import Provider from './provider.js';
 import '../styles/globals.scss';
 import { AuthContextProvider } from './context/authContext';
 import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify/dist/ReactToastify.css'
-
+import 'tailwindcss/tailwind.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,13 +20,15 @@ export default function RootLayout({ children }) {
 		<html lang='es'>
 			<body className={inter.className}>
 				<AuthContextProvider>
-					<header>
-						<Navbar />
-					</header>
-					{children}
-          <Footer/>
+					<Provider>
+						<header>
+							<Navbar />
+						</header>
+						{children}
+						<Footer />
+					</Provider>
 				</AuthContextProvider>
-				<ToastContainer/>
+				<ToastContainer />
 			</body>
 		</html>
 	);
