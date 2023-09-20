@@ -23,31 +23,34 @@ const Detail = () => {
     }, [id, detail.role])
 
     return (
-        <div>
+        <article>
             {detail && Object.keys(detail).length > 0 ? ( 
-            <div>
+            <main>
                 <img src={detail.profile_img} alt={detail.name} />
-                <h2>Name: {detail.name}</h2>
-                <h2>Email: {detail.email}</h2>
-                <h2>Plan: {plan}</h2>
-                <h2>Country: {detail.nationality}</h2>
-                <h2>City: {detail.city}</h2>
-                {/* <h2>Registration date: {detail.createdAt}</h2>  */}
-                <h2>Registration date: {new Date(detail.createdAt).toLocaleDateString()}</h2>
-
+                <header>
+                    <h1>Name: {detail.name}</h1>
+                    <h2>Email: {detail.email}</h2>
+                </header>
+                <section>
+                    <h2>Plan: {plan}</h2>
+                    <h2>Country: {detail.nationality}</h2>
+                    <h2>City: {detail.city}</h2>
+                    {/* <h2>Registration date: {detail.createdAt}</h2>  */}
+                    <h2>Registration date: {new Date(detail.createdAt).toLocaleDateString()}</h2>
+                </section>
                 {/*chuchu aqui uso el createdAt que te da por default la base de datos pero no se si con MongoDB tambien te lo de por default y no lo pude probar por que algo me fallaba en el registro mañana lo reviso, igual si no lo tiene por defecto el modelo nadamas seria agregarlo createdAt: {
                 type: Date,
                 default: Date.now()
                 }  */}
-            </div>
+            </main>
         ) : (
         <>estaria bueno poner aqui un componente que de una pantalla de carga</>
         )}
-        </div>
+        </article>
     )
 }
     // tambien solo me faltaria que este archivo sea hijo de la ruta de valentin
-    export default Detail;
+    export default Detail;    
 
 
 
