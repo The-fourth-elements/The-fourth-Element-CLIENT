@@ -1,25 +1,25 @@
 'use client';
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import './styles.scss';
-import { handleSubmit } from './handlers';
-import { registerSchema, initialValues } from './validations';
+import { handleSubmitRegister } from '../../helpers/handlers';
+import { registerSchema, initialValues } from '../../helpers/validations';
 import { useRouter } from 'next/navigation';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import InputField from '../../helpers/InputField';
 
 const Register = ({ toogleDisplay }) => {
 	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
-	
+
 	return (
 		<main className='Main__Register'>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
-					const response = await handleSubmit(values, country, region);
-					
+					await handleSubmitRegister(values, country, region);
 					router.push('/');
 				}}>
 				{({ errors }) => (
@@ -31,19 +31,7 @@ const Register = ({ toogleDisplay }) => {
 								className='Main__Register__Form--group--label'>
 								Username:
 							</label>
-							<Field
-								type='text'
-								id='username'
-								autoComplete='on'
-								placeholder='Enter your username'
-								name='username'
-								className='Main__Register__Form--group--input'
-							/>
-							<ErrorMessage
-								name='username'
-								component='span'
-								className='Main__Register__Form--group--error'
-							/>
+							<InputField type='string' name='username' placeholder="Ingrese su nombre" />
 						</div>
 
 						<div className='Main__Register__Form--group'>
@@ -52,19 +40,7 @@ const Register = ({ toogleDisplay }) => {
 								className='Main__Register__Form--group--label'>
 								Email:
 							</label>
-							<Field
-								type='email'
-								autoComplete='on'
-								id='email'
-								placeholder='Enter your email'
-								name='email'
-								className='Main__Register__Form--group--input'
-							/>
-							<ErrorMessage
-								name='email'
-								component='span'
-								className='Main__Register__Form--group--error'
-							/>
+							<InputField type='string' name='email' placeholder="Ingrese su email" />
 						</div>
 
 						<div className='Main__Register__Form--group'>
@@ -73,18 +49,7 @@ const Register = ({ toogleDisplay }) => {
 								className='Main__Register__Form--group--label'>
 								Password:
 							</label>
-							<Field
-								id='password'
-								type='password'
-								placeholder='Enter your password'
-								name='password'
-								className='Main__Register__Form--group--input'
-							/>
-							<ErrorMessage
-								name='password'
-								component='span'
-								className='Main__Register__Form--group--error'
-							/>
+							<InputField type='string' name='password' placeholder="Ingrese su contraseña" />
 						</div>
 
 						<div className='Main__Register__Form--group'>
@@ -93,19 +58,7 @@ const Register = ({ toogleDisplay }) => {
 								className='Main__Register__Form--group--label'>
 								Repeat Password:
 							</label>
-							<Field
-								id='repeatPassword'
-								type='password'
-								placeholder='Repeat the password'
-								name='repeatPassword'
-								error={errors.repeatPassword}
-								className='Main__Register__Form--group--input'
-							/>
-							<ErrorMessage
-								name='repeatPassword'
-								component='span'
-								className='Main__Register__Form--group--error'
-							/>
+							<InputField type='string' name='repeatPassword' placeholder="Repita su contraseña"/>
 						</div>
 
 						<div className='Main__Register__Form--group'>
