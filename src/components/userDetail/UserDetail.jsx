@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import "./styles.scss"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useUserDetail } from "@/store/userDetail"
@@ -6,10 +7,9 @@ import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
 
 
 const UserDetail = () => {
-    const {detail} = useUserDetail()
-    const {getDetail} = useUserDetail()
-    // const router = useRouter();
-    // const id = router.query.id
+    const {detail, getDetail} = useUserDetail()
+    
+    // const id = useRouter().query.id
     const [plan, setPlan] = useState();
 
     useEffect(()=> {
@@ -26,7 +26,7 @@ const UserDetail = () => {
     return (
         <article>
             {/* {detail && Object.keys(detail).length > 0 ? ( */}
-            <Card className="py-4">
+            <Card className="cardasdasdasd">
                 {/* <Image className="object-cover rounded-xl" src={detail.profile_img} alt={detail.name} /> */}
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                     <h1>Name: Angel</h1>
