@@ -60,6 +60,11 @@ export const validationSchema = Yup.object({
         .required('Confirmar la nueva contraseña es requerido'),
 });
 
+export const validationSchemaModule = Yup.object({
+    nameOfModule: Yup.string().required(),
+})
+
+
 export const initialValues = {
     username: '',
     email: '',
