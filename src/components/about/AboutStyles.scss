@@ -1,55 +1,83 @@
 @import '../../styles/_base';
 
-@include lg {
+@mixin lg-styles {
 	.Container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		background-color: $grey-1;
-        color: white;
+		color: white;
 
 		> h1 {
 			color: white;
-            margin-bottom: 2vh;
+			margin-bottom: 2vh;
 		}
 
-        
-
 		> img {
-            position: absolute;
-            top: 17vh;
-            left: 0;
-            width: 50vw;
+			position: absolute;
+			top: 17vh;
+			left: 0;
+			width: 50vw;
 			height: auto;
 		}
 
-        &-row{
-            display: flex;
-            margin-bottom: 3vh;
-            gap: 2vw;
-            &-column{
-                padding: 1vw 0 2vw 0;
-                width: 30vw;
-                background-color: rgba($orange-2, 0.8);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+		&-row {
+			display: flex;
+			margin-bottom: 3vh;
+			gap: 2vw;
+			&-column {
+				padding: 1vw 0 2vw 0;
+				width: 30vw;
+				background-color: rgba($orange-2, 0.8);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
 
+				> h3 {
+					color: white;
+					text-align: center;
+					width: 80%;
+					font-size: 2em;
+					margin-bottom: 2vh;
+				}
+
+				> p {
+					color: $grey-1;
+					width: 80%;
+					font-size: 2em;
+				}
+			}
+		}
+	}
+}
+
+@include sm {
+    @include lg-styles;
+	.Container {
+		
+        &-row {
+			display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            &-column {
+                width: fit-content;
+                margin: 3vw;
                 > h3 {
-                    color: white;
-                    text-align: center;
-                    width: 80%;
-                    font-size: 1vw;
-                    margin-bottom: 2vh;
-                }
+                    margin: 2vh 0 2vh 0;
 
-                > p {
-                    color: $grey-1;
-                    width: 80%;
-                    font-size: 1vw;
                 }
             }
 
         }
 	}
+}
+
+
+@include lg {
+	@include lg-styles;
+}
+
+@include md {
+	@include lg-styles;
 }
