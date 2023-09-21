@@ -5,6 +5,7 @@ import Image from 'next/image';
 import logo from '../../../public/logo.svg';
 import { userAuth } from '../../app/context/authContext';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import {
   Navbar,
@@ -13,7 +14,6 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
   NavbarMenuItem,
-  Link, 
   Button,
   NavbarBrand
 } from "@nextui-org/react";
@@ -22,6 +22,7 @@ export default function Nav() {
 
   const router = useRouter;
   const { logOut, user } = userAuth(); 
+  console.log('Usuario', user);
   const access = true; // Provisorio hasta tener la variable de acceso del usuario para hacer el renderizado condicional
   const routes = [
     { label: 'Home', route: '/' },
@@ -38,9 +39,9 @@ export default function Nav() {
   };
 
   return (
-    <Navbar isBordered className="h-40 bg-foreground p-3">
+    <Navbar  className="navcolor h-40 bg-primary p-3">
       <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle className='text-background'/>
+        <NavbarMenuToggle className='text-foreground'/>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
@@ -63,7 +64,7 @@ export default function Nav() {
         {routes.map(({ label, route, index }) => (
             <NavbarMenuItem key={`${route}-${index}`}>
               <Link
-                className="w-full text-xl text-background"
+                className="w-full text-xl text-foreground"
                 color={
                   index === 2 ? "warning" : index === routes.length - 1 ? "danger" : "foreground"
                 }
@@ -92,7 +93,7 @@ export default function Nav() {
           {
           access ?
           <NavbarMenuItem>
-            <Link className="w-full text-xl text-foreground" href="/login">
+            <Link className="w-full text-xl text-foreground" href="/auth">
               Login
             </Link> 
           </NavbarMenuItem> :
@@ -104,7 +105,7 @@ export default function Nav() {
         access ?
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Button as={Link} color="foreground" href="/auth" variant="flat" className='text-xl border border-solid border-1 border-blue-500'>
+            <Button as={Link} color="foreground" href="/auth" variant="flat" className='  text-xl text-foreground border border-solid border-1 border-blue-500'>
               Login
             </Button>
           </NavbarItem>
@@ -125,3 +126,4 @@ export default function Nav() {
     </Navbar>
   );
 }
+
