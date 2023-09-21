@@ -1,4 +1,4 @@
-import Navbar from '../components/navbar/Navbar';
+import Nav from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import './global.css';
 import { Inter } from 'next/font/google';
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
 				<AuthContextProvider>
 					<Provider>
 						<header>
-							<Navbar />
+							<Nav />
 						</header>
 						{children}
 						<Footer />
