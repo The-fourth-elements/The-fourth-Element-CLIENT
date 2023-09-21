@@ -10,83 +10,79 @@ import InputField from '../../helpers/InputField';
 import { validationSchemaLogin } from '../../helpers/validations';
 import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
-import { toastError, toastSuccess } from '../../helpers/toast'
+import { toastError, toastSuccess } from '../../helpers/toast';
+import { Card, CardBody, Button } from '@nextui-org/react';
 
 export const LoginForm = ({ toogleDisplay }) => {
 	const { user, googleSignIn } = userAuth();
+	const router = useRouter();
 
 	const handleSignIn = async () => {
 		try {
 			await googleSignIn();
+			setTimeout(() => {
+				toastSuccess('Logueo exitoso');
+				router.push('/');
+			}, 2000);
 		} catch (error) {
-			console.log(error);
+			toastError('No se pudo iniciar sesión');
 		}
 	};
 
-	const router = useRouter();
-
 	return (
-		<main className='Main'>
+		<Card className='Main text-4xl'>
 			<Formik
 				initialValues={initialValuesLogin}
 				validationSchema={validationSchemaLogin}
 				onSubmit={async values => {
 					try {
 						const response = await handleSubmitLogin(values);
-						toastSuccess(response.message)
-						router.push('/')
+						toastSuccess(response.message);
+						router.push('/');
 					} catch (error) {
-						toastError(error)
+						toastError(error.message);
 					}
-					
 				}}>
 				{({ errors }) => (
-					<Form className='Main__Form'>
-						<h1>Log In</h1>
-						<div className='Main__Form--group'>
-							<label htmlFor='email'>Email:</label>
-							<InputField
-								name='email'
-								type='email'
-								placeholder='Ingrese su email'
-							/>
-						</div>
+					<CardBody className='body'>
+						<Form className='Form'>
+							<div className='group'>
+								<InputField name='email' type='email' />
+							</div>
 
-						<div className='Main__Form--group'>
-							<label htmlFor='password'>Password:</label>
-							<InputField
-								name='password'
-								type='string'
-								placeholder='Ingrese su contraseña'
-							/>
-						</div>
-						<span
-							className='recovery'
-							onClick={() => {
-								router.push('/auth/reset-password');
-							}}>
-							Did you forget your password?
-						</span>
-						<span
-							className='toogle'
-							onClick={() => {
-								toogleDisplay();
-							}}>
-							¿No tienes una cuenta?
-						</span>
+							<div className='group'>
+								<InputField name='password' type='string' />
+							</div>
+							<div className='flex flex-col items-center text-2xl'>
+								<span
+									className='recovery'
+									onClick={() => {
+										router.push('/auth/reset-password');
+									}}>
+									¿Olvido su contraseña?
+								</span>
+								<span
+									className='toogle'
+									onClick={() => {
+										toogleDisplay();
+									}}>
+									¿No tienes una cuenta?
+								</span>
+							</div>
 
-						<button type='submit' className='Main__Form--button'>
-							Submit
-						</button>
-						<button
-							type='button'
-							className='loginButton'
-							onClick={handleSignIn}>
-							<Image src={googleLogo} alt='' className='googleLogo' />
-						</button>
-					</Form>
+							<Button type='submit' className='submit'>
+								Ingresar
+							</Button>
+							<Button
+								type='button'
+								className='loginButton'
+								onClick={handleSignIn}>
+								<Image src={googleLogo} alt='' className='googleLogo' />
+							</Button>
+						</Form>
+					</CardBody>
 				)}
 			</Formik>
-		</main>
+		</Card>
 	);
 };

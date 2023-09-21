@@ -1,30 +1,24 @@
 import { useField } from 'formik';
-import React from 'react';
+import { Input } from '@nextui-org/react';
 
 const InputFiled = ({ ...props }) => {
 	const [field, meta] = useField(props);
+	const words = field.name.split(/(?=[A-Z])/).join(' ');
 	return (
 		<>
-			{!field.name.includes('assword') ? (
-				<input
-					id={field.name}
-					type='text'
-					className={meta.error ? '' : ''}
-					{...props}
-					{...field}
-					autoComplete='false'
-				/>
-			) : (
-				<input
-					id={field.name}
-					type='password'
-					className={meta.error ? '' : ''}
-					{...props}
-					{...field}
-					autoComplete='false'
-				/>
-			)}
-			{meta.error && <span className=''>{meta.error}</span>}
+			<Input
+				isRequired
+				label={words}
+				id={field.name}
+				color={meta.error ? 'danger' : 'default'}
+				{...props}
+				{...field}
+				type={!field.name.includes('assword') ? 'text' : 'password'}
+				autoComplete='false'
+			/>
+			<div className='flex justify-center p-5 moder text-2xl'>
+				{meta.error && <span className='modern bg-primary-700'>{meta.error}</span>}
+			</div>
 		</>
 	);
 };

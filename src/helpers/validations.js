@@ -2,61 +2,82 @@ import * as Yup from 'yup';
 
 export const validationSchemaLogin = Yup.object({
     email: Yup.string()
-        .email('Ingresa un email válido')
-        .required('El email es requerido'),
+        .email('Ingresa un correo electrónico válido')
+        .required('El correo electrónico es obligatorio'),
     password: Yup.string()
         .matches(
             /^(?=.*[A-Z])(?=.*\d).{6,}$/,
-            'The password must have a character Capitalizate, a number and a min of 6 characters'
+            'La contraseña debe contener al menos una letra mayúscula, un número y tener al menos 6 caracteres'
         )
-        .required('La contraseña es requerida'),
+        .required('La contraseña es obligatoria'),
 });
 
 export const registerSchema = (country, region) => {
     return Yup.object({
         username: Yup.string()
-            .required()
-            .min(5)
+            .required("Este campo es requerido")
+            .min(2)
             .max(20)
             .matches(
                 /^[A-Za-z0-9_-]+$/,
-                'The user name can only contain letters, numbers, underscores (_) and hyphens (-).'
+                'El nombre de usuario solo puede contener letras, números, guiones bajos (_) y guiones (-).'
             ),
-        email: Yup.string().email().required(),
-        password: Yup.string().required().min(8).max(25),
+        email: Yup.string().email("El email debe ser valido").required("Este campo es requerido"),
+        password: Yup.string().required("Este campo es requerido").min(6, "Debe tener 6 caracteres como minimo").max(25, "No debe tener mas de 25 caracteres"),
         repeatPassword: Yup.string()
-            .required()
-            .oneOf([Yup.ref('password')], 'Passwords must match'),
-        country: validateCountryAndRegion(country, region),
-        region: validateCountryAndRegion(country, region),
+            .required("Este campo es requerido")
+            .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir'),
+        country: validarcountryYregion(country, region),
+        region: validarcountryYregion(country, region),
     });
 };
 
-const validateCountryAndRegion = (country, region) => {
+const validarcountryYregion = (country, region) => {
     if (!country) {
-        return Yup.string().required('Country is required');
+        return Yup.string().required('El país es obligatorio');
     }
     if (!region) {
-        return Yup.string().required('Region/State is required');
+        return Yup.string().required('La region/estado es obligatoria');
     }
     return Yup.string();
 };
 
 export const validationSchemaRecovery = Yup.object({
     email: Yup.string()
-        .email('Debe ingresar un correo valido.')
-        .required('Este campo es requerido.'),
+        .email('Debe ingresar un correo electrónico válido.')
+        .required('Este campo es obligatorio'),
+});
+
+export const validationSchema = Yup.object({
+    newPassword: Yup.string()
+        .matches(
+            /^(?=.*[A-Z])(?=.*\d).{6,}$/,
+            'La nueva contraseña debe tener al menos 6 caracteres, una letra mayúscula y un número'
+        )
+        .required('La nueva contraseña es requerida'),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('newPassword'), null], 'Las contraseñas deben coincidir')
+        .required('Confirmar la nueva contraseña es requerido'),
+});
+
+export const validationSchemaModule = Yup.object({
+    nameOfModule: Yup.string().required(),
 })
 
 
 export const initialValues = {
-    username: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
 };
 
 export const initialValuesLogin = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
+};
+
+export const initialValuesRecovery = {
+    newPassword: '',
+    confirmPassword: '',
 };

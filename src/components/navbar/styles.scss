@@ -4,42 +4,17 @@
 
 @include lg {
 	.Navbar {
-		@include Navbar(10rem, 1rem);
+		@include Navbar(10rem, 35px);
 		&__logo {
 			img {
-				@include logoNav(8rem);
-				width: 8rem;
+				@include logoNav(90px);
 				transition: filter 0.1s;
+				width: 100%;
+				position: relative;
 				&:hover {
-					filter: drop-shadow(2px 2px 2px rgb(233, 211, 199));
+					filter: drop-shadow(1px 1px 1px rgb(151, 151, 151));
 				}
 			}
-		}
-		&-div{
-			display: flex;
-			width: 100%;
-			justify-content: space-between;
-		}
-
-		&__ul {
-			display: flex;
-			align-items: center;
-			gap: 1rem;
-
-			&--li {
-				display: inline-block;
-				padding: 0.5rem;
-				a {
-					padding: 0.3rem;
-				}
-				&-logOut{
-					background: red;
-					border-radius: 999px;
-				}
-			}
-		}
-		#check, .burger {
-			display: none;
 		}
 	}
 }
@@ -49,39 +24,13 @@
 		@include Navbar(10rem, 1rem);
 		&__logo {
 			img {
-				@include logoNav(8rem);
-				width: 8rem;
+				@include logoNav(80px);
+				width: 100%;
 				transition: filter 0.1s;
 				&:hover {
 					filter: drop-shadow(2px 2px 2px rgb(233, 211, 199));
 				}
 			}
-		}
-		&-div{
-			display: flex;
-			width: 100%;
-			justify-content: space-between;
-		}
-
-		&__ul {
-			display: flex;
-			align-items: center;
-			gap: 1rem;
-
-			&--li {
-				display: inline-block;
-				padding: 0.5rem;
-				a {
-					padding: 0.3rem;
-				}
-				&-logOut{
-					background: red;
-					border-radius: 999px;
-				}
-			}
-		}
-		#check, .burger {
-			display: none;
 		}
 	}
 }
@@ -96,51 +45,9 @@
 	
 		&__logo{
 			img{
-			@include logoNav(4rem);
+			@include logoNav(70px);
 				width: 100%;
 			}
 		}
-		.Navbar-div{
-			height: 0;
-			#check{
-				display: none;
-			}
-		}
-		.burger{
-			position: absolute;
-			cursor: pointer;
-			top: 1%;
-			right: 1%;
-			display: inline-flex;
-			#x{
-				display: none;
-			}
-		}
-		&__ul{
-			height: 0;
-			position: absolute;
-			background: $grey-2;
-			text-align: center;
-			z-index: 1000;
-			left: 0;
-			display: block;
-			width: 100%;
-			overflow: hidden;
-			transition: .3s ease;
-			&--li{
-				&-logOut{
-					border-radius: 10%;
-				}
-			}
-		}
-	}
-	#check:checked~.burger #burger {
-		display: none;
-	}
-	#check:checked~.burger #x {
-		display: block;
-	}
-	#check:checked~.Navbar__ul{
-		height: 6rem;
 	}
 }

@@ -76,38 +76,32 @@ $screen-lg: 1024px;
 }
 
 @mixin common-form-styles($bordRa) {
-	width: 100%;
 	border-top-left-radius: $bordRa;
 	border-top-right-radius: $bordRa;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
-	height: 70%;
 	background: $orange-1;
 
-	&--group {
+	.group {
+		text-align: center;
 		padding: 1rem;
-		width: 70%;
-
-		&--label {
-			display: block;
-			text-align: center;
+		width: 100%;
+		input {
+			font-size: 1.3rem;
 		}
-		&--input {
-			margin-top: 0.5rem;
-			padding: 1rem;
-			border-radius: 0.25rem;
-			border: none;
+		label{
+			font-size: 1rem;
+		}
+		select{
 			width: 100%;
-			display: block;
-		}
-		&--error {
-			margin-top: 1rem;
-			display: block;
-			padding: 1rem;
-			border: $red-1 solid 0.3rem;
-			text-align: center;
+			border-radius: 9px;
+			color: #7d6868;
+			font-size: 1.4rem;
+			option{
+				font-size: 1rem;
+			}
 		}
 	}
 	.toogle {
@@ -117,15 +111,12 @@ $screen-lg: 1024px;
 			text-decoration: underline;
 		}
 	}
-	&--button {
+	.submit {
 		color: #fff;
 		width: 30%;
 		background-color: #ce171e;
-		border-radius: 0.3rem;
-		border: none;
-		padding: 0.6rem;
-		cursor: pointer;
 		transition: box-shadow 0.3s;
+		margin-bottom: 1%;
 
 		&:hover {
 			box-shadow: 2px 2px 10px #4a0303;
@@ -142,7 +133,6 @@ $screen-lg: 1024px;
 
 // Mixin para estilos comunes de un contenedor
 @mixin common-container-styles {
-	min-height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
