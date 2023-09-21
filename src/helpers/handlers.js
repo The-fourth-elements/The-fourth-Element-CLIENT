@@ -17,7 +17,7 @@ export const handleSubmitRegister = async (
     const response = await postData(`${process.env.API_BACKEND}user`, form);
     return response;
   } catch (error) {
-    alert('Ocurrió un error al registrar.', error);
+    throw new Error(error);
   }
 };
 

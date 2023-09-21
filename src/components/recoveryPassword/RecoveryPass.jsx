@@ -2,10 +2,9 @@
 
 import React from 'react';
 import './styles.scss';
-import { Form, Formik, useFormik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { postData } from '../../hooks/postData';
-import { toast } from 'react-toastify';
 import { validationSchemaRecovery } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Button, Card, CardBody } from '@nextui-org/react';
@@ -14,8 +13,8 @@ import InputField from '@/helpers/InputField';
 const RecoveryPass = () => {
 	const router = useRouter();
 	const initialValues = {
-		email: ''
-	}
+		email: '',
+	};
 	return (
 		<Card className='Main text-4xl'>
 			<Formik
@@ -23,11 +22,8 @@ const RecoveryPass = () => {
 				validationSchema={validationSchemaRecovery}
 				onSubmit={async values => {
 					try {
-						const response = await postData(
-							`${process.env.API_BACKEND}auth/forgot`,
-							email
-							);
-							router.push('/');
+						await postData(`${process.env.API_BACKEND}auth/forgot`, email);
+						router.push('/');
 						toastSuccess('Verifique su bandeja de entrada');
 					} catch (error) {
 						toastError('Algo salio mal');
@@ -38,10 +34,14 @@ const RecoveryPass = () => {
 						<Form className='Form'>
 							<h1>Recovery Password</h1>
 							<div className='group'>
-								<InputField type='string' name='email'
-								placeholder='Ingrese su email' />
+								<InputField
+									type='string'
+									name='email'
+									placeholder='Ingrese su email'
+								/>
 							</div>
 							<span
+								className='toogle text-2xl'
 								onClick={() => {
 									router.push('/auth');
 								}}>
