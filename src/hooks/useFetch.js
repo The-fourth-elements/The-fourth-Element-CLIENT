@@ -11,6 +11,7 @@ const useFetch = url => {
                 if (!response.ok) {
                     new Error('Algo ocurrio en el fetching a esta url: ' + url);
                 }
+                console.log(response);
 
                 const dataParser = await response.json();
                 setData(dataParser);
