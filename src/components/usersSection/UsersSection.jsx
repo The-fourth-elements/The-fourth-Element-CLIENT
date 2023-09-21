@@ -4,7 +4,7 @@ import React from 'react';
 import { useEffect, useState } from "react"
 
 import useFetch from '@/hooks/useFetch';
-import { useUsersStore } from "../../store/usersStore"
+import { useUsersStore } from "../../zustand/store/usersStore"
 // import renderCell from '../../helpers/renderCell.jsx'; no se aplican las modificaciones de estilos si renderCell es un componente aparte
 
 import {
