@@ -16,8 +16,8 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-	return (
-		<html lang='es'>
+	return ( //className dark para aplicar el tema a toda la pagina
+		<html lang='es' className='dark'> 
 			<body className={inter.className}>
 				<AuthContextProvider>
 					<Provider>
