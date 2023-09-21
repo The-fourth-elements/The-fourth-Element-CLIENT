@@ -1,14 +1,26 @@
 @import '../../styles/base';
 
 @include sm {
-	.Main__Register {
-		display: flex;
+	.Main {
 		@include common-container-styles;
-		height: 100vh;
-		align-items: flex-end;
-
-		&__Form {
-			@include common-form-styles(4%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.body {
+			justify-content: center;
+			align-items: center;
+			.Form {
+				@include common-form-styles(0);
+				width: 100%;
+				gap: 10%;
+				border-radius: 1rem;
+				min-height: 70vh;
+				button {
+					margin-top: 1%;
+				}
+				
+			}
 		}
 	}
 }
@@ -27,18 +39,18 @@
 }
 
 @include lg {
-  .Main__Register{
-    display: flex;
+	.Main__Register {
+		display: flex;
 		@include common-container-styles;
 		height: 100vh;
 
 		&__Form {
 			@include common-form-styles(0%);
 			width: 60%;
-      height: 80vh;
-      &--button{
-        background: red;
-      }
+			height: 80vh;
+			&--button {
+				background: red;
+			}
 		}
-  }
+	}
 }
