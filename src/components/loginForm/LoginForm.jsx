@@ -33,15 +33,13 @@ export const LoginForm = ({ toogleDisplay }) => {
 					try {
 						const response = await handleSubmitLogin(values);
 						
-						toastSuccess (response.message);
 						if (!response?.error){
-							console.log(response.message)
+						toastSuccess(response.message);
 						router.push('/')
-						}
-						
+						} else
+						throw new Error(response.error)
 					} catch (error) {
-						console.log(error)
-						toastError(error);
+						toastError(error.message);
 					}
 				}}>
 				{({ errors }) => (

@@ -8,6 +8,7 @@ import { AuthContextProvider } from './context/authContext';
 import { ToastContainer } from 'react-toastify';
 import 'tailwindcss/tailwind.css';
 
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -27,17 +28,8 @@ export default function RootLayout({ children }) {
 						{children}
 						<Footer />
 					</Provider>
+				<ToastContainer/>
 				</AuthContextProvider>
-				<ToastContainer position="top-right"
-					autoClose={5000}
-					hideProgressBar={false}
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-					theme="light"/>
 			</body>
 		</html>
 	);
