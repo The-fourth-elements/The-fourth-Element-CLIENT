@@ -18,6 +18,8 @@
 				min-height: 70vh;
 				button {
 					margin-top: 1%;
+					margin-bottom: 100px;
+
 				}
 				
 			}
@@ -26,30 +28,54 @@
 }
 
 @include md {
-	.Main__Register {
-		display: flex;
+	.Main {
 		@include common-container-styles;
-		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.body {
+			justify-content: center;
+			align-items: center;
+			.Form {
+				@include common-form-styles(0);
+				width: 80%;
+				gap: 10%;
+				border-radius: 1rem;
+				min-height: 70vh;
+				button {
+					margin-top: 1%;
+					margin-bottom: 1%;
 
-		&__Form {
-			@include common-form-styles(0%);
-			width: 80%;
+				}
+				
+			}
 		}
 	}
 }
 
 @include lg {
-	.Main__Register {
-		display: flex;
+	.Main {
 		@include common-container-styles;
-		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.body {
+			justify-content: center;
+			align-items: center;
+			.Form {
+				@include common-form-styles(0);
+				width: 40%;
+				gap: 10%;
+				border-radius: 1rem;
+				min-height: 70vh;
+				button {
+					margin-top: 1%;
+					margin-bottom: 1%;
 
-		&__Form {
-			@include common-form-styles(0%);
-			width: 60%;
-			height: 80vh;
-			&--button {
-				background: red;
+				}
+				
 			}
 		}
 	}
