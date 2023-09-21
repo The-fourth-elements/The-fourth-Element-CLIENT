@@ -1,127 +1,88 @@
 'use client';
 
-import * as Yup from 'yup';
-import { postData } from '../utilsFetch/postData';
-import { useFormik } from 'formik';
+import { Formik, Form } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
-import { userAuth } from '@/app/context/authContext';
+import { userAuth } from '../../app/context/authContext';
 import Image from 'next/image';
-import googleLogo from '../../assets/svg/google.svg'
+import googleLogo from '../../assets/svg/google.svg';
+import InputField from '../../helpers/InputField';
+import { validationSchemaLogin } from '../../helpers/validations';
+import { handleSubmitLogin } from '../../helpers/handlers';
+import { initialValuesLogin } from '../../helpers/validations';
+import { toastError, toastSuccess } from '../../helpers/toast';
+import { Card, CardBody, Button } from '@nextui-org/react';
 
 export const LoginForm = ({ toogleDisplay }) => {
-	const { user, googleSignIn, logOut } = userAuth();
-
-	console.log(user);
+	const { user, googleSignIn } = userAuth();
+	const router = useRouter();
 
 	const handleSignIn = async () => {
 		try {
 			await googleSignIn();
+			setTimeout(() => {
+				toastSuccess('Logueo exitoso');
+				router.push('/');
+			}, 2000);
 		} catch (error) {
-			console.log(error);
+			toastError('No se pudo iniciar sesión');
 		}
 	};
-	const handleSignOut = async () => {
-		try {
-			await logOut();
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	const router = useRouter();
-
-	const form = useFormik({
-		initialValues: {
-			email: '',
-			password: '',
-		},
-		onSubmit: async values => {
-			try {
-				const p = await postData('http://localhost:3001/login', values);
-				alert(JSON.stringify(p, null, 2));
-				router.push('/course');
-			} catch (error) {
-				alert('usuario o contraseña invalidos');
-				console.log(error);
-			}
-		},
-		validationSchema: Yup.object({
-			email: Yup.string()
-				.email('Ingresa un email válido')
-				.required('El email es requerido'),
-			password: Yup.string()
-				.matches(
-					/^(?=.*[A-Z])(?=.*\d).{6,}$/,
-					'The password must have a character Capitalizate, a number and a min of 6 characters'
-				)
-				.required('La contraseña es requerida'),
-		}),
-	});
 
 	return (
-		<main className='Main'>
-			<form className='Main__Form' onSubmit={form.handleSubmit}>
-				<h1>Log In</h1>
-				<div className='Main__Form--group'>
-					<label htmlFor='email'>Email:</label>
-					<input
-						type='text'
-						name='email'
-						id='email'
-						className='Main__Form--group--input'
-						onChange={form.handleChange}
-						onBlur={form.handleBlur}
-						value={form.values.email}
-					/>
-					{form.touched.email && form.errors.email ? (
-						<span className='Main__Form--group--error'>
-							{form.errors.email}
-						</span>
-					) : null}
-				</div>
+		<Card className='Main text-4xl'>
+			<Formik
+				initialValues={initialValuesLogin}
+				validationSchema={validationSchemaLogin}
+				onSubmit={async values => {
+					try {
+						const response = await handleSubmitLogin(values);
+						toastSuccess(response.message);
+						router.push('/');
+					} catch (error) {
+						toastError(error.message);
+					}
+				}}>
+				{({ errors }) => (
+					<CardBody className='body'>
+						<Form className='Form'>
+							<div className='group'>
+								<InputField name='email' type='email' />
+							</div>
 
-				<div className='Main__Form--group'>
-					<label htmlFor='password'>Password:</label>
-					<input
-						type='password'
-						name='password'
-						id='password'
-						className='Main__Form--group--input'
-						onChange={form.handleChange}
-						onBlur={form.handleBlur}
-						value={form.values.password}
-					/>
-					{form.touched.password && form.errors.password ? (
-						<span className='Main__Form--group--error'>
-							{form.errors.password}
-						</span>
-					) : null}
-				</div>
-				<span
-					className='recovery'
-					onClick={() => {
-						router.push('/auth/reset-password');
-					}}>
-					Did you forget your password?
-				</span>
-				<span
-					className='toogle'
-					onClick={() => {
-						toogleDisplay();
-					}}>
-					¿No tienes una cuenta?
-				</span>
+							<div className='group'>
+								<InputField name='password' type='string' />
+							</div>
+							<div className='flex flex-col items-center text-2xl'>
+								<span
+									className='recovery'
+									onClick={() => {
+										router.push('/auth/reset-password');
+									}}>
+									¿Olvido su contraseña?
+								</span>
+								<span
+									className='toogle'
+									onClick={() => {
+										toogleDisplay();
+									}}>
+									¿No tienes una cuenta?
+								</span>
+							</div>
 
-				<button type='submit' className='Main__Form--button'>
-					Submit
-				</button>
-				<button type='button' className='loginButton' onClick={handleSignIn}>
-          		<Image src={googleLogo} alt='' className='googleLogo' />
-        </button>
-
-
-			</form>
-		</main>
+							<Button type='submit' className='submit'>
+								Ingresar
+							</Button>
+							<Button
+								type='button'
+								className='loginButton'
+								onClick={handleSignIn}>
+								<Image src={googleLogo} alt='' className='googleLogo' />
+							</Button>
+						</Form>
+					</CardBody>
+				)}
+			</Formik>
+		</Card>
 	);
 };

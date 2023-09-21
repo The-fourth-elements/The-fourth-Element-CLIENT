@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import Facebook from '@/assets/svg/facebook.svg';
-import Instagram from '@/assets/svg/instagram.svg';
-import Linkedin from '@/assets/svg/linkedin.svg';
-import Twitter from '@/assets/svg/twitter.svg';
+import Facebook from '../../assets/svg/facebook.svg';
+import Instagram from '../../assets/svg/instagram.svg';
+import Linkedin from '../../assets/svg/linkedin.svg';
+import Twitter from '../../assets/svg/twitter.svg';
 
 import "./FooterStyles.scss"
 

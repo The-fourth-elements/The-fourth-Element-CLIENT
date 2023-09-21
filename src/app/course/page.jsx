@@ -1,7 +1,15 @@
-import React from 'react';
+'use client'
+
+import SideBar from "@/components/sidebarDashboard/Sidebar";
+
 
 const page = () => {
-	return <>soy la ruta protegida holli</>;
+	return(
+		<main>
+			{/* aqui va el sidebar */}
+			<SideBar></SideBar>
+		</main>
+	)
 };
 
 export default page;

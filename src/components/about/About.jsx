@@ -1,5 +1,5 @@
-import aboutImg2 from '@/assets/img/aboutImg2.jpg';
-import Image from 'next/image';
+// import aboutImg2 from '@/assets/img/aboutImg2.jpg';
+// import Image from 'next/image';
 
 import './AboutStyles.scss';
 

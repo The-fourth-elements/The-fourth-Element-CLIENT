@@ -2,55 +2,59 @@
 
 import React from 'react';
 import './styles.scss';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { postData } from '../utilsFetch/postData';
+import { postData } from '../../hooks/postData';
+import { validationSchemaRecovery } from '../../helpers/validations';
+import { toastError, toastSuccess } from '../../helpers/toast';
+import { Button, Card, CardBody } from '@nextui-org/react';
+import InputField from '@/helpers/InputField';
 
 const RecoveryPass = () => {
 	const router = useRouter();
-	const form = useFormik({
-		initialValues: {
-			email: '',
-		},
-		onSubmit: async (email) => {
-			const  response = await postData('http://localhost:3001/', email);
-			console.log(response);
-		},
-		validationSchema: Yup.object({
-			email: Yup.string()
-				.email('Debe ingresar un correo valido.')
-				.required('Este campo es requerido.'),
-		}),
-	});
-
+	const initialValues = {
+		email: '',
+	};
 	return (
-		<main className='Main__Recovery'>
-			<form onSubmit={form.handleSubmit} className='Main__Recovery__Form'>
-				<h1>Recovery Password</h1>
-				<div className='Main__Recovery__Form--group'>
-					<label htmlFor='email' className='Main__Recovery__Form--group--label'>
-						Email:{' '}
-					</label>
-					<input
-						type='text'
-						name='email'
-						id='email'
-						className='Main__Recovery__Form--group--input'
-						onChange={form.handleChange}
-					/>
-				</div>
-				<span
-					onClick={() => {
-						router.push('/auth');
-					}}>
-					¿Volver?
-				</span>
-				<button type='submit' className='Main__Recovery__Form--button'>
-					Send code
-				</button>
-			</form>
-		</main>
+		<Card className='Main text-4xl'>
+			<Formik
+				initialValues={initialValues}
+				validationSchema={validationSchemaRecovery}
+				onSubmit={async values => {
+					try {
+						await postData(`${process.env.API_BACKEND}auth/forgot`, email);
+						router.push('/');
+						toastSuccess('Verifique su bandeja de entrada');
+					} catch (error) {
+						toastError('Algo salio mal');
+					}
+				}}>
+				{({ errors }) => (
+					<CardBody className='body'>
+						<Form className='Form'>
+							<h1>Recovery Password</h1>
+							<div className='group'>
+								<InputField
+									type='string'
+									name='email'
+									placeholder='Ingrese su email'
+								/>
+							</div>
+							<span
+								className='toogle text-2xl'
+								onClick={() => {
+									router.push('/auth');
+								}}>
+								¿Volver?
+							</span>
+							<Button type='submit' className='submit'>
+								Send code
+							</Button>
+						</Form>
+					</CardBody>
+				)}
+			</Formik>
+		</Card>
 	);
 };
 

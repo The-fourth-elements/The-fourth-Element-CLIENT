@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import landingImg from '@/assets/img/landingImg.jpg';
-import videoPlaceholder from '@/assets/img/videoPlaceholder.png';
+import landingImg from '../../assets/img/landingImg.jpg';
+import videoPlaceholder from '../../assets/img/videoPlaceholder.png';
 import './LandingDesktopStyles.scss';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 const LandingDesktop = () => {
 	return (

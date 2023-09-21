@@ -1,65 +1,60 @@
-'use client'
-import {useFormik} from 'formik';
-import * as Yup from 'yup'
+'use client';
+import { postData } from '../../../../hooks/postData';
+import '@/components/recoveryPassword/styles.scss';
+import { Form, Formik, useFormik } from 'formik';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { Button, Card, CardBody } from '@nextui-org/react';
+import { toastError, toastSuccess } from '@/helpers/toast';
+import InputField from '@/helpers/InputField';
+import { initialValuesRecovery, validationSchema } from '@/helpers/validations';
 
-const ResetPass = ({params})=>{
-    const formik = useFormik({
-        initialValues: {
-          oldPassword: '',
-          newPassword: '',
-          confirmPassword: '',
-        },
-        validationSchema: Yup.object({
-          newPassword: Yup.string()
-            .matches(
-              /^(?=.*[A-Z])(?=.*\d).{6,}$/,
-              'La nueva contraseña debe tener al menos 6 caracteres, una letra mayúscula y un número'
-            )
-            .required('La nueva contraseña es requerida'),
-          confirmPassword: Yup.string()
-            .oneOf([Yup.ref('newPassword'), null], 'Las contraseñas deben coincidir')
-            .required('Confirmar la nueva contraseña es requerido'),
-        }),
-        onSubmit: async (values) => {
-          console.log('Valores enviados:', values);
-        },
-      });
-    
-      return (
-        <form onSubmit={formik.handleSubmit}>
-          <div>
-            <label htmlFor="newPassword">Nueva contraseña:</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.newPassword}
-            />
-            {formik.touched.newPassword && formik.errors.newPassword ? (
-              <div>{formik.errors.newPassword}</div>
-            ) : null}
-          </div>
-    
-          <div>
-            <label htmlFor="confirmPassword">Confirmar nueva contraseña:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.confirmPassword}
-            />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div>{formik.errors.confirmPassword}</div>
-            ) : null}
-          </div>
-    
-          <button type="submit">Cambiar contraseña</button>
-        </form>
-      );
-}
+const ResetPass = ({ params }) => {
+	const handleSubmit = async values => {
+		const { newPassword } = values;
+		const form = {
+			newPassword,
+			token: params.token,
+		};
+		try {
+			const response = await postData(
+				`${process.env.API_BACKEND}reset-password`,
+				form
+			);
+			toastSuccess(response.message);
+		} catch (error) {
+			toastError(error.message);
+		}
+	};
 
-export default ResetPass; 
+	return (
+		<Card className='Main text-3xl text-white'>
+			<Formik
+				initialValues={initialValuesRecovery}
+				onSubmit={handleSubmit}
+				validationSchema={validationSchema}>
+				<CardBody className='body'>
+					<Form className='Form'>
+						<div className='group'>
+							<label htmlFor='newPassword'>Nueva contraseña:</label>
+							<InputField type='string' name='newPassword' />
+						</div>
+
+						<div className='group'>
+							<label htmlFor='confirmPassword'>
+								Confirmar nueva contraseña:
+							</label>
+							<InputField type='string' name='confirmPassword' />
+						</div>
+
+						<Button type='submit' className='submit'>
+							Cambiar contraseña
+						</Button>
+					</Form>
+				</CardBody>
+			</Formik>
+		</Card>
+	);
+};
+
+export default ResetPass;

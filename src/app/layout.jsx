@@ -1,12 +1,16 @@
+
 'use client';
 
-import Navbar from '@/components/navbar/Navbar'
-import Footer from '../components/footer/Footer'
-
-
+import Nav from '../components/navbar/Navbar';
+import Footer from '../components/footer/Footer';
+import './global.css';
 import { Inter } from 'next/font/google';
+import Provider from './provider.js';
 import '../styles/globals.scss';
 import { AuthContextProvider } from './context/authContext';
+import { ToastContainer } from 'react-toastify';
+import 'tailwindcss/tailwind.css';
+import "react-toastify/ReactToastify.min.css"; //no quitar, son las toast.
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,20 +20,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-	return (
-		<html lang='en'>
+	return ( //className dark para aplicar el tema a toda la pagina
+		<html lang='es' className='dark'> 
 			<body className={inter.className}>
 				<AuthContextProvider>
-					<header>
-						<Navbar />
-					</header>
-					{children}
-          <Footer/>
+					<Provider>
+						<header>
+							<Nav />
+						</header>
+						{children}
+						<Footer />
+					</Provider>
 				</AuthContextProvider>
-			
-      
-        </body>
-        
+				<ToastContainer />
+			</body>
 		</html>
 	);
 }
