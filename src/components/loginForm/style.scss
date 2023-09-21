@@ -1,66 +1,86 @@
 @import '../../styles/base';
 
-.recovery {
-  color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-.googleLogo {
-  width: 50px;
-  height: auto;
-  cursor: pointer;
-  
-}
-.loginButton {
-  margin-bottom: 16px;
-  border-radius: 12px
-}
-
 @include lg {
-  .Main {
-    @include common-container-styles;
-    &__Form {
-      @include common-form-styles(0); 
-	  width: 60%;
-	  height: 60vh
-    }
-  }
-  
+	.Main {
+		@include common-container-styles;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.body {
+			justify-content: center;
+			align-items: center;
+			.Form {
+				@include common-form-styles(0);
+				width: 40%;
+				gap: 10%;
+				border-radius: 1rem;
+				min-height: 70vh;
+				button {
+					margin-top: 1%;
+				}
+			}
+		}
+	}
 }
 
 @include md {
-  .Main {
-    @include common-container-styles;
-
-    &__Form {
-      @include common-form-styles(0);
-	  width: 80%;
-	  height: 65vh;
-    }
-  }
+	.Main {
+		@include common-container-styles;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.body {
+			justify-content: center;
+			align-items: center;
+			.Form {
+				@include common-form-styles(0);
+				width: 90%;
+				border-radius: 1rem;
+				min-height: 70vh;
+				button {
+					margin-top: 1%;
+				}
+			}
+		}
+	}
 }
 
 @include sm {
-  .Main {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+	.Main {
+		@include common-container-styles;
+		display: flex;
+		.body {
+			justify-content: center;
+			align-items: center;
+			.Form {
+				@include common-form-styles(0);
+				width: 100%;
+				border-radius: 1rem;
 
-    &__Form {
-      @include common-form-styles(0);
-      border-top-left-radius: 4%;
-      border-top-right-radius: 4%;
-      height: 70%;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      border: 0.2rem solid #000000;
-    }
-  }
+				button {
+					margin-top: 1%;
+				}
+			}
+		}
+	}
+}
+
+.recovery {
+	color: #fff;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+.googleLogo {
+	width: 50px;
+	height: auto;
+	cursor: pointer;
+}
+.loginButton {
+	max-width: 30%;
+	margin-bottom: 1%;
 }
