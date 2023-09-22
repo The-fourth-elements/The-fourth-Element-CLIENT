@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@kurkle/color": "^0.3.2",
     "@nextui-org/react": "^2.1.13",
     "chart.js": "^4.4.0",
     "eslint": "8.49.0",

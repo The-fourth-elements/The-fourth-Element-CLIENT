@@ -1,0 +1,27 @@
+@import '../../styles/_base';
+
+@include lg {
+    .group{
+        > input{
+            color: black;
+        }
+    }
+
+	form {
+		> div {
+			> span {
+				font-size: 20px;
+                color: red;
+			}
+		}
+        > h1{
+            font-size: 1.5vw;
+            color: black;
+        }
+        
+        > button {
+            margin-top: 5vh;
+            background-color: blue;
+        }
+	}
+}
