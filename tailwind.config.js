@@ -69,6 +69,15 @@ const config = {
 						},
 					},
 				},
+        navcolor: {
+          extend: 'dark',
+          colors: {
+            background: '#0D001A',
+            foreground: '#ffffff',
+            primary: '#1E1E1E',
+            focus: '#F182F6'
+          },
+        },
 			},
 		}),
 	],

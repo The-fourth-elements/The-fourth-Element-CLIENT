@@ -8,7 +8,6 @@ const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
 
-
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider()
         signInWithPopup(auth, provider)
@@ -23,9 +22,9 @@ export const AuthContextProvider = ({ children }) => {
             setUser(currentUser)
         })
         return () => unsuscribe()
-    }, [user])
+    }, [user]);
 
-    return (<AuthContext.Provider value={{ user, googleSignIn, logOut }}>{children}</AuthContext.Provider>)
+    return (<AuthContext.Provider value={{ user, googleSignIn, logOut }}>{children}</AuthContext.Provider>);
 }
 
 export const userAuth = () => {
