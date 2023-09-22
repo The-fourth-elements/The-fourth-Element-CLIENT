@@ -1,11 +1,9 @@
-import { toast } from 'react-toastify';
-
+import { toast } from 'react-toastify'
 
 
 export const toastSuccess = (message) => {
-    console.log("emma entro aqui")
-    const tostada = toast.success (message, {
-        position: toast.POSITION.TOP_RIGHT,
+     toast.success (message, {
+        position: "top-right",
         autoClose: 6000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -14,17 +12,16 @@ export const toastSuccess = (message) => {
         progress: 0.2,
         theme: "light",
     })
-    console.log (tostada)
 }
 export const toastError = (message) => {
     toast.error(message, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: "top-right",
         autoClose: 6000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: 0.2,
+        progress: undefined,
         theme: "light",
     })
 }
