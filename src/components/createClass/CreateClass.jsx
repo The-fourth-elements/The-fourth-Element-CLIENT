@@ -29,19 +29,24 @@ function CreateModule() {
 	};
 
 	const handleSubmit = values => {
-		console.log(values);
+		console.log('values', values);
 	};
 
+	const handleSubmitInvalid = ({ errors }) => {
+		console.log('errors', errors);
+	};
+
+
 	return (
-		<>
 			<Card className='relative min-h-screen modern  Main text-4xl'>
 				<CardBody className='body'>
 					<Formik
 						initialValues={initialValuesClass}
 						validationSchema={validationSchemaCreateClass}
+						// onSubmitInvalid={handleSubmitInvalid}
 						onSubmit={handleSubmit}>
 						{({ errors, touched }) => (
-							<Form className='flex flex-col w-1/2 items-center mx-auto space-y-3 mt-10 mb-10 bg-primary-50 p-10 rounded-lg'>
+							<Form className='flex flex-col w-1/2 items-center mx-auto space-y-3 mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
 								<h1> Subir una clase </h1>
 
 								<InputField
@@ -84,15 +89,15 @@ function CreateModule() {
 									<input
 										className=''
 										type='file'
-										name='video'
-										id='video'
+										name='videoFile'
+										id='videoFile'
 										accept='video/*'
 										onChange={handleFileChange}
 										required
 									/>
 								</div>
 
-								<Button type='submit' size='lg' className='bg-gradient-to-tr from-blue-500 rounded-lg'>
+								<Button type='submit' size='lg' className='bg-gradient-to-tr from-blue-500 rounded-lg submit'>
 									Enviar
 								</Button>
 							</Form>
@@ -100,7 +105,6 @@ function CreateModule() {
 					</Formik>
 				</CardBody>
 			</Card>
-		</>
 	);
 }
 

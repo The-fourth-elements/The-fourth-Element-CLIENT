@@ -4,7 +4,7 @@ import { Container, section1, section2, section3 } from './styles.module.scss';
 import Metric from '@/components/metrics/Pie';
 import { metricData, setData } from '@/helpers/getterMetrics';
 import { useEffect, useState } from 'react';
-import { useUserDetail } from '../../store/userDetail';
+import { useUserDetail } from '../../zustand/store/userDetail';
 
 const dashboard = () => {
 	const { getUsers, users } = useUserDetail();
