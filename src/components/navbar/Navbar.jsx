@@ -22,7 +22,6 @@ export default function Nav() {
 
   const router = useRouter;
   const { logOut, user } = userAuth();
-  console.log(user);
   const routes = [
     { label: 'Home', route: '/' },
     { label: 'About Us', route: '/about' }
@@ -111,7 +110,7 @@ export default function Nav() {
         </NavbarContent> :
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Button as={Link} color="foreground" href="/auth" variant="flat" className='  text-l text-foreground border border-solid border-1 border-blue-500'>
+            <Button as={Link} color="foreground" href="/auth" variant="flat" className='  text-l text-foreground border-solid border-1 border-blue-500'>
               Login
             </Button>
           </NavbarItem>
@@ -125,4 +124,3 @@ export default function Nav() {
     </Navbar>
   );
 }
-
