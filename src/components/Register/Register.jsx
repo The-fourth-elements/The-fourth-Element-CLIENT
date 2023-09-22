@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
+import { toastError, toastSuccess } from '@/helpers/toast';
 import './styles.scss';
 import { handleSubmitRegister } from '../../helpers/handlers';
 import { registerSchema, initialValues } from '../../helpers/validations';
@@ -20,8 +21,19 @@ const Register = ({ toogleDisplay }) => {
 				initialValues={initialValues}
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
-					await handleSubmitRegister(values, country, region);
-					router.push('/');
+					try {
+						const response = await handleSubmitRegister(
+							values,
+							country,
+							region
+						);
+						toastSuccess(response.message);
+						router.push('/');
+					} catch (error) {
+						if (error.message.includes('duplicate')) {
+							toastError('Email ya en uso');
+						}
+					}
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
