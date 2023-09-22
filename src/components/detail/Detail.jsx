@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useUserDetail } from "@/store/userDetail"
+import { useUserDetail } from "@/zustand/store/userDetail"
 
 const Detail = () => {
     const {detail} = useUserDetail()
