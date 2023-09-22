@@ -2,7 +2,7 @@
 
     @media (max-width: 768px) {
         display: flex;
-
+        justify-content: center;
     }
 
 	display: grid;
@@ -18,4 +18,30 @@
 .div2 {
 	grid-area: 1 / 3 / 3 / 4;
 	width: 100%;
+    height: 100%;
+}
+
+.h2Title{
+    width: max-content;
+    margin: 0.75rem;
+    border: solid 2px black;
+
+    @media (max-width: 768px) {
+        width: 94%;
+    }
+}
+
+.acordionItem{
+    margin: 0.25rem;
+    border: solid 2px black;
+    span{
+        color: black;
+    }
+    @media (max-width: 768px) {
+        margin: 0.25rem;
+    }
+}
+
+.navtContainer{
+    height: 100%;
 }
