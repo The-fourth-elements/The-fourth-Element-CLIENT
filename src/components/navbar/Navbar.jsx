@@ -5,6 +5,7 @@ import Image from 'next/image';
 import logo from '../../../public/logo.svg';
 import { userAuth } from '../../app/context/authContext';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import {
   Navbar,
@@ -13,7 +14,6 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
   NavbarMenuItem,
-  Link, 
   Button,
   NavbarBrand
 } from "@nextui-org/react";
@@ -21,8 +21,8 @@ import {
 export default function Nav() {
 
   const router = useRouter;
-  const { logOut, user } = userAuth(); 
-  const access = true; // Provisorio hasta tener la variable de acceso del usuario para hacer el renderizado condicional
+  const { logOut, user } = userAuth();
+  console.log(user);
   const routes = [
     { label: 'Home', route: '/' },
     { label: 'About Us', route: '/about' }
@@ -38,9 +38,9 @@ export default function Nav() {
   };
 
   return (
-    <Navbar isBordered className="h-40 bg-foreground p-3">
+    <Navbar  className="navcolor h-40 bg-primary p-3">
       <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle className='text-background'/>
+        <NavbarMenuToggle className='text-foreground'/>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
@@ -63,7 +63,7 @@ export default function Nav() {
         {routes.map(({ label, route, index }) => (
             <NavbarMenuItem key={`${route}-${index}`}>
               <Link
-                className="w-full text-xl text-background"
+                className="w-full text-l text-foreground"
                 color={
                   index === 2 ? "warning" : index === routes.length - 1 ? "danger" : "foreground"
                 }
@@ -79,7 +79,7 @@ export default function Nav() {
           {routes.map(({ label, route, index }) => (
             <NavbarMenuItem key={`${route}-${index}`}>
               <Link
-                className="w-full text-xl"
+                className="w-full text-l"
                 color={
                   index === 2 ? "warning" : index === routes.length - 1 ? "danger" : "foreground"
                 }
@@ -90,34 +90,34 @@ export default function Nav() {
             </NavbarMenuItem>
           ))}
           {
-          access ?
+          user?.email ?
+          null :
           <NavbarMenuItem>
-            <Link className="w-full text-xl text-foreground" href="/login">
+            <Link className="w-full text-l text-foreground" href="/auth">
               Login
             </Link> 
-          </NavbarMenuItem> :
-          null
+          </NavbarMenuItem>
           }
       </NavbarMenu>
 
       {
-        access ?
+        user?.email ?
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Button as={Link} color="foreground" href="/auth" variant="flat" className='text-xl border border-solid border-1 border-blue-500'>
-              Login
-            </Button>
-          </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="warning" href="/auth" variant="flat" className='text-xl'>
-              Sign Up
+            <Button as={Link} color="warning" href="/" variant="flat" className='text-l' onClick={handleLogout}>
+              Log Out
             </Button>
           </NavbarItem>
         </NavbarContent> :
         <NavbarContent justify="end">
+          <NavbarItem className="hidden lg:flex">
+            <Button as={Link} color="foreground" href="/auth" variant="flat" className='  text-l text-foreground border border-solid border-1 border-blue-500'>
+              Login
+            </Button>
+          </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="warning" href="/" variant="flat" className='text-xl'>
-              Log Out
+            <Button as={Link} color="warning" href="/auth" variant="flat" className='text-l'>
+              Sign Up
             </Button>
           </NavbarItem>
         </NavbarContent>
@@ -125,3 +125,4 @@ export default function Nav() {
     </Navbar>
   );
 }
+
