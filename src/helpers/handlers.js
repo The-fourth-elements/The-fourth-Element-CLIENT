@@ -25,5 +25,7 @@ export const handleSubmitLogin = async form => {
   try {
     const response = await postData(`${process.env.API_BACKEND}login`, form);
     return response;
-  } catch (error) { }
+  } catch (error) {
+    throw new Error(error)
+  }
 };

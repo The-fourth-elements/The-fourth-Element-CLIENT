@@ -26,7 +26,7 @@ const ModuleForm = () => {
 	};
 	return (
 		<>
-			<Card className='min-h-screen modern bg-primary-500 Main text-4xl'>
+			<Card className='relative min-h-screen modern bg-primary-500 Main text-4xl'>
 				<CardBody className='body'>
 					<Formik initialValues={initialValuesModule}
                     validationSchema={validationSchemaModule}

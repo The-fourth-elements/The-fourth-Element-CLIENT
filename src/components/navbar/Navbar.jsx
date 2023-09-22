@@ -92,7 +92,7 @@ export default function Nav() {
           {
           access ?
           <NavbarMenuItem>
-            <Link className="w-full text-xl text-foreground" href="/login">
+            <Link className="w-full text-xl text-foreground" href="/auth">
               Login
             </Link> 
           </NavbarMenuItem> :

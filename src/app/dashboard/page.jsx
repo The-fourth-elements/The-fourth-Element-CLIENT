@@ -1,9 +1,10 @@
-import ModuleForm from "@/components/moduleForm/ModuleForm"
-
+import Dashboard from "@/components/dashboard/Dashboard"
 
 const page = () => {
   return (
-    <ModuleForm></ModuleForm>
+    <>
+      <Dashboard></Dashboard>
+    </>
   )
 }
 
