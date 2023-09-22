@@ -1,7 +1,7 @@
 @import '../../styles/_base';
 
-@include lg {
-	.footerLinksContainer {
+@mixin lg-styles {
+    .footerLinksContainer {
         background-color: $grey-1;
         height: 500px;
         display: flex;
@@ -82,7 +82,14 @@
             font-size: 14px;
         }
     }
+}
 
+@include lg {
+	@include lg-styles;
+}
+
+@include md {
+	@include lg-styles;
 }
 
 @include sm {

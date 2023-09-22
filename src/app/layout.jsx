@@ -1,3 +1,6 @@
+
+'use client';
+
 import Nav from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import './global.css';
@@ -7,6 +10,7 @@ import '../styles/globals.scss';
 import { AuthContextProvider } from './context/authContext';
 import { ToastContainer } from 'react-toastify';
 import 'tailwindcss/tailwind.css';
+import "react-toastify/ReactToastify.min.css"; //no quitar, son las toast.
 
 const inter = Inter({ subsets: ['latin'] });
 

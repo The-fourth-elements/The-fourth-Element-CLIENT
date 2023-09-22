@@ -15,16 +15,19 @@ import { Card, CardBody, Button } from '@nextui-org/react';
 
 export const LoginForm = ({ toogleDisplay }) => {
 	const { user, googleSignIn } = userAuth();
+	const router = useRouter();
 
 	const handleSignIn = async () => {
 		try {
 			await googleSignIn();
+			setTimeout(() => {
+				toastSuccess('Logueo exitoso');
+				router.push('/');
+			}, 2000);
 		} catch (error) {
-			console.log(error);
+			toastError('No se pudo iniciar sesión');
 		}
 	};
-
-	const router = useRouter();
 
 	return (
 		<Card className='Main text-4xl'>
@@ -37,7 +40,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 						toastSuccess(response.message);
 						router.push('/');
 					} catch (error) {
-						toastError(error);
+						toastError(error.message);
 					}
 				}}>
 				{({ errors }) => (
