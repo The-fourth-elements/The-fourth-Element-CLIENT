@@ -1,5 +1,4 @@
 'use client';
-
 import { Formik, Form } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
@@ -15,7 +14,6 @@ import { Card, CardBody, Button } from '@nextui-org/react';
 
 export const LoginForm = ({ toogleDisplay }) => {
 	const { user, googleSignIn } = userAuth();
-	const router = useRouter();
 
 	const handleSignIn = async () => {
 		try {
@@ -29,6 +27,8 @@ export const LoginForm = ({ toogleDisplay }) => {
 		}
 	};
 
+	const router = useRouter();
+
 	return (
 		<Card className='Main text-4xl'>
 			<Formik
@@ -37,10 +37,14 @@ export const LoginForm = ({ toogleDisplay }) => {
 				onSubmit={async values => {
 					try {
 						const response = await handleSubmitLogin(values);
+						
+						if (!response?.error){
 						toastSuccess(response.message);
-						router.push('/');
+						router.push('/')
+						} else
+						throw new Error(response.error)
 					} catch (error) {
-						toastError(error.message);
+						toastError(error);
 					}
 				}}>
 				{({ errors }) => (
@@ -83,6 +87,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 					</CardBody>
 				)}
 			</Formik>
+			
 		</Card>
 	);
 };

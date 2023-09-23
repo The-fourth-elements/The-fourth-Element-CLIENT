@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'tailwindcss/tailwind.css';
 import "react-toastify/ReactToastify.min.css"; //no quitar, son las toast.
 
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -31,8 +32,8 @@ export default function RootLayout({ children }) {
 						{children}
 						<Footer />
 					</Provider>
+				<ToastContainer/>
 				</AuthContextProvider>
-				<ToastContainer />
 			</body>
 		</html>
 	);

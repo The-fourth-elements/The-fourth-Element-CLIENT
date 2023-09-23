@@ -1,23 +1,22 @@
-import { toast } from 'react-toastify';
-
+import { toast } from 'react-toastify'
 
 
 export const toastSuccess = (message) => {
-    toast.success(message, {
+     toast.success (message, {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 6000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: 0.2,
         theme: "light",
     })
 }
 export const toastError = (message) => {
     toast.error(message, {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 6000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -26,3 +25,4 @@ export const toastError = (message) => {
         theme: "light",
     })
 }
+

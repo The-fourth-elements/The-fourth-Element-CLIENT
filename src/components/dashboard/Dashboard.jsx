@@ -17,7 +17,7 @@ const dashboard = () => {
 	});
 
 	useEffect(() => {
-		if (users.length <= 0) {
+		if (users?.length <= 0) {
 			getUsers().then(updatedUsers => {
 				const metrics = calculateMetrics(updatedUsers);
 				console.log(metrics);
