@@ -1,0 +1,25 @@
+@import '../../styles/_base';
+
+.group {
+	> input {
+		color: black;
+	}
+}
+
+form {
+	> div {
+		> span {
+			font-size: 20px;
+			color: red;
+		}
+	}
+	> h1 {
+		font-size: 30px;
+		color: black;
+	}
+
+	> button {
+		margin-top: 5vh;
+		background-color: blue;
+	}
+}

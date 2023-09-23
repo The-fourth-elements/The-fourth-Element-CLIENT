@@ -69,15 +69,17 @@ const config = {
 						},
 					},
 				},
-        navcolor: {
-          extend: 'dark',
-          colors: {
-            background: '#0D001A',
-            foreground: '#ffffff',
-            primary: '#1E1E1E',
-            focus: '#F182F6'
-          },
-        },
+				navcolor: {
+					extend: 'dark',
+					colors: {
+						background: '#0D001A',
+						foreground: '#ffffff',
+						primary: '#1E1E1E',
+						secondary: '#c2c2c2',
+						orange: '#F26522',
+						boxGreyHard: '#B7B7B7',
+					},
+				},
 			},
 		}),
 	],
