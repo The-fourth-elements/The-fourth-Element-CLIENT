@@ -11,11 +11,6 @@ import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Card, CardBody, Button } from '@nextui-org/react';
-import { useUserLoged } from '@/zustand/store/userLoged';
-
-
-
-
 import { signIn } from 'next-auth/react';
 
 export const LoginForm = ({ toogleDisplay }) => {
@@ -23,32 +18,33 @@ export const LoginForm = ({ toogleDisplay }) => {
 		signIn('google', { redirect: false });
 	};
 	const router = useRouter()
-	const handleLogin = async (values) => {
-		try {
-		  const response = await handleSubmitLogin(values);
+	// const handleLogin = async (values) => {
+	// 	try {
+	// 	  const response = await handleSubmitLogin(values);
 	  
-		  if (!response.error) {
-			 await getUserLoged();
-			toastSuccess(response.message);
+	// 	  if (!response.error) {
+	// 		 await getUserLoged();
+	// 		toastSuccess(response.message);
 	  
-			if (Object.keys(userLoged).length > 0) {
+	// 		if (Object.keys(userLoged).length > 0) {
 			  
 	  
-			  console.log(userLoged);
+	// 		  console.log(userLoged);
 	  
-			  if (userLoged.role === 0 || userLoged.role === 1) {
-				router.push('/course');
-			  } else {
-				router.push('/dashboard');
-			  }
-			}
-		  } else {
-			throw new Error(response.error);
-		  }
-		} catch (error) {
-		  toastError(error.message);
-		}
-	  };
+	// 		  if (userLoged.role === 0 || userLoged.role === 1) {
+	// 			router.push('/course');
+	// 		  } else {
+	// 			router.push('/dashboard');
+	// 		  }
+	// 		}
+	// 	  } else {
+	// 		throw new Error(response.error);
+	// 	  }
+	// 	} catch (error) {
+	// 	  toastError(error.message);
+	// 	}
+	//   };
+	
 	
 
 	return (
@@ -56,7 +52,6 @@ export const LoginForm = ({ toogleDisplay }) => {
 			<Formik
 				initialValues={initialValuesLogin}
 				validationSchema={validationSchemaLogin}
-
 				onSubmit={async values => {
 					try {
 						const response = await signIn('credentials', {
