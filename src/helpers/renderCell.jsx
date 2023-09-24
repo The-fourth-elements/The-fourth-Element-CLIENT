@@ -1,16 +1,9 @@
 //renderCell estaba memoizada originalmente en UsersSection
 'use client';
 
-
 import React from 'react';
 
-import {
-	
-	User,
-	Chip,
-	Tooltip,
-
-} from '@nextui-org/react';
+import { Button, User, Chip, Tooltip, Link } from '@nextui-org/react';
 
 import { EditIcon } from '../assets/svg-jsx/EditIcon';
 import { DeleteIcon } from '../assets/svg-jsx/DeleteIcon';
@@ -22,67 +15,86 @@ const statusColorMap = {
 	vacation: 'warning',
 };
 
-
-function renderCell (user, columnKey) {
-    const cellValue = user[columnKey];
-
-    switch (columnKey) {
-        case 'name':
-            return (
-                <User
-                    classNames={{
-                        name: 'text-3xl',
-                        description: 'text-lg text-default-800',
-                    }}
-                    avatarProps={{ radius: 'lg', src: user.avatar, size: 'lg' }}
-                    description={user.email}
-                    name={cellValue}
-                    size='xl'>
-                    {user.email}
-                </User>
-            );
-        case 'role':
-            return (
-                <div className='flex flex-col'>
-                    <p className='text-bold text-lg capitalize'>{cellValue}</p>
-                    <p className='text-bold text-lg capitalize text-default-800'>
-                        {user.team}
-                    </p>
-                </div>
-            );
-        case 'status':
-            return (
-                <Chip
-                    className='capitalize'
-                    color={statusColorMap[user.status]}
-                    size='lg'
-                    variant='flat'>
-                    {cellValue}
-                </Chip>
-            );
-        case 'actions':
-            return (
-                <div className='relative flex items-center gap-2'>
-                    <Tooltip content='Details'>
-                        <span className='text-lg text-default-400 cursor-pointer active:opacity-50'>
-                            <EyeIcon />
-                        </span>
-                    </Tooltip>
-                    <Tooltip content='Edit user'>
-                        <span className='text-lg text-default-400 cursor-pointer active:opacity-50'>
-                            <EditIcon />
-                        </span>
-                    </Tooltip>
-                    <Tooltip color='danger' content='Delete user'>
-                        <span className='text-lg text-danger cursor-pointer active:opacity-50'>
-                            <DeleteIcon />
-                        </span>
-                    </Tooltip>
-                </div>
-            );
-        default:
-            return cellValue;
-    }
+const userRoles = {
+	0: 'Free',
+	1: 'Paid',
+	2: 'Moderator',
+	3: 'Administrator',
 };
 
-export default renderCell
+function detailHandler(id) {}
+
+function renderCell(user, columnKey, deleteHandler) {
+	const cellValue = user[columnKey];
+
+	switch (columnKey) {
+		case 'name':
+			return (
+				<User
+					classNames={{
+						name: 'text-3xl',
+						description: 'text-lg text-default-800',
+					}}
+					avatarProps={{ radius: 'lg', src: user.profile_img, size: 'lg' }}
+					description={user.email}
+					name={user.username}
+					size='xl'>
+					{user.email}
+				</User>
+			);
+		case 'plan':
+			return (
+				<div className='flex flex-col'>
+					<p className='text-bold text-lg capitalize text-default-800'>
+						{userRoles[user.role]}
+					</p>
+				</div>
+			);
+		case 'status':
+			return (
+				<Chip
+					className='capitalize'
+					color={user.status ? statusColorMap.active : statusColorMap.vacation}
+					size='lg'
+					variant='flat'>
+					{cellValue ? 'Online' : 'Offline'}
+				</Chip>
+			);
+		case 'actions':
+			return (
+				<div className='relative flex items-center gap-2'>
+					<Tooltip content='Details'>
+						<Button
+							href={'/dashboard/users-section/detail/' + user._id}
+							as={Link}
+							color='primary'
+							variant='solid'>
+							<EyeIcon />
+						</Button>
+						{/* <Button
+							className='text-lg  cursor-pointer active:opacity-50'
+							onPress={() => deleteHandler(user._id)}>
+							
+							<Link to />
+						</Button> */}
+					</Tooltip>
+					<Tooltip content='Edit user'>
+						<span className='text-lg text-default-400 cursor-pointer active:opacity-50'>
+							<EditIcon />
+						</span>
+					</Tooltip>
+					<Tooltip color='danger' content='Delete user'>
+						<Button
+							className='text-lg text-danger cursor-pointer active:opacity-50'
+							onPress={() => deleteHandler(user._id)}>
+							<DeleteIcon />
+						</Button>
+					</Tooltip>
+				</div>
+			);
+		default:
+			return cellValue;
+	}
+}
+
+export default renderCell;
