@@ -2,7 +2,7 @@
 import { Formik, Form } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
-import { userAuth } from '../../app/context/authContext';
+// import { userAuth } from '../../app/context/authContext';
 import Image from 'next/image';
 import googleLogo from '../../assets/svg/google.svg';
 import InputField from '../../helpers/InputField';
@@ -11,50 +11,40 @@ import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Card, CardBody, Button } from '@nextui-org/react';
-import { useUserLoged } from '@/zustand/store/userLoged';
+import { signIn } from 'next-auth/react';
 
-export const LoginForm = ({ toggleDisplay }) => {
-	const { user, googleSignIn } = userAuth();
-	let {userLoged, getUserLoged} = useUserLoged()
-
+export const LoginForm = ({ toogleDisplay }) => {
 	const handleSignIn = async () => {
-		try {
-			await googleSignIn();
-			setTimeout(() => {
-				toastSuccess('Logueo exitoso');
-				router.push('/');
-			}, 2000);
-		} catch (error) {
-			toastError('No se pudo iniciar sesión');
-		}
+		signIn('google', { redirect: false });
 	};
 	const router = useRouter()
-	const handleLogin = async (values) => {
-		try {
-		  const response = await handleSubmitLogin(values);
+	// const handleLogin = async (values) => {
+	// 	try {
+	// 	  const response = await handleSubmitLogin(values);
 	  
-		  if (!response.error) {
-			 await getUserLoged();
-			toastSuccess(response.message);
+	// 	  if (!response.error) {
+	// 		 await getUserLoged();
+	// 		toastSuccess(response.message);
 	  
-			if (Object.keys(userLoged).length > 0) {
+	// 		if (Object.keys(userLoged).length > 0) {
 			  
 	  
-			  console.log(userLoged);
+	// 		  console.log(userLoged);
 	  
-			  if (userLoged.role === 0 || userLoged.role === 1) {
-				router.push('/course');
-			  } else {
-				router.push('/dashboard');
-			  }
-			}
-		  } else {
-			throw new Error(response.error);
-		  }
-		} catch (error) {
-		  toastError(error.message);
-		}
-	  };
+	// 		  if (userLoged.role === 0 || userLoged.role === 1) {
+	// 			router.push('/course');
+	// 		  } else {
+	// 			router.push('/dashboard');
+	// 		  }
+	// 		}
+	// 	  } else {
+	// 		throw new Error(response.error);
+	// 	  }
+	// 	} catch (error) {
+	// 	  toastError(error.message);
+	// 	}
+	//   };
+	
 	
 
 	return (
@@ -62,7 +52,22 @@ export const LoginForm = ({ toggleDisplay }) => {
 			<Formik
 				initialValues={initialValuesLogin}
 				validationSchema={validationSchemaLogin}
-				onSubmit={handleLogin}>
+				onSubmit={async values => {
+					try {
+						const response = await signIn('credentials', {
+							...values,
+							redirect: false,
+						});
+						if (!response?.error) {
+							toastSuccess('Éxito');
+							router.push('/dashboard');
+						} else {
+							throw new Error('Ocurrio un error en el inicio de sesión');
+						}
+					} catch (error) {
+						toastError(error.message);
+					}
+				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
 						<Form className='Form'>
@@ -103,7 +108,6 @@ export const LoginForm = ({ toggleDisplay }) => {
 					</CardBody>
 				)}
 			</Formik>
-			
 		</Card>
 	);
 };

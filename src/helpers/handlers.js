@@ -7,14 +7,14 @@ export const handleSubmitRegister = async (
 ) => {
   try {
     const form = {
-      name: username,
+      username,
       email,
       city: region,
       password,
       nationality: country,
     };
 
-    const response = await postData(`${process.env.API_BACKEND}user`, form);
+    const response = await postData(`/api/register`, form);
     return response;
   } catch (error) {
     throw new Error(error);
@@ -23,13 +23,13 @@ export const handleSubmitRegister = async (
 
 export const handleSubmitLogin = async form => {
   try {
-    const response = await postData(`${process.env.API_BACKEND}login`, form);
-    if(!response?.error)
-    return response;
-  throw new Error(response.error)
+    const response = await postData(`/login`, form);
+    if (!response?.error)
+      return response;
+    throw new Error(response.error)
   } catch (error) {
     throw new Error(error)
-  
-    return {error:error.message}
+
+    return { error: error.message }
   }
 };
