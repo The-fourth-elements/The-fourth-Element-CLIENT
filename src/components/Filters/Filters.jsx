@@ -1,6 +1,7 @@
 import { useUsersStore } from "@/zustand/store/usersStore"
 import { useState } from "react"
 import {Select, SelectSection, SelectItem} from "@nextui-org/react";
+import "./styles.scss"
 
 const Filters = () => {
     const {usersFilter} = useUsersStore()
@@ -23,25 +24,27 @@ const Filters = () => {
 
     }
     return(
-        <>
-            <label htmlFor="">FILTER BY COUNTRY</label>
-            <Select label= "Select a country" onChange={handleFilterNationality} value={filterNationality}>
-                <SelectItem value="all">everyone</SelectItem>
-                {countrys.map ((country) => (
-                    <SelectItem value={country} key={country} >
-                        {country}
-                    </SelectItem>
-                ))}
-            </Select>
-
-            <label htmlFor="">FILTER BY PLAN</label>
-            <Select label="Select a plan"onChange={handleFilterPlan} value={filterPlan}>
-                <SelectItem value="all">everyone</SelectItem>
-                <SelectItem value="free">Free Plan</SelectItem>
-                <SelectItem value="pay">Pay Plan</SelectItem>
-            </Select>
-
-        </>
+        <div className="main">
+            <div className="diver">
+                <label htmlFor="">FILTER BY COUNTRY</label>
+                <select className="select" label= "Select a country" onChange={handleFilterNationality} value={filterNationality}>
+                    <option value="all">everyone</option>
+                    {countrys.map ((country) => (
+                        <option value={country} key={country} >
+                            {country}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className="diver">
+                <label htmlFor="">FILTER BY PLAN</label>
+                <select className="select" label="Select a plan"onChange={handleFilterPlan} value={filterPlan}>
+                    <option value="all">everyone</option>
+                    <option value="free">Free Plan</option>
+                    <option value="pay">Pay Plan</option>
+                </select>
+            </div>
+        </div>
     )
 }
 

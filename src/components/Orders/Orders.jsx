@@ -1,6 +1,8 @@
 import { useUsersStore } from "@/zustand/store/usersStore"
 import { useState } from "react"
 import {Select, SelectSection, SelectItem} from "@nextui-org/react";
+import "./styles.scss"
+
 
 const Orders = () => {
     const {orderUsersName, orderUsersPlan} = useUsersStore()
@@ -20,19 +22,23 @@ const Orders = () => {
     }
     
     return(
-        <>
-        <label htmlFor="">ORDER BY NAME</label>
-        <Select label="Select a name"onChange={handleOrderName} value={orderName}>
-            <SelectItem value="nameDesc">A - Z</SelectItem>
-            <SelectItem value="nameAsc">Z - A</SelectItem>
-        </Select>
+        <div className="main"> 
+            <div className="diver">
+                <label htmlFor="">ORDER BY NAME</label>
+                <select className="select"
+                label="Select a name"onChange={handleOrderName} value={orderName}>
+                    <option value="nameDesc">A - Z</option>
+                    <option value="nameAsc">Z - A</option>
+                </select>
+            </div>
+            <div className="diver">
         <label htmlFor="">ORDER BY PLAN</label>
-        <Select label="Select a plan"onChange={handleOrderPlan} value={orderPlan}>
-            <SelectItem value="payDesc">Pay - Free</SelectItem>
-            <SelectItem value="payAsc">Free - Pay</SelectItem>
-        </Select>
-
-        </>
+        <select className="select" label="Select a plan"onChange={handleOrderPlan} value={orderPlan}>
+            <option value="payDesc">Pay - Free</option>
+            <option value="payAsc">Free - Pay</option>
+        </select>
+        </div>
+        </div>
     )
 }
 export default Orders;

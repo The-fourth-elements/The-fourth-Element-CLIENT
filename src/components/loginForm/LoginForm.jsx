@@ -11,9 +11,11 @@ import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Card, CardBody, Button } from '@nextui-org/react';
+import { useUserLoged } from '@/zustand/store/userLoged';
 
-export const LoginForm = ({ toogleDisplay }) => {
+export const LoginForm = ({ toggleDisplay }) => {
 	const { user, googleSignIn } = userAuth();
+	let {userLoged, getUserLoged} = useUserLoged()
 
 	const handleSignIn = async () => {
 		try {
@@ -26,27 +28,41 @@ export const LoginForm = ({ toogleDisplay }) => {
 			toastError('No se pudo iniciar sesión');
 		}
 	};
-
-	const router = useRouter();
+	const router = useRouter()
+	const handleLogin = async (values) => {
+		try {
+		  const response = await handleSubmitLogin(values);
+	  
+		  if (!response.error) {
+			 await getUserLoged();
+			toastSuccess(response.message);
+	  
+			if (Object.keys(userLoged).length > 0) {
+			  
+	  
+			  console.log(userLoged);
+	  
+			  if (userLoged.role === 0 || userLoged.role === 1) {
+				router.push('/course');
+			  } else {
+				router.push('/dashboard');
+			  }
+			}
+		  } else {
+			throw new Error(response.error);
+		  }
+		} catch (error) {
+		  toastError(error.message);
+		}
+	  };
+	
 
 	return (
 		<Card className='Main text-4xl'>
 			<Formik
 				initialValues={initialValuesLogin}
 				validationSchema={validationSchemaLogin}
-				onSubmit={async values => {
-					try {
-						const response = await handleSubmitLogin(values);
-						
-						if (!response?.error){
-						toastSuccess(response.message);
-						router.push('/')
-						} else
-						throw new Error(response.error)
-					} catch (error) {
-						toastError(error);
-					}
-				}}>
+				onSubmit={handleLogin}>
 				{({ errors }) => (
 					<CardBody className='body'>
 						<Form className='Form'>
