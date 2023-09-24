@@ -1,8 +1,11 @@
 'use client';
 
-import { Input, Button, Card, CardBody } from '@nextui-org/react';
+import { Select, SelectItem, Button, Card, CardBody } from '@nextui-org/react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import InputField from '@/helpers/InputField';
+import SelectField from '@/helpers/SelectField';
+
+import { useState } from 'react';
 
 import React from 'react';
 import './CreateClassStyles.scss';
@@ -10,13 +13,15 @@ import './CreateClassStyles.scss';
 import { validationSchemaCreateClass } from '@/helpers/validations';
 
 function CreateModule() {
-	const initialValuesClass = {
+	const [isloading, setIsLoading] = useState(false);
+
+	const [initialValuesClass, setInitialValuesClass] = useState({
 		module: '',
 		name: '',
 		description: '',
 		videoFile: '',
 		PowerPointUrl: '',
-	};
+	});
 
 	const handleFileChange = event => {
 		const fileInput = event.target;
@@ -28,83 +33,104 @@ function CreateModule() {
 		}
 	};
 
-	const handleSubmit = values => {
-		console.log('values', values);
+	const handleSubmit = async values => {
+		console.log(values);
+		/*setIsLoading(true);
+		const { data } = await axios.post('urlCLOUDINARY', {});
+
+		await axios.post('urlBASEDEDATOS', {
+			...initialValuesClass,
+			videoURL: data,
+		});
+		setIsLoading(false);*/
 	};
 
-	const handleSubmitInvalid = ({ errors }) => {
-		console.log('errors', errors);
-	};
+	const handleChange = event => {
+		const { name, value } = event.target;
 
+		// Si el nombre del evento es "module", entonces guarda el valor seleccionado en el objeto initialValuesClass.
+		if (name === 'module') {
+			console.log(name, value);
+			// React no puede actualizar el estado mientras se renderiza un componente. Por lo tanto, usamos una función de devolución de llamada para actualizar el estado.
+			setInitialValuesClass(prevState => ({ ...prevState, module: value }));
+		}
+	};
 
 	return (
-			<Card className='relative min-h-screen modern  Main text-4xl'>
-				<CardBody className='body'>
-					<Formik
-						initialValues={initialValuesClass}
-						validationSchema={validationSchemaCreateClass}
-						// onSubmitInvalid={handleSubmitInvalid}
-						onSubmit={handleSubmit}>
-						{({ errors, touched }) => (
-							<Form className='flex flex-col w-1/2 items-center mx-auto space-y-3 mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
-								<h1> Subir una clase </h1>
+		<Card className='relative min-h-screen modern text-4xl'>
+			<CardBody>
+				<Formik
+					initialValues={initialValuesClass}
+					// validationSchema={validationSchemaCreateClass}
+					onSubmit={handleSubmit}>
+					<Form className='flex flex-col w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
+						<h1> Subir una clase </h1>
 
-								<InputField
-									classNames={{
-										label: 'text-xl',
-									}}
-									type='module'
-									label='Modulo de la clase'
-									name='module'
-								/>
-								<InputField
-									classNames={{
-										label: 'text-xl',
-									}}
-									type='name'
-									label='Nombre de la clase'
-									name='name'
-								/>
-								<InputField
-									classNames={{
-										label: 'text-xl',
-									}}
-									type='description'
-									label='Descripción'
-									name='description'
-								/>
+						<SelectField
+							isRequired
+							className='mb-10'
+							name='module'
+							label='Seleccionar Módulo'
+							options={[...Array(10)].map((_, index) => ({
+								value: index + 1,
+								text: `Módulo ${index + 1}`,
+							}))}
+						/>
 
-								<InputField
-									classNames={{
-										label: 'text-xl',
-									}}
-									type='PowerPointUrl'
-									label='PowerPoint URL'
-									name='PowerPointUrl'
-								/>
+						<InputField
+							classNames={{
+								label: 'text-xl',
+							}}
+							// type='name'
+							label='Nombre de la clase'
+							name='name'
+						/>
+						<InputField
+							classNames={{
+								label: 'text-xl',
+							}}
+							type='description'
+							label='Descripción'
+							name='description'
+						/>
 
-								<h1>Selecciona un video:</h1>
+						<InputField
+							classNames={{
+								label: 'text-xl',
+							}}
+							type='PowerPointUrl'
+							label='PowerPoint URL'
+							name='PowerPointUrl'
+						/>
 
-								<div className='group'>
-									<input
-										className=''
-										type='file'
-										name='videoFile'
-										id='videoFile'
-										accept='video/*'
-										onChange={handleFileChange}
-										required
-									/>
-								</div>
+						<h1>Selecciona un video:</h1>
 
-								<Button type='submit' size='lg' className='bg-gradient-to-tr from-blue-500 rounded-lg submit'>
-									Enviar
-								</Button>
-							</Form>
+						<div className='group'>
+							<input
+								className=''
+								type='file'
+								name='videoFile'
+								id='videoFile'
+								accept='video/*'
+								onChange={handleFileChange}
+								required
+							/>
+						</div>
+
+						{!isloading ? (
+							<Button
+								type='submit'
+								size='lg'
+								className='bg-gradient-to-tr from-blue-500 rounded-lg submit'>
+								Enviar
+							</Button>
+						) : (
+							<h1>Estsamos cargando el video y la data...</h1>
 						)}
-					</Formik>
-				</CardBody>
-			</Card>
+					</Form>
+				</Formik>
+			</CardBody>
+		</Card>
 	);
 }
 

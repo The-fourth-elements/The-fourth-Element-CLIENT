@@ -16,10 +16,14 @@ form {
 	> h1 {
 		font-size: 30px;
 		color: black;
+		margin-bottom: 4vh;
 	}
 
 	> button {
 		margin-top: 5vh;
 		background-color: blue;
+	}
+	> select {
+		margin-bottom: 5vh;
 	}
 }
