@@ -1,19 +1,18 @@
 "use client";
 import "./styles.scss"
-import profile from "./negro.jpg"
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useUserDetail } from "@/zustand/store/userDetail";
 import {Card, CardHeader, CardBody, Image, CircularProgress} from "@nextui-org/react";
-import Filters from "../Filters/Filters";
-import Orders from "../Orders/Orders";
-
+import { useUserLoged } from "@/zustand/store/userLoged";
 
 const UserDetail = ({params}) => {
+    const {userLoged} = useUserLoged()
     const {detail, getDetail} = useUserDetail()
     const [plan, setPlan] = useState();
+
     console.log(detail)
     useEffect (()=> {
+        console.log(userLoged)
         if (params.id){
          getDetail (params.id)}
     }, [params.id, detail.role])
@@ -22,9 +21,7 @@ const UserDetail = ({params}) => {
         <article>
             {detail.name && Object.keys(detail).length > 0 ? (
     <Card className="main">
-                
-                    {/* Filters/>
-                    <Orders/>< */}
+
                 <CardHeader className="elHeader">
                     <h1>Name: {detail.name}</h1>
                     <Image src="https://marketplace.canva.com/EAFXS8-cvyQ/1/0/1600w/canva-brown-and-light-brown%2C-circle-framed-instagram-profile-picture-2PE9qJLmPac.jpg"  alt={detail.name} />
@@ -46,7 +43,6 @@ const UserDetail = ({params}) => {
         </article>
     )
 }
-    // tambien solo me faltaria que este archivo sea hijo de la ruta de valentin
     export default UserDetail;
 
 
