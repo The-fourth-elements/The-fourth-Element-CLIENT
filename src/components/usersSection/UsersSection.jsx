@@ -62,7 +62,7 @@ export default function UsersSection() {
 		const start = (page - 1) * rowsPerPage;
 		const end = start + rowsPerPage;
 	
-		return users.slice(start, end);
+		return users?.slice(start, end);
 	  }, [page, users]);
 
 	return (
@@ -128,7 +128,7 @@ export default function UsersSection() {
 							title='Confirmar eliminación'
 							content='¿Está seguro de que desea eliminar este usuario?'
 							actions={[
-								<Button autoFocus onClick={handleConfirmDelete}>
+								<Button autoFocus onClick={handleConfirmDelete} color="danger">
 									Confirmar
 								</Button>,
 								<Button onClick={() => setIsModalOpen(false)}>Cancelar</Button>,
