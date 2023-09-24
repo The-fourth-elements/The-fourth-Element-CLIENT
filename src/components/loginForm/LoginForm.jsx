@@ -17,8 +17,34 @@ export const LoginForm = ({ toogleDisplay }) => {
 	const handleSignIn = async () => {
 		signIn('google', { redirect: false });
 	};
-
-	const router = useRouter();
+	const router = useRouter()
+	const handleLogin = async (values) => {
+		try {
+		  const response = await handleSubmitLogin(values);
+	  
+		  if (!response.error) {
+			 await getUserLoged();
+			toastSuccess(response.message);
+	  
+			if (Object.keys(userLoged).length > 0) {
+			  
+	  
+			  console.log(userLoged);
+	  
+			  if (userLoged.role === 0 || userLoged.role === 1) {
+				router.push('/course');
+			  } else {
+				router.push('/dashboard');
+			  }
+			}
+		  } else {
+			throw new Error(response.error);
+		  }
+		} catch (error) {
+		  toastError(error.message);
+		}
+	  };
+	
 
 	return (
 		<Card className='Main text-4xl'>
@@ -41,6 +67,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 						toastError(error.message);
 					}
 				}}>
+
 				{({ errors }) => (
 					<CardBody className='body'>
 						<Form className='Form'>
