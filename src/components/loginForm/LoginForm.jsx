@@ -2,7 +2,7 @@
 import { Formik, Form } from 'formik';
 import './style.scss';
 import { useRouter } from 'next/navigation';
-import { userAuth } from '../../app/context/authContext';
+// import { userAuth } from '../../app/context/authContext';
 import Image from 'next/image';
 import googleLogo from '../../assets/svg/google.svg';
 import InputField from '../../helpers/InputField';
@@ -11,20 +11,11 @@ import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Card, CardBody, Button } from '@nextui-org/react';
+import { signIn } from 'next-auth/react';
 
 export const LoginForm = ({ toogleDisplay }) => {
-	const { user, googleSignIn } = userAuth();
-
 	const handleSignIn = async () => {
-		try {
-			await googleSignIn();
-			setTimeout(() => {
-				toastSuccess('Logueo exitoso');
-				router.push('/');
-			}, 2000);
-		} catch (error) {
-			toastError('No se pudo iniciar sesión');
-		}
+		signIn('google', { redirect: false });
 	};
 
 	const router = useRouter();
@@ -36,15 +27,18 @@ export const LoginForm = ({ toogleDisplay }) => {
 				validationSchema={validationSchemaLogin}
 				onSubmit={async values => {
 					try {
-						const response = await handleSubmitLogin(values);
-						
-						if (!response?.error){
-						toastSuccess(response.message);
-						router.push('/')
-						} else
-						throw new Error(response.error)
+						const response = await signIn('credentials', {
+							...values,
+							redirect: false,
+						});
+						if (!response?.error) {
+							toastSuccess('Éxito');
+							router.push('/dashboard');
+						} else {
+							throw new Error('Ocurrio un error en el inicio de sesión');
+						}
 					} catch (error) {
-						toastError(error);
+						toastError(error.message);
 					}
 				}}>
 				{({ errors }) => (
@@ -87,7 +81,6 @@ export const LoginForm = ({ toogleDisplay }) => {
 					</CardBody>
 				)}
 			</Formik>
-			
 		</Card>
 	);
 };

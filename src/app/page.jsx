@@ -1,12 +1,12 @@
 
 'use client';
-
 import LandingDesktop from '../components/landing/LandingDesktop';
+import { useEffect, useState } from 'react';
 import LandingMobile from '../components/landing/LandingMobile';
 
-import { useEffect, useState } from 'react';
 const Landing = () => {
 	const [mobile, setMobile] = useState(undefined);
+
 
 	useEffect(() => {
 		const updateMobile = () => {
