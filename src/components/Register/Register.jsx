@@ -28,10 +28,10 @@ const Register = ({ toogleDisplay }) => {
 							region
 						);
 						toastSuccess(response.message);
-						router.push('/');
+						// router.push('/');
 					} catch (error) {
-						if (error.message.includes('duplicate')) {
-							toastError('Email ya en uso');
+						if (error) {
+							toastError('Ocurrio un error al crear la cuenta');
 						}
 					}
 				}}>

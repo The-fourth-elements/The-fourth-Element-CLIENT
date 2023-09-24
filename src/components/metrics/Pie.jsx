@@ -4,6 +4,5 @@ import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export default function PieChart({ data, options }) {
-	console.log(data, options);
 	return <Pie data={data} options={options} />;
 }
