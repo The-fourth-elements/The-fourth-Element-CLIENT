@@ -1,16 +1,9 @@
 //renderCell estaba memoizada originalmente en UsersSection
 'use client';
 
-
 import React from 'react';
 
-import {
-	Button,
-	User,
-	Chip,
-	Tooltip,
-
-} from '@nextui-org/react';
+import { Button, User, Chip, Tooltip, Link } from '@nextui-org/react';
 
 import { EditIcon } from '../assets/svg-jsx/EditIcon';
 import { DeleteIcon } from '../assets/svg-jsx/DeleteIcon';
@@ -29,7 +22,7 @@ const userRoles = {
 	3: 'Administrator',
 };
 
-
+function detailHandler(id) {}
 
 function renderCell(user, columnKey, deleteHandler) {
 	const cellValue = user[columnKey];
@@ -71,9 +64,19 @@ function renderCell(user, columnKey, deleteHandler) {
 			return (
 				<div className='relative flex items-center gap-2'>
 					<Tooltip content='Details'>
-						<span className='text-lg text-default-400 cursor-pointer active:opacity-50'>
+						<Button
+							href={'/dashboard/users-section/detail/' + user._id}
+							as={Link}
+							color='primary'
+							variant='solid'>
 							<EyeIcon />
-						</span>
+						</Button>
+						{/* <Button
+							className='text-lg  cursor-pointer active:opacity-50'
+							onPress={() => deleteHandler(user._id)}>
+							
+							<Link to />
+						</Button> */}
 					</Tooltip>
 					<Tooltip content='Edit user'>
 						<span className='text-lg text-default-400 cursor-pointer active:opacity-50'>
@@ -81,7 +84,9 @@ function renderCell(user, columnKey, deleteHandler) {
 						</span>
 					</Tooltip>
 					<Tooltip color='danger' content='Delete user'>
-						<Button className='text-lg text-danger cursor-pointer active:opacity-50' onPress={ () => deleteHandler(user._id)}>
+						<Button
+							className='text-lg text-danger cursor-pointer active:opacity-50'
+							onPress={() => deleteHandler(user._id)}>
 							<DeleteIcon />
 						</Button>
 					</Tooltip>
@@ -92,4 +97,4 @@ function renderCell(user, columnKey, deleteHandler) {
 	}
 }
 
-export default renderCell
+export default renderCell;

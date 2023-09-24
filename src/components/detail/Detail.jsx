@@ -20,7 +20,13 @@ const Detail = () => {
             }
         }
 
+        
+        return (id = null)
+
+
     }, [id, detail.role])
+
+    console.log(" SOY EL ID " + id);
 
     return (
         <article>

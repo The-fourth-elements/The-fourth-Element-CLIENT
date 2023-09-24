@@ -5,6 +5,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 
+import UploadWidget from '../uploadWidget/UploadWidget';
+
+
 import { useState } from 'react';
 
 import React from 'react';
@@ -43,17 +46,6 @@ function CreateModule() {
 			videoURL: data,
 		});
 		setIsLoading(false);*/
-	};
-
-	const handleChange = event => {
-		const { name, value } = event.target;
-
-		// Si el nombre del evento es "module", entonces guarda el valor seleccionado en el objeto initialValuesClass.
-		if (name === 'module') {
-			console.log(name, value);
-			// React no puede actualizar el estado mientras se renderiza un componente. Por lo tanto, usamos una función de devolución de llamada para actualizar el estado.
-			setInitialValuesClass(prevState => ({ ...prevState, module: value }));
-		}
 	};
 
 	return (
@@ -105,17 +97,7 @@ function CreateModule() {
 
 						<h1>Selecciona un video:</h1>
 
-						<div className='group'>
-							<input
-								className=''
-								type='file'
-								name='videoFile'
-								id='videoFile'
-								accept='video/*'
-								onChange={handleFileChange}
-								required
-							/>
-						</div>
+						<UploadWidget/>
 
 						{!isloading ? (
 							<Button
