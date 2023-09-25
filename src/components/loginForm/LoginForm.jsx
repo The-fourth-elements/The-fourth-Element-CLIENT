@@ -17,20 +17,19 @@ export const LoginForm = ({ toogleDisplay }) => {
 	const handleSignIn = async () => {
 		signIn('google', { redirect: false });
 	};
-	const router = useRouter()
+	const router = useRouter();
 	// const handleLogin = async (values) => {
 	// 	try {
 	// 	  const response = await handleSubmitLogin(values);
-	  
+
 	// 	  if (!response.error) {
 	// 		 await getUserLoged();
 	// 		toastSuccess(response.message);
-	  
+
 	// 		if (Object.keys(userLoged).length > 0) {
-			  
-	  
+
 	// 		  console.log(userLoged);
-	  
+
 	// 		  if (userLoged.role === 0 || userLoged.role === 1) {
 	// 			router.push('/course');
 	// 		  } else {
@@ -44,8 +43,6 @@ export const LoginForm = ({ toogleDisplay }) => {
 	// 	  toastError(error.message);
 	// 	}
 	//   };
-	
-	
 
 	return (
 		<Card className='Main text-4xl'>
@@ -71,20 +68,32 @@ export const LoginForm = ({ toogleDisplay }) => {
 				{({ errors }) => (
 					<CardBody className='body'>
 						<Form className='Form'>
-							<div className='group'>
-								<InputField name='email' type='email' />
+							<div className='group text-white'>
+								<InputField
+									name='email'
+									type='email'
+									classNames={{
+										label: 'text-xl',
+									}}
+								/>
 							</div>
 
-							<div className='group'>
-								<InputField name='password' type='string' />
+							<div className='group text-white'>
+								<InputField
+									name='password'
+									type='string'
+									classNames={{
+										label: 'text-xl',
+									}}
+								/>
 							</div>
 							<div className='flex flex-col items-center text-2xl'>
 								<span
-									className='recovery'
+									className='toogle'
 									onClick={() => {
 										router.push('/auth/reset-password');
 									}}>
-									¿Olvido su contraseña?
+									¿Olvidó su contraseña?
 								</span>
 								<span
 									className='toogle'
@@ -100,7 +109,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 							</Button>
 							<Button
 								type='button'
-								className='loginButton'
+								className='googleBtn'
 								onClick={handleSignIn}>
 								<Image src={googleLogo} alt='' className='googleLogo' />
 							</Button>

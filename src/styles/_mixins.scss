@@ -76,13 +76,14 @@ $screen-lg: 1024px;
 }
 
 @mixin common-form-styles($bordRa) {
-	border-top-left-radius: $bordRa;
-	border-top-right-radius: $bordRa;
+	// border-top-left-radius: $bordRa;
+	// border-top-right-radius: $bordRa;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
-	background: $orange-1;
+	justify-content: space-evenly;
+	background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+
 
 	.group {
 		text-align: center;
@@ -90,6 +91,11 @@ $screen-lg: 1024px;
 		width: 100%;
 		input {
 			font-size: 1.3rem;
+		}
+		div {
+			span {
+				color: red;
+			}
 		}
 		label{
 			font-size: 1rem;
@@ -105,16 +111,38 @@ $screen-lg: 1024px;
 		}
 	}
 	.toogle {
-		color: white;
+		color: rgb(0, 0, 0);
 		cursor: pointer;
 		&:hover {
 			text-decoration: underline;
 		}
 	}
 	.submit {
-		color: #fff;
-		width: 30%;
+		padding: 0 50px 0 50px;
+		color: #ffffff;
+		width: fit-content;
 		background-color: #ce171e;
+		transition: box-shadow 0.3s;
+		font-size: x-large;
+
+		&:hover {
+			box-shadow: 2px 2px 10px #4a0303;
+		}
+
+		&:focus {
+			outline: unset;
+		}
+		&:active {
+			background: linear-gradient(to bottom, #4a0303, #ce171e);
+		}
+	}
+
+	.googleBtn {
+		color: #ffffff;
+		width: fit-content;
+		height: fit-content;
+		border-radius: 50%;
+		background-color: #cedfff;
 		transition: box-shadow 0.3s;
 		margin-bottom: 1%;
 
@@ -137,5 +165,5 @@ $screen-lg: 1024px;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	background-color: #fff;
+	background-color: #18181b
 }
