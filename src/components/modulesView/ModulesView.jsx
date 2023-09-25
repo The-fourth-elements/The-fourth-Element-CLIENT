@@ -16,7 +16,9 @@ export default function ModuleView() {
 					className={
 						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
 					}>
-					<div className='bg-black w-96 h-unit-8xl m-3 flex justify-center'></div>
+					<div className='bg-black h-unit-8xl m-3 flex justify-center'>
+						<video src="http://res.cloudinary.com/dyvnku5c4/video/upload/v1695594830/Video/bwj7edqtcl81xmurpdci.mp4" controls={true}/>
+					</div>
 					<Card className='flex p-3 bg-transparent shadow-none'>
 						<h2 className={ h2Title + ' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'}>
 							{modules[0].name}

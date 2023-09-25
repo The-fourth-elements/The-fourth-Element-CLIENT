@@ -10,12 +10,12 @@ export const middleware = async request => {
         url.pathname = '/dashboard';
         return NextResponse.redirect(url);
     }
-    if (session && request.nextUrl.pathname === '/dashboard') {
-        const url = request.nextUrl.clone();
-        //verificar el rol
-        url.pathname = '/course';
-        return NextResponse.redirect(url);
-    }
+    // if (session && request.nextUrl.pathname === '/dashboard') {
+    //     const url = request.nextUrl.clone();
+    //     //verificar el rol
+    //     url.pathname = '/course';
+    //     return NextResponse.redirect(url);
+    // }
 
     if (!session && request.nextUrl.pathname !== '/auth') {
         const requestedPage = request.nextUrl.pathname;

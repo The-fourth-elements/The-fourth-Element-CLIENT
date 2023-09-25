@@ -1,5 +1,6 @@
 'use client'
 
+import ModuleView from "@/components/modulesView/ModulesView";
 import User from "@/components/user/User";
 
 
@@ -8,10 +9,7 @@ const page = () => {
 
 	return(
 		<main>
-			<h1>
-				soy el usuario:
-			</h1>
-			{/* <pre>{JSON.stringify()}</pre> */}
+			<ModuleView></ModuleView>
 			<User></User>
 		</main>
 	)
