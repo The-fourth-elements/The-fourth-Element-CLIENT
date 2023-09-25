@@ -2,8 +2,8 @@ import { postData } from "@/hooks/postData";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-// import GithubProvider from "next-auth/providers/github";
-
+import { destroyCookie, setCookie } from "nookies";
+import Jwt  from "jsonwebtoken";
 export const authOptions = {
     providers: [
         GoogleProvider({
@@ -25,8 +25,18 @@ export const authOptions = {
                 }
                 //esto se usa para el logueo del usuario ya registrado. 
                 //manejo la peticiondel front (/api/auth) y la propago al back para 
-                const response = await postData('http://localhost:3001/login', form );
-                return response;
+                const response = await postData(`${process.env.API_BACKEND}login`, form );
+                if ( response?.token) {
+                    // Decodifica el token JWT para obtener el ID
+                    const decodedToken = Jwt.decode(response.token);
+                    
+                    if (decodedToken && decodedToken.data) {
+                        const userId = decodedToken.data;
+                        destroyCookie(null, "id")
+                        
+                        setCookie(null, "id", userId)
+                    }}
+                return response
             },
         }),  
     ],

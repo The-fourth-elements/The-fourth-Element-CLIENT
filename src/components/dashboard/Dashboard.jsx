@@ -4,10 +4,10 @@ import { Container, section1, section2, section3 } from './styles.module.scss';
 import Metric from '@/components/metrics/Pie';
 import { metricData, setData } from '@/helpers/getterMetrics';
 import { useEffect, useState } from 'react';
-import { useUserDetail } from '../../zustand/store/userDetail';
+import { useUsersStore } from '../../zustand/store/usersStore';
 
 const dashboard = () => {
-	const { getUsers, users } = useUserDetail();
+	const { getUsers, users } = useUsersStore();
 	const option1 = metricData('Usuarios');
 
 	const [userMetrics, setUserMetrics] = useState({
@@ -18,7 +18,7 @@ const dashboard = () => {
 
 	useEffect(() => {
 		if (users?.length <= 0) {
-			getUsers().then(updatedUsers => {
+			getUsers()?.then(updatedUsers => {
 				const metrics = calculateMetrics(updatedUsers);
 				console.log(metrics);
 				setUserMetrics(metrics);
@@ -27,12 +27,9 @@ const dashboard = () => {
 			});
 		} else {
 			const metrics = calculateMetrics(users);
-			console.log(metrics);
 			setUserMetrics(metrics)
-			console.log(userMetrics);
 		}
-	}, []);
-
+	}, [users]);
 	const calculateMetrics = (users) => {
 		const activeUsers = users?.filter((user) => !user.deleted);
 	  

@@ -38,7 +38,7 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar className='navcolor h-40 bg-primary p-3'>
+		<Navbar className='navcolor h-40 bg-primary p-3 '>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -59,7 +59,7 @@ export default function Nav() {
 				</NavbarBrand>
 			</NavbarContent>
 
-			<NavbarContent className='hidden sm:flex gap-4' justify='end'>
+			<NavbarContent className='hidden sm:flex gap-4 ' justify='end'>
 				{routes.map(({ label, route, index }) => (
 					<NavbarMenuItem key={`${route}-${index}`}>
 						<Link
@@ -114,7 +114,7 @@ export default function Nav() {
 			</NavbarMenu>
 
 			{status === 'authenticated' ? (
-				<NavbarContent justify='end'>
+				<NavbarContent>
 					<NavbarItem>
 						<Button
 							as={Link}
