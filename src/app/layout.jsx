@@ -13,17 +13,10 @@ import 'tailwindcss/tailwind.css';
 import "react-toastify/ReactToastify.min.css"; //no quitar, son las toast.
 
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata = {
-	title: 'The fourth elements',
-	description: 'The fourth element is a mental training course',
-};
-
 export default function RootLayout({ children }) {
 	return ( //className dark para aplicar el tema a toda la pagina
 		<html lang='es' className='dark'> 
-			<body className={inter.className}>
+			<body>
 				<AuthContextProvider>
 					<Provider>
 						<header>
