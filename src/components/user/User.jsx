@@ -3,7 +3,8 @@ import { useSession, getSession} from "next-auth/react";
 
 
 const User = () => {
-    const {data:session} = useSession();
+    const {data} = useSession();
+    const newData = data
     const doud =  async() =>{
       const i = await getSession();
       console.log(i);
@@ -11,9 +12,10 @@ const User = () => {
 
     }
     doud().then()
+    console.log(newData)
   return (
     <>
-        <pre>{JSON.stringify(session)}</pre>
+        {/* <pre>{JSON.stringify(session)}</pre> */}
     </>
   )
 }
