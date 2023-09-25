@@ -53,7 +53,7 @@ function CreateModule() {
 			<CardBody>
 				<Formik
 					initialValues={initialValuesClass}
-					// validationSchema={validationSchemaCreateClass}
+					validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
 					<Form className='flex flex-col w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
 						<h1> Subir una clase </h1>

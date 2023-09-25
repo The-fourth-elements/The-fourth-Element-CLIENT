@@ -6,7 +6,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-evenly;
 		.body {
 			justify-content: center;
 			align-items: center;
@@ -33,12 +33,11 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-evenly;
 		.body {
 			justify-content: center;
 			align-items: center;
 			.Form {
-				@include common-form-styles(0);
 				width: 80%;
 				gap: 10%;
 				border-radius: 1rem;
@@ -60,7 +59,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-evenly;
 		.body {
 			justify-content: center;
 			align-items: center;

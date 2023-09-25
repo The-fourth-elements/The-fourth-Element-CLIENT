@@ -38,7 +38,7 @@ const Register = ({ toogleDisplay }) => {
 				{({ errors }) => (
 					<CardBody className='body'>
 						<Form className='Form'>
-							<div className='group'>
+							<div className='group text-white'>
 								<InputField
 									type='string'
 									name='username'
@@ -46,7 +46,7 @@ const Register = ({ toogleDisplay }) => {
 								/>
 							</div>
 
-							<div className='group'>
+							<div className='group text-white'>
 								<InputField
 									type='string'
 									name='email'
@@ -54,7 +54,7 @@ const Register = ({ toogleDisplay }) => {
 								/>
 							</div>
 
-							<div className='group'>
+							<div className='group text-white'>
 								<InputField
 									type='string'
 									name='password'
@@ -62,7 +62,7 @@ const Register = ({ toogleDisplay }) => {
 								/>
 							</div>
 
-							<div className='group'>
+							<div className='group text-white'>
 								<InputField
 									type='string'
 									name='repeatPassword'
@@ -70,7 +70,7 @@ const Register = ({ toogleDisplay }) => {
 								/>
 							</div>
 
-							<div className='group'>
+							<div className='group '>
 								<label htmlFor='country' className=''>
 									Country:
 								</label>

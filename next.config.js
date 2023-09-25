@@ -12,7 +12,8 @@ module.exports = {
     STORAGE_BUCKET: process.env.STORAGE_BUCKET,
     MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
     APP_ID: process.env.APP_ID,
-    API_BACKEND: process.env.API_BACKEND
+    API_BACKEND: process.env.API_BACKEND,
+    PASS: process.env.PASS
   }
 };
 

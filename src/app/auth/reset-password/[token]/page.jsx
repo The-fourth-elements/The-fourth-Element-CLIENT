@@ -1,9 +1,7 @@
 'use client';
 import { postData } from '../../../../hooks/postData';
 import '@/components/recoveryPassword/styles.scss';
-import { Form, Formik, useFormik } from 'formik';
-import * as Yup from 'yup';
-import { toast } from 'react-toastify';
+import { Form, Formik } from 'formik';
 import { Button, Card, CardBody } from '@nextui-org/react';
 import { toastError, toastSuccess } from '@/helpers/toast';
 import InputField from '@/helpers/InputField';
