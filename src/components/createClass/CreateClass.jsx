@@ -14,16 +14,19 @@ import React from 'react';
 import './CreateClassStyles.scss';
 
 import { validationSchemaCreateClass } from '@/helpers/validations';
+import { toastError, toastSuccess } from '@/helpers/toast';
+import { postData } from '@/hooks/postData';
+import { useRouter } from 'next/navigation';
 
 function CreateModule() {
 	const [isloading, setIsLoading] = useState(false);
-
+	const route = useRouter();
+	const [videoUrl, setVideoUrl] = useState('');
 	const initialValuesClass = {
-		module: '',
+		// module: '',
 		name: '',
 		description: '',
-		videoURL: '',
-		powerPointURL: '',
+		powerPointUrl: '',
 	};
 
 	// const handleFileChange = event => {
@@ -36,24 +39,30 @@ function CreateModule() {
 	// 	}
 	// };
 
-	const handleSubmit = values => {
-		console.log(values, 'Values');
-		/*setIsLoading(true);
-		const { data } = await axios.post('urlCLOUDINARY', {});
+	const handleSubmit = async values => {
+		const form = {
 
-		await axios.post('urlBASEDEDATOS', {
-			...initialValuesClass,
-			videoURL: data,
-		});
-		setIsLoading(false);*/
+			name: values.name,
+			description: values.description,
+			videoURL: videoUrl,
+			powerPointURL: values.powerPointUrl,
+		};
+		//llamar a la api para buscar el numeror de clase;
+
+		try {
+			await postData(`${process.env.API_BACKEND}class`, form);
+			toastSuccess('¡se subio la clase!');
+			route.push('/dashboard');
+		} catch (error) {
+			toastError('No se pudo subir la clase, intente mas tarde');
+		}
 	};
 
-	const [videoUrl, setVideoUrl] = useState('');
 
 	const handleSuccess = e => {
-		initialValuesClass.videoURL = e.url
-		console.log("e.url : " + e.url);
-		console.log(initialValuesClass);
+		const { info } = e;
+		const { url } = info;
+		setVideoUrl(url);
 	};
 
 	return (
@@ -61,21 +70,22 @@ function CreateModule() {
 			<CardBody>
 				<Formik
 					initialValues={initialValuesClass}
-					// validationSchema={validationSchemaCreateClass}
+					validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
 					<Form className='flex flex-col w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
 						<h1> Subir una clase </h1>
 
-						<SelectField
+						{/* <SelectField
 							isRequired
 							className='mb-10'
+							onChange={e => console.log(e.target.value)}
 							name='module'
 							label='Seleccionar Módulo'
 							options={[...Array(10)].map((_, index) => ({
 								value: index + 1,
 								text: `Módulo ${index + 1}`,
 							}))}
-						/>
+						/> */}
 
 						<InputField
 							classNames={{
@@ -98,18 +108,18 @@ function CreateModule() {
 							classNames={{
 								label: 'text-xl',
 							}}
-							type='powerPointURL'
-							label='PowerPoint URL'
-							name='powerPointURL'
+							type='string'
+							label='powerPointUrl'
+							name='powerPointUrl'
 						/>
 
 						<h1>Selecciona un video:</h1>
 						{/* <Button> */}
-							<CldUploadButton
-								// onOpen={(e)=>{alert(JSON.stringify(e, null, 2))}}
-								onSuccess={handleSuccess}
-								uploadPreset='vasv6nvh'
-							/>
+						<CldUploadButton
+							// onOpen={(e)=>{alert(JSON.stringify(e, null, 2))}}
+							onSuccess={handleSuccess}
+							uploadPreset='vasv6nvh'
+						/>
 						{/* </Button> */}
 
 						{!isloading ? (
@@ -120,7 +130,7 @@ function CreateModule() {
 								Enviar
 							</Button>
 						) : (
-							<h1>Estsamos cargando el video y la data...</h1>
+							<h1>Estamos cargando el video y la data...</h1>
 						)}
 					</Form>
 				</Formik>
