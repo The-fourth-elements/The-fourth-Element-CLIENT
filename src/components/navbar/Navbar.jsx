@@ -20,9 +20,9 @@ import {
 import { toastError } from '@/helpers/toast';
 
 export default function Nav() {
-	//const { status, data: session, update } = useSession();
+	const { status, data: session, update } = useSession();
 
-	const status = 'authenticated';
+	// const status = 'authenticated';
 
 	const router = useRouter;
 	const routes = [
