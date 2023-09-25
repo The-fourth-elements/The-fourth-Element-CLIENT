@@ -49,5 +49,5 @@ export const middleware = async request => {
 };
 
 export const config = {
-    matcher: ['/course', '/auth', '/dashboard'],
+    matcher: ['/course', '/auth' ],
 };

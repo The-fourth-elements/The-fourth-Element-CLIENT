@@ -1,12 +1,12 @@
 'use client';
 
+import { CldUploadButton } from 'next-cloudinary';
 import { Select, SelectItem, Button, Card, CardBody } from '@nextui-org/react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 
 import UploadWidget from '../uploadWidget/UploadWidget';
-
 
 import { useState } from 'react';
 
@@ -18,26 +18,26 @@ import { validationSchemaCreateClass } from '@/helpers/validations';
 function CreateModule() {
 	const [isloading, setIsLoading] = useState(false);
 
-	const [initialValuesClass, setInitialValuesClass] = useState({
+	const initialValuesClass = {
 		module: '',
 		name: '',
 		description: '',
-		videoFile: '',
-		PowerPointUrl: '',
-	});
-
-	const handleFileChange = event => {
-		const fileInput = event.target;
-		const isVideo =
-			fileInput.files.length > 0 &&
-			fileInput.files[0].type.startsWith('video/');
-		if (!isVideo) {
-			fileInput.value = '';
-		}
+		videoURL: '',
+		powerPointURL: '',
 	};
 
-	const handleSubmit = async values => {
-		console.log(values);
+	// const handleFileChange = event => {
+	// 	const fileInput = event.target;
+	// 	const isVideo =
+	// 		fileInput.files.length > 0 &&
+	// 		fileInput.files[0].type.startsWith('video/');
+	// 	if (!isVideo) {
+	// 		fileInput.value = '';
+	// 	}
+	// };
+
+	const handleSubmit = values => {
+		console.log(values, 'Values');
 		/*setIsLoading(true);
 		const { data } = await axios.post('urlCLOUDINARY', {});
 
@@ -48,12 +48,20 @@ function CreateModule() {
 		setIsLoading(false);*/
 	};
 
+	const [videoUrl, setVideoUrl] = useState('');
+
+	const handleSuccess = e => {
+		initialValuesClass.videoURL = e.url
+		console.log("e.url : " + e.url);
+		console.log(initialValuesClass);
+	};
+
 	return (
 		<Card className='relative min-h-screen modern text-4xl'>
 			<CardBody>
 				<Formik
 					initialValues={initialValuesClass}
-					validationSchema={validationSchemaCreateClass}
+					// validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
 					<Form className='flex flex-col w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
 						<h1> Subir una clase </h1>
@@ -90,14 +98,19 @@ function CreateModule() {
 							classNames={{
 								label: 'text-xl',
 							}}
-							type='PowerPointUrl'
+							type='powerPointURL'
 							label='PowerPoint URL'
-							name='PowerPointUrl'
+							name='powerPointURL'
 						/>
 
 						<h1>Selecciona un video:</h1>
-
-						<UploadWidget/>
+						{/* <Button> */}
+							<CldUploadButton
+								// onOpen={(e)=>{alert(JSON.stringify(e, null, 2))}}
+								onSuccess={handleSuccess}
+								uploadPreset='vasv6nvh'
+							/>
+						{/* </Button> */}
 
 						{!isloading ? (
 							<Button

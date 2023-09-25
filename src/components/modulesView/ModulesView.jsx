@@ -1,6 +1,6 @@
 'use client';
 
-import { modules } from '@/utils/navigation';
+import { modules, classes } from '@/utils/navigation';
 import { Card, Link, Accordion, AccordionItem } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { containerVideos, div1, div2, h2Title, acordionItem, navtContainer } from './ModulesView.module.scss';
@@ -85,7 +85,7 @@ export default function ModuleView() {
 				<aside className={ div2 + ' bg-foreground md:w-96 '}>
 					<nav className={navtContainer + ' flex flex-col bg-secondary m-3 rounded'}>
 						<ul className='m-2'>
-							{modules.map(({ video_url, name }) => (
+							{classes.map(({ video_url, name }, index) => (
 								<li className='m-2' key={name}>
 									<Link
 										video_url={video_url}
