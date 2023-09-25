@@ -1,3 +1,4 @@
+"use client"
 import "./styles.scss"
 import { useEffect } from "react";
 import { useUsersStore } from "@/zustand/store/usersStore";
