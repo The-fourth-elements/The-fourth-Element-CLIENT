@@ -20,7 +20,9 @@ import {
 import { toastError } from '@/helpers/toast';
 
 export default function Nav() {
-	const { status, data: session, update } = useSession();
+	//const { status, data: session, update } = useSession();
+
+	const status = 'authenticated';
 
 	const router = useRouter;
 	const routes = [
@@ -115,6 +117,16 @@ export default function Nav() {
 
 			{status === 'authenticated' ? (
 				<NavbarContent justify='end'>
+					<NavbarItem>
+						<Button
+							href={'/dashboard'}
+							as={Link}
+							
+							variant='flat'
+							>
+							Dashboard
+						</Button>
+					</NavbarItem>
 					<NavbarItem>
 						<Button
 							as={Link}

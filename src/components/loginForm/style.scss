@@ -11,11 +11,14 @@
 			justify-content: center;
 			align-items: center;
 			.Form {
-				@include common-form-styles(0);
+				color: black;
 				width: 40%;
 				gap: 10%;
 				border-radius: 1rem;
 				min-height: 70vh;
+				.recovery {
+					color:  black;
+				}
 				button {
 					margin-top: 1%;
 				}
