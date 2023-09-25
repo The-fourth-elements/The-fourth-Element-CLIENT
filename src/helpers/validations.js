@@ -61,7 +61,8 @@ export const validationSchema = Yup.object({
 });
 
 export const validationSchemaModule = Yup.object({
-    nameOfModule: Yup.string().required(),
+    name: Yup.string().required(),
+    description: Yup.string().required(),
 })
 
 export const validationSchemaCreateClass = Yup.object().shape({
