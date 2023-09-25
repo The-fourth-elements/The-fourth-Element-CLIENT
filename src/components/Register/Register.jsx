@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
-import { toastError, toastSuccess } from '@/helpers/toast';
+import { toastError, toastSuccess } from '../../helpers/toast';
 import './styles.scss';
 import { handleSubmitRegister } from '../../helpers/handlers';
 import { registerSchema, initialValues } from '../../helpers/validations';
@@ -27,8 +27,13 @@ const Register = ({ toogleDisplay }) => {
 							country,
 							region
 						);
-						toastSuccess(response.message);
-						// router.push('/');
+						if(!response.error){
+							toastSuccess("cuenta creada con exito");
+							window.location.reload();
+
+						}
+						
+
 					} catch (error) {
 						if (error) {
 							toastError('Ocurrio un error al crear la cuenta');

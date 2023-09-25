@@ -1,7 +1,7 @@
+
 'use client';
 import './styles.scss';
 import { useEffect, useState } from 'react';
-import { useUserDetail } from '@/zustand/store/userDetail';
 import {
 	Card,
 	CardHeader,
@@ -9,50 +9,56 @@ import {
 	Image,
 	CircularProgress,
 } from '@nextui-org/react';
+import { useSession } from 'next-auth/react';
 
-const UserDetail = ({ params }) => {
-	
-	const { detail, getDetail } = useUserDetail();
+const UserProfile = () => {
+    const { data } = useSession();
+    const nData =  async() =>{
+        const userDetail = await getSession();
+        
+        console.log(userDetail)
+        }
+        nData()
+  
+    const user = data.user
 
 	useEffect(() => {
+        console.log(data)
+        console.log(user)
 		
-		if (params.id) {
-			console.log (detail)
-			getDetail(params.id);
-		}
-	}, [params.id, detail.role]);
+	});
 	
 
 	return (
 		<article>
 			 
-			{detail.name && Object.keys(detail).length > 0 ? (
+			{user.name && Object.keys(user).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
-						<h1>Name: {detail.name}</h1>
-						{detail.profile_img ? <Image
-							src={detail.profile_img}
-							alt={detail.name}
+						<h1>Name: {user.name}</h1>
+						{user.profile_img ? <Image
+							src={user.profile_img}
+							alt={user.name}
 						/>: <Image
 						src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
-						alt={detail.name}
+						alt={user.name}
 					/>}
 					</CardHeader>
 					<CardBody className='elBody'>
-						<h2>Email: {detail.email}</h2>
-						{detail.role === 0 ? (
+						<h2>Email: {user.email}</h2>
+						{user.role === 0 ? (
 							<h2>Plan: Free Plan</h2>
-						) : detail.rol === 1 ? (
+						) : user.rol === 1 ? (
 							<h2>Plan: Pay Plan</h2>
 						) : (
 							<h2>Plan: Admin </h2>
 						)}
-						<h2>Country: {detail.nationality}</h2>
-						<h2>City: {detail.city}</h2>
+						<h2>Country: {user.nationality}</h2>
+						<h2>City: {user.city}</h2>
 						{/* <h2>Registration date: {detail.createdAt}</h2>  */}
 						<h2>
 							Registration date:{' '}
-							{new Date(detail.createdAt).toLocaleDateString()}
+							{new Date(user.createdAt).toLocaleDateString()}
 						</h2>
 					</CardBody>
 				</Card>
@@ -67,5 +73,6 @@ const UserDetail = ({ params }) => {
 			)}
 		</article>
 	);
-};
-export default UserDetail;
+}
+
+export default UserProfile;
