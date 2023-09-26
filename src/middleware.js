@@ -1,7 +1,15 @@
 import { NextResponse } from 'next/server';
 
+
+const fetching = async (id) => {
+    return (await fetch('http://localhost:3001/user?id=' + id)).json();
+}
+
 export const middleware = async request => {
     const session = request.cookies.get('next-auth.session-token');
+
+    const response = await fetching("6511b4cc1e28006a23b3a394")
+    console.log(response, 'yo sou el dkfkdkfjdk');
 
     ///traer el role con un getId y me indicara el role que tiene
     // const id = request.cookies.get('id');
