@@ -13,18 +13,18 @@ import { useSession } from 'next-auth/react';
 
 const UserProfile = () => {
     const { data } = useSession();
-    const nData =  async() =>{
-        const userDetail = await getSession();
+    // const nData =  async() =>{
+    //     const userDetail = await getSession();
         
-        console.log(userDetail)
-        }
-        nData()
+    //     console.log(userDetail)
+    //     }
+    //     nData()
   
-    const user = data.user
+    const user = data?.user
 
 	useEffect(() => {
-        console.log(data)
-        console.log(user)
+        // console.log(data)
+        // console.log(user)
 		
 	});
 	
@@ -32,7 +32,7 @@ const UserProfile = () => {
 	return (
 		<article>
 			 
-			{user.name && Object.keys(user).length > 0 ? (
+			{user && user.name && Object.keys(user).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
 						<h1>Name: {user.name}</h1>
