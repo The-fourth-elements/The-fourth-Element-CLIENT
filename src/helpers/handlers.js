@@ -14,7 +14,7 @@ export const handleSubmitRegister = async (
       nationality: country,
     };
 
-    const response = await postData(`http://localhost:3001/auth`, form);
+    const response = await postData(`${process.env.API_BACKEND}auth`, form);
     return response;
   } catch (error) {
     throw new Error(error);

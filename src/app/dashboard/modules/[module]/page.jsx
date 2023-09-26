@@ -1,11 +1,8 @@
-"use client"
-
 import React from 'react'
-import Pie from '../../../components/metrics/Pie'
 
 function page() {
   return (
-    <Pie/>
+    <div>pagina para entrar a un modulo</div>
   )
 }
 

@@ -4,16 +4,15 @@ export const middleware = async request => {
     const session = request.cookies.get('next-auth.session-token');
 
     ///traer el role con un getId y me indicara el role que tiene
-    const id = request.cookies.get('id');
-    console.log(id);
-    let role = 0;
-    if (id) {
-        const response = await fetch(`${process.env.API_BACKEND}user?id=${id.value}`);
-        const user = await response.json();
-        console.log(user);
-        role = user.role;
-        console.log(role, '"dfjhkddddddddddddddddddddddddd');
-    }
+    // const id = request.cookies.get('id');
+    // console.log(id);
+    // let role = 0;
+    // if (id) {
+    //     const response = await fetch(`${process.env.API_BACKEND}user?id=${id.value}`);
+    //     const user = await response.json();
+    //     console.log(user);
+    //     role = user.role;
+    // }
 
 
 
@@ -49,5 +48,5 @@ export const middleware = async request => {
 };
 
 export const config = {
-    matcher: ['/course', '/auth', '/dashboard'],
+    matcher: ['/course', '/auth'],
 };

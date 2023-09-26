@@ -17,7 +17,6 @@ const UserDetail = ({ params }) => {
 	useEffect(() => {
 		
 		if (params.id) {
-			console.log (detail)
 			getDetail(params.id);
 		}
 	}, [params.id, detail.role]);
