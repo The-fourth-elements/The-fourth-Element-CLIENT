@@ -17,7 +17,6 @@ const UserDetail = ({ params }) => {
 	useEffect(() => {
 		
 		if (params.id) {
-			console.log (detail)
 			getDetail(params.id);
 		}
 	}, [params.id, detail.role]);
@@ -26,7 +25,7 @@ const UserDetail = ({ params }) => {
 	return (
 		<article>
 			 
-			{detail.name && Object.keys(detail).length > 0 ? (
+			{detail.username && Object.keys(detail).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
 						<h1>Name: {detail.name}</h1>
