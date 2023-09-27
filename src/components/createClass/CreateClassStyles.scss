@@ -12,10 +12,9 @@
 	font-size: 18px;
 	padding: 10px 20px;
 	border-radius: 15%;
-	transition : background-color ease .2s;
-	&:hover{
-	background-color: #363636;
-
+	transition: background-color ease 0.2s;
+	&:hover {
+		background-color: #363636;
 	}
 }
 
@@ -25,6 +24,10 @@ form {
 			font-size: 20px;
 			color: red;
 		}
+	}
+	> h2 {
+		font-size: 30px;
+		color: black;
 	}
 	> h1 {
 		font-size: 30px;

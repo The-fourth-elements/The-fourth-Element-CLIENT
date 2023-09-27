@@ -61,8 +61,9 @@ export const validationSchema = Yup.object({
 });
 
 export const validationSchemaModule = Yup.object({
-    name: Yup.string().required(),
-    description: Yup.string().required(),
+    name: Yup.string().required('Este campo es requerido'),
+    description: Yup.string().required('Este campo es requerido'),
+    paid: Yup.string().required('Este campo es requerido'),
 })
 
 export const validationSchemaCreateClass = Yup.object({
