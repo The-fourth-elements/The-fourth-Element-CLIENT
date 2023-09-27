@@ -42,3 +42,19 @@ export const getDetailed = (id) => {
     throw new Error("There was an error connecting to the server.");
   });
 }
+
+export const upadateUserRole = (elbody) => {
+  return fetch(`${process.env.API_BACKEND}user`, 
+              { method: 'PUT' ,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(elbody),})
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
+    });
+};
