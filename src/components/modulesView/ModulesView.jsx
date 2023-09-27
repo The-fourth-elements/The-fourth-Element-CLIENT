@@ -12,23 +12,32 @@ import {
 	navtContainer,
 } from './ModulesView.module.scss';
 import { useSession } from 'next-auth/react';
-import { getCookie, setCookie } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next';
+import { useModulesStore } from '@/zustand/store/modulesStore';
+import { useState, useEffect } from 'react';
 
 export default function ModuleView() {
 	const router = useRouter;
-	const {data: session}  = useSession();
+	const { data: session } = useSession();
 	console.log(session);
-	
+
 	const id = session?.token?.user?.id;
-	if(id){
-		setCookie("jsdklfsdjklfdsjfds", id);
-		const holi  = getCookie("jsdklfsdjklfdsjfds")
+	if (id) {
+		setCookie('jsdklfsdjklfdsjfds', id);
+		const holi = getCookie('jsdklfsdjklfdsjfds');
 		console.log(holi);
 	}
 	const { modules, getModules } = useModulesStore();
 	const [classList, setClassList] = useState([]);
 	const [access, setAccess] = useState(false);
 
+	/*
+		clase : {id, nombre, video, powerpoint };
+		modules : {[clase], }
+		
+	*/
+
+	let modulesWithClass = [];
 	useEffect(() => {
 		getModules();
 		// async function fetchData() {
@@ -37,41 +46,83 @@ export default function ModuleView() {
 		// 	}
 		// }
 		// fetchData(); // Llama a la función asincrónica
-	}, [session]);
+	}, []);
+
+	/*useEffect(() => {
+		const promiseList = modules.map((module) => {
+		  return module.classModule.map((elem) => {
+			const url = `${process.env.API_BACKEND}class/${elem}`;
+			return fetch(url);
+		  });
+		});
+	  
+		const flattenedPromiseList = [].concat(...promiseList);
+	  
+		// Usar Promise.all para esperar a que todas las promesas se completen
+		Promise.all(flattenedPromiseList)
+		  .then((responses) => {
+			const jsonPromises = responses.map((response) => response.json());
+			return Promise.all(jsonPromises);
+		  })
+		  .then((data) => {
+			setClassList(data);
+		  });
+	  }, [modules]); // Agrega 'modules' como dependencia
+	  
+
 	const promiseList = modules.map(module => {
 		return module.classModule.map(elem => {
-			return fetch(`${process.env.API_BACKEND}class/${elem}`);
+			const url = `${process.env.API_BACKEND}class/${elem}`;
+			return fetch(url);
 		});
-	});
+	});*/
 
-	const flattenedPromiseList = [].concat(...promiseList);
+	useEffect(() => {
+		const moduleData = {}; // Objeto para almacenar los datos de las clases por módulo
+	  
+		const promiseList = modules.map((module) => {
+		  const classDataArray = [];
+	  
+		  return Promise.all(
+			module.classModule.map((elem) => {
+			  const url = `${process.env.API_BACKEND}class/${elem}`;
+			  return fetch(url)
+				.then((response) => response.json())
+				.then((classData) => {
+				  classDataArray.push(classData);
+				})
+				.catch((error) => {
+				  console.error(`Error al obtener datos de clase para el módulo ${module.id}:`, error);
+				});
+			})
+		  )
+		  .then(() => {
+			moduleData[module.name] = classDataArray; // Usa el nombre del módulo como clave en moduleData
+		  });
+		});
+	  
+		Promise.all(promiseList)
+		  .then(() => {
+			// moduleData ahora contiene los datos de las clases por módulo
+			console.log("moduleData: ", moduleData);
+			// Puedes hacer lo que necesites con moduleData aquí
+		  });
+	  }, [modules]);
+	  
 
-	console.log(flattenedPromiseList);
+	/*const flattenedPromiseList = [].concat(...promiseList);
+
 	// Usar Promise.all para esperar a que todas las promesas se completen
 	Promise.all(flattenedPromiseList)
 		.then(responses => {
-			// Mapea las respuestas a las promesas de los datos JSON
 			const jsonPromises = responses.map(response => response.json());
-
-			// Usa Promise.all para esperar a que todas las promesas de datos JSON se resuelvan
 			return Promise.all(jsonPromises);
 		})
 		.then(data => {
-			console.log('Datos de todas las promesas resueltas: ', data);
 			setClassList(data);
-			// data ahora es una matriz de los datos JSON de las respuestas
-			// Puedes trabajar con estos datos aquí
-			console.log('classList ', classList);
-			classList?.map(elem => console.log('elem.name', elem.name));
-
-			// return (
-			// 	<p>
-			// 		CLASES: {classList?.map(elem => elem.name)}
-			// 	</p>
-			// );
 		});
 
-	console.log('COSO');
+	console.log('COSO');*/
 	return (
 		<>
 			<Card className={containerVideos + ' navcolor'}>
