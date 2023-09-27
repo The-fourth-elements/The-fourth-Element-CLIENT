@@ -5,7 +5,7 @@ const InputFiled = ({ ...props }) => {
 	const [field, meta] = useField(props);
 	const words = field.name.split(/(?=[A-Z])/).join(' ');
 	return (
-		<>
+		<div className='input-container'>
 			<Input
 				isRequired
 				label={words}
@@ -16,10 +16,10 @@ const InputFiled = ({ ...props }) => {
 				type={!field.name.includes('assword') ? 'text' : 'password'}
 				autoComplete='false'
 			/>
-			<div className='flex justify-center p-5 modern text-2xl '>
-				{meta.error && <span className='modern bg-primary-700'>{meta.error}</span>}
+			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl`} >
+				{meta.error}
 			</div>
-		</>
+		</div>
 	);
 };
 

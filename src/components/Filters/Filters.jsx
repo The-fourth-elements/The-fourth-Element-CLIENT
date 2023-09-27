@@ -1,3 +1,5 @@
+'use client'
+
 import { useUsersStore } from "@/zustand/store/usersStore"
 import { useState } from "react"
 import {Select, SelectSection, SelectItem} from "@nextui-org/react";
@@ -6,7 +8,10 @@ import "./styles.scss"
 const Filters = () => {
     const {usersFilter} = useUsersStore()
     const {filterUsersPlan, filterUserCountry} = useUsersStore()
-    const countrys = Array.from (new Set (usersFilter.map ((user) => user.nation)))
+
+    const countrys = Array.from (new Set (usersFilter?.map ((user) => user.nationality)))
+//     const countrys = Array.from (new Set (usersFilter.map ((user) => user.nation)))
+
 
     let [filterNationality, setFilterNationality] = useState("")
     let [filterPlan, setFilterPlan] = useState("")

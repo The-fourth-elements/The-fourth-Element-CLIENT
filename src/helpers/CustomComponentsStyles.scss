@@ -1,0 +1,32 @@
+@import '../styles/base';
+
+@include sm {
+    .error-message {
+        font-size: 20px;
+        white-space: nowrap;
+    } 
+
+} 
+
+.input-container {
+    position: relative; /* Ensure relative positioning */
+    height: auto; /* Set a fixed or maximum height as needed */
+    width: 100%;
+  }
+  
+  .error-message {
+    width: 100%;
+    position: absolute; /* Position absolutely within the container */
+    bottom: 0; /* Place it at the bottom of the container */
+    left: 0; /* Adjust left as needed */
+    color: red; /* Customize the error message color */
+    visibility: hidden; /* Initially hide the error message */
+    margin-bottom: 10px; 
+  }
+  
+  .error-message.visible {
+    visibility: visible; /* Show the error message when it has content */
+  }
+
+
+  
