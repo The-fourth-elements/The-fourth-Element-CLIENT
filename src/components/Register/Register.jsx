@@ -1,4 +1,5 @@
 'use client';
+import { EyeOpen, EyeSlash } from '../loginForm/eyeIcons';
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { toastError, toastSuccess } from '../../helpers/toast';
@@ -14,6 +15,12 @@ const Register = ({ toogleDisplay }) => {
 	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
+	let [viewPassword, setViewPassword] = useState(false)
+
+	const handleShow = () => {
+		setViewPassword(!viewPassword)
+		console.log(viewPassword)
+	}
 
 	return (
 		<Card className='Main text-4xl'>
@@ -61,18 +68,24 @@ const Register = ({ toogleDisplay }) => {
 
 							<div className='group text-white'>
 								<InputField
-									type='string'
+									type={viewPassword ? 'text' : 'password'}
 									name='password'
 									placeholder='Ingrese su contraseña'
+									viewPassword = {viewPassword}
 								/>
+								
 							</div>
 
 							<div className='group text-white'>
 								<InputField
-									type='string'
+									type={viewPassword ? 'text' : 'password'}
 									name='repeatPassword'
 									placeholder='Repita su contraseña'
+									viewPassword = {viewPassword}
 								/>
+								<button type='button' onClick={handleShow}>
+								{!viewPassword ?  <EyeSlash/> : <EyeOpen/> }
+								</button>
 							</div>
 
 							<div className='group '>

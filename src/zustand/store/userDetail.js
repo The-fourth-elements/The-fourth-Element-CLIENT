@@ -1,5 +1,6 @@
 
 import { create } from "zustand";
+import { upadateUserRole } from "../actions/usersStoreActions";
 
 export const useUserDetail = create((set, get) => ({
     detail: {},
@@ -11,6 +12,10 @@ export const useUserDetail = create((set, get) => ({
                 detail: data
             }))
         }
-        )
+        ),
+    updateUserRole: (elbody) => {
+        upadateUserRole (elbody)
+    }
+
 })
 )
