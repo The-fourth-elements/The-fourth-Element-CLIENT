@@ -1,25 +1,21 @@
+import { Textarea } from '@nextui-org/react';
 import { useField } from 'formik';
-import { Select, SelectItem } from '@nextui-org/react';
+import './CustomComponentsStyles.scss'
 
-const FieldSelect = ({ name, label, options, ...props }) => {
+const TextAreaField = ({ name, label, rows, ...props }) => {
 	const [field, meta] = useField(name);
 
 	return (
 		<div className='input-container'>
-			<Select
+			<Textarea
 				label={label}
+				id={name}
 				name={name}
 				value={field.value}
 				onChange={field.onChange}
-				options={options}
-				{...props}>
-				{options.map(option => (
-					<SelectItem key={option.value} value={option.value}>
-						{option.text}
-					</SelectItem>
-				))}
-			</Select>
-
+				rows={rows}
+				{...props}
+			/>
 			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl`} >
 				{meta.error}
 			</div>
@@ -27,4 +23,4 @@ const FieldSelect = ({ name, label, options, ...props }) => {
 	);
 };
 
-export default FieldSelect;
+export default TextAreaField;
