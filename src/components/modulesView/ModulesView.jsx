@@ -5,54 +5,19 @@ import { Card, Link, Accordion, AccordionItem } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { containerVideos, div1, div2, h2Title, acordionItem, navtContainer } from './ModulesView.module.scss';
 import { useSession } from 'next-auth/react';
-import { postData } from '@/hooks/postData';
-import { useEffect, useState } from 'react';
-import { destroyCookie, parseCookies, setCookie } from 'nookies';
-import  Jwt from 'jsonwebtoken';
+import { getCookie, setCookie } from 'cookies-next'
 
 export default function ModuleView() {
 	const router = useRouter;
-	const { data: session } = useSession();
-
-	const [access, setAccess] = useState(false)
-	const registerOrLogin = async () => {
-		  try {
-			const { email, name, image } = session.user;
-		  ///para iniciar sesion o para registrarse.
-		  const body = { username: name, email, provider: true };
-		  //esperar la respuesta, de si esta registrado;
-		  
-
-			try {
-				const res = await postData(`${process.env.API_BACKEND}auth`, body);
-				if(res.includes('error')){
-					throw new Error('duplicado')
-				}
-			} catch (error) {
-
-				const response = await postData(`${process.env.API_BACKEND}login`, body);
-				const decodedToken = Jwt.decode(response?.token);
-					const userId = decodedToken.data;
-					destroyCookie(null, "id")
-					setCookie(null, "id", userId)
-					setAccess(true)
-			}
-			
-			
-		  } catch (error) {
-			
-		  }
-		
-	  };
+	const {data: session}  = useSession();
+	console.log(session);
 	
-	  useEffect(() => {
-		async function fetchData() {
-			if(session?.user?.name && !access){
-				await registerOrLogin();
-			}
-		}
-		fetchData(); // Llama a la función asincrónica
-	  }, [session]);
+	const id = session?.token?.user?.id;
+	if(id){
+		setCookie("jsdklfsdjklfdsjfds", id);
+		const holi  = getCookie("jsdklfsdjklfdsjfds")
+		console.log(holi);
+	}
 	return (
 		<>
 			<Card className={containerVideos + ' navcolor'}>

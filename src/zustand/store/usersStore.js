@@ -47,7 +47,7 @@ export const useUsersStore = create((set, get) => ({
       set((state) => ({
         ...state,
         users: state.usersFilter.filter(
-        (user) => (plan === "free" && user.role === 0) || (plan === "pay" && user.role === 1))
+        (user) => (plan === "free" && user.role === 0) || (plan === "pay" && user.role === 1) || (plan === "moderators" && user.role === 2))
       }));
     }
   },
