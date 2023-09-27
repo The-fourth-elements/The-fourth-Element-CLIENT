@@ -26,7 +26,7 @@ function CreateModule() {
 
 	const [isloading, setIsLoading] = useState(true);
 	const route = useRouter();
-	const [videoUrl, setVideoUrl] = useState('');
+	const [video, setVideo] = useState({});
 	const initialValuesClass = {
 		module: '',
 		name: '',
@@ -77,11 +77,11 @@ function CreateModule() {
 			module: values.module,
 			name: values.name,
 			description: values.description,
-			videoURL: videoUrl,
-			powerPointURL: values.powerPointUrl,
+			video: video,
+			powerPoint: values.powerPointUrl,
 		};
 
-		if (!videoUrl) {
+		if (!video?.url) {
 			// Show an alert to the user
 			window.alert('Debes subir un video antes de enviar la clase.');
 		}
@@ -96,6 +96,8 @@ function CreateModule() {
 				`${process.env.API_BACKEND}class`,
 				form
 			);
+
+			console.log("classPostResponse ", classPostResponse);
 			const url = `${process.env.API_BACKEND}module/${form.module}/class/${classPostResponse._id}`;
 			const options = {
 				method: 'PUT',
@@ -105,17 +107,19 @@ function CreateModule() {
 			};
 			await fetch(url, options);
 
-			toastSuccess('¡se subio la clase!');
+			toastSuccess('¡Se subió el módulo!!');
 			route.push('/dashboard');
 		} catch (error) {
+			console.log(error);
 			toastError('No se pudo subir la clase, intente mas tarde');
 		}
 	};
 
 	const handleSuccess = e => {
 		const { info } = e;
-		const { url } = info;
-		setVideoUrl(url);
+		const { url, public_id } = info;
+		setVideo({ url, public_id });
+		console.log("video " , video);
 	};
 
 	return (
@@ -126,7 +130,7 @@ function CreateModule() {
 					validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
 					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col   items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
-						<h1> Subir una clase </h1>
+						<h1 className='mb-7'> Subir una clase </h1>
 
 						{modules ? (
 							<SelectField
@@ -172,16 +176,15 @@ function CreateModule() {
 							name='description'
 						/>
 
-						<h1>Selecciona un video:</h1>
+						<h2 className='text-black'>Selecciona un video:</h2>
 						<CldUploadButton
 							className='cldButton'
 							onSuccess={handleSuccess}
 							uploadPreset='vasv6nvh'
 						/>
-						{videoUrl ? (
+						{video?.url?.length > 0 ? (
 							<h5 className='bg-green-600 rounded-lg p-3 text-xl mt-6'>
-								{' '}
-								Video subido correctamente{' '}
+								Video subido correctamente
 							</h5>
 						) : null}
 							<Button
