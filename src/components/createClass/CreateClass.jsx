@@ -107,7 +107,7 @@ function CreateModule() {
 			};
 			await fetch(url, options);
 
-			toastSuccess('¡Se subió el módulo!!');
+			toastSuccess('¡Se subió la clase!!');
 			route.push('/dashboard');
 		} catch (error) {
 			console.log(error);

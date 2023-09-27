@@ -15,12 +15,14 @@ const Register = ({ toogleDisplay }) => {
 	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
-	let [viewPassword, setViewPassword] = useState(false)
+	const [duplicatedEmail, setDuplicatedEmail] = useState(false);
+
+	let [viewPassword, setViewPassword] = useState(false);
 
 	const handleShow = () => {
-		setViewPassword(!viewPassword)
-		console.log(viewPassword)
-	}
+		setViewPassword(!viewPassword);
+		console.log(viewPassword);
+	};
 
 	return (
 		<Card className='Main text-4xl'>
@@ -29,20 +31,26 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					try {
+						console.log(process.env.API_BACKEND);
 						const response = await handleSubmitRegister(
 							values,
 							country,
 							region
 						);
-						if(!response.error){
-							toastSuccess("cuenta creada con exito");
-							window.location.reload();
-
+						console.log('Response:  ', response);
+						if (response.includes('duplicate')) {
+							setDuplicatedEmail(true);
+							throw new Error();
+						} else {
+							//	toastSuccess('cuenta creada con exito');
+							// window.location.reload();
+							console.log('Response valida:  ', response);
 						}
-						
-
 					} catch (error) {
 						if (error) {
+							if (duplicatedEmail) {
+								toastError('Ya hay una cuenta existente con el email ingresado');
+							}
 							toastError('Ocurrio un error al crear la cuenta');
 						}
 					}
@@ -71,9 +79,8 @@ const Register = ({ toogleDisplay }) => {
 									type={viewPassword ? 'text' : 'password'}
 									name='password'
 									placeholder='Ingrese su contraseña'
-									viewPassword = {viewPassword}
+									viewPassword={viewPassword}
 								/>
-								
 							</div>
 
 							<div className='group text-white'>
@@ -81,10 +88,10 @@ const Register = ({ toogleDisplay }) => {
 									type={viewPassword ? 'text' : 'password'}
 									name='repeatPassword'
 									placeholder='Repita su contraseña'
-									viewPassword = {viewPassword}
+									viewPassword={viewPassword}
 								/>
 								<button type='button' onClick={handleShow}>
-								{!viewPassword ?  <EyeSlash/> : <EyeOpen/> }
+									{!viewPassword ? <EyeSlash /> : <EyeOpen />}
 								</button>
 							</div>
 
