@@ -18,6 +18,7 @@ import {
 	NavbarBrand,
 } from '@nextui-org/react';
 import { toastError } from '@/helpers/toast';
+import { deleteCookie } from 'cookies-next';
 
 export default function Nav() {
 	const { status, data: session, update } = useSession();
@@ -32,6 +33,7 @@ export default function Nav() {
 
 	const handleLogout = async () => {
 		try {
+			deleteCookie("jsdklfsdjklfdsjfds");
 			await signOut();
 			router.push('/auth');
 		} catch (error) {

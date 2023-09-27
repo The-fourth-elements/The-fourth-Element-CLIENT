@@ -6,6 +6,19 @@
 	}
 }
 
+.cldButton {
+	background-color: rgba(41, 108, 201, 0.874);
+	color: white;
+	font-size: 18px;
+	padding: 10px 20px;
+	border-radius: 15%;
+	transition : background-color ease .2s;
+	&:hover{
+	background-color: #363636;
+
+	}
+}
+
 form {
 	> div {
 		> span {
@@ -16,12 +29,10 @@ form {
 	> h1 {
 		font-size: 30px;
 		color: black;
-		margin-bottom: 4vh;
 	}
 
 	> button {
-		margin-top: 5vh;
-		background-color: blue;
+		margin-top: 3vh;
 	}
 	> select {
 		margin-bottom: 5vh;
