@@ -4,11 +4,11 @@ import { toast } from 'react-toastify'
 export const toastSuccess = (message) => {
     toast.success(message, {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 5000,
+        pauseOnHover: false,
         hideProgressBar: false,
         closeOnClick: true,
         draggable: true,
-        progress: 0.2,
         theme: "light",
     })
 }

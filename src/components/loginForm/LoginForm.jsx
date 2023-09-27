@@ -40,11 +40,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 							...values,
 							redirect: false,
 						});
-						console.log("response:", response)
-						if (!response?.error) {
-						console.log("response sin error:", response)
-
-
+						if (response.error == null) {
 							toastSuccess('Éxito');
 							router.push('/dashboard');
 						} else {
