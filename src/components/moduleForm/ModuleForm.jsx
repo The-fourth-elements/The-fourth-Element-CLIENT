@@ -1,16 +1,20 @@
 'use client';
 
+
 import './style.scss';
 import { Card, CardBody, Button } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
-import '@/components/loginForm/style.scss';
 import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
+import '@/helpers/CustomComponentsStyles.scss';
 import { validationSchemaModule } from '@/helpers/validations';
+import { toastError, toastSuccess } from '@/helpers/toast';
 import Image from 'next/image';
 import back from '@/assets/svg/arrowBack.svg';
 import { useRouter } from 'next/navigation';
 import useFetch from '@/hooks/useFetch';
+import { postData } from '@/hooks/postData';
+
 
 const ModuleForm = () => {
 	const router = useRouter();
@@ -46,23 +50,30 @@ const ModuleForm = () => {
 
 		console.log("formated values" , formattedValues);
 
-		await fetch(`${process.env.API_BACKEND}moduls`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			  },
-			body: JSON.stringify(formattedValues),
-		});
+		try {
+			
+			const postResponse = await postData(`${process.env.API_BACKEND}moduls`, formattedValues)
+			if (postResponse._id) {
+				toastSuccess('¡Se subió el módulo!');
+				
+			}
+			console.log("postResponse " , postResponse);
+		} catch (error) {
+			toastError('No se pudo subir el módulo, intente mas tarde')
+		}
+
+		
 	};
 
-	return (
+	return ( //Form className='relative flex flex-col h-50vh  w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'
 		<Card className=' relative min-h-screen modern  h-50vh text-4xl'>
 			<CardBody>
 				<Formik
 					initialValues={initialValuesModule}
 					validationSchema={validationSchemaModule}
 					onSubmit={handleSubmit}>
-					<Form className='relative flex flex-col h-50vh  w-1/2 items-center mx-auto space-y-3 mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
+					<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+
 						<Image
 							alt='go back arrow'
 							src={back}
@@ -74,12 +85,13 @@ const ModuleForm = () => {
 							}}
 						/>
 
-						<h1>Agregar Módulo</h1>
+						<h1 className='mx-auto mb-5 text-black' >Agregar Módulo</h1>
 
 						<InputField
 							classNames={{
 								label: 'text-xl',
 							}}
+							className='mb-12'
 							label='Nombre del Módulo'
 							name='name'
 						/>
@@ -88,6 +100,7 @@ const ModuleForm = () => {
 							classNames={{
 								label: 'text-xl',
 							}}
+							className='mb-12'
 							label='Descripcion del Módulo'
 							name='description'
 						/>
@@ -96,13 +109,14 @@ const ModuleForm = () => {
 							classNames={{
 								label: 'text-xl',
 							}}
+							className='mb-12'
 							label='Quiz'
 							name='quiz'
 						/>
 
 						<SelectField
 							isRequired
-							className='mb-10'
+							className='mb-12'
 							name='paid'
 							label='Es pago?'
 							options={optionsSelect.map(elem => ({
@@ -115,7 +129,7 @@ const ModuleForm = () => {
 						<Button
 							type='submit'
 							size='lg'
-							className='bg-gradient-to-tr from-blue-500 rounded-lg submit'>
+							className='bg-gradient-to-tr from-blue-500 rounded-lg submit max-w-xs  mx-auto'>
 							Agregar modulo
 						</Button>
 					</Form>
