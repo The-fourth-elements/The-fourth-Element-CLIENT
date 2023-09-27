@@ -1,49 +1,43 @@
 import { NextResponse } from 'next/server';
 
-
-const fetching = async (id) => {
-    return (await fetch('http://localhost:3001/user?id=' + id)).json();
-}
-
 export const middleware = async request => {
     const session = request.cookies.get('next-auth.session-token');
 
-    // const response = await fetching("6511b4cc1e28006a23b3a394")
     // console.log(response, 'yo sou el dkfkdkfjdk');
 
-    ///traer el role con un getId y me indicara el role que tiene
-    // const id = request.cookies.get('id');
-    // console.log(id);
-    // let role = 0;
-    // if (id) {
-    //     const response = await fetch(`${process.env.API_BACKEND}user?id=${id.value}`);
-    //     const user = await response.json();
-    //     console.log(user);
-    //     role = user.role;
-    // }
-
-
-
-
+    // /traer el role con un getId y me indicara el role que tiene
+    const id = request.cookies.get('jsdklfsdjklfdsjfds');
+    let role = 0;
+    if (id) {
+        const response = await fetch(
+            `${process.env.API_BACKEND}user?id=${id.value}`
+        );
+        const user = await response.json();
+        role = user.role;
+    }
     if (session && request.nextUrl.pathname === '/auth') {
+        const url = request.nextUrl.clone();
         // El usuario está autenticado y está intentando acceder a la página de autenticación,
         // redirigirlo a la página de curso.
-        const url = request.nextUrl.clone();
-        url.pathname = '/dashboard';
+        if (role > 1) {
+            url.pathname = '/dashboard';
+        } else {
+            url.pathname = '/course';
+        }
+        console.log('toy aqui');
         return NextResponse.redirect(url);
     }
-    // if (session && request.nextUrl.pathname === '/dashboard') {
-    //     const url = request.nextUrl.clone();
-    //     //verificar el rol
-    //     console.log('soy el roled', role);
-    //     if (role > 1) {
-    //         url.pathname = '/dashboard'
-    //     } else {
-    //         url.pathname = '/course';
-    //     }
-    //     return NextResponse.redirect(url);
-    // }
-
+    if (session && request.nextUrl.pathname === '/dashboard') {
+        const url = request.nextUrl.clone();
+        //verificar el rol
+        console.log('soy el roled', role);
+        if (role > 1) {
+            return NextResponse.next()
+        } else {
+            url.pathname = '/course';
+        }
+        return NextResponse.redirect(url);
+    }
 
     if (!session && request.nextUrl.pathname !== '/auth') {
         const requestedPage = request.nextUrl.pathname;
@@ -56,5 +50,5 @@ export const middleware = async request => {
 };
 
 export const config = {
-    matcher: ['/course', '/auth'],
+    matcher: ['/course', '/auth', '/dashboard'],
 };

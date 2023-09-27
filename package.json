@@ -12,6 +12,7 @@
     "@kurkle/color": "^0.3.2",
     "@nextui-org/react": "^2.1.13",
     "chart.js": "^4.4.0",
+    "cookies-next": "^4.0.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "firebase": "^10.4.0",
