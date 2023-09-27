@@ -25,7 +25,6 @@ export default function ModuleView() {
 		const holi  = getCookie("jsdklfsdjklfdsjfds")
 		console.log(holi);
 	}
-	const { data: session } = useSession();
 	const { modules, getModules } = useModulesStore();
 	const [classList, setClassList] = useState([]);
 	const [access, setAccess] = useState(false);
