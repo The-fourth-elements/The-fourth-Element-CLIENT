@@ -13,7 +13,8 @@ module.exports = {
     MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
     APP_ID: process.env.APP_ID,
     API_BACKEND: process.env.API_BACKEND,
-    PASS: process.env.PASS
+    PASS: process.env.PASS,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET
   }
 };
 

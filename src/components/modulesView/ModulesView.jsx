@@ -12,15 +12,19 @@ import {
 	navtContainer,
 } from './ModulesView.module.scss';
 import { useSession } from 'next-auth/react';
-import { postData } from '@/hooks/postData';
-import { useEffect, useState } from 'react';
-import { destroyCookie, parseCookies, setCookie } from 'nookies';
-import Jwt from 'jsonwebtoken';
-import { useModulesStore } from '@/zustand/store/modulesStore';
-import useFetch from '@/hooks/useFetch';
+import { getCookie, setCookie } from 'cookies-next'
 
 export default function ModuleView() {
 	const router = useRouter;
+	const {data: session}  = useSession();
+	console.log(session);
+	
+	const id = session?.token?.user?.id;
+	if(id){
+		setCookie("jsdklfsdjklfdsjfds", id);
+		const holi  = getCookie("jsdklfsdjklfdsjfds")
+		console.log(holi);
+	}
 	const { data: session } = useSession();
 	const { modules, getModules } = useModulesStore();
 	const [classList, setClassList] = useState([]);
