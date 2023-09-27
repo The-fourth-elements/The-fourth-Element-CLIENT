@@ -1,3 +1,4 @@
+'use client'
 import { useUsersStore } from "@/zustand/store/usersStore"
 import { useState } from "react"
 import {Select, SelectSection, SelectItem} from "@nextui-org/react";

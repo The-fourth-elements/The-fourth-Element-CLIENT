@@ -46,7 +46,7 @@ const ModuleForm = () => {
 
 		console.log("formated values" , formattedValues);
 
-		await fetch(`${process.env.API_BACKEND}/moduls`, {
+		await fetch(`${process.env.API_BACKEND}moduls`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
