@@ -22,7 +22,7 @@ const RecoveryPass = () => {
 				validationSchema={validationSchemaRecovery}
 				onSubmit={async values => {
 					try {
-						await postData(`${process.env.API_BACKEND}auth/forgot`, email);
+						await postData(`${process.env.API_BACKEND}auth/forgot`, {email: values.email});
 						router.push('/');
 						toastSuccess('Verifique su bandeja de entrada');
 					} catch (error) {

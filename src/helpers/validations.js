@@ -66,9 +66,12 @@ export const validationSchemaModule = Yup.object({
 })
 
 export const validationSchemaCreateClass = Yup.object({
-    // module: Yup.string().required('Este campo es requerido'),
-    // name: Yup.string().required('Este campo es requerido'),
-    // description: Yup.string().required('Este campo es requerido'),
+    module: Yup.string().required('Este campo es requerido'),
+    name: Yup.string().required('Este campo es requerido'),
+    description: Yup.string().required('Este campo es requerido'),
+    powerPointUrl: Yup.string()
+    .required('Este campo es requerido')
+    .url('Debe ser una URL válida.'),
 });
 
 
