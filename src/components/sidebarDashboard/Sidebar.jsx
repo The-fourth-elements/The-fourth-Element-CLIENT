@@ -12,10 +12,10 @@ import { useState } from 'react';
 const Sidebar = () => {
 	const [open, setOpen] = useState(false);
 	return (
-		<div className='relative'>
+		<div className={`sticky top-0 ${open ? 'z-50' : 'z-50'}`}>
 			<div
 				className={
-					open ? sidebarOpen + ' absolute z-10' : sidebar + ' absolute z-10'
+					open ? sidebarOpen + ' absolute z-30' : sidebar + ' absolute z-30'
 				}>
 				<svg
 					className={hamburger}
