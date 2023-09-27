@@ -1,9 +1,9 @@
 import ProfileUser from "@/components/profile/ProfileUser";
 
-const DetailProfile = ({params}) => {
+const DetailProfile = () => {
     return(
         <>
-            <ProfileUser params = {params}/>
+            <ProfileUser/>
         </>
     )
 }

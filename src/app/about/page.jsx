@@ -1,6 +1,11 @@
-import About from "../../components/about/About"
-
+import About from '../../components/about/About';
+import Footer from '@/components/footer/Footer';
 
 export default function page() {
-	return <About></About>
+	return (
+		<>
+			<About></About>
+			<Footer />
+		</>
+	);
 }

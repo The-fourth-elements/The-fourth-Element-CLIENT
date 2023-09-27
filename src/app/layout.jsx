@@ -2,7 +2,6 @@
 'use client';
 
 import Nav from '../components/navbar/Navbar';
-import Footer from '../components/footer/Footer';
 import './global.css';
 import { Inter } from 'next/font/google';
 import AuthContextProvider from './context/authContext';
@@ -23,7 +22,6 @@ export default function RootLayout({ children }) {
 							<Nav />
 						</header>
 						{children}
-						<Footer />
 					</Provider>
 				<ToastContainer/>
 				</AuthContextProvider>

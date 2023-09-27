@@ -8,6 +8,10 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 
 import {
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
 	Navbar,
 	NavbarContent,
 	NavbarItem,
@@ -16,6 +20,7 @@ import {
 	NavbarMenuItem,
 	Button,
 	NavbarBrand,
+	User,
 } from '@nextui-org/react';
 import { toastError } from '@/helpers/toast';
 import { deleteCookie } from 'cookies-next';
@@ -25,7 +30,7 @@ export default function Nav() {
 
 	// const status = 'authenticated';
 
-	const router = useRouter;
+	const router = useRouter();
 	const routes = [
 		{ label: 'Home', route: '/' },
 		{ label: 'About Us', route: '/about' },
@@ -33,7 +38,7 @@ export default function Nav() {
 
 	const handleLogout = async () => {
 		try {
-			deleteCookie("jsdklfsdjklfdsjfds");
+			deleteCookie('jsdklfsdjklfdsjfds');
 			await signOut();
 			router.push('/auth');
 		} catch (error) {
@@ -42,7 +47,8 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar className='navcolor h-40 bg-primary p-3 '>
+		<Navbar className='navcolor h-40 bg-primary p-3 w-full' >
+			
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -63,7 +69,7 @@ export default function Nav() {
 				</NavbarBrand>
 			</NavbarContent>
 
-			<NavbarContent className='hidden sm:flex gap-4 ' justify='end'>
+			<NavbarContent className='hidden sm:flex gap-4 ' justify='center'>
 				{routes.map(({ label, route, index }) => (
 					<NavbarMenuItem key={`${route}-${index}`}>
 						<Link
@@ -118,27 +124,31 @@ export default function Nav() {
 			</NavbarMenu>
 
 			{status === 'authenticated' ? (
-				<NavbarContent>
+				<NavbarContent justify='end'>
 					<NavbarItem>
-						<Button
-							href={'/dashboard'}
-							as={Link}
-							
-							variant='flat'
-							>
-							Dashboard
-						</Button>
-					</NavbarItem>
-					<NavbarItem>
-						<Button
-							as={Link}
-							color='warning'
-							href='/'
-							variant='flat'
-							className='text-l'
-							onClick={handleLogout}>
-							Log Out
-						</Button>
+						<Dropdown>
+							<DropdownTrigger>
+								<User
+									avatarProps={{
+										src: 'https://ichef.bbci.co.uk/news/800/cpsprodpb/14F9E/production/_108881958_gettyimages-154047293.jpg',
+									}}
+								/>
+							</DropdownTrigger>
+							<DropdownMenu aria-label='Static Actions'>
+								<DropdownItem key='profile'>
+									<Link href={'/profile'}>Mi cuenta</Link>
+								</DropdownItem>
+								<DropdownItem key='settings'><Link href={'/profile/settings'}>Editar cuenta</Link></DropdownItem>
+								<DropdownItem
+									key='logout'
+									className='text-danger'
+									color='danger'
+									onClick={handleLogout}
+									>
+									Cerrar sesión
+								</DropdownItem>
+							</DropdownMenu>
+						</Dropdown>
 					</NavbarItem>
 				</NavbarContent>
 			) : (
