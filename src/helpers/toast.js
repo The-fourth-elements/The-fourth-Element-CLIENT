@@ -1,15 +1,12 @@
-'use client'
-
 import { toast } from 'react-toastify'
 
 
 export const toastSuccess = (message) => {
-    toast.success (message, {
+    toast.success(message, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
         draggable: true,
         progress: 0.2,
         theme: "light",
