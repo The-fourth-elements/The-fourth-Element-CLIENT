@@ -35,9 +35,7 @@ function CreateClass() {
 
 	useEffect(() => {
 		const fetchModulesAndRedirect = async () => {
-			console.log(modules);
-			await getModules(); // Espera a que se carguen los módulos
-			console.log("modules cargados, " , modules);
+			await getModules(); 
 			if (!(modules.length === 0)) setIsLoading(!isloading);
 
 			
@@ -68,9 +66,15 @@ function CreateClass() {
 		);
 	}
 
-	console.log('soy el cookies', modules);
-
 	const handleSubmit = async values => {
+		try {
+			if(video.url.length <= 0){
+				throw new Error('Inserte un video')
+			}
+		} catch (error) {
+			toastError(error.message);
+			return;
+		}
 		let form = {
 			module: values.module,
 			name: values.name,
@@ -79,23 +83,16 @@ function CreateClass() {
 			powerPoint: values.powerPointUrl,
 		};
 
-		if (!video?.url) {
-			// Show an alert to the user
-			window.alert('Debes subir un video antes de enviar la clase.');
-		}
 
 		const parsedModule = parseInt(form.module);
 
-		form.module = modules[parsedModule - 1]._id; //guarda el id del modulo seleccionado
-		console.log('form ', form);
+		form.module = modules[parsedModule - 1]._id;
 
 		try {
 			const classPostResponse = await postData(
 				`${process.env.API_BACKEND}class`,
 				form
 			);
-
-			console.log("classPostResponse ", classPostResponse);
 			const url = `${process.env.API_BACKEND}module/${form.module}/class/${classPostResponse._id}`;
 			const options = {
 				method: 'PUT',
@@ -116,9 +113,7 @@ function CreateClass() {
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
-		console.log(url, public_id);
 		setVideo({ url, public_id });
-		console.log("video " , video);
 	};
 
 	return (

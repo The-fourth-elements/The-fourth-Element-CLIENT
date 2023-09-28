@@ -15,7 +15,6 @@ const ResetPass = ({ params }) => {
 
 	const handleShow = () => {
 		setViewPassword(!viewPassword);
-		console.log(viewPassword);
 	};
 	const handleShow2 = () => {
 		setViewPassword2(!viewPassword2);
