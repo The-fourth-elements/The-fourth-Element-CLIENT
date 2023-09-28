@@ -39,6 +39,7 @@ const Register = ({ toogleDisplay }) => {
 						);
 						console.log('Response:  ', response);
 						if (response.includes('duplicate')) {
+							console.log("se hizo true el estado");
 							setDuplicatedEmail(true);
 							throw new Error();
 						} else {
@@ -57,46 +58,41 @@ const Register = ({ toogleDisplay }) => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
-							<div className='group text-white'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
 								<InputField
 									type='string'
 									name='username'
 									placeholder='Ingrese su nombre'
+									className='mb-10 '
 								/>
-							</div>
 
-							<div className='group text-white'>
 								<InputField
 									type='string'
 									name='email'
 									placeholder='Ingrese su email'
+									className='mb-12'
 								/>
-							</div>
 
-							<div className='group text-white'>
 								<InputField
 									type={viewPassword ? 'text' : 'password'}
 									name='password'
 									placeholder='Ingrese su contraseña'
 									viewPassword={viewPassword}
+									className='mb-12'
 								/>
-							</div>
 
-							<div className='group text-white'>
 								<InputField
 									type={viewPassword ? 'text' : 'password'}
 									name='repeatPassword'
 									placeholder='Repita su contraseña'
 									viewPassword={viewPassword}
+									className='mb-12'
 								/>
 								<button type='button' onClick={handleShow}>
 									{!viewPassword ? <EyeSlash /> : <EyeOpen />}
 								</button>
-							</div>
 
-							<div className='group '>
-								<label htmlFor='country' className=''>
+								<label htmlFor='country' className='text-black mb-5'>
 									Country:
 								</label>
 								<CountryDropdown
@@ -108,24 +104,23 @@ const Register = ({ toogleDisplay }) => {
 										setCountry(val);
 										setRegion('');
 									}}
-									className='select'
+									className='select  w-auto'
 								/>
-							</div>
 
 							{country && (
-								<div className='group'>
-									<label htmlFor='state'>State/Region:</label>
+								<div >
+									<label className='text-black ' htmlFor='state'>State/Region:</label>
 									<RegionDropdown
 										country={country}
 										value={region}
 										id='state'
 										onChange={val => setRegion(val)}
-										className='group-select'
+										className='mt-10 group-select max-w-full mx-auto text-white'
 									/>
-									<ErrorMessage name='state' component='span' className='' />
+									<ErrorMessage name='state' component='span' className=' ' />
 								</div>
 							)}
-							<span onClick={toogleDisplay} className='toogle text-2xl'>
+							<span onClick={toogleDisplay} className='toogle text-2xl text-black hover:cursor-pointer underline mt-5 mb-5'>
 								¿Ya tienes una cuenta?
 							</span>
 							<Button type='submit' className='submit'>

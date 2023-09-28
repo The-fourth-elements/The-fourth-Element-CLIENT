@@ -9,6 +9,7 @@ import { validationSchemaRecovery } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Button, Card, CardBody } from '@nextui-org/react';
 import InputField from '@/helpers/InputField';
+import '@/helpers/CustomComponentsStyles.scss';
 
 const RecoveryPass = () => {
 	const router = useRouter();
@@ -31,23 +32,22 @@ const RecoveryPass = () => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='Form'>
-							<h1>Recovery Password</h1>
-							<div className='group'>
+						<Form className=' relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+							<h1 className='text-black mx-auto mb-10'>Recovery Password</h1>
 								<InputField
 									type='string'
 									name='email'
 									placeholder='Ingrese su email'
+									className='mb-12'
 								/>
-							</div>
 							<span
-								className='toogle text-2xl'
+								className='toogle text-2xl text-black mx-auto mb-8 mt-8 hover:cursor-pointer underline '
 								onClick={() => {
 									router.push('/auth');
 								}}>
 								¿Volver?
 							</span>
-							<Button type='submit' className='submit'>
+							<Button type='submit' className='submit text-xl p-5 mx-auto'>
 								Send code
 							</Button>
 						</Form>

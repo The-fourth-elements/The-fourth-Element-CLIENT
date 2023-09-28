@@ -16,7 +16,7 @@ const TextAreaField = ({ name, label, rows, ...props }) => {
 				rows={rows}
 				{...props}
 			/>
-			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl`} >
+			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl mb-10 mt-20`} >
 				{meta.error}
 			</div>
 		</div>

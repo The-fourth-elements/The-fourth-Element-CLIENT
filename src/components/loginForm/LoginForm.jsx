@@ -73,7 +73,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 									classNames={{
 										label: 'text-xl',
 									}}
-									className='mb-20'
+									className='mb-5'
 									viewPassword = {viewPassword}
 								/>
 								<button type='button' onClick={handleShow}>
