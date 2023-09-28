@@ -4,12 +4,22 @@ import '@/components/recoveryPassword/styles.scss';
 import { Form, Formik } from 'formik';
 import { Button, Card, CardBody } from '@nextui-org/react';
 import { toastError, toastSuccess } from '@/helpers/toast';
-import InputField from '@/helpers/InputField';
+import InputFieldPassword from '@/helpers/InputFieldPassword';
+
 import { initialValuesRecovery, validationSchema } from '@/helpers/validations';
 import '@/helpers/CustomComponentsStyles.scss';
-
-
+import { useState } from 'react';
 const ResetPass = ({ params }) => {
+	let [viewPassword, setViewPassword] = useState(false);
+	let [viewPassword2, setViewPassword2] = useState(false);
+
+	const handleShow = () => {
+		setViewPassword(!viewPassword);
+		console.log(viewPassword);
+	};
+	const handleShow2 = () => {
+		setViewPassword2(!viewPassword2);
+	};
 	const handleSubmit = async values => {
 		const { newPassword } = values;
 		const form = {
@@ -35,13 +45,27 @@ const ResetPass = ({ params }) => {
 				validationSchema={validationSchema}>
 				<CardBody className='body flex-grow'>
 					<Form className=' relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col mx-auto space-y-5  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
-							<label htmlFor='newPassword' className='text-black'>Nueva contraseña:</label>
-							<InputField className='mb-12' type='string' name='newPassword' />
+						<label htmlFor='newPassword' className='text-black'>
+							Nueva contraseña:
+						</label>
+						<InputFieldPassword
+							className='mb-5'
+							type='string'
+							name='newPassword'
+							viewPassword={viewPassword}
+							handleShow={handleShow}
+						/>
 
-							<label className='text-black mb-12'  htmlFor='confirmPassword '>
-								Confirmar nueva contraseña:
-							</label>
-							<InputField className='mb-12' type='string' name='confirmPassword' />
+						<label className='text-black mb-12' htmlFor='confirmPassword '>
+							Confirmar nueva contraseña:
+						</label>
+						<InputFieldPassword
+							className='mb-5'
+							type='string'
+							name='confirmPassword'
+							viewPassword={viewPassword2}
+							handleShow={handleShow2}
+						/>
 
 						<Button type='submit' className='submit mx-auto'>
 							Cambiar contraseña

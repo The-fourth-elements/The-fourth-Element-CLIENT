@@ -7,6 +7,12 @@
     color: red;
 	}
 
+  .input-wrapper {
+		height: auto;
+		width: 100%;
+	}
+
+
 	.input-container {
 		position: static; /* Ensure relative positioning */
 		height: auto; /* Set a fixed or maximum height as needed */
@@ -21,6 +27,11 @@
 @include lg {
 	.input-container {
 		position: relative; 
+		height: auto;
+		width: 100%;
+	}
+
+  .input-wrapper {
 		height: auto;
 		width: 100%;
 	}
@@ -55,6 +66,12 @@
 		width: 100%;
 	}
 
+  .input-wrapper {
+		height: auto;
+		width: 100%;
+	}
+
+
   .error-message {
 		color: red;
 		visibility: hidden;
@@ -78,8 +95,6 @@
 	}*/
 }
 
-    visibility: visible; /* Show the error message when it has content */
-  }
 
 
 

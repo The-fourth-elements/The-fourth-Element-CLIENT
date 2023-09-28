@@ -3,6 +3,7 @@ import { useField } from 'formik';
 import { Input } from '@nextui-org/react';
 import { EyeOpen, EyeSlash } from '@/components/loginForm/eyeIcons';
 import "./Button.scss"
+import './CustomComponentsStyles.scss'
 
 const InputFiledPassword = ({ ...props }) => {
 	const [field, meta] = useField(props);

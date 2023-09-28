@@ -61,10 +61,10 @@ export const LoginForm = ({ toogleDisplay }) => {
 									classNames={{
 										label: 'text-xl',
 									}}
+									className='mb-5'
 									
 								/>
 
-							<div className='group text-white' >
 								<InputFieldPassword
 									name='password'
 									type={viewPassword ? 'text' : 'password'}
@@ -77,7 +77,6 @@ export const LoginForm = ({ toogleDisplay }) => {
 									className='mb-5'
 									
 								/>
-							</div>
 							<div className='flex flex-col items-center text-2xl'>
 								<span
 									className='toogle text-black hover:cursor-pointer underline'

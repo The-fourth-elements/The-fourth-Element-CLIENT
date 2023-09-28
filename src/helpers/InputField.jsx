@@ -18,7 +18,7 @@ const InputFiled = ({ ...props }) => {
 				type={!field.name.includes("assword") ? "text" : viewPassword ? 'text' : 'password'}
 				autoComplete='false'
 			/>
-			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl text-red-500 mb-10 mt-20 w-`} >
+			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl text-red-500`} >
 				{meta.error}
 			</div>
 		</div>

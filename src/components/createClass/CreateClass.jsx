@@ -128,7 +128,7 @@ function CreateClass() {
 					initialValues={initialValuesClass}
 					validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
-					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col   items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
+					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
 						<h1 className='mb-7'> Subir una clase </h1>
 
 						{modules ? (
@@ -148,7 +148,8 @@ function CreateClass() {
 							classNames={{
 								label: 'text-xl',
 							}}
-							className='mb-12'
+							className='mb-5'
+
 							// type='name'
 
 							label='Nombre de la clase'
@@ -159,7 +160,8 @@ function CreateClass() {
 							classNames={{
 								label: 'text-xl',
 							}}
-							className='mb-12'
+							className='mb-5'
+
 							type='string'
 							label='URL del PowerPoint'
 							name='powerPointUrl'
@@ -169,7 +171,8 @@ function CreateClass() {
 							classNames={{
 								label: 'text-xl',
 							}}
-							className='mb-12'
+							className='mb-5'
+
 							type='description'
 							label='Descripción'
 							name='description'
