@@ -8,7 +8,6 @@ import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
-
 import UploadWidget from '../uploadWidget/UploadWidget';
 
 import { useState, useEffect } from 'react';
@@ -21,7 +20,7 @@ import { toastError, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
 
-function CreateModule() {
+function CreateClass() {
 	const { modules, getModules } = useModulesStore();
 
 	const [isloading, setIsLoading] = useState(true);
@@ -39,7 +38,7 @@ function CreateModule() {
 			console.log('holi bobi');
 			console.log(modules);
 			await getModules(); // Espera a que se carguen los módulos
-			console.log(modules);
+			console.log("modules cargados, " , modules);
 			if (!(modules.length === 0)) setIsLoading(!isloading);
 
 			
@@ -201,4 +200,4 @@ function CreateModule() {
 	);
 }
 
-export default CreateModule;
+export default CreateClass;

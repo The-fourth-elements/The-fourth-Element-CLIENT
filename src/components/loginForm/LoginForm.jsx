@@ -2,6 +2,7 @@
 import { EyeOpen, EyeSlash } from './eyeIcons';
 import { Formik, Form } from 'formik';
 import './style.scss';
+import '@/helpers/CustomComponentsStyles.scss';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import googleLogo from '../../assets/svg/google.svg';
@@ -56,40 +57,38 @@ export const LoginForm = ({ toogleDisplay }) => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='Form'>
-							<div className='group text-white'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
 								<InputField
 									name='email'
 									type='email'
 									classNames={{
 										label: 'text-xl',
 									}}
+									className='mb-12'
 								/>
-							</div>
 
-							<div className='group text-white' style={{ alignItems: 'center' }}>
 								<InputField
 									name='password'
 									type={viewPassword ? 'text' : 'password'}
 									classNames={{
 										label: 'text-xl',
 									}}
+									className='mb-20'
 									viewPassword = {viewPassword}
 								/>
 								<button type='button' onClick={handleShow}>
 								{!viewPassword ?  <EyeSlash/> : <EyeOpen/> }
 								</button>
-							</div>
 							<div className='flex flex-col items-center text-2xl'>
 								<span
-									className='toogle'
+									className='toogle text-black hover:cursor-pointer underline'
 									onClick={() => {
 										router.push('/auth/reset-password');
 									}}>
 									¿Olvidó su contraseña?
 								</span>
 								<span
-									className='toogle'
+									className='toogle text-black hover:cursor-pointer underline'
 									onClick={() => {
 										toogleDisplay();
 									}}>
@@ -97,12 +96,12 @@ export const LoginForm = ({ toogleDisplay }) => {
 								</span>
 							</div>
 
-							<Button type='submit' className='submit'>
+							<Button type='submit' className='  border-large rounded-sm mb-12'>
 								Ingresar
 							</Button>
 							<Button
 								type='button'
-								className='googleBtn'
+								className='googleBtn mb-12 aspect-ratio-1/1'
 								onClick={handleSignIn}>
 								<Image src={googleLogo} alt='' className='googleLogo' />
 							</Button>

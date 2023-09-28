@@ -28,16 +28,14 @@ export default function ModuleView() {
 		console.log(holi);
 	}
 	const { modules, getModules } = useModulesStore();
+	const [moduleData, setModuleData] = useState({});
+	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
+	const [selectedClass, setSelectedClass] = useState({});
+
+
 	const [classList, setClassList] = useState([]);
 	const [access, setAccess] = useState(false);
 
-	/*
-		clase : {id, nombre, video, powerpoint };
-		modules : {[clase], }
-		
-	*/
-
-	let modulesWithClass = [];
 	useEffect(() => {
 		getModules();
 		// async function fetchData() {
@@ -48,81 +46,38 @@ export default function ModuleView() {
 		// fetchData(); // Llama a la función asincrónica
 	}, []);
 
-	/*useEffect(() => {
-		const promiseList = modules.map((module) => {
-		  return module.classModule.map((elem) => {
-			const url = `${process.env.API_BACKEND}class/${elem}`;
-			return fetch(url);
-		  });
-		});
-	  
-		const flattenedPromiseList = [].concat(...promiseList);
-	  
-		// Usar Promise.all para esperar a que todas las promesas se completen
-		Promise.all(flattenedPromiseList)
-		  .then((responses) => {
-			const jsonPromises = responses.map((response) => response.json());
-			return Promise.all(jsonPromises);
-		  })
-		  .then((data) => {
-			setClassList(data);
-		  });
-	  }, [modules]); // Agrega 'modules' como dependencia
-	  
-
-	const promiseList = modules.map(module => {
-		return module.classModule.map(elem => {
-			const url = `${process.env.API_BACKEND}class/${elem}`;
-			return fetch(url);
-		});
-	});*/
 
 	useEffect(() => {
-		const moduleData = {}; // Objeto para almacenar los datos de las clases por módulo
-	  
-		const promiseList = modules.map((module) => {
-		  const classDataArray = [];
-	  
-		  return Promise.all(
-			module.classModule.map((elem) => {
-			  const url = `${process.env.API_BACKEND}class/${elem}`;
-			  return fetch(url)
-				.then((response) => response.json())
-				.then((classData) => {
-				  classDataArray.push(classData);
-				})
-				.catch((error) => {
-				  console.error(`Error al obtener datos de clase para el módulo ${module.id}:`, error);
-				});
-			})
-		  )
-		  .then(() => {
-			moduleData[module.name] = classDataArray; // Usa el nombre del módulo como clave en moduleData
-		  });
-		});
-	  
-		Promise.all(promiseList)
-		  .then(() => {
-			// moduleData ahora contiene los datos de las clases por módulo
-			console.log("moduleData: ", moduleData);
-			// Puedes hacer lo que necesites con moduleData aquí
-		  });
-	  }, [modules]);
-	  
+		const fetchData = async () => {
+			const fetchedModuleData = {};
 
-	/*const flattenedPromiseList = [].concat(...promiseList);
+			for (const module of modules) {
+				const classDataArray = [];
 
-	// Usar Promise.all para esperar a que todas las promesas se completen
-	Promise.all(flattenedPromiseList)
-		.then(responses => {
-			const jsonPromises = responses.map(response => response.json());
-			return Promise.all(jsonPromises);
-		})
-		.then(data => {
-			setClassList(data);
-		});
+				for (const elem of module.classModule) {
+					try {
+						const url = `${process.env.API_BACKEND}class/${elem}`;
+						const response = await fetch(url);
+						const classData = await response.json();
+						classDataArray.push(classData);
+					} catch (error) {
+						console.error(
+							`Error al obtener datos de clase para el módulo ${module.id}:`,
+							error
+						);
+					}
+				}
 
-	console.log('COSO');*/
+				fetchedModuleData[module.name] = classDataArray;
+			}
+
+			setModuleData(fetchedModuleData);
+			setModulesDataLoaded(true);
+		};
+
+		fetchData();
+	}, [modules]);
+
 	return (
 		<>
 			<Card className={containerVideos + ' navcolor'}>
@@ -165,33 +120,37 @@ export default function ModuleView() {
 									href='#'
 									className='flex justify-center bg-transparent rounded'>
 									<h3 className='p-2 m-3 cursor-pointer'>
-										Power Point Module: {modules[0]?.name}
+										Power Point Module: {modules.name}
 									</h3>
 								</Link>
 							</AccordionItem>
 						</Accordion>
 					</Card>
 				</main>
-				<aside className={div2 + ' bg-foreground md:w-96 '}>
+				<aside className={`${div2} bg-foreground md:w-96`}>
 					<nav
-						className={
-							navtContainer + ' flex flex-col bg-secondary m-3 rounded'
-						}>
+						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
 						<ul className='m-2'>
-							{modules.map(({ video_url, name }, index) => (
-								<li className='m-2' key={index}>
-									<Accordion>
-										<AccordionItem
-											className={
-												acordionItem +
-												' p-2 m-1 bg-transparent rounded md:m-0 text-background'
-											}
-											title={`Módulo: ${name}`}>
-											<p> CLASES: {classList?.map(elem => elem.name)}</p>
-										</AccordionItem>
-									</Accordion>
-								</li>
-							))}
+							{modulesDataLoaded ? (
+								modules.map(({ name }, index) => (
+									<li className='m-2' key={index}>
+										<Accordion>
+											<AccordionItem
+												className={`${acordionItem} p-2 m-1 bg-transparent rounded md:m-0 text-background`}
+												title={`Módulo: ${name}`}>
+												<p>
+													CLASES:
+													{moduleData[modules[index].name]?.map(
+														elem => elem.name
+													).join(', ')}
+												</p>
+											</AccordionItem>
+										</Accordion>
+									</li>
+								))
+							) : (
+								<h1>Esperando a que se carguen los datos...</h1>
+							)}
 						</ul>
 					</nav>
 				</aside>
