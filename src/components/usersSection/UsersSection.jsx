@@ -16,6 +16,7 @@ import {
 } from '@nextui-org/react';
 import renderCell from '../../helpers/renderCell.jsx';
 import CustomModal from '../../helpers/CustomModal.jsx';
+import { useRouter } from 'next/router';
 
 import { useUsersStore } from '@/zustand/store/usersStore.js';
 
@@ -33,7 +34,10 @@ export default function UsersSection() {
 	const { users, getUsers, deleteUser } = useUsersStore();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [userIdToDelete, setUserIdToDelete] = useState('');
-
+	// const router = useRouter()
+	const handleClick = () => {
+		// router.push(`/dashboard/users-section/user-edit/6515526af3ae6387c3766af3`);
+	  };
 	const handleDelete = userId => {
 		setUserIdToDelete(userId);
 		setIsModalOpen(true);
@@ -114,7 +118,7 @@ export default function UsersSection() {
 									<TableRow key={item._id}>
 										{columnKey => (
 											<TableCell>
-												{renderCell(item, columnKey, handleDelete)}
+												{renderCell(item, columnKey, handleDelete, handleClick)}
 											</TableCell>
 										)}
 									</TableRow>

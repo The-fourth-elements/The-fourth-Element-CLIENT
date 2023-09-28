@@ -1,0 +1,17 @@
+
+
+
+  .input-wrapper {
+      position: relative;
+    //   display: inline-block;
+    }
+
+    .eye-button {
+          position: absolute;
+          top: 50%;
+          right: 30px; // Ajusta el valor según tus necesidades
+          transform: translateY(-50%);
+          background: transparent;
+          border: none;
+          cursor: pointer;
+        }

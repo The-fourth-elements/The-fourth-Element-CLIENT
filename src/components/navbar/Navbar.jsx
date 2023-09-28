@@ -115,7 +115,7 @@ export default function Nav() {
 								<User
 									avatarProps={
 										// session?.token?
-										session?.token?.picture.length > 5 ? ({src:session.token.picture}):({src:session?.token?.user?.image_profile })
+										session?.token?.picture?.length > 5 ? ({src:session.token.picture}):({src:session?.token?.user?.image_profile })
 									}
 								/>
 							</DropdownTrigger>
