@@ -8,6 +8,10 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 
 import {
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
 	Navbar,
 	NavbarContent,
 	NavbarItem,
@@ -16,6 +20,7 @@ import {
 	NavbarMenuItem,
 	Button,
 	NavbarBrand,
+	User,
 } from '@nextui-org/react';
 import { toastError } from '@/helpers/toast';
 import { deleteCookie } from 'cookies-next';
@@ -25,7 +30,7 @@ export default function Nav() {
 
 	// const status = 'authenticated';
 
-	const router = useRouter;
+	const router = useRouter();
 	const routes = [
 		{ label: 'Home', route: '/' },
 		{ label: 'About Us', route: '/about' },
@@ -33,16 +38,17 @@ export default function Nav() {
 
 	const handleLogout = async () => {
 		try {
-			deleteCookie("jsdklfsdjklfdsjfds");
+			deleteCookie('jsdklfsdjklfdsjfds');
 			await signOut();
 			router.push('/auth');
 		} catch (error) {
 			toastError('Ocurrio un error en el cierre de sesión');
 		}
 	};
+	console.log(session?.token);
 
 	return (
-		<Navbar className='navcolor h-40 bg-primary p-3 '>
+		<Navbar className='navcolor h-40 bg-primary p-3 w-full'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -63,7 +69,7 @@ export default function Nav() {
 				</NavbarBrand>
 			</NavbarContent>
 
-			<NavbarContent className='hidden sm:flex gap-4 ' justify='end'>
+			<NavbarContent className='hidden sm:flex gap-4 ' justify='center'>
 				{routes.map(({ label, route, index }) => (
 					<NavbarMenuItem key={`${route}-${index}`}>
 						<Link
@@ -99,46 +105,46 @@ export default function Nav() {
 						</Link>
 					</NavbarMenuItem>
 				))}
-				{status === 'unauthenticated' ? (
-					<NavbarMenuItem>
-						<Link className='w-full text-l text-foreground' href='/auth'>
-							Login
-						</Link>
-					</NavbarMenuItem>
-				) : (
-					<NavbarMenuItem>
-						<Link
-							className='w-full text-l text-foreground'
-							href='/auth'
-							onClick={handleLogout}>
-							Logout
-						</Link>
-					</NavbarMenuItem>
-				)}
 			</NavbarMenu>
 
 			{status === 'authenticated' ? (
-				<NavbarContent>
+				<NavbarContent justify='end'>
 					<NavbarItem>
-						<Button
-							href={'/dashboard'}
-							as={Link}
-							
-							variant='flat'
-							>
-							Dashboard
-						</Button>
-					</NavbarItem>
-					<NavbarItem>
-						<Button
-							as={Link}
-							color='warning'
-							href='/'
-							variant='flat'
-							className='text-l'
-							onClick={handleLogout}>
-							Log Out
-						</Button>
+						<Dropdown>
+							<DropdownTrigger>
+								<User
+									avatarProps={
+										// session?.token?
+										session?.token?.picture.length > 5 ? ({src:session.token.picture}):({src:session?.token?.user?.image_profile })
+									}
+								/>
+							</DropdownTrigger>
+							<DropdownMenu aria-label='Static Actions'>
+								<DropdownItem key='profile'>
+									<Link href={'/profile'}>Mi cuenta</Link>
+								</DropdownItem>
+								{session?.token?.user?.role >= 2 ? (
+									<DropdownItem onClick={() => router.push('/dashboard')}>
+										Panel
+									</DropdownItem>
+								) : (
+									<DropdownItem onClick={() => router.push('/course')}>
+										Curso
+									</DropdownItem>
+								)}
+								<DropdownItem key='settings'>
+									<Link href={'/profile/settings'}>Editar cuenta</Link>
+								</DropdownItem>
+
+								<DropdownItem
+									key='logout'
+									className='text-danger'
+									color='danger'
+									onClick={handleLogout}>
+									Cerrar sesión
+								</DropdownItem>
+							</DropdownMenu>
+						</Dropdown>
 					</NavbarItem>
 				</NavbarContent>
 			) : (

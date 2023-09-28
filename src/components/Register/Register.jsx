@@ -16,7 +16,9 @@ const Register = ({ toogleDisplay }) => {
 	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
-	let [viewPassword, setViewPassword] = useState(false)
+	const [duplicatedEmail, setDuplicatedEmail] = useState(false);
+
+	let [viewPassword, setViewPassword] = useState(false);
 	let [viewPassword2, setViewPassword2] = useState(false)
 
 
@@ -36,26 +38,33 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					try {
+						console.log(process.env.API_BACKEND);
 						const response = await handleSubmitRegister(
 							values,
 							country,
 							region
 						);
-						if(!response.error){
-							toastSuccess("cuenta creada con exito");
-							window.location.reload();
-							console.log(values)
+						console.log('Response:  ', response);
+						if (response.includes('duplicate')) {
+							setDuplicatedEmail(true);
+							throw new Error();
+						} else {
+							//	toastSuccess('cuenta creada con exito');
+							// window.location.reload();
+							console.log('Response valida:  ', response);
 						}
-
 					} catch (error) {
 						if (error) {
+							if (duplicatedEmail) {
+								toastError('Ya hay una cuenta existente con el email ingresado');
+							}
 							toastError('Ocurrio un error al crear la cuenta');
 						}
 					}
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='Form'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
 							<div className='group text-white'>
 								<InputField
 									type='string'
@@ -81,7 +90,6 @@ const Register = ({ toogleDisplay }) => {
 									handleShow={handleShow}
 
 								/>
-								
 							</div>
 
 							<div className='group text-white'>

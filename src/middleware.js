@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 export const middleware = async request => {
     const session = request.cookies.get('next-auth.session-token');
 
-    // console.log(response, 'yo sou el dkfkdkfjdk');
 
     // /traer el role con un getId y me indicara el role que tiene
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
@@ -24,13 +23,11 @@ export const middleware = async request => {
         } else {
             url.pathname = '/course';
         }
-        console.log('toy aqui');
         return NextResponse.redirect(url);
     }
     if (session && request.nextUrl.pathname === '/dashboard') {
         const url = request.nextUrl.clone();
         //verificar el rol
-        console.log('soy el roled', role);
         if (role > 1) {
             return NextResponse.next()
         } else {
@@ -50,5 +47,5 @@ export const middleware = async request => {
 };
 
 export const config = {
-    matcher: ['/course', '/auth', '/dashboard'],
+    matcher: ['/course/:path*', '/auth', '/dashboard/:path*', '/profile/:path*'],
 };

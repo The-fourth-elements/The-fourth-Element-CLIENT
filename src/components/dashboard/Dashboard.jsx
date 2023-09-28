@@ -13,38 +13,35 @@ const dashboard = () => {
 	const [userMetrics, setUserMetrics] = useState({
 		labels: [],
 		data: [],
-
 	});
 
 	useEffect(() => {
 		if (users?.length <= 0) {
 			getUsers()?.then(updatedUsers => {
 				const metrics = calculateMetrics(updatedUsers);
-				console.log(metrics);
-				setUserMetrics(metrics);
-				console.log(metrics);
 
+				setUserMetrics(metrics);
 			});
 		} else {
 			const metrics = calculateMetrics(users);
-			setUserMetrics(metrics)
+			setUserMetrics(metrics);
 		}
 	}, [users]);
-	const calculateMetrics = (users) => {
-		const activeUsers = users?.filter((user) => !user.deleted);
-	  
+	const calculateMetrics = users => {
+		const activeUsers = users?.filter(user => !user.deleted);
+
 		let roleCounts = [0, 0, 0, 0];
-	  
-		activeUsers?.forEach((user) => {
-		  if (user.role) {
-			roleCounts[user.role]++;
-		  } else {
-			roleCounts[0]++;
-		  }
+
+		activeUsers?.forEach(user => {
+			if (user.role) {
+				roleCounts[user.role]++;
+			} else {
+				roleCounts[0]++;
+			}
 		});
 		const labels = ['Rol 0', 'Rol 1', 'Rol 2', 'Rol 3'];
 		const data = roleCounts;
-		const metricData = setData(labels, 'Usuarios', data)
+		const metricData = setData(labels, 'Usuarios', data);
 		return metricData;
 	};
 
@@ -58,19 +55,19 @@ const dashboard = () => {
 					<div className={Container}>
 						<section className={section1}>
 							<h2>Usuarios: </h2>
-							{userMetrics?.labels?.length >=1 && (
+							{userMetrics?.labels?.length >= 1 && (
 								<Metric data={userMetrics} options={option1}></Metric>
 							)}
 						</section>
 						<section className={section2}>
 							<h2>Usuarios: </h2>
-							{userMetrics?.labels?.length >=1 && (
+							{userMetrics?.labels?.length >= 1 && (
 								<Metric data={userMetrics} options={option1}></Metric>
 							)}
 						</section>
 						<section className={section3}>
 							<h2>Usuarios: </h2>
-							{userMetrics?.labels?.length >=1 && (
+							{userMetrics?.labels?.length >= 1 && (
 								<Metric data={userMetrics} options={option1}></Metric>
 							)}
 						</section>
