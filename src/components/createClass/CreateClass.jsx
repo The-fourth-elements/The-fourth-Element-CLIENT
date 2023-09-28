@@ -35,7 +35,6 @@ function CreateClass() {
 
 	useEffect(() => {
 		const fetchModulesAndRedirect = async () => {
-			console.log('holi bobi');
 			console.log(modules);
 			await getModules(); // Espera a que se carguen los módulos
 			console.log("modules cargados, " , modules);
@@ -117,6 +116,7 @@ function CreateClass() {
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
+		console.log(url, public_id);
 		setVideo({ url, public_id });
 		console.log("video " , video);
 	};

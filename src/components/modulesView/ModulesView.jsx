@@ -1,8 +1,9 @@
 'use client';
-
-import { modules, classes } from '@/utils/navigation';
+import { useState, useEffect } from 'react';
 import { Card, Link, Accordion, AccordionItem } from '@nextui-org/react';
-import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { getCookie, setCookie } from 'cookies-next';
+import { useModulesStore } from '@/zustand/store/modulesStore';
 import {
 	containerVideos,
 	div1,
@@ -11,41 +12,21 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
-import { useSession } from 'next-auth/react';
-import { getCookie, setCookie } from 'cookies-next';
-import { useModulesStore } from '@/zustand/store/modulesStore';
-import { useState, useEffect } from 'react';
 
 export default function ModuleView() {
-	const router = useRouter;
 	const { data: session } = useSession();
-	console.log(session);
-
 	const id = session?.token?.user?.id;
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
-		const holi = getCookie('jsdklfsdjklfdsjfds');
-		console.log(holi);
 	}
 	const { modules, getModules } = useModulesStore();
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
-	const [selectedClass, setSelectedClass] = useState({});
-
-
-	const [classList, setClassList] = useState([]);
-	const [access, setAccess] = useState(false);
+	const [currentClass, setCurrentClass] = useState(null);
 
 	useEffect(() => {
 		getModules();
-		// async function fetchData() {
-		// 	if(session?.user?.name && !access){
-		// 		await registerOrLogin();
-		// 	}
-		// }
-		// fetchData(); // Llama a la función asincrónica
 	}, []);
-
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -67,16 +48,61 @@ export default function ModuleView() {
 						);
 					}
 				}
-
 				fetchedModuleData[module.name] = classDataArray;
 			}
-
 			setModuleData(fetchedModuleData);
 			setModulesDataLoaded(true);
 		};
-
 		fetchData();
 	}, [modules]);
+
+	const renderVideo = () => {
+		if (currentClass) {
+			const selectedModule = modules[0]?.name;
+			const selectedClassData = moduleData[selectedModule]?.find(
+				elem => elem.name === currentClass
+			);
+
+			if (selectedClassData) {
+				return <video src={selectedClassData.video.url} controls={true} />;
+			}
+		}
+		return <p>Selecciona una clase para ver el video.</p>;
+	};
+
+	const renderDescription = () => {
+		if (currentClass) {
+			const selectedModule = modules[0]?.name;
+			const selectedClassData = moduleData[selectedModule]?.find(
+				elem => elem.name === currentClass
+			);
+			if (selectedClassData) {
+				return (
+					<>
+						<h3 className='text-lg'>Descripción</h3>
+						<br />
+						<p>{selectedClassData.description}</p>
+						<br />
+						<Link
+							href='#'
+							className='flex justify-center bg-transparent rounded'>
+							<h3 className='p-2 m-3 cursor-pointer'>
+								Power Point:{' '}
+								<Link href={selectedClassData.powerPoint.url} target='_blank'>
+									icon
+								</Link>
+							</h3>
+						</Link>
+					</>
+				);
+			}
+		}
+		return <p>Selecciona una clase para ver la descripción.</p>;
+	};
+
+	const handleClassClick = className => {
+		setCurrentClass(className);
+	};
 
 	return (
 		<>
@@ -86,10 +112,7 @@ export default function ModuleView() {
 						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
 					}>
 					<div className='bg-black h-unit-8xl m-3 flex justify-center'>
-						<video
-							src='http://res.cloudinary.com/dyvnku5c4/video/upload/v1695594830/Video/bwj7edqtcl81xmurpdci.mp4'
-							controls={true}
-						/>
+						{renderVideo()}
 					</div>
 					<Card className='flex p-3 bg-transparent shadow-none'>
 						<h2
@@ -106,23 +129,7 @@ export default function ModuleView() {
 									' p-2 m-1 bg-transparent rounded md:m-0 text-background'
 								}
 								title='Recursos'>
-								<h3 className='text-lg'>Description</h3>
-								<br />
-								<p>
-									{modules[0]?.description} Lorem ipsum dolor sit amet
-									consectetur adipisicing elit. Perspiciatis facilis deserunt
-									reiciendis illo debitis eum repellat quas. A eligendi amet
-									illo magnam nemo sed similique hic, deserunt harum? Quos,
-									pariatur!
-								</p>
-								<br />
-								<Link
-									href='#'
-									className='flex justify-center bg-transparent rounded'>
-									<h3 className='p-2 m-3 cursor-pointer'>
-										Power Point Module: {modules.name}
-									</h3>
-								</Link>
+								{renderDescription()}
 							</AccordionItem>
 						</Accordion>
 					</Card>
@@ -138,12 +145,19 @@ export default function ModuleView() {
 											<AccordionItem
 												className={`${acordionItem} p-2 m-1 bg-transparent rounded md:m-0 text-background`}
 												title={`Módulo: ${name}`}>
-												<p>
-													CLASES:
+												<ul>
 													{moduleData[modules[index].name]?.map(
-														elem => elem.name
-													).join(', ')}
-												</p>
+														(elem, classIndex) => (
+															<li key={classIndex}>
+																<Link
+																	href='#'
+																	onClick={() => handleClassClick(elem.name)}>
+																	{elem.name}
+																</Link>
+															</li>
+														)
+													)}
+												</ul>
 											</AccordionItem>
 										</Accordion>
 									</li>
