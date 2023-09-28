@@ -61,7 +61,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 									classNames={{
 										label: 'text-xl',
 									}}
-									className='mb-12'
+									
 								/>
 
 							<div className='group text-white' >
@@ -71,7 +71,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 									classNames={{
 									label: 'text-xl',
 									}}
-									className='mb-20'
+									
 									viewPassword={viewPassword}
 									handleShow={handleShow}
 								/>

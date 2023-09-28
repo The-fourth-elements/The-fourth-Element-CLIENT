@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useUserDetail } from '@/zustand/store/userDetail';
 import { Card, CardHeader, CardBody, Image, CircularProgress, select } from '@nextui-org/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
-import ModalChangeRole from '@/helpers/Modal';
-
 import "./styles.scss"
 
 const EditAdminUser = ({id}) => {
@@ -97,7 +95,7 @@ const EditAdminUser = ({id}) => {
 							</div>
 							</div>
 						)}
-						<h2>Country: {detail.nationality}</h2>
+						<h2>Country: {detail.nation}</h2>
 						<h2>City: {detail.city}</h2>
 						<h2>
 							Registration date:{' '}

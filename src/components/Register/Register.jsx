@@ -1,5 +1,4 @@
 'use client';
-import { EyeOpen, EyeSlash } from '../loginForm/eyeIcons';
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { toastError, toastSuccess } from '../../helpers/toast';
