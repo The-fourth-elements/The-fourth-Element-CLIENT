@@ -1,5 +1,5 @@
 'use client';
-
+import { useModulesStore } from '@/zustand/store/modulesStore';
 import { modules, classes } from '@/utils/navigation';
 import { Card, Link, Accordion, AccordionItem } from '@nextui-org/react';
 import { useRouter } from 'next/router';

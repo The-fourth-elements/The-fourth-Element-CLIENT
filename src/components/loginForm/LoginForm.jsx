@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import googleLogo from '../../assets/svg/google.svg';
 import InputField from '../../helpers/InputField';
+import InputFieldPassword from '@/helpers/InputFieldPassword';
 import { validationSchemaLogin } from '../../helpers/validations';
 import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
@@ -67,18 +68,16 @@ export const LoginForm = ({ toogleDisplay }) => {
 								/>
 							</div>
 
-							<div className='group text-white' style={{ alignItems: 'center' }}>
-								<InputField
+							<div className='group text-white' >
+								<InputFieldPassword
 									name='password'
 									type={viewPassword ? 'text' : 'password'}
 									classNames={{
-										label: 'text-xl',
+									label: 'text-xl',
 									}}
-									viewPassword = {viewPassword}
+									viewPassword={viewPassword}
+									handleShow={handleShow}
 								/>
-								<button type='button' onClick={handleShow}>
-								{!viewPassword ?  <EyeSlash/> : <EyeOpen/> }
-								</button>
 							</div>
 							<div className='flex flex-col items-center text-2xl'>
 								<span

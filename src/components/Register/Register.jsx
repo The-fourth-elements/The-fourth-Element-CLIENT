@@ -9,6 +9,7 @@ import { registerSchema, initialValues } from '../../helpers/validations';
 import { useRouter } from 'next/navigation';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import InputField from '../../helpers/InputField';
+import InputFieldPassword from '@/helpers/InputFieldPassword';
 import { Button, Card, CardBody } from '@nextui-org/react';
 
 const Register = ({ toogleDisplay }) => {
@@ -16,10 +17,16 @@ const Register = ({ toogleDisplay }) => {
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
 	let [viewPassword, setViewPassword] = useState(false)
+	let [viewPassword2, setViewPassword2] = useState(false)
+
 
 	const handleShow = () => {
 		setViewPassword(!viewPassword)
 		console.log(viewPassword)
+	}
+	const handleShow2 = () => {
+		setViewPassword2(!viewPassword2)
+		
 	}
 
 	return (
@@ -37,9 +44,8 @@ const Register = ({ toogleDisplay }) => {
 						if(!response.error){
 							toastSuccess("cuenta creada con exito");
 							window.location.reload();
-
+							console.log(values)
 						}
-						
 
 					} catch (error) {
 						if (error) {
@@ -67,25 +73,27 @@ const Register = ({ toogleDisplay }) => {
 							</div>
 
 							<div className='group text-white'>
-								<InputField
+								<InputFieldPassword
 									type={viewPassword ? 'text' : 'password'}
 									name='password'
 									placeholder='Ingrese su contraseña'
 									viewPassword = {viewPassword}
+									handleShow={handleShow}
+
 								/>
 								
 							</div>
 
 							<div className='group text-white'>
-								<InputField
-									type={viewPassword ? 'text' : 'password'}
+								<InputFieldPassword
+									type={viewPassword2 ? 'text' : 'password'}
 									name='repeatPassword'
 									placeholder='Repita su contraseña'
-									viewPassword = {viewPassword}
+									viewPassword = {viewPassword2}
+									handleShow={handleShow2}
+
 								/>
-								<button type='button' onClick={handleShow}>
-								{!viewPassword ?  <EyeSlash/> : <EyeOpen/> }
-								</button>
+								
 							</div>
 
 							<div className='group '>
