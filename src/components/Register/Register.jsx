@@ -18,17 +18,15 @@ const Register = ({ toogleDisplay }) => {
 	const [duplicatedEmail, setDuplicatedEmail] = useState(false);
 
 	let [viewPassword, setViewPassword] = useState(false);
-	let [viewPassword2, setViewPassword2] = useState(false)
-
+	let [viewPassword2, setViewPassword2] = useState(false);
 
 	const handleShow = () => {
-		setViewPassword(!viewPassword)
-		console.log(viewPassword)
-	}
+		setViewPassword(!viewPassword);
+		console.log(viewPassword);
+	};
 	const handleShow2 = () => {
-		setViewPassword2(!viewPassword2)
-		
-	}
+		setViewPassword2(!viewPassword2);
+	};
 
 	return (
 		<Card className='Main text-4xl'>
@@ -45,6 +43,7 @@ const Register = ({ toogleDisplay }) => {
 						);
 						console.log('Response:  ', response);
 						if (response.includes('duplicate')) {
+							console.log('se hizo true el estado');
 							setDuplicatedEmail(true);
 							throw new Error();
 						} else {
@@ -55,7 +54,9 @@ const Register = ({ toogleDisplay }) => {
 					} catch (error) {
 						if (error) {
 							if (duplicatedEmail) {
-								toastError('Ya hay una cuenta existente con el email ingresado');
+								toastError(
+									'Ya hay una cuenta existente con el email ingresado'
+								);
 							}
 							toastError('Ocurrio un error al crear la cuenta');
 						}
@@ -63,77 +64,72 @@ const Register = ({ toogleDisplay }) => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
-							<div className='group text-white'>
-								<InputField
-									type='string'
-									name='username'
-									placeholder='Ingrese su nombre'
-								/>
-							</div>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5 items-center mx-auto mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+							<InputField
+								type='string'
+								name='username'
+								placeholder='Ingrese su nombre'
+								className='mb-3'
+							/>
 
-							<div className='group text-white'>
-								<InputField
-									type='string'
-									name='email'
-									placeholder='Ingrese su email'
-								/>
-							</div>
+							<InputField
+								type='string'
+								name='email'
+								placeholder='Ingrese su email'
+								className='mb-3'
+							/>
 
-							<div className='group text-white'>
-								<InputFieldPassword
-									type={viewPassword ? 'text' : 'password'}
-									name='password'
-									placeholder='Ingrese su contraseña'
-									viewPassword = {viewPassword}
-									handleShow={handleShow}
+							<InputFieldPassword
+								type={viewPassword ? 'text' : 'password'}
+								name='password'
+								placeholder='Ingrese su contraseña'
+								viewPassword={viewPassword}
+								handleShow={handleShow}
+								className='mb-3'
+							/>
 
-								/>
-							</div>
+							<InputFieldPassword
+								type={viewPassword2 ? 'text' : 'password'}
+								name='repeatPassword'
+								placeholder='Repita su contraseña'
+								viewPassword={viewPassword2}
+								handleShow={handleShow2}
+								className='mb-3'
+							/>
 
-							<div className='group text-white'>
-								<InputFieldPassword
-									type={viewPassword2 ? 'text' : 'password'}
-									name='repeatPassword'
-									placeholder='Repita su contraseña'
-									viewPassword = {viewPassword2}
-									handleShow={handleShow2}
-
-								/>
-								
-							</div>
-
-							<div className='group '>
-								<label htmlFor='country' className=''>
-									Country:
-								</label>
-								<CountryDropdown
-									name='country'
-									autoComplete='on'
-									id='country'
-									value={country}
-									onChange={val => {
-										setCountry(val);
-										setRegion('');
-									}}
-									className='select'
-								/>
-							</div>
+							<label htmlFor='country' className='text-black mb-5'>
+								Country:
+							</label>
+							<CountryDropdown
+								name='country'
+								autoComplete='on'
+								id='country'
+								value={country}
+								onChange={val => {
+									setCountry(val);
+									setRegion('');
+								}}
+								className='select text-medium  w-auto'
+							/>
 
 							{country && (
-								<div className='group'>
-									<label htmlFor='state'>State/Region:</label>
+								<>
+									<label className='text-black ' htmlFor='state'>
+										State/Region:
+									</label>
 									<RegionDropdown
 										country={country}
 										value={region}
 										id='state'
 										onChange={val => setRegion(val)}
-										className='group-select'
+										className='select mt-10 group-select max-w-full text-white'
 									/>
-									<ErrorMessage name='state' component='span' className='' />
-								</div>
+									<ErrorMessage name='state' component='span' className=' ' />
+								</>
 							)}
-							<span onClick={toogleDisplay} className='toogle text-2xl'>
+							<span
+								onClick={toogleDisplay}
+								className='toogle text-2xl text-black hover:cursor-pointer underline mt-5 mb-5'>
 								¿Ya tienes una cuenta?
 							</span>
 							<Button type='submit' className='submit'>

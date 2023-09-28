@@ -20,7 +20,7 @@ const FieldSelect = ({ name, label, options, ...props }) => {
 				))}
 			</Select>
 
-			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl color text-red-500`} >
+			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl color text-red-500 mb-10 mt-20`} >
 				{meta.error}
 			</div>
 		</div>

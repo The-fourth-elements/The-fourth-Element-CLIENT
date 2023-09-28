@@ -72,7 +72,7 @@ const ModuleForm = () => {
 					initialValues={initialValuesModule}
 					validationSchema={validationSchemaModule}
 					onSubmit={handleSubmit}>
-					<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+					<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 space-y-5  flex flex-col mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
 
 						<Image
 							alt='go back arrow'
@@ -91,7 +91,7 @@ const ModuleForm = () => {
 							classNames={{
 								label: 'text-xl',
 							}}
-							className='mb-12'
+							className='mb-5'
 							label='Nombre del Módulo'
 							name='name'
 						/>
@@ -100,7 +100,8 @@ const ModuleForm = () => {
 							classNames={{
 								label: 'text-xl',
 							}}
-							className='mb-12'
+							className='mb-5'
+
 							label='Descripcion del Módulo'
 							name='description'
 						/>
@@ -109,14 +110,16 @@ const ModuleForm = () => {
 							classNames={{
 								label: 'text-xl',
 							}}
-							className='mb-12'
+							className='mb-5'
+
 							label='Quiz'
 							name='quiz'
 						/>
 
 						<SelectField
 							isRequired
-							className='mb-12'
+							className='mb-5'
+
 							name='paid'
 							label='Es pago?'
 							options={optionsSelect.map(elem => ({
