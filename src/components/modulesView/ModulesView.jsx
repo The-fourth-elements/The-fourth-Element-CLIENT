@@ -83,16 +83,13 @@ export default function ModuleView() {
 						<br />
 						<p>{selectedClassData.description}</p>
 						<br />
-						<Link
-							href='#'
-							className='flex justify-center bg-transparent rounded'>
-							<h3 className='p-2 m-3 cursor-pointer'>
-								Power Point:{' '}
-								<Link href={selectedClassData.powerPoint.url} target='_blank'>
-									icon
-								</Link>
-							</h3>
-						</Link>
+
+						<h3 className='p-2 m-3 cursor-pointer'>
+							Power Point:{' '}
+							<Link href={selectedClassData.powerPoint.url} target='_blank'>
+								icon
+							</Link>
+						</h3>
 					</>
 				);
 			}
@@ -145,19 +142,19 @@ export default function ModuleView() {
 											<AccordionItem
 												className={`${acordionItem} p-2 m-1 bg-transparent rounded md:m-0 text-background`}
 												title={`Módulo: ${name}`}>
-												<ul>
+												<Accordion>
 													{moduleData[modules[index].name]?.map(
 														(elem, classIndex) => (
-															<li key={classIndex}>
+															<AccordionItem key={classIndex} title={classIndex + 1}>
 																<Link
 																	href='#'
 																	onClick={() => handleClassClick(elem.name)}>
 																	{elem.name}
 																</Link>
-															</li>
+															</AccordionItem>
 														)
 													)}
-												</ul>
+												</Accordion>
 											</AccordionItem>
 										</Accordion>
 									</li>
