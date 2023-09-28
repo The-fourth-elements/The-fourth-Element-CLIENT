@@ -22,7 +22,6 @@ const Register = ({ toogleDisplay }) => {
 
 	const handleShow = () => {
 		setViewPassword(!viewPassword);
-		console.log(viewPassword);
 	};
 	const handleShow2 = () => {
 		setViewPassword2(!viewPassword2);
@@ -35,21 +34,17 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					try {
-						console.log(process.env.API_BACKEND);
 						const response = await handleSubmitRegister(
 							values,
 							country,
 							region
 						);
-						console.log('Response:  ', response);
 						if (response.includes('duplicate')) {
-							console.log('se hizo true el estado');
 							setDuplicatedEmail(true);
 							throw new Error();
 						} else {
-							//	toastSuccess('cuenta creada con exito');
-							// window.location.reload();
-							console.log('Response valida:  ', response);
+								toastSuccess('cuenta creada con exito');
+							window.location.reload();
 						}
 					} catch (error) {
 						if (error) {

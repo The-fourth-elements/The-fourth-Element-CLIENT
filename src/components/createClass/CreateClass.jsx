@@ -105,7 +105,6 @@ function CreateClass() {
 			toastSuccess('¡Se subió la clase!!');
 			route.push('/dashboard');
 		} catch (error) {
-			console.log(error);
 			toastError('No se pudo subir la clase, intente mas tarde');
 		}
 	};

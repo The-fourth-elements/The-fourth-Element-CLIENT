@@ -45,7 +45,6 @@ export default function Nav() {
 			toastError('Ocurrio un error en el cierre de sesión');
 		}
 	};
-	console.log(session?.token);
 
 	return (
 		<Navbar className='navcolor h-40 bg-primary p-3 w-full'>
