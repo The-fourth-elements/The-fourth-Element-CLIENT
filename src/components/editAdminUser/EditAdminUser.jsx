@@ -8,33 +8,48 @@ import "./styles.scss"
 const EditAdminUser = ({id}) => {
     
     const { detail, getDetail, updateUserRole } = useUserDetail();
-    useEffect(()=> {
-        if(id){
-            getDetail(id)
-        } 
-    }, [id, detail.role])
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [changePlan, setChangePlan] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null); 
+  const [showBackdrop, setShowBackdrop] = useState(false);
 
-    const [currentPlan, setCurrentPlan] = useState(detail.role);
-    const [changePlan, setChangePlan] = useState(false)
 
-    const handleChangePlan = () => {
-        setChangePlan(!changePlan)
-    } 
-
-    const selectPlan = (event) => {
-        detail.role = event.target.value
-
+  useEffect(() => {
+    if (id) {
+      getDetail(id);
     }
-    const updateRole = () => {
-        detail.id = id
-        updateUserRole(detail)
-        setChangePlan(!changePlan)
-    }
+  }, [id, detail.role]);
+
+
+  const handleChangePlan = () => {
+    setChangePlan(!changePlan);
+  };
+
+  const handleChangeModal = () => {
+    setShowConfirmationModal(!showConfirmationModal);
+	setShowBackdrop(!showBackdrop);
+
+  };
+
+  const selectPlan = (event) => {
+    setSelectedPlan(event.target.value);
+  };
+
+  const updateRole = () => {
+	if (selectedPlan !== null) {
+	  detail.id = id;
+	  detail.role = selectedPlan;
+	  updateUserRole(detail);
+	  setChangePlan(!changePlan);
+	  handleChangeModal();
+	  setSelectedPlan(null)
+	}
+  };
 
 
     return (
 		<article>
-			 
+			{showBackdrop && <div className="backdrop"></div>}
 			{detail.username && Object.keys(detail).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
@@ -62,11 +77,25 @@ const EditAdminUser = ({id}) => {
                                 <option value={1}>Pay plan</option>
                                 <option value={2}>Admin</option>
                             </select>
-                            <button title="Change Plan" onClick={updateRole}> Accept </button>
+                            <button
+								disabled={selectedPlan === null}
+								title="Change Plan"
+								onClick={handleChangeModal}
+								 
+							> Accept </button>
                             <button title="Back to" onClick={handleChangePlan}>↩</button>
                             </h2>)}
                         </div>
-						<h2>Country: {detail.nationality}</h2>
+						{showConfirmationModal && (
+							<div className="confirmation-modal">
+							<div className="modal-content">
+								<p>Are you sure you want to change the role?</p>
+								<button onClick={updateRole}>Change Plan</button>
+								<button onClick={handleChangeModal}>Cancel</button>
+							</div>
+							</div>
+						)}
+						<h2>Country: {detail.nation}</h2>
 						<h2>City: {detail.city}</h2>
 						<h2>
 							Registration date:{' '}
