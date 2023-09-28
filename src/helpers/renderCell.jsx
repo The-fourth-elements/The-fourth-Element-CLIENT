@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Button, User, Chip, Tooltip, Link } from '@nextui-org/react';
-
 import { EditIcon } from '../assets/svg-jsx/EditIcon';
 import { DeleteIcon } from '../assets/svg-jsx/DeleteIcon';
 import { EyeIcon } from '../assets/svg-jsx/EyeIcon';
@@ -24,9 +23,9 @@ const userRoles = {
 
 function detailHandler(id) {}
 
-function renderCell(user, columnKey, deleteHandler) {
+function renderCell(user, columnKey, deleteHandler, handleClick) {
 	const cellValue = user[columnKey];
-
+	
 	switch (columnKey) {
 		case 'name':
 			return (
@@ -79,9 +78,12 @@ function renderCell(user, columnKey, deleteHandler) {
 						</Button> */}
 					</Tooltip>
 					<Tooltip content='Edit user'>
-						<span className='text-lg text-default-400 cursor-pointer active:opacity-50'>
+						<Button
+							className='text-lg text-danger cursor-pointer active:opacity-50'
+							href={'/dashboard/users-section/user-edit/' + user._id}
+							as={Link}>
 							<EditIcon />
-						</span>
+						</Button>
 					</Tooltip>
 					<Tooltip color='danger' content='Delete user'>
 						<Button

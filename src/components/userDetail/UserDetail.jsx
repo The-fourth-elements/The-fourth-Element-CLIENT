@@ -28,7 +28,7 @@ const UserDetail = ({ params }) => {
 			{detail.username && Object.keys(detail).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
-						<h1>Name: {detail.name}</h1>
+						<h1>Name: {detail.username}</h1>
 						{detail.profile_img ? <Image
 							src={detail.profile_img}
 							alt={detail.name}
@@ -46,7 +46,7 @@ const UserDetail = ({ params }) => {
 						) : (
 							<h2>Plan: Admin </h2>
 						)}
-						<h2>Country: {detail.nationality}</h2>
+						<h2>Country: {detail.nation}</h2>
 						<h2>City: {detail.city}</h2>
 						{/* <h2>Registration date: {detail.createdAt}</h2>  */}
 						<h2>
