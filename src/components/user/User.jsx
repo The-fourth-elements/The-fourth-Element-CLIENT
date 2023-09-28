@@ -7,12 +7,9 @@ const User = () => {
     const newData = data
     const doud =  async() =>{
       const i = await getSession();
-      console.log(i);
       
 
     }
-    doud().then()
-    console.log(newData)
   return (
     <>
         {/* <pre>{JSON.stringify(session)}</pre> */}
