@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const middleware = async request => {
-    const session = request.cookies.get('next-auth.session-token');
+    const session = request.cookies.get('__Secure-next-auth.session-token');
 
 
     // /traer el role con un getId y me indicara el role que tiene
