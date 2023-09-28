@@ -49,7 +49,7 @@ const dashboard = () => {
 		<>
 			<Card className='min-h-screen'>
 				<header className='p-5'>
-					<h1 className=''>YO SOY EL SENIOR SOY HENRY</h1>
+					<h1 className=''>Panel de Administrador</h1>
 				</header>
 				<CardBody>
 					<div className={Container}>
