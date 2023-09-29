@@ -1,7 +1,7 @@
 import { postData } from '../hooks/postData';
 
 export const handleSubmitRegister = async (
-  { username, email, password },
+  { username, email, password, edad, deporte },
   country,
   region
 ) => {
@@ -12,6 +12,8 @@ export const handleSubmitRegister = async (
       city: region,
       password,
       nationality: country,
+      edad,
+      deporte
     };
 
     const response = await postData(`${process.env.API_BACKEND}auth`, form);
@@ -29,7 +31,5 @@ export const handleSubmitLogin = async form => {
     throw new Error(response.error)
   } catch (error) {
     throw new Error(error)
-
-    return { error: error.message }
   }
 };

@@ -2,20 +2,19 @@
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { toastError, toastSuccess } from '../../helpers/toast';
+import SelectField from '@/helpers/SelectField';
+import { deportes } from '@/utils/dataRegister'
 import './styles.scss';
 import { handleSubmitRegister } from '../../helpers/handlers';
 import { registerSchema, initialValues } from '../../helpers/validations';
-import { useRouter } from 'next/navigation';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import InputField from '../../helpers/InputField';
 import InputFieldPassword from '@/helpers/InputFieldPassword';
 import { Button, Card, CardBody } from '@nextui-org/react';
 
 const Register = ({ toogleDisplay }) => {
-	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
-	const [duplicatedEmail, setDuplicatedEmail] = useState(false);
 
 	let [viewPassword, setViewPassword] = useState(false);
 	let [viewPassword2, setViewPassword2] = useState(false);
@@ -34,21 +33,23 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					try {
+
+						console.log(values, country, region,  "estos son los valores");
 						const response = await handleSubmitRegister(
 							values,
 							country,
 							region
 						);
-						if (response.includes('duplicate')) {
-							setDuplicatedEmail(true);
-							throw new Error();
-						} else {
-								toastSuccess('cuenta creada con exito');
-							window.location.reload();
+						if(response?.success){
+							toastSuccess(response.success)
+							toogleDisplay();
+						}
+						else{
+							throw new Error(response)
 						}
 					} catch (error) {
 						if (error) {
-							if (duplicatedEmail) {
+							if (error.startsWith("E", 0)) {
 								toastError(
 									'Ya hay una cuenta existente con el email ingresado'
 								);
@@ -91,6 +92,16 @@ const Register = ({ toogleDisplay }) => {
 								handleShow={handleShow2}
 								className='mb-3'
 							/>
+		                    <InputField 
+							type="number"
+							name="edad"
+							placeholder="Ingrese su edad"
+							/>
+							<SelectField options={deportes} name={"deporte"}
+							label={"deporte"}
+							></SelectField>
+
+							
 
 							<label htmlFor='country' className='text-black mb-5'>
 								Country:
@@ -110,7 +121,7 @@ const Register = ({ toogleDisplay }) => {
 							{country && (
 								<>
 									<label className='text-black ' htmlFor='state'>
-										State/Region:
+										Estado/Region:
 									</label>
 									<RegionDropdown
 										country={country}

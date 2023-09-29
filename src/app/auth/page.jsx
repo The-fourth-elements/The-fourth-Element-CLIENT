@@ -4,14 +4,11 @@ import { LoginForm } from '../../components/loginForm/LoginForm';
 import Register from '../../components/Register/Register';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { getCookie, setCookie } from 'cookies-next';
-
-
+import { setCookie } from 'cookies-next';
 
 const page = () => {
 	const { data: session } = useSession();
 	const id = session?.token?.user?.id;
-	console.log('soy el id', id);
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}

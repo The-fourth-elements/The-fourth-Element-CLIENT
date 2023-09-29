@@ -13,11 +13,17 @@ const FieldSelect = ({ name, label, options, ...props }) => {
 				onChange={field.onChange}
 				options={options}
 				{...props}>
-				{options.map(option => (
-					<SelectItem key={option.value} value={option.value}>
-						{option.text}
-					</SelectItem>
-				))}
+				{options.map((option, index) => {
+					if(typeof option =="object"){
+						return (<SelectItem key={option.value} value={option.value}>
+							{option.text}
+						</SelectItem>)
+					} else {
+						return (<SelectItem key={option} value={option}>{option}</SelectItem>)
+					}
+					
+					
+					})}
 			</Select>
 
 			<div className={`error-message ${meta.error ? 'visible' : 'hidden'} flex justify-center modern text-2xl color text-red-500 mb-10 mt-20`} >

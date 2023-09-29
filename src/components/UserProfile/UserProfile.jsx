@@ -9,6 +9,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
+	console.log(session);
 	const user = session?.token?.user;
 	const {updateUserRole} = useUserDetail()
 	let [openImage, setOpenImage] = useState(false)

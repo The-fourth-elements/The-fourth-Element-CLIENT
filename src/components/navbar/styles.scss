@@ -1,6 +1,11 @@
 @import '../../styles/base';
 
-
+.fix-Header {
+	header {
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+}
 
 @include lg {
 	.Navbar {
@@ -8,44 +13,36 @@
 		&__logo {
 			img {
 				@include logoNav(90px);
-				transition: filter 0.1s;
 				width: 100%;
 				position: relative;
-				&:hover {
-					filter: drop-shadow(1px 1px 1px rgb(151, 151, 151));
-				}
 			}
 		}
 	}
 }
 
 @include md {
-    .Navbar {
+	.Navbar {
 		@include Navbar(10rem, 1rem);
 		&__logo {
 			img {
 				@include logoNav(80px);
 				width: 100%;
-				transition: filter 0.1s;
-				&:hover {
-					filter: drop-shadow(2px 2px 2px rgb(233, 211, 199));
-				}
 			}
 		}
 	}
 }
 
-@include sm{
-	.Navbar{
+@include sm {
+	.Navbar {
 		height: 5rem;
 		display: flex;
 		padding: 0.5rem;
 		color: #ffffff;
 		background: $grey-1;
-	
-		&__logo{
-			img{
-			@include logoNav(70px);
+
+		&__logo {
+			img {
+				@include logoNav(70px);
 				width: 100%;
 			}
 		}

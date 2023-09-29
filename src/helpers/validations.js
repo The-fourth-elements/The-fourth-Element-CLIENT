@@ -34,6 +34,8 @@ export const registerSchema = (country, region) => {
 			.oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir'),
 		country: validarcountryYregion(country, region),
 		region: validarcountryYregion(country, region),
+		deporte: Yup.string().required("El campo es requerido"),
+		edad: Yup.number("La edad no puede estar vacia").typeError("Debe ser un numero válido").positive("La edad debe ser un número positivo").integer("La edad debe ser un número entero").min(1, "La edad debe ser mayor a cero").required("La edad no puede estar vacia")
 	});
 };
 
@@ -70,7 +72,7 @@ export const validationSchemaModule = Yup.object({
 	description: Yup.string().required('Este campo es requerido'),
 	paid: Yup.string().required('Este campo es requerido'),
 	quiz: Yup.number()
-		.typeError('Debe ser un número') // Mensaje de error personalizado
+		.typeError('Debe ser un número')
 		.required('Este campo es requerido'),
 });
 
@@ -88,6 +90,8 @@ export const initialValues = {
 	email: '',
 	password: '',
 	repeatPassword: '',
+	deporte: '',
+	edad: 0,
 };
 
 export const initialValuesLogin = {
