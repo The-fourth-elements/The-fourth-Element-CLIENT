@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 
 export const middleware = async request => {
-    const session = request.cookies.get('next-auth.session-token');
-
+    const develop = 'next-auth.session-token';
+    const production = '__Secure-next-auth.session-token';
+    const session = request.cookies.get(develop);
 
     // /traer el role con un getId y me indicara el role que tiene
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
@@ -29,7 +30,7 @@ export const middleware = async request => {
         const url = request.nextUrl.clone();
         //verificar el rol
         if (role > 1) {
-            return NextResponse.next()
+            return NextResponse.next();
         } else {
             url.pathname = '/course';
         }

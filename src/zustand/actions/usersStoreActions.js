@@ -27,32 +27,34 @@ export const deleteUser = (id) => {
 
 export const getDetailed = (id) => {
   fetch(`${process.env.API_BACKEND}user?id=${id}`)
-  .then((response) => {
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error("A user with the provided ID could not be found.");
-      } else {
-        throw new Error("There was a problem obtaining user data.");
+    .then((response) => {
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("A user with the provided ID could not be found.");
+        } else {
+          throw new Error("There was a problem obtaining user data.");
+        }
       }
-    }
-    return response.json();
-  })
-  .catch((error) => {
-    console.error("Network or server error:", error);
-    throw new Error("There was an error connecting to the server.");
-  });
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Network or server error:", error);
+      throw new Error("There was an error connecting to the server.");
+    });
 }
 
 export const upadateUserRole = (elbody) => {
-  return fetch(`${process.env.API_BACKEND}user`, 
-              { method: 'PUT' ,
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(elbody),})
+  return fetch(`${process.env.API_BACKEND}user`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(elbody),
+    })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
+      data
     })
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);

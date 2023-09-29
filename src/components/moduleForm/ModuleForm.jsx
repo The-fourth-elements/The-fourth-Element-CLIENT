@@ -41,14 +41,11 @@ const ModuleForm = () => {
 	];
 
 	const handleSubmit = async values => {
-		console.log(values);
 		const formattedValues = {
 			...values,
 			paid: values.paid === 'true' ? true : false,
 			quiz: parseInt(values.quiz),
 		};
-
-		console.log("formated values" , formattedValues);
 
 		try {
 			
@@ -57,7 +54,6 @@ const ModuleForm = () => {
 				toastSuccess('¡Se subió el módulo!');
 				
 			}
-			console.log("postResponse " , postResponse);
 		} catch (error) {
 			toastError('No se pudo subir el módulo, intente mas tarde')
 		}
