@@ -9,17 +9,29 @@ import {
 	Image,
 	CircularProgress,
 } from '@nextui-org/react';
+import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 
 const UserDetail = ({ params }) => {
 	
 	const { detail, getDetail } = useUserDetail();
+	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
+	let [country, setCountry] = useState(stringCountry);
+	let [city, setCity] = useState(stringCity);
 
 	useEffect(() => {
 		
 		if (params.id) {
 			getDetail(params.id);
 		}
-	}, [params.id, detail.role]);
+		if(detail.username && Object.keys(detail).length > 0){
+			getCountryId(detail.nation)
+			getCityId(detail.city)
+		}
+		if (stringCity !== "" && stringCountry !== ""){
+			setCity(stringCity)
+			setCountry(stringCountry)
+		}
+	}, [detail.role, stringCity, stringCountry,  params.id  ]);
 	
 
 	return (
@@ -46,9 +58,8 @@ const UserDetail = ({ params }) => {
 						) : (
 							<h2>Plan: Admin </h2>
 						)}
-						<h2>Country: {detail.nation}</h2>
-						<h2>City: {detail.city}</h2>
-						{/* <h2>Registration date: {detail.createdAt}</h2>  */}
+						<h2>Country: {country}</h2>
+						<h2>City: {city}</h2>
 						<h2>
 							Registration date:{' '}
 							{new Date(detail.createdAt).toLocaleDateString()}

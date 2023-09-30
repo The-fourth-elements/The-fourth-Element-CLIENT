@@ -4,21 +4,33 @@ import { useUserDetail } from '@/zustand/store/userDetail';
 import { Card, CardHeader, CardBody, Image, CircularProgress, select } from '@nextui-org/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import "./styles.scss"
+import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 
 const EditAdminUser = ({id}) => {
     
     const { detail, getDetail, updateUserRole } = useUserDetail();
+	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [changePlan, setChangePlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null); 
   const [showBackdrop, setShowBackdrop] = useState(false);
+	let [country, setCountry] = useState(stringCountry);
+	let [city, setCity] = useState(stringCity);
 
 
   useEffect(() => {
     if (id) {
       getDetail(id);
     }
-  }, [id, detail.role]);
+	if(detail.username && Object.keys(detail).length > 0){
+		getCountryId(detail.nation)
+		getCityId(detail.city)
+	}
+	if (stringCity !== "" && stringCountry !== ""){
+		setCity(stringCity)
+		setCountry(stringCountry)
+	}
+  }, [ detail.role, stringCity, stringCountry, id]);
 
 
   const handleChangePlan = () => {
@@ -95,8 +107,8 @@ const EditAdminUser = ({id}) => {
 							</div>
 							</div>
 						)}
-						<h2>Country: {detail.nation}</h2>
-						<h2>City: {detail.city}</h2>
+						<h2>Country: {country}</h2>
+						<h2>City: {city}</h2>
 						<h2>
 							Registration date:{' '}
 							{new Date(detail.createdAt).toLocaleDateString()}

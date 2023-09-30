@@ -60,3 +60,46 @@ export const upadateUserRole = (elbody) => {
       console.error('There was a problem with the fetch operation:', error);
     });
 };
+
+export const getCountry = (name) => {
+  return fetch(`${process.env.API_BACKEND}city/${name}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
+      throw error; // Re-throw the error so it can be handled elsewhere if needed
+    });
+};
+
+export const getCityId = (id) => {
+  return fetch(`${process.env.API_BACKEND}city/${id}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
+      throw error; // Re-throw the error so it can be handled elsewhere if needed
+    });
+};
+
+export const getCountryId = (id) => {
+  return fetch(`${process.env.API_BACKEND}country/${id}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
+      throw error; // Re-throw the error so it can be handled elsewhere if needed
+    });
+};
+
