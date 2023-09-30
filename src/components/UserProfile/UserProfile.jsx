@@ -1,17 +1,20 @@
 'use client';
+import { useCountryCity } from '@/zustand/store/countryStore';
 import './styles.scss';
 import { useEffect, useState } from 'react';
-import {Card, CardHeader, CardBody, Image, CircularProgress } from '@nextui-org/react';
+import {Card, CardHeader, CardBody, Image, CircularProgress, Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { useUserDetail } from '@/zustand/store/userDetail';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import InputName from './input';
+
 
 const UserProfile = () => {
 	const { data: session } = useSession();
-	console.log(session);
 	const user = session?.token?.user;
 	const {updateUserRole} = useUserDetail()
+	const { theCountry, getCountry } = useCountryCity();
 	let [openImage, setOpenImage] = useState(false)
 	let [openCountry, setOpenCountry] = useState(false)
 	let [openCity, setOpenCity] = useState(false)
@@ -60,6 +63,7 @@ const UserProfile = () => {
 	}
 	const updateUserCountry = () => {
 		user.country = newCountry
+		console.log(theCountry)
 		updateUserRole(user)
 		setOpenCountry(false)
 	}
@@ -73,15 +77,21 @@ const UserProfile = () => {
 		updateUserRole(user)
 		setOpenName(false)
 	}
+	const selectCountry = (val) => {
+		setNewCountry(val);
+		setNewCity('');
+		console.log(val)
+		getCountry(val)
+	}
 	return (
 		<article>
 			{user && user.id && Object.keys(user).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
-						{openName ? <h1>Name: <input onChange={getNewName}/> <button title="back to" onClick={handleChangeName}>↩</button> <button onClick={updateUserName}> Accept </button></h1>
-						:<h1>Name: {user.username} <button title="Edit Name" onClick={handleChangeName}>
+						{openName ? <h1> <InputName getNewName={getNewName}/> <Button size="sm" title="back to" color="warning" variant="bordered" onClick={handleChangeName} isIconOnly>↩</Button> <Button color="warning" variant="bordered" size="sm" onClick={updateUserName}> Accept </Button></h1>
+						:<h1>Name: {user.username} <Button title="Edit  Name" color="warning" variant="bordered" onClick={handleChangeName} size="sm" isIconOnly>
 							<EditIcon/>
-						</button></h1>}
+						</Button></h1>}
 						{user.profile_img ? (
 							<Image src={user.profile_img} alt={user.name} />
 						) : (
@@ -91,9 +101,9 @@ const UserProfile = () => {
 							/>
 							
 						)}
-						<button title="Edit Photo" onClick={handleChangePhoto}>
+						<Button isIconOnly color="warning" variant="bordered" title="Edit Photo" onClick={handleChangePhoto}>
 							<EditIcon/>
-						</button>
+						</Button>
 						
 					</CardHeader>
 					<CardBody className='elBody'>
@@ -110,14 +120,11 @@ const UserProfile = () => {
 									autoComplete='on'
 									id='country'
 									value={newCountry}
-									onChange={val => {
-										setNewCountry(val);
-										setNewCity('');
-									}}
+									onChange={selectCountry}
 									className='select'
-								/> <button title="back to" onClick={handleChangeCountry}> ↩ </button> <button onClick={updateUserCountry}> Accept </button></h2> :<h2>Country: {user.country} <button title="Edit Country" onClick={handleChangeCountry}>
+								/> <Button color="warning" variant="bordered" title="back to" onClick={handleChangeCountry} isIconOnly> ↩ </Button> <Button onClick={updateUserCountry} color="warning" variant="bordered"> Accept </Button></h2> :<h2>Country: {user.country} <Button isIconOnly color="warning" variant="bordered"title="Edit Country" onClick={handleChangeCountry}>
 							<EditIcon/>
-						</button>
+						</Button>
 						</h2>}
 						{openCity ? <h2> City: <RegionDropdown
 										country={newCountry}
@@ -125,9 +132,9 @@ const UserProfile = () => {
 										id='state'
 										onChange={val => setNewCity(val)}
 										className='group-select'
-									/> <button title="back to" onClick={handleChangeCity}> ↩ </button> <button onClick={updateUserCity}> Accept </button></h2> : <h2>City: {user.city} <button title="Edit City" onClick={handleChangeCity}>
+									/> <Button isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCity}> ↩ </Button> <Button color="warning" variant="bordered" onClick={updateUserCity}> Accept </Button></h2> : <h2>City: {user.city} <Button color="warning" isIconOnly variant="bordered"title="Edit City" onClick={handleChangeCity}>
 							<EditIcon/>
-						</button>
+						</Button>
 						</h2>}
 						<h2>
 							Registration date: {new Date(user.createdAt).toLocaleDateString()}
