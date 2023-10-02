@@ -1,8 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Card, Link, Accordion, AccordionItem } from '@nextui-org/react';
+import Image from 'next/image';
+import {
+	Card,
+	Link,
+	Accordion,
+	AccordionItem,
+	accordion,
+	useDisclosure,
+} from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import { useModulesStore } from '@/zustand/store/modulesStore';
 import {
 	containerVideos,
@@ -12,6 +20,9 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
+import { EditIcon } from '@/assets/svg-jsx/EditIcon';
+import { toastError } from '@/helpers/toast';
+import ModalEditClass from '@/helpers/ModalEditClass';
 
 export default function ModuleView() {
 	const { data: session } = useSession();
@@ -23,12 +34,20 @@ export default function ModuleView() {
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);
+	const [access, setAccess] = useState(false);
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	useEffect(() => {
 		getModules();
 	}, []);
 
 	useEffect(() => {
+		if (session) {
+			if (session?.token?.user) {
+				const { role } = session.token.user;
+				role > 1 && setAccess(true);
+			}
+		}
 		const fetchData = async () => {
 			const fetchedModuleData = {};
 
@@ -54,7 +73,7 @@ export default function ModuleView() {
 			setModulesDataLoaded(true);
 		};
 		fetchData();
-	}, [modules]);
+	}, [modules, session]);
 
 	const renderVideo = () => {
 		if (currentClass) {
@@ -85,10 +104,10 @@ export default function ModuleView() {
 						<br />
 
 						<h3 className='p-2 m-3 cursor-pointer'>
-							Power Point:{' '}
-							<Link href={selectedClassData.powerPoint.url} target='_blank'>
-								icon
-							</Link>
+							Power Point:
+							<a href={selectedClassData.powerPoint.url} target='_blank'>
+								Archivo
+							</a>
 						</h3>
 					</>
 				);
@@ -99,6 +118,11 @@ export default function ModuleView() {
 
 	const handleClassClick = className => {
 		setCurrentClass(className);
+	};
+
+	const handleEditClass = () => {
+		
+		onOpen();
 	};
 
 	return (
@@ -125,7 +149,8 @@ export default function ModuleView() {
 									acordionItem +
 									' p-2 m-1 bg-transparent rounded md:m-0 text-background'
 								}
-								title='Recursos'>
+								title='Recursos'
+								textValue={`${accordion}`}>
 								{renderDescription()}
 							</AccordionItem>
 						</Accordion>
@@ -145,12 +170,37 @@ export default function ModuleView() {
 												<Accordion>
 													{moduleData[modules[index].name]?.map(
 														(elem, classIndex) => (
-															<AccordionItem key={classIndex} title={classIndex + 1}>
-																<Link
-																	href='#'
-																	onClick={() => handleClassClick(elem.name)}>
-																	{elem.name}
-																</Link>
+															<AccordionItem
+																key={classIndex}
+																textValue={`${index} ${name}`}
+																title={classIndex + 1}>
+																<div className='flex justify-between'>
+																	<span
+																		className='cursor-pointer'
+																		onClick={() => handleClassClick(elem.name)}>
+																		{elem.name}
+																	</span>
+																	{access && (
+																		<>
+																			<EditIcon
+																				className={
+																					'cursor-pointer rounded-full transition-background hover:opacity-70'
+																				}
+																				width='30'
+																				height='30'
+																				onClick={() => {
+																					handleEditClass();
+																				}}
+																			/>
+																			<ModalEditClass
+																				classValues={elem}
+																				isOpen={isOpen}
+																				onOpenChange={
+																					onOpenChange
+																				}></ModalEditClass>
+																		</>
+																	)}
+																</div>
 															</AccordionItem>
 														)
 													)}
@@ -169,4 +219,3 @@ export default function ModuleView() {
 		</>
 	);
 }
-

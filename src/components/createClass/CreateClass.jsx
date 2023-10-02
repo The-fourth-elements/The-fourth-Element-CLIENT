@@ -63,9 +63,8 @@ function CreateClass() {
 	}
 
 	const handleSubmit = async values => {
-
 		try {
-			if (video?.url?.length  == undefined) {
+			if (video?.url?.length == undefined) {
 				throw new Error('Inserte un video');
 			}
 		} catch (error) {
@@ -78,7 +77,9 @@ function CreateClass() {
 			name: values.name,
 			description: values.description,
 			video: video,
-			powerPoint: values.powerPointUrl,
+			powerPoint: {
+				url: values.powerPointUrl,
+			},
 		};
 
 		const parsedModule = parseInt(form.module);
@@ -108,6 +109,7 @@ function CreateClass() {
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
+		console.log(e);
 		setVideo({ url, public_id });
 	};
 
