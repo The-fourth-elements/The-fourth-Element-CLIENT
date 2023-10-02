@@ -8,7 +8,8 @@ import {
 	ModalFooter,
 	Button,
 } from '@nextui-org/react';
-import '@/components/createClass/CreateclassStyles.scss'
+// import '@/components/createClass/CreateClassStyles.scss'
+import '../components/createClass/CreateClassStyles.scss'
 import { Form, Formik } from 'formik';
 import {
 	validationSchemaEditClass,
@@ -66,7 +67,9 @@ const ModalEditClass = ({ isOpen, onOpenChange, classValues }) => {
 								<Formik
 									initialValues={initialValuesEditClass}
 									onSubmit={async(values)=>{
-										handleSubmitEditClass(values, newVideo)
+										await handleSubmitEditClass(values, newVideo)
+										setNewVideo({});
+										//aparecer modal de edicion de video de tipo info.
 										onClose()
 									}}
 									validationSchema={validationSchemaEditClass}>

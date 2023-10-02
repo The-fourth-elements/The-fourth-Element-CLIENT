@@ -42,6 +42,7 @@ export const handleSubmitEditClass = async (form, video) => {
     if (video.hasOwnProperty('url')) {
       body.video = video;
     }
+    console.log(video);
     console.log(body);
 
     // const response = await fetch(process.env.API_BACKEND, {
