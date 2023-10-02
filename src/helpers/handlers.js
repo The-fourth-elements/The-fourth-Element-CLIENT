@@ -12,9 +12,9 @@ export const handleSubmitRegister = async (
       city: region,
       password,
       nationality: country,
-      edad: Number(edad),
-      deporte,
-      experiencia: Number(experiencia),
+      age: Number(edad),
+      sport: deporte,
+      yearsOfExperience: Number(experiencia),
     };
 
     const response = await postData(`${process.env.API_BACKEND}auth`, form);

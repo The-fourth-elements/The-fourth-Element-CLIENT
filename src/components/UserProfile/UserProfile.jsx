@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { useUserDetail } from '@/zustand/store/userDetail';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { NameEditor, CountryEditor, } from './ComponentsProfile';
+import { NameEditor, CountryEditor, CityEditor } from './ComponentsProfile';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
