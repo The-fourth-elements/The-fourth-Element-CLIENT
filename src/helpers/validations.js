@@ -34,6 +34,9 @@ export const registerSchema = (country, region) => {
 			.oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir'),
 		country: validarcountryYregion(country, region),
 		region: validarcountryYregion(country, region),
+		deporte: Yup.string().required("El campo es requerido"),
+		edad: Yup.number("La edad no puede estar vacia").typeError("Debe ser un numero válido").positive("La edad debe ser un número positivo").integer("La edad debe ser un número entero").min("La edad no puede ser menor a cero").min(Yup.ref('experiencia'), "La edad no puede ser menor que la experiencia").max(120, "La edad no puede ser mayor a 120 años").required("La edad no puede estar vacia"),
+		experiencia: Yup.number("La experiencia no puede estar vacía").typeError("Debe ser un numero válido").positive("La experiencia debe ser un número positivo").integer("La edad debe ser un número entero").min(0, "La experencia puede ser mayor o igual a cero").max(100, "La experiencia no puede ser mayor a 100").required("La experiencia no puede estar vacia")
 	});
 };
 
@@ -70,7 +73,7 @@ export const validationSchemaModule = Yup.object({
 	description: Yup.string().required('Este campo es requerido'),
 	paid: Yup.string().required('Este campo es requerido'),
 	quiz: Yup.number()
-		.typeError('Debe ser un número') // Mensaje de error personalizado
+		.typeError('Debe ser un número')
 		.required('Este campo es requerido'),
 });
 
@@ -83,11 +86,21 @@ export const validationSchemaCreateClass = Yup.object({
 		.url('Debe ser una URL válida.'),
 });
 
+export const validationSchemaEditClass = Yup.object({
+	editedName: Yup.string().required('El nombre no puede estar vacío'),
+	editedDescription: Yup.string().required('La descripcion no puede estar vacía'),
+	editedPowerPoint: Yup.string().url("Debe ser una url valida").required("La url es requerida")
+})
+
+
 export const initialValues = {
 	username: '',
 	email: '',
 	password: '',
 	repeatPassword: '',
+	deporte: '',
+	edad: 0,
+	experiencia: 0,
 };
 
 export const initialValuesLogin = {

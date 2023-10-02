@@ -26,10 +26,7 @@ import { toastError } from '@/helpers/toast';
 import { deleteCookie } from 'cookies-next';
 
 export default function Nav() {
-	const { status, data: session, update } = useSession();
-
-	// const status = 'authenticated';
-
+	const { status, data: session } = useSession();
 	const router = useRouter();
 	const routes = [
 		{ label: 'Home', route: '/' },
@@ -45,10 +42,9 @@ export default function Nav() {
 			toastError('Ocurrio un error en el cierre de sesión');
 		}
 	};
-	console.log(session?.token);
 
 	return (
-		<Navbar className='navcolor h-40 bg-primary p-3 w-full'>
+		<Navbar className='navcolor h-40 bg-primary p-3 w-full fix-Header'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -114,33 +110,36 @@ export default function Nav() {
 							<DropdownTrigger>
 								<User
 									avatarProps={
-										// session?.token?
-										session?.token?.picture?.length > 5 ? ({src:session.token.picture}):({src:session?.token?.user?.image_profile })
+										session?.token?.picture?.length > 5
+											? { src: session.token.picture }
+											: { src: session?.token?.user?.image_profile }
 									}
 								/>
 							</DropdownTrigger>
 							<DropdownMenu aria-label='Static Actions'>
-								<DropdownItem key='profile'>
+								<DropdownItem key='profile' textValue='profile'>
 									<Link href={'/profile'}>Mi cuenta</Link>
 								</DropdownItem>
 								{session?.token?.user?.role >= 2 ? (
-									<DropdownItem onClick={() => router.push('/dashboard')}>
+									<DropdownItem
+										onClick={() => router.push('/dashboard')}
+										textValue='profile'>
 										Panel
 									</DropdownItem>
 								) : (
-									<DropdownItem onClick={() => router.push('/course')}>
+									<DropdownItem
+										onClick={() => router.push('/course')}
+										textValue='profile'>
 										Curso
 									</DropdownItem>
 								)}
-								<DropdownItem key='settings'>
-									<Link href={'/profile/settings'}>Editar cuenta</Link>
-								</DropdownItem>
 
 								<DropdownItem
 									key='logout'
 									className='text-danger'
 									color='danger'
-									onClick={handleLogout}>
+									onClick={handleLogout}
+									textValue='profile'>
 									Cerrar sesión
 								</DropdownItem>
 							</DropdownMenu>

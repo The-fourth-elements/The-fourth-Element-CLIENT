@@ -27,7 +27,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 	};
 	const handleShow = () => {
 		setViewPassword(!viewPassword)
-		console.log(viewPassword)
+		
 	}
 	const router = useRouter()	
 

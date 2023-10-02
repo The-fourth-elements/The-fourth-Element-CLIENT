@@ -26,7 +26,6 @@ const Detail = () => {
 
     }, [id, detail.role])
 
-    console.log(" SOY EL ID " + id);
 
     return (
         <article>

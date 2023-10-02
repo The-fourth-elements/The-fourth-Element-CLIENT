@@ -49,22 +49,26 @@ export const authOptions = {
 			if (account?.provider == 'google') {
 				try {
 					const response = await fetch(
-						`${process.env.API_BACKEND}user/email?email=${token?.email}`);
+						`${process.env.API_BACKEND}user/email?email=${token?.email}`
+					);
 					const responseParsed = await response.json();
-						if(responseParsed?.error){
-							const form = {
-								username: user.name,
-								email: token?.email,
-								provider:true
-							}
-							await postData(`${process.env.API_BACKEND}auth`, form);
-						}
-						else{
-							const lol = await postData(`${process.env.API_BACKEND}login`, {email: token.email, username: token.name});
-							const decodedToken = Jwt.decode(lol?.token)
-							if(user) token.user = decodedToken?.data
-							return token
-						}	
+					if (responseParsed?.error) {
+						const form = {
+							username: user.name,
+							email: token?.email,
+							provider: true,
+						};
+						await postData(`${process.env.API_BACKEND}auth`, form);
+					} else {
+						const lol = await postData(`${process.env.API_BACKEND}login`, {
+							email: token.email,
+							username: token.name,
+							provider: true,
+						});
+						const decodedToken = Jwt.decode(lol?.token);
+						if (user) token.user = decodedToken?.data;
+						return token;
+					}
 				} catch (error) {
 					console.log(error?.message);
 				}

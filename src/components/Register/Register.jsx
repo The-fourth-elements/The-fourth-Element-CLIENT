@@ -2,27 +2,25 @@
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { toastError, toastSuccess } from '../../helpers/toast';
+import SelectField from '@/helpers/SelectField';
+import { deportes } from '@/utils/dataRegister';
 import './styles.scss';
 import { handleSubmitRegister } from '../../helpers/handlers';
 import { registerSchema, initialValues } from '../../helpers/validations';
-import { useRouter } from 'next/navigation';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import InputField from '../../helpers/InputField';
 import InputFieldPassword from '@/helpers/InputFieldPassword';
 import { Button, Card, CardBody } from '@nextui-org/react';
 
 const Register = ({ toogleDisplay }) => {
-	const router = useRouter();
 	const [country, setCountry] = useState('');
 	const [region, setRegion] = useState('');
-	const [duplicatedEmail, setDuplicatedEmail] = useState(false);
 
 	let [viewPassword, setViewPassword] = useState(false);
 	let [viewPassword2, setViewPassword2] = useState(false);
 
 	const handleShow = () => {
 		setViewPassword(!viewPassword);
-		console.log(viewPassword);
 	};
 	const handleShow2 = () => {
 		setViewPassword2(!viewPassword2);
@@ -35,25 +33,20 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					try {
-						console.log(process.env.API_BACKEND);
 						const response = await handleSubmitRegister(
 							values,
 							country,
 							region
 						);
-						console.log('Response:  ', response);
-						if (response.includes('duplicate')) {
-							console.log('se hizo true el estado');
-							setDuplicatedEmail(true);
-							throw new Error();
+						if (response?.success) {
+							toastSuccess(response.success);
+							toogleDisplay();
 						} else {
-							//	toastSuccess('cuenta creada con exito');
-							// window.location.reload();
-							console.log('Response valida:  ', response);
+							throw new Error(response);
 						}
 					} catch (error) {
 						if (error) {
-							if (duplicatedEmail) {
+							if (error.startsWith('E', 0)) {
 								toastError(
 									'Ya hay una cuenta existente con el email ingresado'
 								);
@@ -96,6 +89,20 @@ const Register = ({ toogleDisplay }) => {
 								handleShow={handleShow2}
 								className='mb-3'
 							/>
+							<InputField
+								type='number'
+								name='edad'
+								placeholder='Ingrese su edad'
+							/>
+							<InputField
+								type='number'
+								name='experiencia'
+								placeholder='Ingrese sus años de experiencia'
+							/>
+							<SelectField
+								options={deportes}
+								name={'deporte'}
+								label={'deporte'}></SelectField>
 
 							<label htmlFor='country' className='text-black mb-5'>
 								Country:
@@ -115,7 +122,7 @@ const Register = ({ toogleDisplay }) => {
 							{country && (
 								<>
 									<label className='text-black ' htmlFor='state'>
-										State/Region:
+										Estado/Region:
 									</label>
 									<RegionDropdown
 										country={country}

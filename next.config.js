@@ -14,7 +14,8 @@ module.exports = {
     APP_ID: process.env.APP_ID,
     API_BACKEND: process.env.API_BACKEND,
     PASS: process.env.PASS,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    UPLOAD_PRESET: process.env.UPLOAD_PRESET
   }
 };
 
