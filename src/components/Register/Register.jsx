@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import SelectField from '@/helpers/SelectField';
-import { deportes } from '@/utils/dataRegister'
+import { deportes } from '@/utils/dataRegister';
 import './styles.scss';
 import { handleSubmitRegister } from '../../helpers/handlers';
 import { registerSchema, initialValues } from '../../helpers/validations';
@@ -33,23 +33,20 @@ const Register = ({ toogleDisplay }) => {
 				validationSchema={registerSchema(country, region)}
 				onSubmit={async values => {
 					try {
-
-						console.log(values, country, region,  "estos son los valores");
 						const response = await handleSubmitRegister(
 							values,
 							country,
 							region
 						);
-						if(response?.success){
-							toastSuccess(response.success)
+						if (response?.success) {
+							toastSuccess(response.success);
 							toogleDisplay();
-						}
-						else{
-							throw new Error(response)
+						} else {
+							throw new Error(response);
 						}
 					} catch (error) {
 						if (error) {
-							if (error.startsWith("E", 0)) {
+							if (error.startsWith('E', 0)) {
 								toastError(
 									'Ya hay una cuenta existente con el email ingresado'
 								);
@@ -92,16 +89,20 @@ const Register = ({ toogleDisplay }) => {
 								handleShow={handleShow2}
 								className='mb-3'
 							/>
-		                    <InputField 
-							type="number"
-							name="edad"
-							placeholder="Ingrese su edad"
+							<InputField
+								type='number'
+								name='edad'
+								placeholder='Ingrese su edad'
 							/>
-							<SelectField options={deportes} name={"deporte"}
-							label={"deporte"}
-							></SelectField>
-
-							
+							<InputField
+								type='number'
+								name='experiencia'
+								placeholder='Ingrese sus años de experiencia'
+							/>
+							<SelectField
+								options={deportes}
+								name={'deporte'}
+								label={'deporte'}></SelectField>
 
 							<label htmlFor='country' className='text-black mb-5'>
 								Country:
