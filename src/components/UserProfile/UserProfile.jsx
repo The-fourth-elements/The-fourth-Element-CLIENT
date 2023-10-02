@@ -1,5 +1,6 @@
 'use client';
 import { useCountryCity } from '@/zustand/store/countryStore';
+import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 import './styles.scss';
 import { useEffect, useState } from 'react';
 import {Card, CardHeader, CardBody, Image, CircularProgress, Button } from '@nextui-org/react';
@@ -7,14 +8,14 @@ import { useSession } from 'next-auth/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { useUserDetail } from '@/zustand/store/userDetail';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import InputName from './input';
-
+import { NameEditor, CountryEditor, } from './ComponentsProfile';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
 	const user = session?.token?.user;
 	const {updateUserRole} = useUserDetail()
-	const { theCountry, getCountry } = useCountryCity();
+	const { theCountry, getCountry, theCity, getCity } = useCountryCity();
+	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
 	let [openImage, setOpenImage] = useState(false)
 	let [openCountry, setOpenCountry] = useState(false)
 	let [openCity, setOpenCity] = useState(false)
@@ -25,10 +26,14 @@ const UserProfile = () => {
 	let [newImage, setNewImage] = useState("")
 
 	useEffect(() => {
-		setNewCity(user?.city)
-		setNewCountry(user?.country)
+		console.log(user?.city)
+		console.log(user?.nation)
+		getCityId(user?.city)
+		getCountryId(user?.nation)
+		setNewCity(stringCity)
+		setNewCountry(stringCountry)
 		setNewName(user?.username)
-	}, [user?.username, user?.country, user?.city])
+	}, [user?.username, user?.country, user?.city, stringCity, stringCountry] )
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage)
 		setOpenCity(false)
@@ -62,15 +67,18 @@ const UserProfile = () => {
 		setOpenName(false)
 	}
 	const updateUserCountry = () => {
-		user.country = newCountry
-		console.log(theCountry)
+		if(theCountry !== ""){
+		user.nation = theCountry
 		updateUserRole(user)
 		setOpenCountry(false)
+		}
 	}
-	const updateUserCity = () => {
-		user.city = newCity
+	const updateUserCity = () => {	
+		if(theCity !== ""){
+		user.city = theCity
 		updateUserRole(user)
 		setOpenCity(false)
+		}
 	}
 	const updateUserImage = () => {
 		user.profile_img = newImage
@@ -80,18 +88,25 @@ const UserProfile = () => {
 	const selectCountry = (val) => {
 		setNewCountry(val);
 		setNewCity('');
-		console.log(val)
 		getCountry(val)
+	}
+	const selectCity = (val) => {
+		setNewCity('');
+		getCity(val)
 	}
 	return (
 		<article>
 			{user && user.id && Object.keys(user).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
-						{openName ? <h1> <InputName getNewName={getNewName}/> <Button size="sm" title="back to" color="warning" variant="bordered" onClick={handleChangeName} isIconOnly>↩</Button> <Button color="warning" variant="bordered" size="sm" onClick={updateUserName}> Accept </Button></h1>
-						:<h1>Name: {user.username} <Button title="Edit  Name" color="warning" variant="bordered" onClick={handleChangeName} size="sm" isIconOnly>
-							<EditIcon/>
-						</Button></h1>}
+						<NameEditor
+						user={user}
+						openName={openName}
+						setOpenName={setOpenName}
+						newName={newName}
+						getNewName={getNewName}
+						updateUser={updateUserName}
+						/>
 						{user.profile_img ? (
 							<Image src={user.profile_img} alt={user.name} />
 						) : (
@@ -115,27 +130,29 @@ const UserProfile = () => {
 						) : (
 							<h2>Plan: Admin </h2>
 						)}
-						{openCountry ? <h2> Country: <CountryDropdown
-									name='country'
-									autoComplete='on'
-									id='country'
-									value={newCountry}
-									onChange={selectCountry}
-									className='select'
-								/> <Button color="warning" variant="bordered" title="back to" onClick={handleChangeCountry} isIconOnly> ↩ </Button> <Button onClick={updateUserCountry} color="warning" variant="bordered"> Accept </Button></h2> :<h2>Country: {user.country} <Button isIconOnly color="warning" variant="bordered"title="Edit Country" onClick={handleChangeCountry}>
-							<EditIcon/>
-						</Button>
-						</h2>}
-						{openCity ? <h2> City: <RegionDropdown
-										country={newCountry}
-										value={newCity}
-										id='state'
-										onChange={val => setNewCity(val)}
-										className='group-select'
-									/> <Button isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCity}> ↩ </Button> <Button color="warning" variant="bordered" onClick={updateUserCity}> Accept </Button></h2> : <h2>City: {user.city} <Button color="warning" isIconOnly variant="bordered"title="Edit City" onClick={handleChangeCity}>
-							<EditIcon/>
-						</Button>
-						</h2>}
+						<CountryEditor
+							user={user}
+							openCountry={openCountry}
+							setOpenCountry={setOpenCountry}
+							newCountry={newCountry}
+							selectCountry={selectCountry}
+							updateUser={updateUserCountry}
+						/>
+						<CityEditor
+							user={user}
+							openCity={openCity}
+							setOpenCity={setOpenCity}
+							newCity={newCity}
+							selectCity={selectCity}
+							updateUser={updateUserCity}
+						/>
+						{/* <h2>Edad: {user.edad}</h2> */}
+						{/* <h2>Deportes:</h2> <ul>
+							{user.deportes.map((deporte) => (
+								<li>{deporte}</li>
+							))}
+						</ul> */}
+						{/* <h2>Deporte: {user.deporte}</h2> */}
 						<h2>
 							Registration date: {new Date(user.createdAt).toLocaleDateString()}
 						</h2>

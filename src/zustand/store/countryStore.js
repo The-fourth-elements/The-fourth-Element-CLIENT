@@ -1,18 +1,34 @@
 const { create } = require("zustand")
-const {getCountry} = require ("../actions/usersStoreActions")
+const {getCountry, getCountryAxios} = require ("../actions/usersStoreActions")
 
 export const useCountryCity = create((set, get) => ({
-    theCountry: {hola: "hola"},
-    city: {},
+    theCountry: "",
+    theCity: "",
     getCountry: (name) => {
         getCountry(name)
         .then((data) => {
             console.log(data)
             set((state) => ({
                 ...state,
-                stringCity: data.name
+                stringCity: data._id
             }))
         })
     }
     
 }))
+
+// export const useCountryCity = create((set, get) => ({
+//     theCountry: {},
+//     city: {},
+//     getCountry: (name) => {
+//         getCountryAxios(name)
+//         .then((data) => {
+//             console.log(data)
+//             set((state) => ({
+//                 ...state,
+//                 stringCity: data.name
+//             }))
+//         })
+//     }
+    
+// }))
