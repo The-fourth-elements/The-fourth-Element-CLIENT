@@ -39,7 +39,11 @@ export const handleSubmitEditClass = async (form, video) => {
     //dejar para hacer la peticion;
     console.log(form, video);
     const body = { ...form };
+    if (video.hasOwnProperty('url')) {
+      body.video = video;
+    }
     console.log(body);
+
     // const response = await fetch(process.env.API_BACKEND, {
     //   method: 'PUT',
     //   cache: 'no-cache',
@@ -47,5 +51,7 @@ export const handleSubmitEditClass = async (form, video) => {
     //   mode: 'cors',
     //   body,
     // });
+    alert('sois la ostia')
+
   } catch (error) { }
 };
