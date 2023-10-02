@@ -110,7 +110,7 @@ function CreateClass() {
 		const { info } = e;
 		const { url, public_id } = info;
 		console.log(e);
-		setVideo({ url, public_id });
+		setVideo({ url, id:public_id });
 	};
 
 	return (
