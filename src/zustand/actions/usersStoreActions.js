@@ -1,3 +1,4 @@
+import axios from "axios";
 
 export const getUsers = () => {
   return fetch(`${process.env.API_BACKEND}users`)
@@ -62,7 +63,7 @@ export const upadateUserRole = (elbody) => {
 };
 
 export const getCountry = (name) => {
-  return fetch(`${process.env.API_BACKEND}city/${name}`)
+  return fetch(`${process.env.API_BACKEND}country?name=${name}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -71,8 +72,18 @@ export const getCountry = (name) => {
     })
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
-      throw error; // Re-throw the error so it can be handled elsewhere if needed
+      throw error; 
     });
+};
+
+  export const getCountryAxios = async (name) => {
+  try {
+    const response = await axios.get(`${API_BACKEND}/country?name=${name}`);
+    return response.data;
+  } catch (error) {
+    console.error('There was a problem with the request:', error);
+    throw error; 
+  }
 };
 
 export const getCityId = (id) => {
