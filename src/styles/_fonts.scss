@@ -39,6 +39,14 @@
 	font-style: normal;
 }
 
+
+@font-face {
+	font-family: 'Input Serif';
+	src: url('./Fonts/InputSerif.ttf') format('truetype');
+	font-weight: 1000;
+	font-style: normal;
+}
+
 $font-primary: 'Suez One', sans-serif;
 $font-secondary: 'Roboto', Arial, sans-serif;
 $font-size-h1: 40px;
