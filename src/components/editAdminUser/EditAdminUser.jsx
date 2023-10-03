@@ -49,9 +49,7 @@ const EditAdminUser = ({id}) => {
 
   const updateRole = () => {
 	if (selectedPlan !== null) {
-	  detail.id = id;
-	  detail.role = selectedPlan;
-	  updateUserRole(detail);
+	  updateUserRole({id: id, role: selectedPlan});
 	  setChangePlan(!changePlan);
 	  handleChangeModal();
 	  setSelectedPlan(null)

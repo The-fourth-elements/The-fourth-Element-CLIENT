@@ -45,7 +45,7 @@ export const getDetailed = (id) => {
 }
 
 export const upadateUserRole = (elbody) => {
-  return fetch(`${process.env.API_BACKEND}user`,
+  return fetch(`http://localhost:3001/user`,
     {
       method: 'PUT',
       headers: {
@@ -65,9 +65,6 @@ export const upadateUserRole = (elbody) => {
 export const getCountry = (name) => {
   return fetch(`${process.env.API_BACKEND}country?name=${name}`)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
       return response.json();
     })
     .catch((error) => {
@@ -89,9 +86,6 @@ export const getCountry = (name) => {
 export const getCityId = (id) => {
   return fetch(`${process.env.API_BACKEND}city/${id}`)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
       return response.json();
     })
     .catch((error) => {
@@ -103,14 +97,21 @@ export const getCityId = (id) => {
 export const getCountryId = (id) => {
   return fetch(`${process.env.API_BACKEND}country/${id}`)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
       return response.json();
     })
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
       throw error; // Re-throw the error so it can be handled elsewhere if needed
+    });
+};
+
+export const getCountrys = () => {
+  return fetch(`${process.env.API_BACKEND}countries`)
+    .then((response) => {
+      return response.json(); 
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
     });
 };
 
