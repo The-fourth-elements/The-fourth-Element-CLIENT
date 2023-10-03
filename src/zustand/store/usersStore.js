@@ -33,7 +33,7 @@ export const useUsersStore = create((set, get) => ({
 
       set((state) => ({
         ...state,
-        users: state.usersFilter.filter ((user) => user.nationality === nationality)
+        users: state.usersFilter.filter ((user) => user.nation === nationality)
       }))
     }
     },
@@ -53,12 +53,14 @@ export const useUsersStore = create((set, get) => ({
   },
   orderUsersName: (orderName) =>{
     if (orderName === "nameDesc"){
+      console.log("Desc", orderName)
       set ((state) => ({
         ...state,
         users: state.users.sort(compareAZ)
       }))
     }
     if (orderName === "nameAsc"){
+      console.log("Asc", orderName)
       set((state) => ({
         ...state,
         users: state.users.sort(compareZA)

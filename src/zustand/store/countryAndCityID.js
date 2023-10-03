@@ -8,7 +8,6 @@ export const useNationAndCity = create ((set, get) => ({
     getCityId: (id) => {
         getCityId(id)
         .then((data) => {
-            console.log(data)
             set((state) => ({
                 ...state,
                 stringCity: data.name
@@ -18,8 +17,6 @@ export const useNationAndCity = create ((set, get) => ({
     getCountryId: (id) => {
         getCountryId (id)
         .then ((data) => {
-            console.log(data)
-
             set((state) => ({
                 ...state,
                 stringCountry:data.name

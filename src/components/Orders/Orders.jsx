@@ -5,7 +5,7 @@ import "./styles.scss"
 
 
 const Orders = () => {
-    const {orderUsersName, orderUsersPlan} = useUsersStore()
+    const {users, orderUsersName, orderUsersPlan} = useUsersStore()
 
     let [orderName, setOrderName] = useState("");
     let [orderPlan, setOrderPlan] = useState("");
@@ -14,6 +14,7 @@ const Orders = () => {
         const selectOrderName = event.target.value 
         setOrderName(selectOrderName)
         orderUsersName (selectOrderName)
+        console.log(users)
     }
     const handleOrderPlan = (event) => {
         const selectOrderPlan = event.target.value

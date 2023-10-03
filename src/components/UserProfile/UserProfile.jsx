@@ -5,16 +5,14 @@ import './styles.scss';
 import { useEffect, useState } from 'react';
 import {Card, CardHeader, CardBody, Image, CircularProgress, Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { useUserDetail } from '@/zustand/store/userDetail';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { NameEditor, CountryEditor, } from './ComponentsProfile';
+import { UserProfileBody, UserProfileHeader } from './HeadBodyProfile';
+
 
 const UserProfile = () => {
 	const { data: session } = useSession();
 	const user = session?.token?.user;
 	const {updateUserRole} = useUserDetail()
-	const { theCountry, getCountry, theCity, getCity } = useCountryCity();
 	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
 	let [openImage, setOpenImage] = useState(false)
 	let [openCountry, setOpenCountry] = useState(false)
@@ -24,16 +22,18 @@ const UserProfile = () => {
 	let [newCountry, setNewCountry] = useState("")
 	let [newCity, setNewCity] = useState("")
 	let [newImage, setNewImage] = useState("")
-
+	if(user){
+			user.nation = user.country
+		}
 	useEffect(() => {
-		console.log(user?.city)
-		console.log(user?.nation)
 		getCityId(user?.city)
 		getCountryId(user?.nation)
+
 		setNewCity(stringCity)
 		setNewCountry(stringCountry)
 		setNewName(user?.username)
-	}, [user?.username, user?.country, user?.city, stringCity, stringCountry] )
+	}, [ user?.city, user?.nation, user?.username ] )
+
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage)
 		setOpenCity(false)
@@ -62,23 +62,20 @@ const UserProfile = () => {
 		setNewName(event.target.value)
 	}
 	const updateUserName = () => {
-		user.username = newName
-		updateUserRole(user)
+		const update = {id: user.id, username: newName}
+		updateUserRole(update)
 		setOpenName(false)
 	}
 	const updateUserCountry = () => {
-		if(theCountry !== ""){
-		user.nation = theCountry
-		updateUserRole(user)
+		const update = {id: user.id, nation: newCountry}
+		console.log(update)
+		updateUserRole(update)
 		setOpenCountry(false)
-		}
 	}
 	const updateUserCity = () => {	
-		if(theCity !== ""){
-		user.city = theCity
-		updateUserRole(user)
+		const update = {id: user.id, city: newCity}
+		updateUserRole(update)
 		setOpenCity(false)
-		}
 	}
 	const updateUserImage = () => {
 		user.profile_img = newImage
@@ -88,87 +85,28 @@ const UserProfile = () => {
 	const selectCountry = (val) => {
 		setNewCountry(val);
 		setNewCity('');
-		getCountry(val)
 	}
 	const selectCity = (val) => {
-		setNewCity('');
-		getCity(val)
+		setNewCity(val);
 	}
 	return (
 		<article>
-			{user && user.id && Object.keys(user).length > 0 ? (
-				<Card className='main'>
-					<CardHeader className='elHeader'>
-						<NameEditor
-						user={user}
-						openName={openName}
-						setOpenName={setOpenName}
-						newName={newName}
-						getNewName={getNewName}
-						updateUser={updateUserName}
-						/>
-						{user.profile_img ? (
-							<Image src={user.profile_img} alt={user.name} />
-						) : (
-							<Image
-								src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
-								alt={user.name}
-							/>
-							
-						)}
-						<Button isIconOnly color="warning" variant="bordered" title="Edit Photo" onClick={handleChangePhoto}>
-							<EditIcon/>
-						</Button>
-						
-					</CardHeader>
-					<CardBody className='elBody'>
-						<h2>Email: {user.email}</h2>
-						{user.role === 0 ? (
-							<h2>Plan: Free Plan</h2>
-						) : user.role === 1 ? (
-							<h2>Plan: Pay Plan</h2>
-						) : (
-							<h2>Plan: Admin </h2>
-						)}
-						<CountryEditor
-							user={user}
-							openCountry={openCountry}
-							setOpenCountry={setOpenCountry}
-							newCountry={newCountry}
-							selectCountry={selectCountry}
-							updateUser={updateUserCountry}
-						/>
-						<CityEditor
-							user={user}
-							openCity={openCity}
-							setOpenCity={setOpenCity}
-							newCity={newCity}
-							selectCity={selectCity}
-							updateUser={updateUserCity}
-						/>
-						{/* <h2>Edad: {user.edad}</h2> */}
-						{/* <h2>Deportes:</h2> <ul>
-							{user.deportes.map((deporte) => (
-								<li>{deporte}</li>
-							))}
-						</ul> */}
-						{/* <h2>Deporte: {user.deporte}</h2> */}
-						<h2>
-							Registration date: {new Date(user.createdAt).toLocaleDateString()}
-						</h2>
-					</CardBody>
-				</Card>
-			) : (
-				<div className='centered'>
-					<CircularProgress
-						className='loading'
-						label='Loading...'
-						color='warning'
-					/>
-				</div>
-			)}
+		  {user && user.id && Object.keys(user).length > 0 ? (
+			<Card className='main'>
+			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName}/>
+			  <UserProfileBody user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
+			</Card>
+		  ) : (
+			<div className='centered'>
+			  <CircularProgress
+				className='loading'
+				label='Loading...'
+				color='warning'
+			  />
+			</div>
+		  )}
 		</article>
-	);
+	  );
 };
 
 export default UserProfile;
