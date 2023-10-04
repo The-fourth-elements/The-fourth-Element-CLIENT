@@ -3,16 +3,25 @@ import {Card, CardHeader, CardBody, Image, CircularProgress, Button } from '@nex
 import InputName from './input';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { CountrySelect, CitySelect } from './SelectsProfile';
+import { useState } from 'react';
 
-export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName }) => (
+export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName}) => {
+  const [hasErrors, setHasErrors] = useState(false);
+
+  // Función para actualizar el estado de errores
+  const handleValidationErrors = (hasErrors) => {
+    setHasErrors(hasErrors);
+  };
+  
+  return(
     <CardHeader className='elHeader'>
       {openName ? (
         <h1>
-          <InputName getNewName={getNewName} />
+          <InputName getNewName={getNewName} name={newName}             handleValidationErrors={handleValidationErrors}/>
           <Button size="sm" title="back to" color="warning" variant="bordered" onClick={handleChangeName} isIconOnly>
             ↩
           </Button>
-          <Button color="warning" variant="bordered" size="sm" onClick={updateUserName}> Accept </Button>
+          <Button color="warning" variant="bordered" size="sm" onClick={updateUserName} disabled={hasErrors} > Accept </Button>
         </h1>
       ) : (
         <h1>
@@ -34,7 +43,8 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
         <EditIcon />
       </Button>
     </CardHeader>
-  );
+  )
+};
 
 export const UserProfileBody = ({ user, openCountry, stringCountry, newCountry, selectCountry, handleChangeCountry, updateUserCountry, openCity, stringCity, newCity, selectCity, handleChangeCity, updateUserCity }) => (
 
@@ -48,7 +58,7 @@ export const UserProfileBody = ({ user, openCountry, stringCountry, newCountry, 
         <h2>Plan: Admin </h2>
       )}
       <CountrySelect stringCountry = {stringCountry} openCountry = {openCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} />
-      <CitySelect openCity = {openCity} stringCity = {stringCity}newCountry={newCountry} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
+      <CitySelect openCountry={openCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity = {openCity} stringCity = {stringCity} newCountry={newCountry} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
       {/* Otras partes del cuerpo del perfil */}
     </CardBody>
   );

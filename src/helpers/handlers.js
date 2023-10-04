@@ -14,7 +14,7 @@ export const handleSubmitRegister = async (
       nationality: country,
       age: Number(edad),
       sport: deporte,
-      yearsOfExperience: Number(experiencia),
+      expYearsSports: Number(experiencia),
     };
 
     const response = await postData(`${process.env.API_BACKEND}auth`, form);

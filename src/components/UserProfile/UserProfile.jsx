@@ -28,9 +28,10 @@ const UserProfile = () => {
 	useEffect(() => {
 		getCityId(user?.city)
 		getCountryId(user?.nation)
-
+		console.log(user)
 		setNewCity(stringCity)
 		setNewCountry(stringCountry)
+		console.log(stringCountry)
 		setNewName(user?.username)
 	}, [ user?.city, user?.nation, user?.username ] )
 
@@ -45,6 +46,7 @@ const UserProfile = () => {
 		setOpenCity(false)
 		setOpenName(false)
 		setOpenImage(false)
+		setNewCountry(stringCountry)
 	}
 	const handleChangeCity = () => {
 		setOpenCity(!openCity)
@@ -67,10 +69,10 @@ const UserProfile = () => {
 		setOpenName(false)
 	}
 	const updateUserCountry = () => {
-		const update = {id: user.id, nation: newCountry}
-		console.log(update)
+		const update = {id: user.id, nation: newCountry, city:newCity}
 		updateUserRole(update)
 		setOpenCountry(false)
+		setOpenCity(false)
 	}
 	const updateUserCity = () => {	
 		const update = {id: user.id, city: newCity}
@@ -93,7 +95,7 @@ const UserProfile = () => {
 		<article>
 		  {user && user.id && Object.keys(user).length > 0 ? (
 			<Card className='main'>
-			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName}/>
+			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName}/>
 			  <UserProfileBody user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
 			</Card>
 		  ) : (
