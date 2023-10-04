@@ -1,9 +1,9 @@
-'use client'
-import { useUsersStore } from "@/zustand/store/usersStore"
-import { useState, useEffect } from "react"
-import {Select, SelectSection, SelectItem} from "@nextui-org/react";
-import { useAllCountrys } from "@/zustand/store/allCountrys";
-import "./styles.scss"
+'use client';
+import { useUsersStore } from '@/zustand/store/usersStore';
+import { useState, useEffect } from 'react';
+import { Select, SelectSection, SelectItem, Button } from '@nextui-org/react';
+import { useAllCountrys } from '@/zustand/store/allCountrys';
+import './styles.scss';
 
 const Filters = () => {
     const { usersFilter } = useUsersStore();
@@ -61,3 +61,4 @@ const Filters = () => {
 };
 
 export default Filters;
+

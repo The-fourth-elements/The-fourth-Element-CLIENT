@@ -43,7 +43,7 @@ const ResetPass = ({ params }) => {
 				onSubmit={handleSubmit}
 				validationSchema={validationSchema}>
 				<CardBody className='body flex-grow'>
-					<Form className=' relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col mx-auto space-y-5  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+					<Form className=' relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col mx-auto space-y-5 bg-primary-500 mt-10 mb-10 p-10 rounded-lg justify-center'>
 						<label htmlFor='newPassword' className='text-black'>
 							Nueva contraseña:
 						</label>

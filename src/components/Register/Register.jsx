@@ -57,7 +57,7 @@ const Register = ({ toogleDisplay }) => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5 items-center mx-auto mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5 items-center mx-auto mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
 							<InputField
 								type='string'
 								name='username'

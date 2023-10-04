@@ -14,7 +14,7 @@ import "react-toastify/ReactToastify.min.css"; //no quitar, son las toast.
 
 export default function RootLayout({ children }) {
 	return ( //className dark para aplicar el tema a toda la pagina
-		<html lang='es' className='dark'> 
+		<html lang='es' className='modern'> 
 			<body>
 				<AuthContextProvider>
 					<Provider>

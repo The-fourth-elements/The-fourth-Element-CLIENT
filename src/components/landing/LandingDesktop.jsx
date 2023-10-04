@@ -11,10 +11,10 @@ const LandingDesktop = () => {
 				<div className='Container-banner'>
 					<Image alt='landing image' src={landingImg} />
 					<div className='Container-banner-text'>
-						<h3>
+						<h1>
 							TU ENTRENAMIENTO MENTAL Y CEREBRAL PARA POTENCIAR <br />TU DESEMPEÑO <br />
 							DEPORTIVO
-						</h3>
+						</h1>
 					</div>
 				</div>
 				<div className='Container-welcome-text'>
