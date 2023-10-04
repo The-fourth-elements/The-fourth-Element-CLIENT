@@ -24,4 +24,15 @@ export const toastError = (message) => {
         theme: "light",
     })
 }
-
+export const toastInfo = (message) => {
+    toast.info(message, {
+        position: "top-right",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    })
+}
