@@ -20,7 +20,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
         </h2>
       ) : (
         <h2>
-          Country: {stringCountry}
+          Country: {newCountry}
           <Button isIconOnly color="warning" variant="bordered" title="Edit Country" onClick={handleChangeCountry}>
             <EditIcon />
           </Button>
@@ -61,7 +61,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
         </h2>
       ) : (
         <h2>
-          City: {stringCity}
+          City: {newCity}
           <Button color="warning" isIconOnly variant="bordered" title="Edit City" onClick={handleChangeCity}>
             <EditIcon />
           </Button>

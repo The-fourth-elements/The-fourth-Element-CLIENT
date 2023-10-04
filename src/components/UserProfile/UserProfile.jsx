@@ -7,11 +7,15 @@ import {Card, CardHeader, CardBody, Image, CircularProgress, Button } from '@nex
 import { useSession } from 'next-auth/react';
 import { useUserDetail } from '@/zustand/store/userDetail';
 import { UserProfileBody, UserProfileHeader } from './HeadBodyProfile';
+import { useUserProfile } from '@/zustand/store/userProfile';
+import { getCookie } from 'cookies-next';
 
 
 const UserProfile = () => {
 	const { data: session } = useSession();
-	const user = session?.token?.user;
+	const theUser = session?.token?.user;
+	const cookie = getCookie("jsdklfsdjklfdsjfds")
+	const {getProfile, user} = useUserProfile()
 	const {updateUserRole} = useUserDetail()
 	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
 	let [openImage, setOpenImage] = useState(false)
@@ -22,18 +26,16 @@ const UserProfile = () => {
 	let [newCountry, setNewCountry] = useState("")
 	let [newCity, setNewCity] = useState("")
 	let [newImage, setNewImage] = useState("")
-	if(user){
-			user.nation = user.country
-		}
+	
 	useEffect(() => {
-		getCityId(user?.city)
-		getCountryId(user?.nation)
-		console.log(user)
-		setNewCity(stringCity)
-		setNewCountry(stringCountry)
-		console.log(stringCountry)
+		getProfile(cookie)
+		console.log("user:", user)
 		setNewName(user?.username)
-	}, [ user?.city, user?.nation, user?.username ] )
+		setNewCountry(user?.nation?.name)
+		setNewCity(user?.city?.name)
+		console.log(session)
+		console.log("theUser:", theUser)
+	}, [user.id, user.username] )
 
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage)
@@ -64,20 +66,27 @@ const UserProfile = () => {
 		setNewName(event.target.value)
 	}
 	const updateUserName = () => {
-		const update = {id: user.id, username: newName}
+		console.log(newName)
+		const update = {id: user._id, username: newName}
 		updateUserRole(update)
 		setOpenName(false)
+		getProfile(cookie)
+		// window.location.reload()
 	}
 	const updateUserCountry = () => {
-		const update = {id: user.id, nation: newCountry, city:newCity}
+		const update = {id: user._id, nation: newCountry, city:newCity}
 		updateUserRole(update)
 		setOpenCountry(false)
 		setOpenCity(false)
+		getProfile(cookie)
+		// window.location.reload()
 	}
 	const updateUserCity = () => {	
-		const update = {id: user.id, city: newCity}
+		const update = {id: user._id, city: newCity}
 		updateUserRole(update)
 		setOpenCity(false)
+		getProfile(cookie)
+		// window.location.reload()
 	}
 	const updateUserImage = () => {
 		user.profile_img = newImage
@@ -93,9 +102,9 @@ const UserProfile = () => {
 	}
 	return (
 		<article>
-		  {user && user.id && Object.keys(user).length > 0 ? (
+		  {user && user._id && Object.keys(user).length > 0 ? (
 			<Card className='main'>
-			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName}/>
+			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName} session = {session}/>
 			  <UserProfileBody user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
 			</Card>
 		  ) : (
