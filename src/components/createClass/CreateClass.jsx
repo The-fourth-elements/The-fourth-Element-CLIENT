@@ -1,14 +1,13 @@
 'use client';
 
 import { CldUploadButton } from 'next-cloudinary';
-import { Select, SelectItem, Button, Card, CardBody } from '@nextui-org/react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Button, Card, CardBody } from '@nextui-org/react';
+import { Formik, Form } from 'formik';
 import { useRouter } from 'next/navigation';
 import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
-import UploadWidget from '../uploadWidget/UploadWidget';
 
 import { useState, useEffect } from 'react';
 
@@ -35,10 +34,8 @@ function CreateClass() {
 
 	useEffect(() => {
 		const fetchModulesAndRedirect = async () => {
-			await getModules(); 
+			await getModules();
 			if (!(modules.length === 0)) setIsLoading(!isloading);
-
-			
 		};
 		if (!(modules.length > 0) && isloading) {
 			fetchModulesAndRedirect();
@@ -47,10 +44,9 @@ function CreateClass() {
 
 	function handleRouteChange() {
 		route.push('/dashboard/module/create');
-
 	}
 
-	if (!Array.isArray(modules) || modules.length === 0) {
+	if (!Array.isArray(modules) || modules?.length === 0) {
 		// No hay módulos creados, redirige al usuario
 		return (
 			<CustomModal
@@ -68,21 +64,23 @@ function CreateClass() {
 
 	const handleSubmit = async values => {
 		try {
-			if(video.url.length <= 0){
-				throw new Error('Inserte un video')
+			if (video?.url?.length == undefined) {
+				throw new Error('Inserte un video');
 			}
 		} catch (error) {
 			toastError(error.message);
 			return;
 		}
+
 		let form = {
 			module: values.module,
 			name: values.name,
 			description: values.description,
 			video: video,
-			powerPoint: values.powerPointUrl,
+			powerPoint: {
+				url: values.powerPointUrl,
+			},
 		};
-
 
 		const parsedModule = parseInt(form.module);
 
@@ -108,11 +106,11 @@ function CreateClass() {
 			toastError('No se pudo subir la clase, intente mas tarde');
 		}
 	};
-
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
-		setVideo({ url, public_id });
+		console.log(e);
+		setVideo({ url, id:public_id });
 	};
 
 	return (
@@ -122,8 +120,8 @@ function CreateClass() {
 					initialValues={initialValuesClass}
 					validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
-					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
-						<h1 className='mb-7'> Subir una clase </h1>
+					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-primary-500 p-10 rounded-lg'>
+						<h1 className='mb-7 text-white'> Subir una clase </h1>
 
 						{modules ? (
 							<SelectField
@@ -143,7 +141,6 @@ function CreateClass() {
 								label: 'text-xl',
 							}}
 							className='mb-5'
-
 							// type='name'
 
 							label='Nombre de la clase'
@@ -155,7 +152,6 @@ function CreateClass() {
 								label: 'text-xl',
 							}}
 							className='mb-5'
-
 							type='string'
 							label='URL del PowerPoint'
 							name='powerPointUrl'
@@ -166,30 +162,30 @@ function CreateClass() {
 								label: 'text-xl',
 							}}
 							className='mb-5'
-
 							type='description'
 							label='Descripción'
 							name='description'
 						/>
 
-						<h2 className='text-black'>Selecciona un video:</h2>
+						<h2 className='text-white'>Selecciona un video:</h2>
 						<CldUploadButton
 							className='cldButton'
 							onSuccess={handleSuccess}
-							uploadPreset='vasv6nvh'
+							uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
+							disabled={video?.url?.length > 0}
 						/>
 						{video?.url?.length > 0 ? (
 							<h5 className='bg-green-600 rounded-lg p-3 text-xl mt-6'>
 								Video subido correctamente
 							</h5>
 						) : null}
-							<Button
-								type='submit'
-								size='lg'
-								className='bg-blue-500 rounded-lg submit'
-								variant='ghost'>
-								Enviar
-							</Button>
+						<Button
+							type='submit'
+							size='lg'
+							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'
+							>
+							Enviar
+						</Button>
 					</Form>
 				</Formik>
 			</CardBody>

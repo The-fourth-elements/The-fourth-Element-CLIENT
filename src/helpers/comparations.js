@@ -1,11 +1,11 @@
 
 export const compareAZ = (user1, user2) => {
-    return user1.name.localeCompare(user2.name);
+  return user1.username.localeCompare(user2.username);
 }
 
 export const compareZA = (user1, user2) => {
-    return user2.name.localeCompare(user1.name);
-  }
+  return user2.username.localeCompare(user1.username);
+}
 
 export const compareAsc = (user1, user2) => {
     return user1.rol - user2.rol;

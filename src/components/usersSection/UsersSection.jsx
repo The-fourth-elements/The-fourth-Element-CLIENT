@@ -25,19 +25,26 @@ import './UsersSection.scss';
 const columns = [
 	{ name: 'NAME', uid: 'name' },
 	{ name: 'PLAN', uid: 'plan' },
-	{ name: 'STATUS', uid: 'status' },
 	{ name: 'ACTIONS', uid: 'actions' },
 ];
 
 export default function UsersSection() {
 	const [isLoading, setIsLoading] = useState(true);
-	const { users, getUsers, deleteUser } = useUsersStore();
+	const { users, getUsers, deleteUser, getDeletedUsers, restoreUser } =
+		useUsersStore();
+	
+	const [showDeletedUsers, setShowDeletedUsers] = useState(true);
+
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
+
 	const [userIdToDelete, setUserIdToDelete] = useState('');
+	const [userEmailToRestore, setUserEmailToRestore] = useState('');
+
 	// const router = useRouter()
 	const handleClick = () => {
 		// router.push(`/dashboard/users-section/user-edit/6515526af3ae6387c3766af3`);
-	  };
+	};
 	const handleDelete = userId => {
 		setUserIdToDelete(userId);
 		setIsModalOpen(true);
@@ -47,6 +54,25 @@ export default function UsersSection() {
 		// Eliminar el usuario de la base de datos
 		deleteUser(userIdToDelete);
 		setIsModalOpen(false);
+	};
+
+	const handleRestore = email => {
+		setUserEmailToRestore(email);
+		setIsRestoreModalOpen(true);
+	};
+
+	const handleConfirmRestore = async () => {
+		// Eliminar el usuario de la base de datos
+		await restoreUser(userEmailToRestore);
+		setIsRestoreModalOpen(false);
+		setShowDeletedUsers(!showDeletedUsers)
+
+		getUsers();
+	};
+
+	const handleGetDeletedUsers = () => {
+		setShowDeletedUsers(!showDeletedUsers);
+		getDeletedUsers(showDeletedUsers);
 	};
 
 	useEffect(() => {
@@ -61,16 +87,18 @@ export default function UsersSection() {
 
 	const pages = Math.ceil(users?.length / rowsPerPage);
 
-
 	const items = React.useMemo(() => {
 		const start = (page - 1) * rowsPerPage;
 		const end = start + rowsPerPage;
-	
+
 		return users?.slice(start, end);
-	  }, [page, users]);
+	}, [page, users]);
 
 	return (
 		<div className='mainDiv'>
+			<Button onClick={handleGetDeletedUsers}>
+				{showDeletedUsers ? 'Ver usuarios eliminados' : 'Ver usuarios existentes'}
+			</Button>
 			{isLoading && (
 				<Card className='h-[100vh] space-y-5 p-4' radius='2xl'>
 					<p className='uppercase font-bold'>Loading Users</p>
@@ -93,10 +121,14 @@ export default function UsersSection() {
 										isCompact
 										showControls
 										showShadow
-										color='primary'
 										page={page}
 										total={pages}
 										onChange={page => setPage(page)}
+										classNames={{
+											item: "w-8 h-8 text-small rounded-none bg-transparent",
+											cursor:
+											  " modern primary-500  text-white font-bold",
+										  }}
 									/>
 								</div>
 							}>
@@ -118,29 +150,65 @@ export default function UsersSection() {
 									<TableRow key={item._id}>
 										{columnKey => (
 											<TableCell>
-												{renderCell(item, columnKey, handleDelete, handleClick)}
+												{renderCell(
+													item,
+													columnKey,
+													handleDelete,
+													handleRestore,
+													handleClick
+												)}
 											</TableCell>
 										)}
 									</TableRow>
 								)}
 							</TableBody>
 						</Table>
-						<CustomModal
-							isOpen={isModalOpen}
-							onClose={() => setIsModalOpen(false)}
-							closeButton
-							title='Confirmar eliminación'
-							content='¿Está seguro de que desea eliminar este usuario?'
-							actions={[
-								<Button autoFocus onClick={handleConfirmDelete} color="danger">
-									Confirmar
-								</Button>,
-								<Button onClick={() => setIsModalOpen(false)}>Cancelar</Button>,
-							]}
-						/>
+						{isRestoreModalOpen ? (
+							<CustomModal
+								isOpen={isRestoreModalOpen}
+								onClose={() => setIsRestoreModalOpen(false)}
+								closeButton
+								title='Confirmar restauración de usuario'
+								content='¿Está seguro de que desea restaurar este usuario?'
+								actions={[
+									<Button
+										autoFocus
+										onClick={handleConfirmRestore}
+										color='danger'>
+										Confirmar
+									</Button>,
+									<Button onClick={() => setIsRestoreModalOpen(false)}>
+										Cancelar
+									</Button>,
+								]}
+							/>
+						) : (
+							<CustomModal
+								isOpen={isModalOpen}
+								onClose={() => setIsModalOpen(false)}
+								closeButton
+								title='Confirmar eliminación'
+								content='¿Está seguro de que desea eliminar este usuario?'
+								actions={[
+									<Button
+										autoFocus
+										onClick={handleConfirmDelete}
+										color='danger'>
+										Confirmar
+									</Button>,
+									<Button onClick={() => setIsModalOpen(false)}>
+										Cancelar
+									</Button>,
+								]}
+							/>
+						)}
 					</div>
 				) : (
+					<>
 					<h1 className='nousers'>No hay usuarios</h1>
+
+					{/* {setShowDeletedUsers(false)} */}
+					</>
 				))}
 		</div>
 	);

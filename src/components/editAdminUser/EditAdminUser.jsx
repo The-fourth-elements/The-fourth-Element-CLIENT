@@ -4,21 +4,32 @@ import { useUserDetail } from '@/zustand/store/userDetail';
 import { Card, CardHeader, CardBody, Image, CircularProgress, select } from '@nextui-org/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import "./styles.scss"
+import { useNationAndCity } from '@/zustand/store/countryAndCityID';
+import { Modal } from '@nextui-org/react';
 
 const EditAdminUser = ({id}) => {
     
     const { detail, getDetail, updateUserRole } = useUserDetail();
+	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [changePlan, setChangePlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null); 
   const [showBackdrop, setShowBackdrop] = useState(false);
+	let [country, setCountry] = useState("");
+	let [city, setCity] = useState("");
 
 
   useEffect(() => {
     if (id) {
       getDetail(id);
     }
-  }, [id, detail.role]);
+	if(detail.username && Object.keys(detail).length > 0){
+		setCountry(detail.nation.name)
+		setCity(detail.city.name)
+	}
+	console.log(detail.nation)
+	console.log(detail.city)
+  }, [ detail?.role, id]);
 
 
   const handleChangePlan = () => {
@@ -28,7 +39,6 @@ const EditAdminUser = ({id}) => {
   const handleChangeModal = () => {
     setShowConfirmationModal(!showConfirmationModal);
 	setShowBackdrop(!showBackdrop);
-
   };
 
   const selectPlan = (event) => {
@@ -37,9 +47,7 @@ const EditAdminUser = ({id}) => {
 
   const updateRole = () => {
 	if (selectedPlan !== null) {
-	  detail.id = id;
-	  detail.role = selectedPlan;
-	  updateUserRole(detail);
+	  updateUserRole({id: id, role: selectedPlan});
 	  setChangePlan(!changePlan);
 	  handleChangeModal();
 	  setSelectedPlan(null)
@@ -95,8 +103,8 @@ const EditAdminUser = ({id}) => {
 							</div>
 							</div>
 						)}
-						<h2>Country: {detail.nation}</h2>
-						<h2>City: {detail.city}</h2>
+						<h2>Country: {country}</h2>
+						<h2>City: {city}</h2>
 						<h2>
 							Registration date:{' '}
 							{new Date(detail.createdAt).toLocaleDateString()}

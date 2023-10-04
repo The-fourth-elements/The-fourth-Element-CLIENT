@@ -5,10 +5,11 @@ import Metric from '@/components/metrics/Pie';
 import { metricData, setData } from '@/helpers/getterMetrics';
 import { useEffect, useState } from 'react';
 import { useUsersStore } from '../../zustand/store/usersStore';
+import { generateMetric } from '@/helpers/generateMetric';
 
 const dashboard = () => {
-	const { getUsers, users } = useUsersStore();
-	const option1 = metricData('Usuarios');
+	const { getUsers, users, countriesCount, getCountOfUsersPerCountry } = useUsersStore();
+	const option = metricData('Usuarios');
 
 	const [userMetrics, setUserMetrics] = useState({
 		labels: [],
@@ -22,11 +23,14 @@ const dashboard = () => {
 
 				setUserMetrics(metrics);
 			});
+			getCountOfUsersPerCountry()?.then(
+				data=>console.log(data)
+			)
 		} else {
 			const metrics = calculateMetrics(users);
 			setUserMetrics(metrics);
 		}
-	}, [users]);
+	}, [users, countriesCount]);
 	const calculateMetrics = users => {
 		const activeUsers = users?.filter(user => !user.deleted);
 
@@ -44,6 +48,32 @@ const dashboard = () => {
 		const metricData = setData(labels, 'Usuarios', data);
 		return metricData;
 	};
+	const tuJson = {
+		"Antigua and Barbuda": 2,
+		"Australia": 1,
+		"Austria": 1,
+		"Argentina": 3,
+		"Brazil": 5,
+		"Canada": 4,
+		"Chile": 2,
+		"China": 8,
+		"France": 6,
+		"Germany": 7,
+		"India": 10,
+		"Italy": 6,
+		"Japan": 4,
+		"Mexico": 3,
+		"Netherlands": 2,
+		"New Zealand": 1,
+		"Spain": 4,
+		"Switzerland": 2,
+		"United Kingdom": 7,
+		"United States": 15
+		// Puedes seguir agregando más países si es necesario
+	  };
+
+	const [data1, option1] = generateMetric(tuJson, 'Frutillita')
+	const [data2, option2] = generateMetric(tuJson, 'nuevo')
 
 	return (
 		<>
@@ -56,19 +86,19 @@ const dashboard = () => {
 						<section className={section1}>
 							<h2>Usuarios: </h2>
 							{userMetrics?.labels?.length >= 1 && (
-								<Metric data={userMetrics} options={option1}></Metric>
+								<Metric data={userMetrics} options={option}></Metric>
 							)}
 						</section>
 						<section className={section2}>
-							<h2>Usuarios: </h2>
+							<h2>Usuarios por país: </h2>
 							{userMetrics?.labels?.length >= 1 && (
-								<Metric data={userMetrics} options={option1}></Metric>
+								<Metric data={data1} options={option1}></Metric>
 							)}
 						</section>
 						<section className={section3}>
-							<h2>Usuarios: </h2>
+							<h2>Usuarios por edad: </h2>
 							{userMetrics?.labels?.length >= 1 && (
-								<Metric data={userMetrics} options={option1}></Metric>
+								<Metric data={data2} options={option2}></Metric>
 							)}
 						</section>
 					</div>

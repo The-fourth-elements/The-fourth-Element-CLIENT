@@ -1,8 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Card, Link, Accordion, AccordionItem } from '@nextui-org/react';
+import Image from 'next/image';
+import {
+	Card,
+	Link,
+	Accordion,
+	AccordionItem,
+	accordion,
+	useDisclosure,
+} from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import { useModulesStore } from '@/zustand/store/modulesStore';
 import {
 	containerVideos,
@@ -12,6 +20,9 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
+import { EditIcon } from '@/assets/svg-jsx/EditIcon';
+import { toastError } from '@/helpers/toast';
+import ModalEditClass from '@/helpers/ModalEditClass';
 
 export default function ModuleView() {
 	const { data: session } = useSession();
@@ -23,38 +34,58 @@ export default function ModuleView() {
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);
+	const [access, setAccess] = useState(false);
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const [dataUpdated, setDataUpdated] = useState(false)
 
 	useEffect(() => {
 		getModules();
 	}, []);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const fetchedModuleData = {};
-
-			for (const module of modules) {
-				const classDataArray = [];
-
-				for (const elem of module.classModule) {
-					try {
-						const url = `${process.env.API_BACKEND}class/${elem}`;
-						const response = await fetch(url);
-						const classData = await response.json();
-						classDataArray.push(classData);
-					} catch (error) {
-						console.error(
-							`Error al obtener datos de clase para el módulo ${module.id}:`,
-							error
-						);
-					}
-				}
-				fetchedModuleData[module.name] = classDataArray;
+		if (session) {
+			if (session?.token?.user) {
+				const { role } = session.token.user;
+				role > 2 && setAccess(true);
 			}
-			setModuleData(fetchedModuleData);
-			setModulesDataLoaded(true);
-		};
+		}
 		fetchData();
-	}, [modules]);
+	}, [modules, session, dataUpdated]);
+	const fetchData = async () => {
+		const fetchedModuleData = {};
+
+		for (const module of modules) {
+			const classDataArray = [];
+
+			for (const elem of module.classModule) {
+				try {
+					const url = `${process.env.API_BACKEND}class/${elem._id}`;
+					const response = await fetch(url);
+					const classData = await response.json();
+					classDataArray.push(classData);
+				} catch (error) {
+					console.error(
+						`Error al obtener datos de clase para el módulo ${module.id}:`,
+						error
+					);
+					toastError('No se pudieron obtener los modulos');
+				}
+			}
+			fetchedModuleData[module.name] = classDataArray;
+		}
+		setModuleData(fetchedModuleData);
+		setModulesDataLoaded(true);
+	};
+
+	const handleDataUpdate = () => {
+		setDataUpdated(true);
+	}
+
+	useEffect(()=>{
+		if(dataUpdated){
+			setDataUpdated(false)
+		}
+	}, [dataUpdated])
 
 	const renderVideo = () => {
 		if (currentClass) {
@@ -64,7 +95,7 @@ export default function ModuleView() {
 			);
 
 			if (selectedClassData) {
-				return <video src={selectedClassData.video.url} controls={true} />;
+				return <video src={selectedClassData?.video?.url} controls={true} />;
 			}
 		}
 		return <p>Selecciona una clase para ver el video.</p>;
@@ -85,10 +116,10 @@ export default function ModuleView() {
 						<br />
 
 						<h3 className='p-2 m-3 cursor-pointer'>
-							Power Point:{' '}
-							<Link href={selectedClassData.powerPoint.url} target='_blank'>
-								icon
-							</Link>
+							Power Point:
+							<a href={selectedClassData?.powerPoint?.url} target='_blank'>
+								Archivo
+							</a>
 						</h3>
 					</>
 				);
@@ -98,8 +129,10 @@ export default function ModuleView() {
 	};
 
 	const handleClassClick = className => {
+		console.log('tocado');
 		setCurrentClass(className);
 	};
+
 
 	return (
 		<>
@@ -125,7 +158,8 @@ export default function ModuleView() {
 									acordionItem +
 									' p-2 m-1 bg-transparent rounded md:m-0 text-background'
 								}
-								title='Recursos'>
+								title='Recursos'
+								textValue={`${accordion}`}>
 								{renderDescription()}
 							</AccordionItem>
 						</Accordion>
@@ -145,12 +179,36 @@ export default function ModuleView() {
 												<Accordion>
 													{moduleData[modules[index].name]?.map(
 														(elem, classIndex) => (
-															<AccordionItem key={classIndex} title={classIndex + 1}>
-																<Link
-																	href='#'
-																	onClick={() => handleClassClick(elem.name)}>
-																	{elem.name}
-																</Link>
+															<AccordionItem
+																key={classIndex}
+																textValue={`${index} ${name}`}
+																title={classIndex + 1}>
+																<div className='flex justify-between'>
+																	<span
+																		className='cursor-pointer'
+																		onClick={() => handleClassClick(elem.name)}>
+																		{elem.name}
+																	</span>
+																	{access && (
+																		<>
+																			<EditIcon
+																				className={
+																					'cursor-pointer rounded-full transition-background hover:opacity-70'
+																				}
+																				width='30'
+																				height='30'
+																				onClick={onOpen}
+																			/>
+																			<ModalEditClass
+																				classValues={elem}
+																				isOpen={isOpen}
+																				handleDataUpdate={handleDataUpdate}
+																				onOpenChange={
+																					onOpenChange
+																				}></ModalEditClass>
+																		</>
+																	)}
+																</div>
 															</AccordionItem>
 														)
 													)}
@@ -169,4 +227,3 @@ export default function ModuleView() {
 		</>
 	);
 }
-

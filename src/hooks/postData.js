@@ -19,8 +19,7 @@ export const postData = async (url, data, token) => {
         });
 
         const responseParsed = await response.json();
-
-        if (responseParsed.error) {
+        if (responseParsed?.error) {
             throw new Error(responseParsed.error);
         }
 

@@ -11,10 +11,10 @@ const LandingDesktop = () => {
 				<div className='Container-banner'>
 					<Image alt='landing image' src={landingImg} />
 					<div className='Container-banner-text'>
-						<h3>
-							TU ENTRENAMIENTO MENTAL Y CEREBRAL PARA POTENCIAR TU DESEMPEÑO
+						<h1>
+							TU ENTRENAMIENTO MENTAL Y CEREBRAL PARA POTENCIAR <br />TU DESEMPEÑO <br />
 							DEPORTIVO
-						</h3>
+						</h1>
 					</div>
 				</div>
 				<div className='Container-welcome-text'>
@@ -41,7 +41,7 @@ const LandingDesktop = () => {
 					<button>Grupos</button>
 				</div>
 				<div className='Container-description'>
-					<p>The Fourth Element está diseñado para... </p>
+					<h3><b>The Fourth Element</b> está diseñado para...</h3>
 					<p>
 						Cualquier atleta comprometido con el alto rendimiento, ya sea en
 						disciplinas individuales o de equipo. También, es una oportunidad
