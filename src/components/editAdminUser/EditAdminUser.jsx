@@ -6,6 +6,7 @@ import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import "./styles.scss"
 import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 import { Modal } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 const EditAdminUser = ({id}) => {
     
@@ -17,7 +18,7 @@ const EditAdminUser = ({id}) => {
   const [showBackdrop, setShowBackdrop] = useState(false);
 	let [country, setCountry] = useState("");
 	let [city, setCity] = useState("");
-
+	const router = useRouter()
 
   useEffect(() => {
     if (id) {
@@ -51,6 +52,7 @@ const EditAdminUser = ({id}) => {
 	  setChangePlan(!changePlan);
 	  handleChangeModal();
 	  setSelectedPlan(null)
+	  getDetail(id)
 	}
   };
 

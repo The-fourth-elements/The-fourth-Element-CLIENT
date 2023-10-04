@@ -5,7 +5,7 @@ import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { CountrySelect, CitySelect } from './SelectsProfile';
 import { useState } from 'react';
 
-export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName}) => {
+export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName, session}) => {
   const [hasErrors, setHasErrors] = useState(false);
 
   // Función para actualizar el estado de errores
@@ -31,7 +31,10 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
           </Button>
         </h1>
       )}
-      {user.profile_img ? (
+      {session.token.picture ?(         
+      <Image src={session.token.picture} alt="profileImage" />)
+      :
+      user.profile_img ? (
         <Image src={user.profile_img} alt={user.name} />
       ) : (
         <Image
