@@ -5,6 +5,7 @@ import { Card, CardHeader, CardBody, Image, CircularProgress, select } from '@ne
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import "./styles.scss"
 import { useNationAndCity } from '@/zustand/store/countryAndCityID';
+import { Modal } from '@nextui-org/react';
 
 const EditAdminUser = ({id}) => {
     
@@ -14,8 +15,8 @@ const EditAdminUser = ({id}) => {
   const [changePlan, setChangePlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null); 
   const [showBackdrop, setShowBackdrop] = useState(false);
-	let [country, setCountry] = useState(stringCountry);
-	let [city, setCity] = useState(stringCity);
+	let [country, setCountry] = useState("");
+	let [city, setCity] = useState("");
 
 
   useEffect(() => {
@@ -23,14 +24,12 @@ const EditAdminUser = ({id}) => {
       getDetail(id);
     }
 	if(detail.username && Object.keys(detail).length > 0){
-		getCountryId(detail.nation)
-		getCityId(detail.city)
+		setCountry(detail.nation.name)
+		setCity(detail.city.name)
 	}
-	if (stringCity !== "" && stringCountry !== ""){
-		setCity(stringCity)
-		setCountry(stringCountry)
-	}
-  }, [ detail.role, stringCity, stringCountry, id]);
+	console.log(detail.nation)
+	console.log(detail.city)
+  }, [ detail?.role, id]);
 
 
   const handleChangePlan = () => {
@@ -40,7 +39,6 @@ const EditAdminUser = ({id}) => {
   const handleChangeModal = () => {
     setShowConfirmationModal(!showConfirmationModal);
 	setShowBackdrop(!showBackdrop);
-
   };
 
   const selectPlan = (event) => {
