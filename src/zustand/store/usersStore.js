@@ -92,7 +92,7 @@ export const useUsersStore = create((set, get) => ({
       ...state,
       agesCount: response
     }));
-  }
+  },
 
 
 	getDeletedUsers: showDeletedUsers => {
