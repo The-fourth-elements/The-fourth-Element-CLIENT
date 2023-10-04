@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { compareAZ, compareZA, compareAsc, compareDesc } from '@/helpers/comparations';
 import {
-	getUsers,
-	deleteUser,
-	getDeletedUsers,
-	restoreUser,
-  getCountCountries
+  getUsers,
+  deleteUser,
+  getDeletedUsers,
+  restoreUser,
+  getCountCountries,
+  getCountAges
 } from '../actions/usersStoreActions';
 
 export const useUsersStore = create((set, get) => ({
@@ -107,35 +108,35 @@ export const useUsersStore = create((set, get) => ({
   },
 
 
-	getDeletedUsers: showDeletedUsers => {
-		showDeletedUsers
-			? getDeletedUsers().then(data => {
-					set(state => ({
-						...state,
-						users: data,
-					}));
-			  })
-			: getUsers().then(data => {
-					set(state => ({
-						...state,
-						users: data,
-					}));
-			  });
-	},
+  getDeletedUsers: showDeletedUsers => {
+    showDeletedUsers
+      ? getDeletedUsers().then(data => {
+        set(state => ({
+          ...state,
+          users: data,
+        }));
+      })
+      : getUsers().then(data => {
+        set(state => ({
+          ...state,
+          users: data,
+        }));
+      });
+  },
 
-	restoreUser: email => {
-		restoreUser(email).then(() => {
-			// set(state => ({
-			// 	users: state.users.filter(user => user.email !== email),
-			// }));
-		});
-		getUsers().then(data => {
-			set(state => ({
-				...state,
-				users: data,
-				usersFilter: data,
-			}));
-		});
-	},
+  restoreUser: email => {
+    restoreUser(email).then(() => {
+      // set(state => ({
+      // 	users: state.users.filter(user => user.email !== email),
+      // }));
+    });
+    getUsers().then(data => {
+      set(state => ({
+        ...state,
+        users: data,
+        usersFilter: data,
+      }));
+    });
+  },
 }));
 
