@@ -1,11 +1,18 @@
 import { create } from 'zustand';
-import { getUsers, deleteUser, getCountCountries } from '../actions/usersStoreActions';
 import { compareAZ, compareZA, compareAsc, compareDesc } from '@/helpers/comparations';
+import {
+	getUsers,
+	deleteUser,
+	getDeletedUsers,
+	restoreUser,
+  getCountCountries
+} from '../actions/usersStoreActions';
 
 export const useUsersStore = create((set, get) => ({
   users: [],
   usersFilter: [],
-  countriesCount: [],
+  countriesCount: {},
+  agesCount: {},
   getUsers: () => {
     getUsers()
       .then((data) => {
@@ -24,6 +31,7 @@ export const useUsersStore = create((set, get) => ({
         }));
       });
   },
+
   filterUsers: (nationality, plan) => {
     const filteredUsers = get().usersFilter.filter((user) => {
         const nationalityFilter = nationality === "all" || user.nation._id === nationality;
@@ -77,6 +85,45 @@ export const useUsersStore = create((set, get) => ({
         countriesCount: data
       }));
     });
+  },
+  getCountOfUsersPerAge: async () => {
+    const response = await getCountAges()
+    set((state) => ({
+      ...state,
+      agesCount: response
+    }));
   }
+
+
+	getDeletedUsers: showDeletedUsers => {
+		showDeletedUsers
+			? getDeletedUsers().then(data => {
+					set(state => ({
+						...state,
+						users: data,
+					}));
+			  })
+			: getUsers().then(data => {
+					set(state => ({
+						...state,
+						users: data,
+					}));
+			  });
+	},
+
+	restoreUser: email => {
+		restoreUser(email).then(() => {
+			// set(state => ({
+			// 	users: state.users.filter(user => user.email !== email),
+			// }));
+		});
+		getUsers().then(data => {
+			set(state => ({
+				...state,
+				users: data,
+				usersFilter: data,
+			}));
+		});
+	},
 }));
 
