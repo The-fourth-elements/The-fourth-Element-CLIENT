@@ -120,8 +120,8 @@ function CreateClass() {
 					initialValues={initialValuesClass}
 					validationSchema={validationSchemaCreateClass}
 					onSubmit={handleSubmit}>
-					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
-						<h1 className='mb-7'> Subir una clase </h1>
+					<Form className='sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-primary-500 p-10 rounded-lg'>
+						<h1 className='mb-7 text-white'> Subir una clase </h1>
 
 						{modules ? (
 							<SelectField
@@ -167,7 +167,7 @@ function CreateClass() {
 							name='description'
 						/>
 
-						<h2 className='text-black'>Selecciona un video:</h2>
+						<h2 className='text-white'>Selecciona un video:</h2>
 						<CldUploadButton
 							className='cldButton'
 							onSuccess={handleSuccess}

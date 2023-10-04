@@ -46,7 +46,7 @@ export const useUsersStore = create((set, get) => ({
 
       set((state) => ({
         ...state,
-        users: state.usersFilter.filter((user) => user.nation === nationality)
+        users: state.usersFilter.filter((user) => user.nation.name === nationality)
       }))
     }
   },

@@ -5,8 +5,9 @@ import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { Button } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 
+
 function MercadoPago() {
-    initMercadoPago("TEST-0b2faa68-53ac-4008-9f01-350b063de4d8");
+    initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY);
 
 	const [preferenceId, setPreferenceId] = useState(null);
 
