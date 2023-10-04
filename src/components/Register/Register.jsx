@@ -41,18 +41,10 @@ const Register = ({ toogleDisplay }) => {
 						if (response?.success) {
 							toastSuccess(response.success);
 							toogleDisplay();
-						} else {
-							throw new Error(response);
-						}
+						} 
+						console.log(response);
 					} catch (error) {
-						if (error) {
-							if (error.startsWith('E', 0)) {
-								toastError(
-									'Ya hay una cuenta existente con el email ingresado'
-								);
-							}
-							toastError('Ocurrio un error al crear la cuenta');
-						}
+						toastError(error?.message)
 					}
 				}}>
 				{({ errors }) => (

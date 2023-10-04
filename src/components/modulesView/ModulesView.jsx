@@ -89,7 +89,9 @@ export default function ModuleView() {
 
 	const renderVideo = () => {
 		if (currentClass) {
-			const selectedModule = modules[0]?.name;
+			const selectedModule = modules.find(module =>
+				module.classModule.some(classItem => classItem.name === currentClass)
+			  )?.name;
 			const selectedClassData = moduleData[selectedModule]?.find(
 				elem => elem.name === currentClass
 			);
@@ -103,7 +105,9 @@ export default function ModuleView() {
 
 	const renderDescription = () => {
 		if (currentClass) {
-			const selectedModule = modules[0]?.name;
+			const selectedModule =  modules.find(module =>
+				module.classModule.some(classItem => classItem.name === currentClass)
+			  )?.name;
 			const selectedClassData = moduleData[selectedModule]?.find(
 				elem => elem.name === currentClass
 			);
@@ -131,6 +135,7 @@ export default function ModuleView() {
 	const handleClassClick = className => {
 		console.log('tocado');
 		setCurrentClass(className);
+		console.log(className);
 	};
 
 
