@@ -47,6 +47,12 @@ const config = {
 							DEFAULT: '#e85721',
 							foreground: '#ffffff',
 						},
+						secondary:{
+							600: '#d93b20',
+							700: '#fe8100',
+							800: '#cc5e02',
+							900: '#a1490b',
+						},
 						focus: '#F182F6',
 					},
 					layout: {

@@ -25,7 +25,6 @@ import './UsersSection.scss';
 const columns = [
 	{ name: 'NAME', uid: 'name' },
 	{ name: 'PLAN', uid: 'plan' },
-	{ name: 'STATUS', uid: 'status' },
 	{ name: 'ACTIONS', uid: 'actions' },
 ];
 
@@ -122,10 +121,14 @@ export default function UsersSection() {
 										isCompact
 										showControls
 										showShadow
-										color='primary'
 										page={page}
 										total={pages}
 										onChange={page => setPage(page)}
+										classNames={{
+											item: "w-8 h-8 text-small rounded-none bg-transparent",
+											cursor:
+											  " modern primary-500  text-white font-bold",
+										  }}
 									/>
 								</div>
 							}>

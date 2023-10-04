@@ -7,6 +7,8 @@ import { Button, User, Chip, Tooltip, Link } from '@nextui-org/react';
 import { EditIcon } from '../assets/svg-jsx/EditIcon';
 import { DeleteIcon } from '../assets/svg-jsx/DeleteIcon';
 import { EyeIcon } from '../assets/svg-jsx/EyeIcon';
+import Image from 'next/image';
+import RestoreIcon from '../assets/svg/RestoreIcon.svg';
 
 const statusColorMap = {
 	active: 'success',
@@ -21,7 +23,6 @@ const userRoles = {
 	3: 'Administrator',
 };
 
-function detailHandler(id) {}
 
 function renderCell(user, columnKey, deleteHandler, restoreHandler, handleClick) {
 	const cellValue = user[columnKey];
@@ -49,16 +50,6 @@ function renderCell(user, columnKey, deleteHandler, restoreHandler, handleClick)
 					</p>
 				</div>
 			);
-		// case 'status':
-		// 	return (
-		// 		<Chip
-		// 			className='capitalize'
-		// 			color={user.status ? statusColorMap.active : statusColorMap.vacation}
-		// 			size='lg'
-		// 			variant='flat'>
-		// 			{cellValue ? 'Online' : 'Offline'}
-		// 		</Chip>
-		// 	);
 		case 'actions':
 			return (
 				<div className='relative flex items-center gap-2'>
@@ -66,36 +57,32 @@ function renderCell(user, columnKey, deleteHandler, restoreHandler, handleClick)
 						<Button
 							href={'/dashboard/users-section/detail/' + user._id}
 							as={Link}
-							color='primary'
+							className='modern bg-primary text-lg text-black'
 							variant='solid'>
 							<EyeIcon />
 						</Button>
-						{/* <Button
-							className='text-lg  cursor-pointer active:opacity-50'
-							onPress={() => deleteHandler(user._id)}>
-							
-							<Link to />
-						</Button> */}
+						
 					</Tooltip>
 					<Tooltip content='Edit user'>
 						<Button
-							className='text-lg text-danger cursor-pointer active:opacity-50'
+							className='modern bg-primary-500 text-lg cursor-pointer active:opacity-50 text-black'
 							href={'/dashboard/users-section/user-edit/' + user._id}
 							as={Link}>
 							<EditIcon />
 						</Button>
 					</Tooltip>
 					{user.deleted ? (
-						<Tooltip color='danger' content='Restore user'>
+						<Tooltip color='foreground' content='Restore user'>
 							<Button
-								className='text-lg cursor-pointer active:opacity-50'
+								className='modern text-lg cursor-pointer active:opacity-50'  
 								onPress={() => restoreHandler(user.email)}>
+								<Image src={RestoreIcon} alt='Restore' className='w-5' />
 							</Button>
 						</Tooltip>
 					) : (
 						<Tooltip color='danger' content='Delete user'>
 							<Button
-								className='text-lg text-danger cursor-pointer active:opacity-50'
+								className='modern text-lg cursor-pointer active:opacity-50 content'
 								onPress={() => deleteHandler(user._id)}>
 								<DeleteIcon />
 							</Button>
