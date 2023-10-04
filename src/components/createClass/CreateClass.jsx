@@ -182,8 +182,8 @@ function CreateClass() {
 						<Button
 							type='submit'
 							size='lg'
-							className='bg-blue-500 rounded-lg submit'
-							variant='ghost'>
+							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'
+							>
 							Enviar
 						</Button>
 					</Form>

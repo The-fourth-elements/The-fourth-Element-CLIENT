@@ -128,7 +128,7 @@ const ModuleForm = () => {
 						<Button
 							type='submit'
 							size='lg'
-							className='bg-background rounded-lg submit max-w-xs  mx-auto transition duration-300 ease-in-out hover:bg-primary'>
+							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'>
 							Agregar modulo
 						</Button>
 					</Form>
