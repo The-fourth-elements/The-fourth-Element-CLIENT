@@ -54,9 +54,9 @@ export const LoginForm = ({ toogleDisplay }) => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
 								<InputField
-									name='email'
+									name='Email'
 									type='email'
 									classNames={{
 										label: 'text-xl',
@@ -66,7 +66,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 								/>
 
 								<InputFieldPassword
-									name='password'
+									name='Password'
 									type={viewPassword ? 'text' : 'password'}
 									classNames={{
 									label: 'text-xl',
