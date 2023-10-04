@@ -69,17 +69,17 @@ export const getCountry = (name) => {
     })
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
-      throw error; 
+      throw error;
     });
 };
 
-  export const getCountryAxios = async (name) => {
+export const getCountryAxios = async (name) => {
   try {
     const response = await axios.get(`${API_BACKEND}/country?name=${name}`);
     return response.data;
   } catch (error) {
     console.error('There was a problem with the request:', error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -108,10 +108,22 @@ export const getCountryId = (id) => {
 export const getCountrys = () => {
   return fetch(`${process.env.API_BACKEND}countries`)
     .then((response) => {
-      return response.json(); 
+      return response.json();
     })
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
     });
 };
 
+export const getCountCountries = () => {
+  return fetch(`${process.env.API_BACKEND}countriesC`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json(); // Parse the response as JSON
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
+    });
+}

@@ -36,6 +36,7 @@ export default function ModuleView() {
 	const [currentClass, setCurrentClass] = useState(null);
 	const [access, setAccess] = useState(false);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const [dataUpdated, setDataUpdated] = useState(false)
 
 	useEffect(() => {
 		getModules();
@@ -45,35 +46,46 @@ export default function ModuleView() {
 		if (session) {
 			if (session?.token?.user) {
 				const { role } = session.token.user;
-				role > 1 && setAccess(true);
+				role > 2 && setAccess(true);
 			}
 		}
-		const fetchData = async () => {
-			const fetchedModuleData = {};
-
-			for (const module of modules) {
-				const classDataArray = [];
-
-				for (const elem of module.classModule) {
-					try {
-						const url = `${process.env.API_BACKEND}class/${elem}`;
-						const response = await fetch(url);
-						const classData = await response.json();
-						classDataArray.push(classData);
-					} catch (error) {
-						console.error(
-							`Error al obtener datos de clase para el módulo ${module.id}:`,
-							error
-						);
-					}
-				}
-				fetchedModuleData[module.name] = classDataArray;
-			}
-			setModuleData(fetchedModuleData);
-			setModulesDataLoaded(true);
-		};
 		fetchData();
-	}, [modules, session]);
+	}, [modules, session, dataUpdated]);
+	const fetchData = async () => {
+		const fetchedModuleData = {};
+
+		for (const module of modules) {
+			const classDataArray = [];
+
+			for (const elem of module.classModule) {
+				try {
+					const url = `${process.env.API_BACKEND}class/${elem._id}`;
+					const response = await fetch(url);
+					const classData = await response.json();
+					classDataArray.push(classData);
+				} catch (error) {
+					console.error(
+						`Error al obtener datos de clase para el módulo ${module.id}:`,
+						error
+					);
+					toastError('No se pudieron obtener los modulos');
+				}
+			}
+			fetchedModuleData[module.name] = classDataArray;
+		}
+		setModuleData(fetchedModuleData);
+		setModulesDataLoaded(true);
+	};
+
+	const handleDataUpdate = () => {
+		setDataUpdated(true);
+	}
+
+	useEffect(()=>{
+		if(dataUpdated){
+			setDataUpdated(false)
+		}
+	}, [dataUpdated])
 
 	const renderVideo = () => {
 		if (currentClass) {
@@ -83,7 +95,7 @@ export default function ModuleView() {
 			);
 
 			if (selectedClassData) {
-				return <video src={selectedClassData.video.url} controls={true} />;
+				return <video src={selectedClassData?.video?.url} controls={true} />;
 			}
 		}
 		return <p>Selecciona una clase para ver el video.</p>;
@@ -105,7 +117,7 @@ export default function ModuleView() {
 
 						<h3 className='p-2 m-3 cursor-pointer'>
 							Power Point:
-							<a href={selectedClassData.powerPoint.url} target='_blank'>
+							<a href={selectedClassData?.powerPoint?.url} target='_blank'>
 								Archivo
 							</a>
 						</h3>
@@ -117,13 +129,10 @@ export default function ModuleView() {
 	};
 
 	const handleClassClick = className => {
+		console.log('tocado');
 		setCurrentClass(className);
 	};
 
-	const handleEditClass = () => {
-		
-		onOpen();
-	};
 
 	return (
 		<>
@@ -188,13 +197,12 @@ export default function ModuleView() {
 																				}
 																				width='30'
 																				height='30'
-																				onClick={() => {
-																					handleEditClass();
-																				}}
+																				onClick={onOpen}
 																			/>
 																			<ModalEditClass
 																				classValues={elem}
 																				isOpen={isOpen}
+																				handleDataUpdate={handleDataUpdate}
 																				onOpenChange={
 																					onOpenChange
 																				}></ModalEditClass>

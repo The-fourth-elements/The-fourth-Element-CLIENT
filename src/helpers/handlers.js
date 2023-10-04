@@ -1,4 +1,5 @@
 import { postData } from '../hooks/postData';
+import axios from 'axios';
 
 export const handleSubmitRegister = async (
   { username, email, password, edad, deporte, experiencia },
@@ -34,25 +35,27 @@ export const handleSubmitLogin = async form => {
   }
 };
 
-export const handleSubmitEditClass = async (form, video) => {
+export const handleSubmitEditClass = async (form, video, id) => {
   try {
-    //dejar para hacer la peticion;
-    console.log(form, video);
-    const body = { ...form };
+    const body = {
+      name: form.editedName,
+      description: form.editedDescription,
+      powerPoint: form.editedPowerPoint,
+      video,
+    };
     if (video.hasOwnProperty('url')) {
       body.video = video;
     }
-    console.log(video);
-    console.log(body);
 
-    // const response = await fetch(process.env.API_BACKEND, {
-    //   method: 'PUT',
-    //   cache: 'no-cache',
-    //   credentials: 'include',
-    //   mode: 'cors',
-    //   body,
-    // });
-    alert('sois la ostia')
-
-  } catch (error) { }
+    const response = await fetch(`${process.env.API_BACKEND}class/${id}`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const responseParsed = await response.json();
+    return responseParsed;
+  } catch (error) {
+    console.log(error);
+  }
 };
