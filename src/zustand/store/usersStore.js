@@ -31,35 +31,23 @@ export const useUsersStore = create((set, get) => ({
         }));
       });
   },
-  filterUserCountry: (nationality) => {
-    if (nationality === "all") {
-      set((state) => ({
+
+  filterUsers: (nationality, plan) => {
+    const filteredUsers = get().usersFilter.filter((user) => {
+        const nationalityFilter = nationality === "all" || user.nation._id === nationality;
+        const planFilter =
+            plan === "all" ||
+            (plan === "free" && user.role === 0) ||
+            (plan === "pay" && user.role === 1) ||
+            (plan === "moderators" && user.role === 2);
+        return nationalityFilter && planFilter;
+    });
+
+    set((state) => ({
         ...state,
-        users: state.usersFilter
-      }))
-    }
-    else {
-      console.log(users);
-      set((state) => ({
-        ...state,
-        users: state.usersFilter.filter((user) => user.nation._id === nationality)
-      }))
-    }
-  },
-  filterUsersPlan: (plan) => {
-    if (plan === "all") {
-      set((state) => ({
-        ...state,
-        users: state.usersFilter,
-      }));
-    } else {
-      set((state) => ({
-        ...state,
-        users: state.usersFilter.filter(
-          (user) => (plan === "free" && user.role === 0) || (plan === "pay" && user.role === 1) || (plan === "moderators" && user.role === 2))
-      }));
-    }
-  },
+        users: filteredUsers,
+    }));
+},
   orderUsersName: (orderName) => {
     if (orderName === "nameDesc") {
       console.log("Desc", orderName)
