@@ -5,23 +5,20 @@ import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { Button } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 
+
 function MercadoPago() {
-    initMercadoPago("TEST-0b2faa68-53ac-4008-9f01-350b063de4d8"); 
+    initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY);
 
 	const [preferenceId, setPreferenceId] = useState(null);
 
 	const createPreference = async () => {
-        console.log("api backend ", process.env.API_BACKEND);
 		try {
 			const response = await postData(`${process.env.API_BACKEND}create-order`);
-            console.log('response ', response);
 
 			const { id } = response;
-            console.log('id ', id);
 
 			// Una vez que obtienes el ID de preferencia, establece el estado
 			setPreferenceId(id);
-			console.log("preferenceId dentro de cratePreference", preferenceId);
 
 		} catch (error) {
 			console.log(error);
@@ -36,14 +33,13 @@ function MercadoPago() {
 
 	const handleBuy = async () => {
 		await createPreference();
-			console.log("preferenceId ", preferenceId);
 
 	};
 
 	return (
 		<div>
 			<Button onClick={handleBuy}>Comprar</Button>
-			{preferenceId && <Wallet initialization={{ preferenceId : preferenceId}} />}
+			{preferenceId && <Wallet initialization={{ preferenceId : preferenceId, redirectMode: 'modal'}} />}
 		</div>
 	);
 }

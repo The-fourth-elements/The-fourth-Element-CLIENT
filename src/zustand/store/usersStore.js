@@ -1,6 +1,17 @@
 import { create } from 'zustand';
-import { getUsers, deleteUser, getCountCountries } from '../actions/usersStoreActions';
-import { compareAZ, compareZA, compareAsc, compareDesc } from '@/helpers/comparations';
+import {
+	getUsers,
+	deleteUser,
+	getDeletedUsers,
+	restoreUser,
+  getCountCountries
+} from '../actions/usersStoreActions';
+import {
+	compareAZ,
+	compareZA,
+	compareAsc,
+	compareDesc,
+} from '@/helpers/comparations';
 
 export const useUsersStore = create((set, get) => ({
   users: [],
@@ -90,6 +101,38 @@ export const useUsersStore = create((set, get) => ({
         countriesCount: data
       }));
     });
-  }
+  },
+
+
+	getDeletedUsers: showDeletedUsers => {
+		showDeletedUsers
+			? getDeletedUsers().then(data => {
+					set(state => ({
+						...state,
+						users: data,
+					}));
+			  })
+			: getUsers().then(data => {
+					set(state => ({
+						...state,
+						users: data,
+					}));
+			  });
+	},
+
+	restoreUser: email => {
+		restoreUser(email).then(() => {
+			// set(state => ({
+			// 	users: state.users.filter(user => user.email !== email),
+			// }));
+		});
+		getUsers().then(data => {
+			set(state => ({
+				...state,
+				users: data,
+				usersFilter: data,
+			}));
+		});
+	},
 }));
 
