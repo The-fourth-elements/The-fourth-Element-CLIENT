@@ -68,7 +68,7 @@ const ModuleForm = () => {
 					initialValues={initialValuesModule}
 					validationSchema={validationSchemaModule}
 					onSubmit={handleSubmit}>
-					<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 space-y-5  flex flex-col mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+					<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 space-y-5  flex flex-col mx-auto  mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
 
 						<Image
 							alt='go back arrow'
@@ -81,7 +81,7 @@ const ModuleForm = () => {
 							}}
 						/>
 
-						<h1 className='mx-auto mb-5 text-black' >Agregar Módulo</h1>
+						<h1 className='mx-auto mb-5 text-white ' >Agregar Módulo</h1>
 
 						<InputField
 							classNames={{
@@ -128,7 +128,7 @@ const ModuleForm = () => {
 						<Button
 							type='submit'
 							size='lg'
-							className='bg-gradient-to-tr from-blue-500 rounded-lg submit max-w-xs  mx-auto'>
+							className='bg-background rounded-lg submit max-w-xs  mx-auto'>
 							Agregar modulo
 						</Button>
 					</Form>

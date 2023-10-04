@@ -23,9 +23,9 @@ const userRoles = {
 
 function detailHandler(id) {}
 
-function renderCell(user, columnKey, deleteHandler, handleClick) {
+function renderCell(user, columnKey, deleteHandler, restoreHandler, handleClick) {
 	const cellValue = user[columnKey];
-	
+
 	switch (columnKey) {
 		case 'name':
 			return (
@@ -49,16 +49,16 @@ function renderCell(user, columnKey, deleteHandler, handleClick) {
 					</p>
 				</div>
 			);
-		case 'status':
-			return (
-				<Chip
-					className='capitalize'
-					color={user.status ? statusColorMap.active : statusColorMap.vacation}
-					size='lg'
-					variant='flat'>
-					{cellValue ? 'Online' : 'Offline'}
-				</Chip>
-			);
+		// case 'status':
+		// 	return (
+		// 		<Chip
+		// 			className='capitalize'
+		// 			color={user.status ? statusColorMap.active : statusColorMap.vacation}
+		// 			size='lg'
+		// 			variant='flat'>
+		// 			{cellValue ? 'Online' : 'Offline'}
+		// 		</Chip>
+		// 	);
 		case 'actions':
 			return (
 				<div className='relative flex items-center gap-2'>
@@ -85,13 +85,22 @@ function renderCell(user, columnKey, deleteHandler, handleClick) {
 							<EditIcon />
 						</Button>
 					</Tooltip>
-					<Tooltip color='danger' content='Delete user'>
-						<Button
-							className='text-lg text-danger cursor-pointer active:opacity-50'
-							onPress={() => deleteHandler(user._id)}>
-							<DeleteIcon />
-						</Button>
-					</Tooltip>
+					{user.deleted ? (
+						<Tooltip color='danger' content='Restore user'>
+							<Button
+								className='text-lg cursor-pointer active:opacity-50'
+								onPress={() => restoreHandler(user.email)}>
+							</Button>
+						</Tooltip>
+					) : (
+						<Tooltip color='danger' content='Delete user'>
+							<Button
+								className='text-lg text-danger cursor-pointer active:opacity-50'
+								onPress={() => deleteHandler(user._id)}>
+								<DeleteIcon />
+							</Button>
+						</Tooltip>
+					)}
 				</div>
 			);
 		default:
