@@ -3,27 +3,32 @@
 @include lg{
     .Container{
         display: grid;
-        padding-left: 10vw;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 2fr ;
+        // padding-left: 10vw;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
         min-height: 80vh;
         max-width: 100vw;
         grid-template-areas:
-        "sec1 sec1 sec2 sec2"
-        "sec1 sec1 sec3 sec3"
+        "sec1 sec1"
+        "sec2 sec2"
+        "sec3 sec3"
 
         ;
         .section1{
             grid-area: sec1;
             width: 50%;
+            margin: auto;
         }
         .section2{
             grid-area: sec2;
-            width: 40%;
+            width: 50%;
+            margin: auto;
+
         }
         .section3{
             grid-area: sec3;
-            width: 40%;
+            margin: auto;
+            width: 50%;
         }
     }
 }
@@ -37,22 +42,25 @@
         max-width: 100vw;
         grid-template-areas:
         "sec1 sec1"
-        "sec2 sec3"
+        "sec2 sec2"
+        "sec3 sec3"
 
         ;
         .section1{
             grid-area: sec1;
-            width: 40%;
-            height: 50%;
+            width: 50%;
+            margin: auto;
         }
         .section2{
             grid-area: sec2;
-            width: 90%;
+            width: 50%;
+            margin: auto;
 
         }
         .section3{
             grid-area: sec3;
-            width: 90%;
+            margin: auto;
+            width: 50%;
         }
     }
 }
@@ -67,24 +75,25 @@
         max-width: 100vw;
         grid-template-areas:
         "sec1 sec1"
-        "sec2 sec3"
+        "sec2 sec2"
+        "sec3 sec3"
 
         ;
         .section1{
             grid-area: sec1;
             width: 100%;
-            height: 80%;
+            margin: auto;
         }
         .section2{
             grid-area: sec2;
-            width: 90%;
+            width: 100%;
+            margin: auto;
 
         }
         .section3{
-
             grid-area: sec3;
-            width: 90%;
-            height: 60%;
+            margin: auto;
+            width: 100%;
         }
     }
 }

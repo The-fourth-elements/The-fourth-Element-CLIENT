@@ -45,7 +45,7 @@ export default function ModuleView() {
 		if (session) {
 			if (session?.token?.user) {
 				const { role } = session.token.user;
-				role > 1 && setAccess(true);
+				role > 2 && setAccess(true);
 			}
 		}
 		const fetchData = async () => {
@@ -56,7 +56,7 @@ export default function ModuleView() {
 
 				for (const elem of module.classModule) {
 					try {
-						const url = `${process.env.API_BACKEND}class/${elem}`;
+						const url = `${process.env.API_BACKEND}class/${elem._id}`;
 						const response = await fetch(url);
 						const classData = await response.json();
 						classDataArray.push(classData);
@@ -65,6 +65,7 @@ export default function ModuleView() {
 							`Error al obtener datos de clase para el módulo ${module.id}:`,
 							error
 						);
+						toastError('No se pudieron obtener los modulos');
 					}
 				}
 				fetchedModuleData[module.name] = classDataArray;
@@ -117,11 +118,12 @@ export default function ModuleView() {
 	};
 
 	const handleClassClick = className => {
+		console.log('tocado');
 		setCurrentClass(className);
 	};
 
 	const handleEditClass = () => {
-		
+		console.log('open');
 		onOpen();
 	};
 
