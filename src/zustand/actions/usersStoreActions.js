@@ -127,3 +127,15 @@ export const getCountCountries = () => {
       console.error('There was a problem with the fetch operation:', error);
     });
 }
+export const getCountAges = async () => {
+  try {
+    const response = await fetch(`${process.env.API_BACKEND}users/average`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const parsed = await response.json();
+    return parsed
+  } catch (error) {
+    console.log(error);
+  }
+}

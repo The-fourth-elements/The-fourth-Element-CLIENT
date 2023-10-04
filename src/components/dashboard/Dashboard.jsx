@@ -6,31 +6,45 @@ import { metricData, setData } from '@/helpers/getterMetrics';
 import { useEffect, useState } from 'react';
 import { useUsersStore } from '../../zustand/store/usersStore';
 import { generateMetric } from '@/helpers/generateMetric';
+import { toastError } from '@/helpers/toast';
 
 const dashboard = () => {
-	const { getUsers, users, countriesCount, getCountOfUsersPerCountry } = useUsersStore();
+	const { getUsers, users, countriesCount, getCountOfUsersPerCountry, agesCount, getCountOfUsersPerAge } = useUsersStore();
 	const option = metricData('Usuarios');
 
 	const [userMetrics, setUserMetrics] = useState({
 		labels: [],
 		data: [],
 	});
+	
+
+	const fetchUsers = async() => {
+		await getCountOfUsersPerAge()
+	}
 
 	useEffect(() => {
+		if(Object.keys(agesCount).length < 1){
+			fetchUsers()
+		}
 		if (users?.length <= 0) {
 			getUsers()?.then(updatedUsers => {
 				const metrics = calculateMetrics(updatedUsers);
 
 				setUserMetrics(metrics);
 			});
-			getCountOfUsersPerCountry()?.then(
-				data=>console.log(data)
-			)
+			
+			getCountOfUsersPerCountry()?.then().catch((error)=> toastError('No se pudo conseguir el conteo de paises'))
 		} else {
 			const metrics = calculateMetrics(users);
 			setUserMetrics(metrics);
 		}
-	}, [users, countriesCount]);
+		if(Object.keys(countriesCount)?.length < 0){
+			getCountOfUsersPerCountry()?.then(
+				data=>console.log(data)
+			);
+		}
+		
+	}, [users, countriesCount, agesCount]);
 	const calculateMetrics = users => {
 		const activeUsers = users?.filter(user => !user.deleted);
 
@@ -48,33 +62,8 @@ const dashboard = () => {
 		const metricData = setData(labels, 'Usuarios', data);
 		return metricData;
 	};
-	const tuJson = {
-		"Antigua and Barbuda": 2,
-		"Australia": 1,
-		"Austria": 1,
-		"Argentina": 3,
-		"Brazil": 5,
-		"Canada": 4,
-		"Chile": 2,
-		"China": 8,
-		"France": 6,
-		"Germany": 7,
-		"India": 10,
-		"Italy": 6,
-		"Japan": 4,
-		"Mexico": 3,
-		"Netherlands": 2,
-		"New Zealand": 1,
-		"Spain": 4,
-		"Switzerland": 2,
-		"United Kingdom": 7,
-		"United States": 15
-		// Puedes seguir agregando más países si es necesario
-	  };
-
-	const [data1, option1] = generateMetric(tuJson, 'Frutillita')
-	const [data2, option2] = generateMetric(tuJson, 'nuevo')
-
+	const [data1, option1] = generateMetric(countriesCount, 'Usuarios por pais')
+	const [data2, option2] = generateMetric(agesCount, 'nuevo')
 	return (
 		<>
 			<Card className='min-h-screen'>
@@ -91,13 +80,13 @@ const dashboard = () => {
 						</section>
 						<section className={section2}>
 							<h2>Usuarios por país: </h2>
-							{userMetrics?.labels?.length >= 1 && (
+							{data1?.labels?.length >= 1 && (
 								<Metric data={data1} options={option1}></Metric>
 							)}
 						</section>
 						<section className={section3}>
 							<h2>Usuarios por edad: </h2>
-							{userMetrics?.labels?.length >= 1 && (
+							{data2?.labels?.length >= 1 && (
 								<Metric data={data2} options={option2}></Metric>
 							)}
 						</section>
