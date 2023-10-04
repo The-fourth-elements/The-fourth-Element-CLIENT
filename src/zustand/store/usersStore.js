@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { compareAZ, compareZA, compareAsc, compareDesc } from '@/helpers/comparations';
 import {
 	getUsers,
 	deleteUser,
@@ -6,17 +7,12 @@ import {
 	restoreUser,
   getCountCountries
 } from '../actions/usersStoreActions';
-import {
-	compareAZ,
-	compareZA,
-	compareAsc,
-	compareDesc,
-} from '@/helpers/comparations';
 
 export const useUsersStore = create((set, get) => ({
   users: [],
   usersFilter: [],
-  countriesCount: [],
+  countriesCount: {},
+  agesCount: {},
   getUsers: () => {
     getUsers()
       .then((data) => {
@@ -43,10 +39,10 @@ export const useUsersStore = create((set, get) => ({
       }))
     }
     else {
-
+      console.log(users);
       set((state) => ({
         ...state,
-        users: state.usersFilter.filter ((user) => user.nation._id === nationality)
+        users: state.usersFilter.filter((user) => user.nation._id === nationality)
       }))
     }
   },
@@ -102,6 +98,13 @@ export const useUsersStore = create((set, get) => ({
       }));
     });
   },
+  getCountOfUsersPerAge: async () => {
+    const response = await getCountAges()
+    set((state) => ({
+      ...state,
+      agesCount: response
+    }));
+  }
 
 
 	getDeletedUsers: showDeletedUsers => {
