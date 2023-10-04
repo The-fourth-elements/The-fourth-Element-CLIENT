@@ -6,7 +6,7 @@ import { Button } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 
 function MercadoPago() {
-    initMercadoPago("TEST-5841b2e7-9436-4c6c-9e47-0d7cd27f1a93");
+    initMercadoPago("TEST-0b2faa68-53ac-4008-9f01-350b063de4d8"); 
 
 	const [preferenceId, setPreferenceId] = useState(null);
 

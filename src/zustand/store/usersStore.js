@@ -1,10 +1,11 @@
 import { create } from 'zustand';
-import { getUsers, deleteUser} from '../actions/usersStoreActions'; 
+import { getUsers, deleteUser, getCountCountries } from '../actions/usersStoreActions';
 import { compareAZ, compareZA, compareAsc, compareDesc } from '@/helpers/comparations';
 
 export const useUsersStore = create((set, get) => ({
   users: [],
   usersFilter: [],
+  countriesCount: [],
   getUsers: () => {
     getUsers()
       .then((data) => {
@@ -24,19 +25,20 @@ export const useUsersStore = create((set, get) => ({
       });
   },
   filterUserCountry: (nationality) => {
-    if(nationality === "all") {
+    if (nationality === "all") {
       set((state) => ({
-    ...state,
-    users: state.usersFilter
-  }))}
-    else{
+        ...state,
+        users: state.usersFilter
+      }))
+    }
+    else {
 
       set((state) => ({
         ...state,
-        users: state.usersFilter.filter ((user) => user.nation === nationality)
+        users: state.usersFilter.filter((user) => user.nation === nationality)
       }))
     }
-    },
+  },
   filterUsersPlan: (plan) => {
     if (plan === "all") {
       set((state) => ({
@@ -47,19 +49,19 @@ export const useUsersStore = create((set, get) => ({
       set((state) => ({
         ...state,
         users: state.usersFilter.filter(
-        (user) => (plan === "free" && user.role === 0) || (plan === "pay" && user.role === 1) || (plan === "moderators" && user.role === 2))
+          (user) => (plan === "free" && user.role === 0) || (plan === "pay" && user.role === 1) || (plan === "moderators" && user.role === 2))
       }));
     }
   },
-  orderUsersName: (orderName) =>{
-    if (orderName === "nameDesc"){
+  orderUsersName: (orderName) => {
+    if (orderName === "nameDesc") {
       console.log("Desc", orderName)
-      set ((state) => ({
+      set((state) => ({
         ...state,
         users: state.users.sort(compareAZ)
       }))
     }
-    if (orderName === "nameAsc"){
+    if (orderName === "nameAsc") {
       console.log("Asc", orderName)
       set((state) => ({
         ...state,
@@ -68,17 +70,26 @@ export const useUsersStore = create((set, get) => ({
     }
   },
   orderUsersPlan: (orderPlan) => {
-    if(orderPlan === "payDesc"){
+    if (orderPlan === "payDesc") {
       set((state) => ({
         ...state,
         users: state.users.sort(compareDesc)
       }))
     }
-    if(orderPlan === "payAsc"){
+    if (orderPlan === "payAsc") {
       set((state) => ({
         ...state,
         users: state.users.sort(compareAsc)
       }))
     }
+  },
+  getCountOfUsersPerCountry: () => {
+    getCountCountries().then((data) => {
+      set((state) => ({
+        ...state,
+        countriesCount: data
+      }));
+    });
   }
 }));
+

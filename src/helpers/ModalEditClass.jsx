@@ -20,7 +20,6 @@ import TextAreaField from './TextAreaField';
 import { CldUploadButton } from 'next-cloudinary';
 
 const ModalEditClass = ({ isOpen, onOpenChange, classValues }) => {
-	
 	const [initialValuesEditClass, setInitialValuesEditClass] = useState({})
 	const [newVideo, setNewVideo] = useState({});
 	useEffect(()=>{
@@ -67,10 +66,11 @@ const ModalEditClass = ({ isOpen, onOpenChange, classValues }) => {
 								<Formik
 									initialValues={initialValuesEditClass}
 									onSubmit={async(values)=>{
-										await handleSubmitEditClass(values, newVideo)
+										const r = await handleSubmitEditClass(values, newVideo, classValues?._id)
 										setNewVideo({});
 										//aparecer modal de edicion de video de tipo info.
-										onClose()
+										// onClose()
+										console.log(r);
 									}}
 									validationSchema={validationSchemaEditClass}>
 									<Form className='sm:w-full md:w-3/4 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
