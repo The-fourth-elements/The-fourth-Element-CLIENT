@@ -16,8 +16,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
             onChange={selectCountry}
             className='select'
           />
-          <Button color="warning" variant="bordered" title="back to" onClick={handleChangeCountry} isIconOnly> ↩ </Button>
-          <Button onClick={updateUserCountry} color="warning" variant="bordered"> Accept </Button>
+
         </h2>
       ) : (
         <h2>
@@ -30,9 +29,24 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
     </div>
   );
 
-  export const CitySelect = ({ openCity, stringCity, newCountry, newCity, selectCity, handleChangeCity, updateUserCity }) => (
+  export const CitySelect = ({ openCity, stringCity, newCountry, newCity, selectCity, handleChangeCity, updateUserCity, handleChangeCountry, openCountry, updateUserCountry }) => (
     <div>
-      {openCity ? (
+      {openCountry ? 
+      (
+        <h2>
+          City:
+          <RegionDropdown
+            country={newCountry}
+            value={newCity}
+            id='state'
+            onChange={selectCity}
+            className='group-select'
+          />
+          <Button isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCountry}> ↩ </Button>
+          <Button color="warning" variant="bordered" onClick={updateUserCountry}> Accept </Button>
+        </h2>
+      )
+      :openCity ? (
         <h2>
           City:
           <RegionDropdown

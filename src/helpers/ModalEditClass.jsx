@@ -9,53 +9,53 @@ import {
 	Button,
 } from '@nextui-org/react';
 // import '@/components/createClass/CreateClassStyles.scss'
-import '../components/createClass/CreateClassStyles.scss'
+import '../components/createClass/CreateClassStyles.scss';
 import { Form, Formik } from 'formik';
-import {
-	validationSchemaEditClass,
-} from '@/helpers/validations';
+import { validationSchemaEditClass } from '@/helpers/validations';
 import { handleSubmitEditClass } from './handlers';
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import { CldUploadButton } from 'next-cloudinary';
+import { toastInfo } from './toast';
 
-const ModalEditClass = ({ isOpen, onOpenChange, classValues }) => {
-	const [initialValuesEditClass, setInitialValuesEditClass] = useState({})
+const ModalEditClass = ({
+	isOpen,
+	onOpenChange,
+	classValues,
+	handleDataUpdate,
+}) => {
+	const [initialValuesEditClass, setInitialValuesEditClass] = useState({});
 	const [newVideo, setNewVideo] = useState({});
-	useEffect(()=>{
-		const { name, description, powerPoint } =  classValues;
-		
+	useEffect(() => {
+		const { name, description, powerPoint } = classValues;
+
 		setInitialValuesEditClass({
 			editedName: name,
 			editedDescription: description,
-			editedPowerPoint: powerPoint?.url
-		})
+			editedPowerPoint: powerPoint?.url,
+		});
 
-		return ()=>{
+		return () => {
 			classValues = {};
-		}
-	},[
-		classValues
-	])
-	const handleSuccessVideo = (values)=>{
-		const {public_id, url} = values.info;
+		};
+	}, [classValues]);
+	const handleSuccessVideo = values => {
+		const { public_id, url } = values.info;
 		const infoVideo = {
 			id: public_id,
-			url
-		}
+			url,
+		};
 		console.log(infoVideo);
-		setNewVideo(infoVideo)
-
-	}
-
-
+		setNewVideo(infoVideo);
+	};
 
 	return (
 		<>
-			<Modal isOpen={isOpen} onOpenChange={onOpenChange}
+			<Modal
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
 				backdrop='blur'
-				size='5xl'
-			>
+				size='5xl'>
 				<ModalContent>
 					{onClose => (
 						<>
@@ -65,12 +65,20 @@ const ModalEditClass = ({ isOpen, onOpenChange, classValues }) => {
 							<ModalBody>
 								<Formik
 									initialValues={initialValuesEditClass}
-									onSubmit={async(values)=>{
-										const r = await handleSubmitEditClass(values, newVideo, classValues?._id)
-										setNewVideo({});
-										//aparecer modal de edicion de video de tipo info.
-										// onClose()
-										console.log(r);
+									onSubmit={async values => {
+										try {
+											const r = await handleSubmitEditClass(
+												values,
+												newVideo,
+												classValues?._id
+											);
+											setNewVideo({});
+											handleDataUpdate();
+											onClose();
+											toastInfo("Clase actualizada");
+										} catch (error) {
+											toastError(error.message)
+										}
 									}}
 									validationSchema={validationSchemaEditClass}>
 									<Form className='sm:w-full md:w-3/4 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
@@ -94,11 +102,10 @@ const ModalEditClass = ({ isOpen, onOpenChange, classValues }) => {
 											className='cldButton'
 											onSuccess={handleSuccessVideo}
 											uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
-											/>
-										<Button color='primary' 
-								type='submit'>
-									Editar
-								</Button>
+										/>
+										<Button color='primary' type='submit'>
+											Editar
+										</Button>
 									</Form>
 								</Formik>
 							</ModalBody>
