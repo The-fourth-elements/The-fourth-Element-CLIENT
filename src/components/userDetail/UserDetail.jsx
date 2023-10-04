@@ -14,9 +14,8 @@ import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 const UserDetail = ({ params }) => {
 	
 	const { detail, getDetail } = useUserDetail();
-	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
-	let [country, setCountry] = useState(stringCountry);
-	let [city, setCity] = useState(stringCity);
+	let [country, setCountry] = useState("");
+	let [city, setCity] = useState("");
 
 	useEffect(() => {
 		
@@ -24,14 +23,11 @@ const UserDetail = ({ params }) => {
 			getDetail(params.id);
 		}
 		if(detail.username && Object.keys(detail).length > 0){
-			getCountryId(detail.nation)
-			getCityId(detail.city)
+			setCity(detail.nation.name)
+			setCountry(detail.city.name)
 		}
-		if (stringCity !== "" && stringCountry !== ""){
-			setCity(stringCity)
-			setCountry(stringCountry)
-		}
-	}, [detail.role, stringCity, stringCountry,  params.id  ]);
+		console.log (detail)
+	}, [detail.role, params.id  ]);
 	
 
 	return (
@@ -61,7 +57,7 @@ const UserDetail = ({ params }) => {
 						<h2>Country: {country}</h2>
 						<h2>City: {city}</h2>
 						<h2>
-							Registration date:{' '}
+							Registration date:
 							{new Date(detail.createdAt).toLocaleDateString()}
 						</h2>
 					</CardBody>
