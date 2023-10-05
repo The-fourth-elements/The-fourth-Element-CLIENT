@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const middleware = async request => {
     const develop = 'next-auth.session-token';
     const production = '__Secure-next-auth.session-token';
-    const session = request.cookies.get(production);
+    const session = request.cookies.get(develop);
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
     let role = 0;
     if (id) {
