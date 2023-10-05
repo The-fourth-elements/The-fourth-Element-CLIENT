@@ -19,10 +19,6 @@ export const postData = async (url, data, token) => {
         });
 
         const responseParsed = await response.json();
-        if (responseParsed?.error) {
-            throw new Error(responseParsed.error);
-        }
-
         return responseParsed;
     } catch (error) {
         throw new Error('Error:', error);

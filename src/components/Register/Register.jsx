@@ -41,23 +41,15 @@ const Register = ({ toogleDisplay }) => {
 						if (response?.success) {
 							toastSuccess(response.success);
 							toogleDisplay();
-						} else {
-							throw new Error(response);
-						}
+						} 
+						console.log(response);
 					} catch (error) {
-						if (error) {
-							if (error.startsWith('E', 0)) {
-								toastError(
-									'Ya hay una cuenta existente con el email ingresado'
-								);
-							}
-							toastError('Ocurrio un error al crear la cuenta');
-						}
+						toastError(error?.message)
 					}
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5 items-center mx-auto mt-10 mb-10 bg-blue-100 p-10 rounded-lg justify-center'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5 items-center mx-auto mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
 							<InputField
 								type='string'
 								name='username'

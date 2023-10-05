@@ -45,7 +45,7 @@ export const getDetailed = id => {
 };
 
 export const upadateUserRole = elbody => {
-	return fetch(`${process.env.API_BACKEND}/user`, {
+	return fetch(`${process.env.API_BACKEND}user`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',

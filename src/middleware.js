@@ -4,8 +4,6 @@ export const middleware = async request => {
     const develop = 'next-auth.session-token';
     const production = '__Secure-next-auth.session-token';
     const session = request.cookies.get(production);
-
-    // /traer el role con un getId y me indicara el role que tiene
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
     let role = 0;
     if (id) {
@@ -26,7 +24,14 @@ export const middleware = async request => {
         }
         return NextResponse.redirect(url);
     }
-    if (session && request.nextUrl.pathname === '/dashboard') {
+    const path = request.nextUrl.pathname;
+    if (
+        (session && path === '/dashboard') ||
+        (session && path === '/dashboard/users-section') ||
+        (session && path === '/dashboard/modules') ||
+        (session && path === '/dashboard/class/create') ||
+        (session && path === '/dashboard/module/create')
+    ) {
         const url = request.nextUrl.clone();
         //verificar el rol
         if (role > 1) {
@@ -48,5 +53,5 @@ export const middleware = async request => {
 };
 
 export const config = {
-    matcher: ['/course/:path*', '/auth/:path*', '/dashboard/:path*', '/profile/:path*'],
+    matcher: ['/course/:path*', '/auth', '/dashboard/:path*', '/profile/:path*'],
 };
