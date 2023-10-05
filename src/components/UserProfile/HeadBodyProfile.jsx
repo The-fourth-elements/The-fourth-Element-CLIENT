@@ -31,8 +31,8 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
           </Button>
         </h1>
       )}
-      {session.token.picture ?(         
-      <Image src={session.token.picture} alt="profileImage" />)
+      {session?.token?.picture ?(         
+      <Image src={session?.token?.picture} alt="profileImage" />)
       :
       user.profile_img ? (
         <Image src={user.profile_img} alt={user.name} />

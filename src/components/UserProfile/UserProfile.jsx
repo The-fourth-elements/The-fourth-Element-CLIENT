@@ -33,7 +33,7 @@ const UserProfile = () => {
 		setNewName(user?.username)
 		setNewCountry(user?.nation?.name)
 		setNewCity(user?.city?.name)
-		console.log(session)
+	
 		console.log("theUser:", theUser)
 	}, [user.id, user.username] )
 
@@ -66,8 +66,8 @@ const UserProfile = () => {
 		setNewName(event.target.value)
 	}
 	const updateUserName = () => {
-		console.log(newName)
 		const update = {id: user._id, username: newName}
+		console.log(update)
 		updateUserRole(update)
 		setOpenName(false)
 		getProfile(cookie)
