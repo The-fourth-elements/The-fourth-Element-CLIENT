@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 
 export const validationSchemaLogin = Yup.object({
-	email: Yup.string()
+	Email: Yup.string()
 		.email('Ingresa un correo electrónico válido')
 		.required('El correo electrónico es obligatorio'),
-	password: Yup.string()
+	Password: Yup.string()
 		.matches(
 			/^(?=.*[A-Z])(?=.*\d).{6,}$/,
 			'La contraseña debe contener al menos una letra mayúscula, un número y tener al menos 6 caracteres'
@@ -104,8 +104,8 @@ export const initialValues = {
 };
 
 export const initialValuesLogin = {
-	email: '',
-	password: '',
+	Email: '',
+	Password: '',
 };
 
 export const initialValuesRecovery = {
