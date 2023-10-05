@@ -2,7 +2,8 @@
 
 
 .main {
-
+    flex-wrap: nowrap;
+    display: flex;
     flex-direction: row;
     width: 300px;
     padding: 0;
@@ -11,12 +12,14 @@
 
     @include sm () {
         width: 225px;
+        
     }
 }
 
 .main label {
     font-size: 12px;
     @include sm () {
+        white-space: nowrap;
         font-size: 10px;
     }
 }

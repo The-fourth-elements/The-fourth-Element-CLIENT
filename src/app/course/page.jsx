@@ -1,21 +1,20 @@
-'use client'
+'use client';
 
-import MercadoPago from "@/components/MercadoPago/MercadoPago";
-import ModuleView from "@/components/modulesView/ModulesView";
-import User from "@/components/user/User";
-
-
+import MercadoPago from '@/components/MercadoPago/MercadoPago';
+import ModuleView from '@/components/modulesView/ModulesView';
+import User from '@/components/user/User';
+import { useSession } from 'next-auth/react';
 
 const page = () => {
-
-
-	return(
+	const { data: session } = useSession();
+	const role = session?.token?.user?.role;
+	return (
 		<main>
 			<ModuleView></ModuleView>
 			<User></User>
-			<MercadoPago></MercadoPago>
+			{role < 1 && <MercadoPago />}
 		</main>
-	)
+	);
 };
 
 export default page;

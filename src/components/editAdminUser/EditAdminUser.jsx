@@ -24,12 +24,12 @@ const EditAdminUser = ({id}) => {
     if (id) {
       getDetail(id);
     }
-	if(detail.username && Object.keys(detail).length > 0){
-		setCountry(detail.nation.name)
-		setCity(detail.city.name)
+	if(detail?.username && Object.keys(detail).length > 0){
+		setCountry(detail?.nation?.name)
+		setCity(detail?.city?.name)
 	}
-	console.log(detail.nation)
-	console.log(detail.city)
+	console.log(detail?.nation)
+	console.log(detail?.city)
   }, [ detail?.role, id]);
 
 
@@ -60,24 +60,24 @@ const EditAdminUser = ({id}) => {
     return (
 		<article>
 			{showBackdrop && <div className="backdrop"></div>}
-			{detail.username && Object.keys(detail).length > 0 ? (
+			{detail?.username && Object.keys(detail).length > 0 ? (
 				<Card className='main'>
 					<CardHeader className='elHeader'>
-						<h1>Name: {detail.username}</h1>
-						{detail.profile_img ? <Image
-							src={detail.profile_img}
-							alt={detail.name}
+						<h1>Name: {detail?.username}</h1>
+						{detail?.profile_img ? <Image
+							src={detail?.profile_img}
+							alt={detail?.name}
 						/>: <Image
 						src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
-						alt={detail.name}
+						alt={detail?.name}
 					/>}
 					</CardHeader>
 					<CardBody className='elBody'>
-						<h2>Email: {detail.email}</h2>
+						<h2>Email: {detail?.email}</h2>
                         <div className='editPlan'>
-                        {!changePlan ? (detail.role === 0 ? (
+                        {!changePlan ? (detail?.role === 0 ? (
 							<h2>Plan: Free Plan <button title="Edit Plan" onClick={handleChangePlan}><EditIcon/></button></h2>
-						) : detail.role === 1 ? (
+						) : detail?.role === 1 ? (
 							<h2>Plan: Pay Plan <button title="Edit Plan" onClick={handleChangePlan}><EditIcon/></button></h2>
 						) : (
 							<h2>Plan: Admin <button title="Edit Plan" onClick={handleChangePlan}><EditIcon/></button></h2>)
@@ -109,7 +109,7 @@ const EditAdminUser = ({id}) => {
 						<h2>City: {city}</h2>
 						<h2>
 							Registration date:{' '}
-							{new Date(detail.createdAt).toLocaleDateString()}
+							{new Date(detail?.createdAt).toLocaleDateString()}
 						</h2>
 					</CardBody>
 				</Card>

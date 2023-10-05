@@ -1,6 +1,5 @@
 'use client';
 
-
 import './style.scss';
 import { Card, CardBody, Button } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
@@ -15,23 +14,20 @@ import { useRouter } from 'next/navigation';
 import useFetch from '@/hooks/useFetch';
 import { postData } from '@/hooks/postData';
 
-
 const ModuleForm = () => {
 	const router = useRouter();
-	const handleFileChange = event => {
-		const fileInput = event.target;
-		const isVideo =
-			fileInput.files.length > 0 &&
-			fileInput.files[0].type.startsWith('video/');
-		if (!isVideo) {
-			fileInput.value = '';
-		}
-	};
+	// const handleFileChange = event => {
+	// 	const fileInput = event.target;
+	// 	const isVideo = fileInput.files.length > 0 &&
+	// 		fileInput.files[0].type.startsWith('video/');
+	// 	if (!isVideo) {
+	// 		fileInput.value = '';
+	// 	}
+	// };
 
 	const initialValuesModule = {
 		name: '',
 		description: '',
-		quiz: '',
 		paid: '',
 	};
 
@@ -44,24 +40,24 @@ const ModuleForm = () => {
 		const formattedValues = {
 			...values,
 			paid: values.paid === 'true' ? true : false,
-			quiz: parseInt(values.quiz),
+			// quiz: parseInt(values.quiz),
 		};
 
 		try {
-			
-			const postResponse = await postData(`${process.env.API_BACKEND}moduls`, formattedValues)
-			if (postResponse._id) {
+			const postResponse = await postData(
+				`${process.env.API_BACKEND}moduls`,
+				formattedValues
+			);
+			if (postResponse?._id) {
 				toastSuccess('¡Se subió el módulo!');
-				
 			}
 		} catch (error) {
-			toastError('No se pudo subir el módulo, intente mas tarde')
+			toastError('No se pudo subir el módulo, intente mas tarde');
 		}
-
-		
 	};
 
-	return ( //Form className='relative flex flex-col h-50vh  w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'
+	return (
+		//Form className='relative flex flex-col h-50vh  w-1/2 items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'
 		<Card className=' relative min-h-screen modern  h-50vh text-4xl'>
 			<CardBody>
 				<Formik
@@ -69,7 +65,6 @@ const ModuleForm = () => {
 					validationSchema={validationSchemaModule}
 					onSubmit={handleSubmit}>
 					<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 space-y-5  flex flex-col mx-auto  mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
-
 						<Image
 							alt='go back arrow'
 							src={back}
@@ -81,7 +76,7 @@ const ModuleForm = () => {
 							}}
 						/>
 
-						<h1 className='mx-auto mb-5 text-white ' >Agregar Módulo</h1>
+						<h1 className='mx-auto mb-5 text-white '>Agregar Módulo</h1>
 
 						<InputField
 							classNames={{
@@ -97,12 +92,11 @@ const ModuleForm = () => {
 								label: 'text-xl',
 							}}
 							className='mb-5'
-
 							label='Descripcion del Módulo'
 							name='description'
 						/>
 
-						<InputField
+						{/* <InputField
 							classNames={{
 								label: 'text-xl',
 							}}
@@ -110,12 +104,11 @@ const ModuleForm = () => {
 
 							label='Quiz'
 							name='quiz'
-						/>
+						/> */}
 
 						<SelectField
 							isRequired
 							className='mb-5'
-
 							name='paid'
 							label='Es pago?'
 							options={optionsSelect.map(elem => ({

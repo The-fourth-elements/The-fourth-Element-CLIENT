@@ -28,19 +28,19 @@ export const useUsersStore = create((set, get) => ({
     deleteUser(id)
       .then(() => {
         set((state) => ({
-          users: state.users.filter((user) => user._id !== id),
+          users: state.users.filter((user) => user?._id !== id),
         }));
       });
   },
 
   filterUsers: (nationality, plan) => {
     const filteredUsers = get().usersFilter.filter((user) => {
-        const nationalityFilter = nationality === "all" || user.nation._id === nationality;
+        const nationalityFilter = nationality === "all" || user?.nation?._id === nationality;
         const planFilter =
             plan === "all" ||
-            (plan === "free" && user.role === 0) ||
-            (plan === "pay" && user.role === 1) ||
-            (plan === "moderators" && user.role === 2);
+            (plan === "free" && user?.role === 0) ||
+            (plan === "pay" && user?.role === 1) ||
+            (plan === "moderators" && user?.role === 2);
         return nationalityFilter && planFilter;
     });
 
