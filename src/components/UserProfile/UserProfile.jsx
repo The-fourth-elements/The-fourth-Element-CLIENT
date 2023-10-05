@@ -29,13 +29,10 @@ const UserProfile = () => {
 	
 	useEffect(() => {
 		getProfile(cookie)
-		console.log("user:", user)
 		setNewName(user?.username)
 		setNewCountry(user?.nation?.name)
 		setNewCity(user?.city?.name)
-	
-		console.log("theUser:", theUser)
-	}, [user.id, user.username] )
+		}, [user?.username, user?.id ] )
 
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage)
@@ -66,15 +63,15 @@ const UserProfile = () => {
 		setNewName(event.target.value)
 	}
 	const updateUserName = () => {
-		const update = {id: user._id, username: newName}
+		const update = {id: user?._id, username: newName}
 		console.log(update)
 		updateUserRole(update)
 		setOpenName(false)
 		getProfile(cookie)
-		// window.location.reload()
+		window.location.reload()
 	}
 	const updateUserCountry = () => {
-		const update = {id: user._id, nation: newCountry, city:newCity}
+		const update = {id: user?._id, nation: newCountry, city:newCity}
 		updateUserRole(update)
 		setOpenCountry(false)
 		setOpenCity(false)
@@ -82,7 +79,7 @@ const UserProfile = () => {
 		// window.location.reload()
 	}
 	const updateUserCity = () => {	
-		const update = {id: user._id, city: newCity}
+		const update = {id: user?._id, city: newCity}
 		updateUserRole(update)
 		setOpenCity(false)
 		getProfile(cookie)
@@ -102,7 +99,7 @@ const UserProfile = () => {
 	}
 	return (
 		<article>
-		  {user && user._id && Object.keys(user).length > 0 ? (
+		  {user && user?._id && Object.keys(user).length > 0 ? (
 			<Card className='main'>
 			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName} session = {session}/>
 			  <UserProfileBody user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />

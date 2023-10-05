@@ -25,7 +25,7 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
         </h1>
       ) : (
         <h1>
-          Name: {user.username}
+          Name: {user?.username}
           <Button title="Edit  Name" color="warning" variant="bordered" onClick={handleChangeName} size="sm" isIconOnly>
             <EditIcon />
           </Button>
@@ -34,12 +34,12 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
       {session?.token?.picture ?(         
       <Image src={session?.token?.picture} alt="profileImage" />)
       :
-      user.profile_img ? (
-        <Image src={user.profile_img} alt={user.name} />
+      user?.profile_img ? (
+        <Image src={user?.profile_img} alt={user?.name} />
       ) : (
         <Image
           src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
-          alt={user.name}
+          alt={user?.name}
         />
       )}
       <Button isIconOnly color="warning" variant="bordered" title="Edit Photo" onClick={handleChangePhoto}>
@@ -52,16 +52,18 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
 export const UserProfileBody = ({ user, openCountry, stringCountry, newCountry, selectCountry, handleChangeCountry, updateUserCountry, openCity, stringCity, newCity, selectCity, handleChangeCity, updateUserCity }) => (
 
     <CardBody className='elBody'>
-      <h2>Email: {user.email}</h2>
-      {user.role === 0 ? (
+      <h2>Email: {user?.email}</h2>
+      {user?.role === 0 ? (
         <h2>Plan: Free Plan</h2>
-      ) : user.role === 1 ? (
+      ) : user?.role === 1 ? (
         <h2>Plan: Pay Plan</h2>
       ) : (
         <h2>Plan: Admin </h2>
       )}
       <CountrySelect stringCountry = {stringCountry} openCountry = {openCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} />
       <CitySelect openCountry={openCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity = {openCity} stringCity = {stringCity} newCountry={newCountry} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
-      {/* Otras partes del cuerpo del perfil */}
+      <h2> Deporte: {user?.sport?.name}</h2>
+      <h2> Edad: {user?.age} </h2>
+      <h2> Años de experiencia: {user?.expYearsSports}  </h2>
     </CardBody>
   );
