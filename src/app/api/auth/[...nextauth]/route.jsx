@@ -18,8 +18,8 @@ export const authOptions = {
 			},
 			async authorize(credentials) {
 				const form = {
-					email: credentials.email,
-					password: credentials.password,
+					email: credentials.Email,
+					password: credentials.Password,
 				};
 				//esto se usa para el logueo del usuario ya registrado.
 				//manejo la peticiondel front (/api/auth) y la preparo para el back
