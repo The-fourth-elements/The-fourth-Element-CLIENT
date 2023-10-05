@@ -108,13 +108,14 @@ export default function Nav() {
 					<NavbarItem>
 						<Dropdown>
 							<DropdownTrigger>
-								<User
-									avatarProps={
-										session?.token?.picture?.length > 5
-											? { src: session.token.picture }
-											: { src: session?.token?.user?.image_profile }
-									}
-								/>
+									<User
+									className="cursor-pointer"
+										avatarProps={
+											session?.token?.picture?.length > 5
+												? { src: session.token.picture }
+												: { src: session?.token?.user?.image_profile }
+										}
+									/>
 							</DropdownTrigger>
 							<DropdownMenu aria-label='Static Actions'>
 								<DropdownItem key='profile' textValue='profile'>

@@ -96,7 +96,7 @@ export default function UsersSection() {
 
 	return (
 		<div className='mainDiv'>
-			<Button onClick={handleGetDeletedUsers}>
+			<Button className='deletedUsersBtn absolute top-44 md:left-96 left-72 md:text-base whitespace-normal md:whitespace-nowrap w-auto' onClick={handleGetDeletedUsers}>
 				{showDeletedUsers ? 'Ver usuarios eliminados' : 'Ver usuarios existentes'}
 			</Button>
 			{isLoading && (
@@ -113,7 +113,7 @@ export default function UsersSection() {
 						<Table
 							className='dark text-foreground'
 							classNames={{
-								table: 'min-h-[91.4vh]',
+								table: 'min-h-[91.4vh] w-full',
 							}}
 							bottomContent={
 								<div className='flex w-full justify-center'>
