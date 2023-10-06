@@ -27,6 +27,7 @@ import ModalEditClass from '@/helpers/ModalEditClass';
 export default function ModuleView() {
 	const { data: session } = useSession();
 	const id = session?.token?.user?.id;
+	const role = session?.token?.user?.role;
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
@@ -56,7 +57,6 @@ export default function ModuleView() {
 
 		for (const module of modules) {
 			const classDataArray = [];
-
 			for (const elem of module.classModule) {
 				try {
 					const url = `${process.env.API_BACKEND}class/${elem._id}`;
@@ -106,10 +106,10 @@ export default function ModuleView() {
 	const renderDescription = () => {
 		if (currentClass) {
 			const selectedModule =  modules.find(module =>
-				module.classModule.some(classItem => classItem.name === currentClass)
+				module?.classModule?.some(classItem => classItem?.name === currentClass)
 			  )?.name;
 			const selectedClassData = moduleData[selectedModule]?.find(
-				elem => elem.name === currentClass
+				elem => elem?.name === currentClass
 			);
 			if (selectedClassData) {
 				return (
@@ -133,102 +133,110 @@ export default function ModuleView() {
 	};
 
 	const handleClassClick = className => {
-		console.log('tocado');
 		setCurrentClass(className);
-		console.log(className);
 	};
 
 
 	return (
 		<>
-			<Card className={containerVideos + ' navcolor'}>
-				<main
+		  <Card className={containerVideos + ' navcolor'}>
+			<main
+			  className={
+				div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
+			  }
+			>
+			  <div className='bg-black h-unit-8xl m-3 flex justify-center'>
+				{renderVideo()}
+			  </div>
+			  <Card className='flex p-3 bg-transparent shadow-none'>
+				<h2
+				  className={
+					h2Title +
+					' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
+				  }
+				>
+				  {modules[0]?.name}
+				</h2>
+				<Accordion>
+				  <AccordionItem
 					className={
-						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
-					}>
-					<div className='bg-black h-unit-8xl m-3 flex justify-center'>
-						{renderVideo()}
-					</div>
-					<Card className='flex p-3 bg-transparent shadow-none'>
-						<h2
-							className={
-								h2Title +
-								' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
-							}>
-							{modules[0]?.name}
-						</h2>
-						<Accordion>
+					  acordionItem +
+					  ' p-2 m-1 bg-transparent rounded md:m-0 text-background'
+					}
+					title='Recursos'
+					textValue={`${accordion}`}
+				  >
+					{renderDescription()}
+				  </AccordionItem>
+				</Accordion>
+			  </Card>
+			</main>
+			<aside className={`${div2} bg-foreground md:w-96`}>
+			  <nav
+				className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}
+			  >
+				<ul className='m-2'>
+				  {modulesDataLoaded ? (
+					modules.map(({ name, paid }, index) => (
+					  (!paid || role > 0) && (
+						<li className='m-2' key={index}>
+						  <Accordion>
 							<AccordionItem
-								className={
-									acordionItem +
-									' p-2 m-1 bg-transparent rounded md:m-0 text-background'
-								}
-								title='Recursos'
-								textValue={`${accordion}`}>
-								{renderDescription()}
+							  className={`${acordionItem} p-2 m-1 bg-transparent rounded md:m-0 text-background`}
+							  title={`Módulo: ${name}`}
+							>
+							  <Accordion>
+								{moduleData[modules[index].name]?.map(
+								  (elem, classIndex) => (
+									<AccordionItem
+									  key={classIndex}
+									  textValue={elem?.name}
+									  title={elem?.name}
+									>
+									  <div className='flex justify-between'>
+										<span
+										  className='cursor-pointer'
+										  onClick={() =>
+											handleClassClick(elem.name)
+										  }
+										>
+										  Entrar
+										</span>
+										{access && (
+										  <>
+											<EditIcon
+											  className={
+												'cursor-pointer rounded-full transition-background hover:opacity-70'
+											  }
+											  width='30'
+											  height='30'
+											  onClick={onOpen}
+											/>
+											<ModalEditClass
+											  classValues={elem}
+											  isOpen={isOpen}
+											  handleDataUpdate={handleDataUpdate}
+											  onOpenChange={onOpenChange}
+											></ModalEditClass>
+										  </>
+										)}
+									  </div>
+									</AccordionItem>
+								  )
+								)}
+							  </Accordion>
 							</AccordionItem>
-						</Accordion>
-					</Card>
-				</main>
-				<aside className={`${div2} bg-foreground md:w-96`}>
-					<nav
-						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
-						<ul className='m-2'>
-							{modulesDataLoaded ? (
-								modules.map(({ name }, index) => (
-									<li className='m-2' key={index}>
-										<Accordion>
-											<AccordionItem
-												className={`${acordionItem} p-2 m-1 bg-transparent rounded md:m-0 text-background`}
-												title={`Módulo: ${name}`}>
-												<Accordion>
-													{moduleData[modules[index].name]?.map(
-														(elem, classIndex) => (
-															<AccordionItem
-																key={classIndex}
-																textValue={`${index} ${name}`}
-																title={classIndex + 1}>
-																<div className='flex justify-between'>
-																	<span
-																		className='cursor-pointer'
-																		onClick={() => handleClassClick(elem.name)}>
-																		{elem.name}
-																	</span>
-																	{access && (
-																		<>
-																			<EditIcon
-																				className={
-																					'cursor-pointer rounded-full transition-background hover:opacity-70'
-																				}
-																				width='30'
-																				height='30'
-																				onClick={onOpen}
-																			/>
-																			<ModalEditClass
-																				classValues={elem}
-																				isOpen={isOpen}
-																				handleDataUpdate={handleDataUpdate}
-																				onOpenChange={
-																					onOpenChange
-																				}></ModalEditClass>
-																		</>
-																	)}
-																</div>
-															</AccordionItem>
-														)
-													)}
-												</Accordion>
-											</AccordionItem>
-										</Accordion>
-									</li>
-								))
-							) : (
-								<h1>Esperando a que se carguen los datos...</h1>
-							)}
-						</ul>
-					</nav>
-				</aside>
-			</Card>
+						  </Accordion>
+						</li>
+					  )
+					))
+				  ) : (
+					<h1>Esperando a que se carguen los datos...</h1>
+				  )}
+				</ul>
+			  </nav>
+			</aside>
+		  </Card>
 		</>
-	);
+	  );
 }

@@ -39,10 +39,10 @@ const Filters = () => {
             <div className="diver">
                 <label htmlFor="">FILTER BY COUNTRY</label>
                 <select className="select" label="Select a country" onChange={handleFilterNationality} value={filterNationality}>
-                    <option value="all">everyone</option>
+                    <option value="all">Everyone</option>
                     {allCountrys.map((country) => (
-                        <option value={country._id} key={country._id}>
-                            {country.name}
+                        <option value={country?._id} key={country?._id}>
+                            {country?.name}
                         </option>
                     ))}
                 </select>
