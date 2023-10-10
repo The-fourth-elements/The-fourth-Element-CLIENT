@@ -17,6 +17,10 @@
 				position: relative;
 			}
 		}
+		
+	}
+	.login{
+		display: block
 	}
 }
 
@@ -39,12 +43,14 @@
 		padding: 0.5rem;
 		color: #ffffff;
 		background: $grey-1;
-
 		&__logo {
 			img {
 				@include logoNav(70px);
 				width: 100%;
 			}
 		}
+	}
+	.login{
+		display: none;
 	}
 }
