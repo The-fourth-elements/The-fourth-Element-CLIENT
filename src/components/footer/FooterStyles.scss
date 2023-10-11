@@ -3,21 +3,21 @@
 @mixin lg-styles {
     .footerLinksContainer {
         background-color: $black-1;
-        height: 500px;
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 2vh;
     }
     .linksContainer {
-        height: 500px;
         text-align: center;
     }
     
     .footerLinks {
+        display: flex;
+        justify-content: space-evenly;
         color: #949292;
         display: flex;
         padding-top: 70px;
-        gap: 250px;
         font-size: 18px;
         padding-left: 20px;
         padding-right: 20px;
@@ -26,10 +26,7 @@
         background: none;
         color: #949292;
         border-color: #949292;
-        font-size: 20px;
-        padding: 14px 10px;
-        margin-top: -15px;
-        margin-left: 60%;
+
     }
     .buttonContainer {
         margin-top: 40px;
@@ -47,7 +44,6 @@
         cursor: pointer;
     }
     .footerButton:hover {
-        color: red;
         text-decoration: underline;
     }
     .iconsContainer {
@@ -95,7 +91,10 @@
 @include sm {
 	.Footer-container {
 		background-color: $grey-1;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2vh;
 
 		&-footer-links {
 			padding-top: 2vh;

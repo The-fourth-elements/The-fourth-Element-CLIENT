@@ -44,7 +44,7 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar className='navcolor h-40 bg-primary p-3 w-full fix-Header'>
+		<Navbar className=' bg-background h-40 p-3 w-full fix-Header'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>

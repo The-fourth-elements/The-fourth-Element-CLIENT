@@ -31,7 +31,7 @@ const config = {
 				modern: {
 					extend: 'dark',
 					colors: {
-						background: '#1E1E1E',
+						background: '#030303',
 						foreground: '#ffffff',
 						primary: {
 							50: '#fffaec',
