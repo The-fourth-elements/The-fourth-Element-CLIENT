@@ -9,7 +9,7 @@ import {
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { setCookie } from 'cookies-next';
-import { useModulesStore } from '@/zustand/store/modulesStore'
+import { useModulesStore } from '@/zustand/store/modulesStore';
 import {
 	containerVideos,
 	div1,
@@ -55,7 +55,7 @@ export default function ModuleView() {
 				getProfile(id);
 			}
 		}
-		fetchData(modules).then(data=> setModuleData(data))
+		fetchData(modules).then(data => setModuleData(data));
 		setModulesDataLoaded(true);
 	}, [modules, session, dataUpdated]);
 
@@ -64,107 +64,115 @@ export default function ModuleView() {
 			setDataUpdated(false);
 		}
 	}, [dataUpdated]);
-	
+
 	const handleDataUpdate = () => {
 		setDataUpdated(true);
 	};
 
 	const renderModuleClasses = (moduleData, moduleIndex) => {
-		if(user){
-			if(user.role > 1){
-				return 
-			}
-		}
 		return moduleData[modules[moduleIndex].name]?.map((elem, classIndex) => {
-			const moduleProgress = user?.progress?.modules.find(
-				module => module.moduleId === modules[moduleIndex]._id
-			);
-
-			if (!moduleProgress) {
-				return (
-					<AccordionItem
-						key={classIndex}
-						textValue={elem?.name}
-						title={elem?.name}
-						disabled={true}>
-						<div className='flex justify-between'>
-							<span className='cursor-pointer'>Entrar</span>
-						</div>
-						<span>Este módulo aún no se ha iniciado.</span>
-					</AccordionItem>
-				);
-			}
-
-			const classInfo = moduleProgress.classes.find(
-				classItem => classItem.name === elem.name
-			);
-
-			if (!classInfo) {
-				return <p>Error: Clase no encontrada en el progreso.</p>;
-			}
-
-			const unlockDate = new Date(classInfo.unlockDate);
-			const currentDate = new Date();
-			if(user)
-			if (unlockDate > currentDate) {
-				return (
-					<AccordionItem
-						key={classIndex}
-						textValue={elem?.name}
-						title={elem?.name}
-						disabled={true}>
-						<div className='flex justify-between'>
-							<span className='cursor-pointer'>Entrar</span>
-						</div>
-						<span>Clase bloqueada hasta {unlockDate.toLocaleString()}.</span>
-					</AccordionItem>
-				);
-			}
-
+		  const moduleProgress = user?.progress?.modules?.find(
+			(module) => module.moduleId === modules[moduleIndex]._id
+		  );
+	  
+		  if (!moduleProgress && !access) {
 			return (
-				<AccordionItem
-					key={classIndex}
-					textValue={elem?.name}
-					title={elem?.name}>
-					<div className='flex justify-between'>
-						<span
-							className='cursor-pointer'
-							onClick={() => handleClassClick(elem.name)}>
-							Entrar
-						</span>
-						{access && (
-							<>
-								<EditIcon
-									className='cursor-pointer rounded-full transition-background hover:opacity-70'
-									width='30'
-									height='30'
-									onClick={onOpen}
-								/>
-								<ModalEditClass
-									classValues={elem}
-									isOpen={isOpen}
-									handleDataUpdate={handleDataUpdate}
-									onOpenChange={onOpenChange}></ModalEditClass>
-							</>
-						)}
-					</div>
-				</AccordionItem>
+			  <AccordionItem
+				key={classIndex}
+				textValue={elem?.name}
+				title={elem?.name}
+				disabled={true}>
+				<div className='flex justify-between'>
+				  <span className='cursor-pointer'>Entrar</span>
+				</div>
+				<span>Este módulo aún no se ha iniciado.</span>
+			  </AccordionItem>
 			);
+		  }
+	  
+		  const classInfo = moduleProgress?.classes.find(
+			(classItem) => classItem.name === elem.name
+		  );
+	  
+		  const unlockDate = new Date(classInfo?.unlockDate);
+		  const currentDate = new Date();
+	  
+		  if (access) {
+			// Si el usuario tiene un acceso especial (role > 2), no bloquear las clases
+			return (
+			  <AccordionItem
+				key={classIndex}
+				textValue={elem?.name}
+				title={elem?.name}>
+				<div className='flex justify-between'>
+				  <span
+					className='cursor-pointer'
+					onClick={() => handleClassClick(elem.name)}>
+					Entrar
+				  </span>
+				  {access && (
+					<>
+					  <EditIcon
+						className='cursor-pointer rounded-full transition-background hover:opacity-70'
+						width='30'
+						height='30'
+						onClick={onOpen}
+					  />
+					  <ModalEditClass
+						classValues={elem}
+						isOpen={isOpen}
+						handleDataUpdate={handleDataUpdate}
+						onOpenChange={onOpenChange}></ModalEditClass>
+					</>
+				  )}
+				</div>
+			  </AccordionItem>
+			);
+		  }
+	  
+		  // Si el usuario no tiene acceso especial, aplicar lógica de bloqueo por fecha
+		  if (unlockDate > currentDate) {
+			return (
+			  <AccordionItem
+				key={classIndex}
+				textValue={elem?.name}
+				title={elem?.name}
+				disabled={true}>
+				<div className='flex justify-between'>
+				  <span className='cursor-pointer'>Entrar</span>
+				</div>
+				<span>Clase bloqueada hasta {unlockDate.toLocaleString()}.</span>
+			  </AccordionItem>
+			);
+		  }
+	  
+		  return (
+			<AccordionItem
+			  key={classIndex}
+			  textValue={elem?.name}
+			  title={elem?.name}>
+			  <div className='flex justify-between'>
+				<span
+				  className='cursor-pointer'
+				  onClick={() => handleClassClick(elem.name)}>
+				  Entrar
+				</span>
+			  </div>
+			</AccordionItem>
+		  );
 		});
-	};
+	  };
 
-	
-
-	
 	const verifyProgressUser = async () => {
 		try {
-			if (!user?.progress) {
-				const progress = await postData(
-					`${process.env.API_BACKEND}startCourse/${id}`
-				);
-				console.log(progress);
-				toastSuccess(progress?.message);
-				getProfile(id);
+			if (user?.role <= 2) {
+				if (!user?.progress) {
+					const progress = await postData(
+						`${process.env.API_BACKEND}startCourse/${id}`
+					);
+					toastSuccess(progress?.message);
+					getProfile(id);
+				}
 			}
 		} catch (error) {
 			toastError(error);
