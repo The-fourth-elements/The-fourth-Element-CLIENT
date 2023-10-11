@@ -1,4 +1,4 @@
-export const postData = async (url, data, token) => {
+export const postData = async (url, data = {}, token) => {
     try {
         const headers = {
             "Content-Type": "application/json",
