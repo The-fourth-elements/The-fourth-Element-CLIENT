@@ -1,0 +1,26 @@
+@import "../../styles/base";
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: $grey-1;
+    border: 10px solid $red-2;
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 10px;
+    padding: 12px;
+
+    @include md (){
+        margin-left: 35px;
+        margin-right: 35px;
+        padding: 30px;
+    }
+
+    @include lg () {
+        margin-left: 120px;
+        margin-right: 120px;
+        padding: 50px;
+    }
+}

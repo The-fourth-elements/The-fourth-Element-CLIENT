@@ -1,10 +1,12 @@
 'use client'
 import { useState } from "react";
 import "./QuizForm.scss"
+import { useCreateQuiz } from "@/zustand/store/updataeQuizes";
 
 const QuizForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const {createQuiz} = useCreateQuiz()
   const [questions, setQuestions] = useState([]);
   const [currentAnswer, setCurrentAnswer] = useState(''); 
   const [currentAnswers, setCurrentAnswers] = useState([]);
@@ -13,7 +15,6 @@ const QuizForm = () => {
     {
       question: '',
       answers: [],
-      correctAnswer: '',
     },
   ]);
 
@@ -31,21 +32,22 @@ const handleAddQuestion = () => {
 
 const handleAddAnswer = (questionIndex) => {
   const newQuestionData = [...questionData];
-  newQuestionData[questionIndex].answers.push(currentAnswer);
+  const newAnswer = { response: currentAnswer, verdadera: false };
+  newQuestionData[questionIndex].answers.push(newAnswer);
   setQuestionData(newQuestionData);
   setCurrentAnswer('');
 };
 
-const handleDeleteQuestion = (index) => {
-  const updatedQuestions = [...questions];
-  updatedQuestions.splice(index, 1);
-  setQuestions(updatedQuestions);
+const handleDeleteQuestion = (questionIndex) => {
+  const newQuestionData = [...questionData];
+  newQuestionData.splice(questionIndex, 1); // Elimina la pregunta en el índice questionIndex
+  setQuestionData(newQuestionData);
 };
 
-const handleDeleteAnswer = (index) => {
-  const updatedAnswers = [...currentAnswers];
-  updatedAnswers.splice(index, 1);
-  setCurrentAnswers(updatedAnswers);
+const handleDeleteAnswer = (questionIndex, ansIndex) => {
+  const updatedAnswers = [...questionData];
+  const newupdatedAnswers = updatedAnswers[questionIndex].answers.splice(ansIndex, 1)
+  setCurrentAnswers(newupdatedAnswers);
 };
 
 const handleQuestionChange = (text, questionIndex) => {
@@ -55,9 +57,11 @@ const handleQuestionChange = (text, questionIndex) => {
 };
 
 const handleCorrectAnswerChange = (answer, questionIndex) => {
-  const newCorrectAnswerChange = [...questionData];
-  newCorrectAnswerChange[questionIndex].correctAnswer = answer;
-  setQuestionData(newCorrectAnswerChange);
+  const newQuestionData = [...questionData];
+  newQuestionData[questionIndex].answers.forEach((ans) => {
+    ans.verdadera = ans.response === answer;
+  });
+  setQuestionData(newQuestionData);
 };
 
 const handleSaveQuestionnaire = () => {
@@ -67,8 +71,8 @@ const handleSaveQuestionnaire = () => {
     quest:questionData,
     
   };
-
-    console.log(questionnaireData)
+  console.log(questionnaireData)
+  createQuiz(questionnaireData)
 };
 
 return (
@@ -93,7 +97,7 @@ return (
 
     <div className="body">
     {questionData.map((question, questionIndex) => (
-  <div key={questionIndex}>
+  <div className="divEveryQuestion" key={questionIndex}>
     <h3>Pregunta {questionIndex + 1}</h3>
     <input
       className="input"
@@ -110,32 +114,36 @@ return (
       onChange={(e) => setCurrentAnswer(e.target.value)}
     />
     <div>
-      {question.answers.map((answer, ansIndex) => (
-        <div className="inputElements" key={ansIndex}>
-          <div className="divInput">
-            <input
-              className="inputRadio"
-              type="radio"
-              name={`correctAnswer_${questionIndex}`}
-              value={answer}
-              checked={question.correctAnswer === answer}
-              onChange={() => handleCorrectAnswerChange(answer, questionIndex)}
-            />
-            <p className="pAnswer">{answer}</p>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <button onClick={() => handleDeleteAnswer(questionIndex, ansIndex)}>
-              <p className="pDelete">Eliminar</p>
-            </button>
-          </div>
-        </div>
-      ))}
+    {question.answers.map((answer, ansIndex) => (
+  <div className="inputElements" key={ansIndex}>
+    <div className="divInput">
+      <input
+        className="inputRadio"
+        type="radio"
+        name={`correctAnswer_${questionIndex}`}
+        value={answer.response}
+        checked={answer.verdadera}
+        onChange={() => handleCorrectAnswerChange(answer.response, questionIndex)}
+      />
+      <p className="pAnswer">{answer.response}</p>
     </div>
-    <button onClick={() => handleAddAnswer(questionIndex)}>Agregar Respuesta</button>
+    <div style={{ marginLeft: 'auto' }}>
+      <button onClick={() => handleDeleteAnswer(questionIndex, ansIndex)}>
+        <p className="pDelete">Eliminar</p>
+      </button>
+    </div>
   </div>
 ))}
     </div>
-        <button onClick={handleAddQuestion}>Agregar Pregunta</button>
+    <div className="guardaBotones">
+    <button onClick={() => handleAddAnswer(questionIndex)}>Agregar Respuesta</button>
+    <button onClick={() => handleDeleteQuestion(questionIndex)}>Eliminar pregunta</button>
+    </div>
+
+  </div>
+))}
+    </div>
+        <button className="agregarQ" onClick={handleAddQuestion}>Agregar Pregunta</button>
      
     <button className="QuizSave" onClick={handleSaveQuestionnaire}>Guardar Cuestionario</button>
   </div>

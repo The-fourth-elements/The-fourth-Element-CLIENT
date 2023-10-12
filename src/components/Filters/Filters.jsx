@@ -15,7 +15,6 @@ const Filters = () => {
         const selectOrderName = event.target.value 
         setOrderName(selectOrderName)
         orderUsersName (selectOrderName)
-        getUsers() 
         console.log(users)
 
     }
