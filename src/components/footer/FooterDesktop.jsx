@@ -6,12 +6,10 @@ import Instagram from '../../assets/svg/instagram.svg';
 import Linkedin from '../../assets/svg/linkedin.svg';
 import Twitter from '../../assets/svg/twitter.svg';
 
-import "./FooterStyles.scss"
+import './FooterStyles.scss';
 
 const FooterDesktop = () => {
-
-
-    const links = [
+	const links = [
 		{
 			label: 'Partners',
 			route: '/partners',
@@ -37,9 +35,9 @@ const FooterDesktop = () => {
 	];
 	return (
 		<>
-			<div className='footerLinksContainer'>
-				<div className='linksContainer'>
-					<ul className='footerLinks'>
+			<div className='footerLinksContainer w-full'>
+				<div className='linksContainer w-full'>
+					<ul className='footerLinks w-full'>
 						{links.map(({ label, route }) => (
 							<li key={route}>
 								<Link href={route}>{label}</Link>
@@ -52,13 +50,15 @@ const FooterDesktop = () => {
 								<Link href={route}>{label}</Link>
 							</li>
 						))}
+						<li>
+							<div className='flex flex-col space-y-4'>
+							<input
+								placeholder='Your email address'
+								className='inputFooter'></input>
+							<button className='footerButton'>Get updates</button>
+							</div>
+						</li>
 					</ul>
-					<input
-						placeholder='Your email address'
-						className='inputFooter'></input>
-					<div className='buttonContainer'>
-						<button className='footerButton'>Get updates</button>
-					</div>
 				</div>
 			</div>
 
@@ -97,11 +97,7 @@ const FooterDesktop = () => {
 
 				<h1>Train the Mind®</h1>
 			</div>
-        </>                    
-
-
-
-			
+		</>
 	);
 };
 

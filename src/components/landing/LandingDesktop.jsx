@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import landingImg from '../../assets/img/landingImg.jpg';
 import videoPlaceholder from '../../assets/img/videoPlaceholder.png';
+
 import './LandingDesktopStyles.scss';
-// import Link from 'next/link';
+import Link from 'next/link';
 
 const LandingDesktop = () => {
 	return (
@@ -12,7 +13,8 @@ const LandingDesktop = () => {
 					<Image alt='landing image' src={landingImg} />
 					<div className='Container-banner-text'>
 						<h1>
-							TU ENTRENAMIENTO MENTAL Y CEREBRAL PARA POTENCIAR <br />TU DESEMPEÑO <br />
+							TU ENTRENAMIENTO MENTAL Y CEREBRAL PARA POTENCIAR <br />
+							TU DESEMPEÑO <br />
 							DEPORTIVO
 						</h1>
 					</div>
@@ -27,9 +29,6 @@ const LandingDesktop = () => {
 					</p>
 				</div>
 				<div className='Container-take-a-tour-container'>
-					<div className='Container-take-a-tour-container-text'>
-						Take a tour
-					</div>
 					<div className='Container-take-a-tour-container-images'>
 						<Image alt='placeholder image' src={videoPlaceholder} />
 						<Image alt='placeholder image' src={videoPlaceholder} />
@@ -37,11 +36,17 @@ const LandingDesktop = () => {
 					</div>
 				</div>
 				<div className='Container-buttons'>
-					<button>Get started (free trial)</button>
-					<button>Grupos</button>
+					<button>
+						<Link href='/course'>Get started (free trial)</Link>
+					</button>
+					<button>
+						<Link href='/groups'>Grupos</Link>
+					</button>
 				</div>
 				<div className='Container-description'>
-					<h3><b>The Fourth Element</b> está diseñado para...</h3>
+					<h3>
+						<b>The Fourth Element</b> está diseñado para...
+					</h3>
 					<p>
 						Cualquier atleta comprometido con el alto rendimiento, ya sea en
 						disciplinas individuales o de equipo. También, es una oportunidad
