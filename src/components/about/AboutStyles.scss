@@ -23,8 +23,10 @@
 
 		&-row {
 			display: flex;
-			margin-bottom: 3vh;
+			flex-wrap: wrap;
+			justify-content: space-around;
 			gap: 2vw;
+			margin-bottom: 3vh;
 			&-column {
 				padding: 1vw 0 2vw 0;
 				width: 30vw;
@@ -80,4 +82,14 @@
 
 @include md {
 	@include lg-styles;
+	.Container{
+		&-row{
+			margin: 0 auto;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			&-column {
+				width: 47%;
+			}
+		}
+	}
 }
