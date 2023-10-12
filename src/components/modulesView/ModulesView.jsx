@@ -41,7 +41,7 @@ export default function ModuleView() {
 	const [access, setAccess] = useState(false);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [dataUpdated, setDataUpdated] = useState(false);
-
+	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
 	}, []);
@@ -70,102 +70,110 @@ export default function ModuleView() {
 	};
 
 	const renderModuleClasses = (moduleData, moduleIndex) => {
-		return moduleData[modules[moduleIndex].name]?.map((elem, classIndex) => {
-		  const moduleProgress = user?.progress?.modules?.find(
-			(module) => module.moduleId === modules[moduleIndex]._id
-		  );
-	  
-		  if (!moduleProgress && !access) {
-			return (
-			  <AccordionItem
-				key={classIndex}
-				textValue={elem?.name}
-				title={elem?.name}
-				disabled={true}>
-				<div className='flex justify-between'>
-				  <span className='cursor-pointer'>Entrar</span>
-				</div>
-				<span>Este módulo aún no se ha iniciado.</span>
-			  </AccordionItem>
-			);
-		  }
-	  
-		  const classInfo = moduleProgress?.classes.find(
-			(classItem) => classItem.name === elem.name
-		  );
-	  
-		  const unlockDate = new Date(classInfo?.unlockDate);
-		  const currentDate = new Date();
-	  
-		  if (access) {
-			// Si el usuario tiene un acceso especial (role > 2), no bloquear las clases
-			return (
-			  <AccordionItem
-				key={classIndex}
-				textValue={elem?.name}
-				title={elem?.name}>
-				<div className='flex justify-between'>
-				  <span
-					className='cursor-pointer'
-					onClick={() => handleClassClick(elem.name)}>
-					Entrar
-				  </span>
-				  {access && (
-					<>
-					  <EditIcon
-						className='cursor-pointer rounded-full transition-background hover:opacity-70'
-						width='30'
-						height='30'
-						onClick={onOpen}
-					  />
-					  <ModalEditClass
-						classValues={elem}
-						isOpen={isOpen}
-						handleDataUpdate={handleDataUpdate}
-						onOpenChange={onOpenChange}></ModalEditClass>
-					</>
-				  )}
-				</div>
-			  </AccordionItem>
-			);
-		  }
-	  
-		  // Si el usuario no tiene acceso especial, aplicar lógica de bloqueo por fecha
-		  if (unlockDate > currentDate) {
-			return (
-			  <AccordionItem
-				key={classIndex}
-				textValue={elem?.name}
-				title={elem?.name}
-				disabled={true}>
-				<div className='flex justify-between'>
-				  <span className='cursor-pointer'>Entrar</span>
-				</div>
-				<span>Clase bloqueada hasta {unlockDate.toLocaleString()}.</span>
-			  </AccordionItem>
-			);
-		  }
-	  
-		  return (
-			<AccordionItem
-			  key={classIndex}
-			  textValue={elem?.name}
-			  title={elem?.name}>
-			  <div className='flex justify-between'>
-				<span
-				  className='cursor-pointer'
-				  onClick={() => handleClassClick(elem.name)}>
-				  Entrar
-				</span>
-			  </div>
-			</AccordionItem>
-		  );
-		});
-	  };
+		if (moduleData) {
+			return moduleData[modules[moduleIndex].name]?.map((elem, classIndex) => {
+
+				if (access) {
+					//no bloquear clases para el usuario.
+					return (
+						<AccordionItem
+							key={classIndex}
+							textValue={elem?.name}
+							title={elem?.name}>
+							<div className='flex justify-between'>
+								<span
+									className='cursor-pointer'
+									onClick={() => handleClassClick(elem.name)}>
+									Entrar
+								</span>
+
+								<EditIcon
+									className='cursor-pointer rounded-full transition-background hover:opacity-70'
+									width='30'
+									height='30'
+									onClick={onOpen}
+								/>
+								<ModalEditClass
+									classValues={elem}
+									isOpen={isOpen}
+									handleDataUpdate={handleDataUpdate}
+									onOpenChange={onOpenChange}></ModalEditClass>
+							</div>
+						</AccordionItem>
+					);
+				} else {
+					if (user) {
+						const moduleProgress = user?.progress?.modules?.find(
+							module => {
+								return module[moduleIndex]?.moduleId === modules[moduleIndex]._id}
+						);
+						const classInfo = moduleProgress?.map((module)=>{
+							return module?.classes?.find(
+								classItem => {
+									return classItem.name === elem.name
+								}
+							);
+						})
+						if (!moduleProgress) {
+							// Este módulo aún no se ha iniciado.
+							return (
+								<AccordionItem
+									key={classIndex}
+									textValue={elem?.name}
+									title={elem?.name}
+									disabled={true}>
+									<div className='flex justify-between'>
+										<span className='cursor-pointer'>Entrar</span>
+									</div>
+									<span>Este módulo aún no se ha iniciado.</span>
+								</AccordionItem>
+							);
+						}
+						const unlockDate = new Date(classInfo[0]?.unlockDate);
+						const currentDate = new Date();
+
+						if (unlockDate > currentDate) {
+							// Clase bloqueada hasta una fecha futura.
+							console.log(unlockDate, '<== unlock', '===> ahorra', currentDate);
+							return (
+								<AccordionItem
+									key={classIndex}
+									textValue={elem?.name}
+									title={elem?.name}
+									disabled={true}>
+									<div className='flex justify-between'>
+										<span className='cursor-pointer'>Entrar</span>
+									</div>
+									<span>
+										Clase bloqueada hasta {unlockDate.toLocaleString()}.
+									</span>
+								</AccordionItem>
+							);
+						}
+						// Si ninguna de las condiciones anteriores se cumple, la clase está disponible.
+						return (
+							<AccordionItem
+								key={classIndex}
+								textValue={elem?.name}
+								title={elem?.name}>
+								<div className='flex justify-between'>
+									<span
+										className='cursor-pointer'
+										onClick={() => handleClassClick(elem.name)}>
+										Entrar
+									</span>
+								</div>
+							</AccordionItem>
+						);
+					}
+				}
+			});
+		}
+	};
 
 	const verifyProgressUser = async () => {
 		try {
-			if (user?.role <= 2) {
+			if (user?.role < 2) {
 				if (!user?.progress) {
 					const progress = await postData(
 						`${process.env.API_BACKEND}startCourse/${id}`
@@ -181,6 +189,18 @@ export default function ModuleView() {
 
 	const handleClassClick = className => {
 		setCurrentClass(className);
+		setCurrentModule(className);
+		const module = modules.find(module => {
+			const classEqual = module.classModule.find(
+				clase => clase.name === className
+			);
+			return classEqual;
+		});
+		if (module) {
+			setCurrentModule(module.name);
+		} else {
+			toastError('Algo ocurrio, porfavor contactese con un administrador');
+		}
 	};
 
 	return (
@@ -198,7 +218,10 @@ export default function ModuleView() {
 							className={
 								h2Title +
 								' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
-							}></h2>
+							}>
+							{currentModule ? `Módulo: ${currentModule}` : ''}{' '}
+							{/* Renderizar el módulo seleccionado */}
+						</h2>
 						<Accordion>
 							<AccordionItem
 								className={
@@ -227,7 +250,8 @@ export default function ModuleView() {
 														title={`Módulo: ${name}`}
 														onPress={verifyProgressUser}>
 														<Accordion>
-															{renderModuleClasses(moduleData, index)}
+															{moduleData &&
+																renderModuleClasses(moduleData, index)}
 														</Accordion>
 													</AccordionItem>
 												</Accordion>
