@@ -87,13 +87,15 @@
 		&-buttons {
 			display: flex;
 			width: 80%;
-			justify-content: space-evenly;
+			justify-content: center;
+			gap: 50px;
 			> button {
-				font-size: 2em;
-				border-radius: 20px;
+				font-family: "Input Serif";
+				font-size: 21px;
+				border-radius: 40px;
 				background-color: $orange-1;
 				color: white;
-				padding: 10px 20px;
+				padding: 10px 50px;
 				border: none;
 				cursor: pointer;
 				transition: color 0.2s ease;
@@ -113,7 +115,7 @@
 
 			> h3 {
 				margin-bottom: 6vh;
-				
+				font-family: "Input Serif"
 			}
 		}
 	}
@@ -203,14 +205,15 @@
 
 		&-buttons {
 			display: flex;
-			width: 100%;
-			justify-content: space-evenly;
+			justify-content: center;
+			gap: 70px;
 			> button {
-				font-size: 2em;
-				border-radius: 20px;
+				font-family: "Input Serif";
+				font-size: 18px;
+				border-radius: 40px;
 				background-color: $orange-1;
 				color: white;
-				padding: 10px 20px;
+				padding: 5px 25px;
 				border: none;
 				cursor: pointer;
 				transition: color 0.2s ease;

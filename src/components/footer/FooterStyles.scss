@@ -90,8 +90,10 @@
 
 @include sm {
 	.Footer-container {
-		background-color: $grey-1;
+		background-color: $black-1;
+
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         margin-bottom: 2vh;
@@ -99,7 +101,6 @@
 		&-footer-links {
 			padding-top: 2vh;
 			background-color: black;
-			width: 100vw;
 			color: $grey-2;
 			display: flex;
 			gap: 10vw;
