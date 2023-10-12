@@ -1,12 +1,53 @@
-// import aboutImg2 from '@/assets/img/aboutImg2.jpg';
-// import Image from 'next/image';
-
+'use client';
+import React from 'react';
 import './AboutStyles.scss';
+import '@/components/about-content/AboutContent';
 
 export default function About() {
+	let values = [
+		{
+			id: 1,
+			content: 'Este es el contenido del primer objeto.',
+			title: 'Título del primer objeto',
+		},
+		{
+			id: 2,
+			content: 'Este es el contenido del segundo objeto.',
+			title: 'Título del segundo objeto',
+		},
+		{
+			id: 3,
+			content: 'Este es el contenido del tercer objeto.',
+			title: 'Título del tercer objeto',
+		},
+		{
+			id: 4,
+			content: 'Este es el contenido del cuarto objeto.',
+			title: 'Título del cuarto objeto',
+		},
+		{
+			id: 5,
+			content: 'Este es el contenido del quinto objeto.',
+			title: 'Título del quinto objeto',
+		},
+	];
+	if (values.length < 1) {
+	}
 	return (
 		<div className='Container'>
 			<h1>About us</h1>
+			<div className='Container-row'>
+				{values.map(({ id, content, title }) => {
+					return (
+						<React.Fragment key={id}>
+							<div className='Container-row-column'>
+								<h3>{title}</h3>
+								<p>{content}</p>
+							</div>
+						</React.Fragment>
+					);
+				})}
+			</div>
 
 			<div className='Container-row'>
 				<div className='Container-row-column'>
@@ -52,7 +93,7 @@ export default function About() {
 					</p>
 				</div>
 
-                <div className='Container-row-column'>
+				<div className='Container-row-column'>
 					<h3>Testimonio 2:</h3>
 					<p>
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -62,7 +103,7 @@ export default function About() {
 					</p>
 				</div>
 
-                <div className='Container-row-column'>
+				<div className='Container-row-column'>
 					<h3>Testimonio 3:</h3>
 					<p>
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

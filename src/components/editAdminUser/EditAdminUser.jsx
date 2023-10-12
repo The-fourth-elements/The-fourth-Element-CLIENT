@@ -107,6 +107,9 @@ const EditAdminUser = ({id}) => {
 						)}
 						<h2>Country: {country}</h2>
 						<h2>City: {city}</h2>
+						<h2> Deporte: {detail?.sport?.name}</h2>
+						<h2> Edad: {detail?.age} </h2>
+						<h2> Años de experiencia: {detail?.expYearsSports}  </h2>
 						<h2>
 							Registration date:{' '}
 							{new Date(detail?.createdAt).toLocaleDateString()}

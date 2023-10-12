@@ -1,3 +1,6 @@
+@import "../../styles/base";
+
+
 
 .nousers {
   position: absolute;
@@ -10,6 +13,18 @@
   transform: translate(-50%, 100%);
   left: 50%;
   margin-left: 40px;
+ }
+
+ .deletedUsersBtn {
+
+
+    @include sm {
+      padding: 0;
+      left: 75vw;
+
+      font-size: 11px;
+      width: 6vw;
+    }
  }
 
  

@@ -6,14 +6,21 @@ import { useAllCountrys } from '@/zustand/store/allCountrys';
 import './styles.scss';
 
 const Filters = () => {
-    const { usersFilter } = useUsersStore();
+    const { usersFilter, users, orderUsersName, getUsers } = useUsersStore();
     const { getCountrys, allCountrys } = useAllCountrys();
-    const { filterUsers } = useUsersStore(); // Utilizamos una única función de filtro
+    const { filterUsers } = useUsersStore();
+    let [orderName, setOrderName] = useState("");
+
+    const handleOrderName = (event) => {
+        const selectOrderName = event.target.value 
+        setOrderName(selectOrderName)
+        orderUsersName (selectOrderName)
+        console.log(users)
+
+    }
 
     useEffect(() => {
         getCountrys();
-        console.log(allCountrys);
-        console.log(usersFilter);
     }, []);
 
     let [filterNationality, setFilterNationality] = useState("all");
@@ -30,7 +37,6 @@ const Filters = () => {
     };
 
     useEffect(() => {
-        // Aplicar ambos filtros al actualizar cualquiera de los valores de filtro
         filterUsers(filterNationality, filterPlan);
     }, [filterNationality, filterPlan]);
 
@@ -39,7 +45,7 @@ const Filters = () => {
             <div className="diver">
                 <label htmlFor="">FILTER BY COUNTRY</label>
                 <select className="select" label="Select a country" onChange={handleFilterNationality} value={filterNationality}>
-                    <option value="all">everyone</option>
+                    <option value="all">Everyone</option>
                     {allCountrys.map((country) => (
                         <option value={country?._id} key={country?._id}>
                             {country?.name}
@@ -56,6 +62,15 @@ const Filters = () => {
                     <option value="moderators">Moderator</option>
                 </select>
             </div>
+            <div className="diver">
+                <label htmlFor="">ORDER BY NAME</label>
+                <select className="select"
+                label="Select a name"onChange={handleOrderName} value={orderName}>
+                    <option value="nameDesc">A - Z</option>
+                    <option value="nameAsc">Z - A</option>
+                </select>
+            </div>
+            
         </div>
     );
 };

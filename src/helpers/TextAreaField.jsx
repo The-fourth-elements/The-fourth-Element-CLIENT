@@ -13,6 +13,7 @@ const TextAreaField = ({ name, label, rows, ...props }) => {
 				name={name}
 				value={field.value}
 				onChange={field.onChange}
+				color={meta?.error ? 'danger' : 'default'}
 				rows={rows}
 				{...props}
 			/>

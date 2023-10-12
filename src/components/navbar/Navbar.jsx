@@ -108,13 +108,14 @@ export default function Nav() {
 					<NavbarItem>
 						<Dropdown>
 							<DropdownTrigger>
-								<User
-									avatarProps={
-										session?.token?.picture?.length > 5
-											? { src: session.token.picture }
-											: { src: session?.token?.user?.image_profile }
-									}
-								/>
+									<User
+									className="cursor-pointer"
+										avatarProps={
+											session?.token?.picture?.length > 5
+												? { src: session.token.picture }
+												: { src: session?.token?.user?.image_profile }
+										}
+									/>
 							</DropdownTrigger>
 							<DropdownMenu aria-label='Static Actions'>
 								<DropdownItem key='profile' textValue='profile'>
@@ -148,7 +149,7 @@ export default function Nav() {
 				</NavbarContent>
 			) : (
 				<NavbarContent justify='end'>
-					<NavbarItem className='hidden lg:flex'>
+					<NavbarItem className='login'>
 						<Button
 							as={Link}
 							color='foreground'
@@ -156,16 +157,6 @@ export default function Nav() {
 							variant='flat'
 							className='  text-l text-foreground border-solid border-1 border-blue-500'>
 							Login
-						</Button>
-					</NavbarItem>
-					<NavbarItem>
-						<Button
-							as={Link}
-							color='warning'
-							href='/auth'
-							variant='flat'
-							className='text-l'>
-							Sign Up
 						</Button>
 					</NavbarItem>
 				</NavbarContent>

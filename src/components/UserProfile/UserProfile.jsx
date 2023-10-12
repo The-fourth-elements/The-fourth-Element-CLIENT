@@ -9,6 +9,7 @@ import { useUserDetail } from '@/zustand/store/userDetail';
 import { UserProfileBody, UserProfileHeader } from './HeadBodyProfile';
 import { useUserProfile } from '@/zustand/store/userProfile';
 import { getCookie } from 'cookies-next';
+import { deportes } from '@/utils/dataRegister';
 
 
 const UserProfile = () => {
@@ -26,16 +27,19 @@ const UserProfile = () => {
 	let [newCountry, setNewCountry] = useState("")
 	let [newCity, setNewCity] = useState("")
 	let [newImage, setNewImage] = useState("")
+	let [newSport, setNewSport] = useState("")
+	let [newExp, setNewExp] = useState("")
+	let [newAge, setNewAge] = useState("")
 	
 	useEffect(() => {
 		getProfile(cookie)
-		console.log("user:", user)
 		setNewName(user?.username)
 		setNewCountry(user?.nation?.name)
 		setNewCity(user?.city?.name)
-		console.log(session)
-		console.log("theUser:", theUser)
-	}, [user.id, user.username] )
+		if(!user.sport){
+			console.log("no deporte")
+		}
+		}, [user?.username, user?.id ] )
 
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage)
@@ -65,16 +69,37 @@ const UserProfile = () => {
 	const getNewName = (event) => {
 		setNewName(event.target.value)
 	}
+	const getNewExp = (event) => {
+		console.log(event.target.value)
+		setNewExp(event.target.value)
+	}
+	const getNewAge = (event) => {
+		console.log(event.target.value)
+		setNewAge(event.target.value)
+	}
 	const updateUserName = () => {
-		console.log(newName)
-		const update = {id: user._id, username: newName}
+		const update = {id: user?._id, username: newName}
+		console.log(update)
 		updateUserRole(update)
 		setOpenName(false)
+		getProfile(cookie)
+		window.location.reload()
+	}
+	const updateUserAge = () => {
+		const update = {id: user?._id, age: newAge}
+		updateUserRole(update)
+		getProfile(cookie)
+		console.log(update)
+		// window.location.reload()
+	}
+	const updateUserExp = () => {
+		const update = {id: user?._id, expYearsSports: newExp}
+		updateUserRole(update)
 		getProfile(cookie)
 		// window.location.reload()
 	}
 	const updateUserCountry = () => {
-		const update = {id: user._id, nation: newCountry, city:newCity}
+		const update = {id: user?._id, nation: newCountry, city:newCity}
 		updateUserRole(update)
 		setOpenCountry(false)
 		setOpenCity(false)
@@ -82,9 +107,15 @@ const UserProfile = () => {
 		// window.location.reload()
 	}
 	const updateUserCity = () => {	
-		const update = {id: user._id, city: newCity}
+		const update = {id: user?._id, city: newCity}
 		updateUserRole(update)
 		setOpenCity(false)
+		getProfile(cookie)
+		// window.location.reload()
+	}
+	const updateUserSport = () => {	
+		const update = {id: user?._id, sport: newSport}
+		updateUserRole(update)
 		getProfile(cookie)
 		// window.location.reload()
 	}
@@ -100,12 +131,16 @@ const UserProfile = () => {
 	const selectCity = (val) => {
 		setNewCity(val);
 	}
+	const selectSport = (event) => {
+		setNewSport(event.target.value)
+	}
+
 	return (
 		<article>
-		  {user && user._id && Object.keys(user).length > 0 ? (
+		  {user && user?._id && Object.keys(user).length > 0 ? (
 			<Card className='main'>
 			  <UserProfileHeader user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName} session = {session}/>
-			  <UserProfileBody user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
+			  <UserProfileBody updateUserAge={updateUserAge} updateUserExp={updateUserExp} getNewAge={getNewAge} newAge={newAge} getNewExp={getNewExp} newExp={newExp} updateUserSport={updateUserSport} newSport={newSport} selectSport={selectSport} deportes={deportes} user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
 			</Card>
 		  ) : (
 			<div className='centered'>

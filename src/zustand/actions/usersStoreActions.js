@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toastSuccess, toastError } from '@/helpers/toast';
 
 export const getUsers = () => {
 	return fetch(`${process.env.API_BACKEND}users`)
@@ -173,5 +174,25 @@ export const restoreUser = email => {
 		})
 		.catch(error => {
 			console.error('Hubo un problema con la solicitud PUT:', error);
+		});
+};
+
+export const createQuiz = body => {
+	return fetch(`${process.env.API_BACKEND}quiz`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(body),
+	})
+		.then(response => response.json())
+		.then(data => {
+			toastSuccess(`se ha creado con exito el quiz: ${data.name}`)
+			setTimeout(() => {
+				window.location.reload()
+			}, "3000")
+		})
+		.catch(error => {
+			console.error('There was a problem with the fetch operation:', error);
 		});
 };
