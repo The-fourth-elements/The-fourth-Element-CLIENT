@@ -90,7 +90,12 @@ export const validationSchemaEditClass = Yup.object({
 	editedName: Yup.string().required('El nombre no puede estar vacío'),
 	editedDescription: Yup.string().required('La descripcion no puede estar vacía'),
 	editedPowerPoint: Yup.string().url("Debe ser una url valida").required("La url es requerida")
-})
+});
+
+export const validationSchemaLanding = Yup.object({
+	Titulo: Yup.string().required('El título no puede estar vacío'),
+	Contenido: Yup.string().required('El contenido no puede estar vacío')
+});
 
 
 export const initialValues = {
@@ -112,3 +117,8 @@ export const initialValuesRecovery = {
 	newPassword: '',
 	confirmPassword: '',
 };
+
+export const initialValuesLanding = {
+	Titulo: '',
+	Contenido: ''
+}

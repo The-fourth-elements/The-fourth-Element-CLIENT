@@ -2,7 +2,7 @@
 import React from 'react';
 import './styles.scss';
 import Image from 'next/image';
-import logo from '../../../public/logo.svg';
+import logo from '../../../src/assets/svg/logo.svg';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -29,8 +29,8 @@ export default function Nav() {
 	const { status, data: session } = useSession();
 	const router = useRouter();
 	const routes = [
-		{ label: 'Home', route: '/' },
-		{ label: 'About Us', route: '/about' },
+		{ label: 'Acerca', route: '/about' },
+		{ label: 'Precios', route: '/prices' },
 	];
 
 	const handleLogout = async () => {
@@ -44,78 +44,74 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar className='navcolor h-40 bg-primary p-3 w-full fix-Header'>
+		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header h-52'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
 
-			<NavbarContent className='sm:hidden pr-3' justify='center'>
+			<NavbarContent className='sm:hidden pr-3' justify=''>
 				<NavbarBrand>
 					<Link href='/' className='Navbar__logo'>
-						<Image src={logo} priority alt='The fourth element logo' />
+						<Image
+							className='h-auto'
+							src={logo}
+							priority
+							alt='The fourth element logo'
+						/>
 					</Link>
 				</NavbarBrand>
 			</NavbarContent>
 
-			<NavbarContent className='hidden sm:flex gap-4' justify='start'>
+			<NavbarContent className='hidden sm:flex gap-4 ' justify='start'>
 				<NavbarBrand>
 					<Link href='/' className='Navbar__logo'>
-						<Image src={logo} priority alt='The fourth element logo' />
+						<Image
+							className=' mt-5 ml-8 h-auto'
+							src={logo}
+							priority
+							alt='The fourth element logo'
+						/>
 					</Link>
 				</NavbarBrand>
 			</NavbarContent>
 
-			<NavbarContent className='hidden sm:flex gap-4 ' justify='center'>
-				{routes.map(({ label, route, index }) => (
-					<NavbarMenuItem key={`${route}-${index}`}>
-						<Link
-							className='w-full text-l text-foreground'
-							color={
-								index === 2
-									? 'warning'
-									: index === routes.length - 1
-									? 'danger'
-									: 'foreground'
-							}
-							href={route}>
-							{label}
-						</Link>
-					</NavbarMenuItem>
-				))}
-			</NavbarContent>
+			<NavbarContent
+				className='flex justify-evenly items-center gap-10 mb-7 sm:mb-9 md:mb-12'
+				justify='end'>
+				<NavbarContent className='hidden sm:flex gap-10 w-fit ' justify='end'>
+					{routes.map(({ label, route, index }) => (
+						<NavbarMenuItem key={`${route}-${index}`}>
+							<Link
+								className='text-l whitespace-no-wrap text-foreground text-sm'
+								href={route}>
+								<p>{label}</p>
+							</Link>
+						</NavbarMenuItem>
+					))}
+				</NavbarContent>
 
-			<NavbarMenu className='top-40'>
-				{routes.map(({ label, route, index }) => (
-					<NavbarMenuItem key={`${route}-${index}`}>
-						<Link
-							className='w-full text-l'
-							color={
-								index === 2
-									? 'warning'
-									: index === routes.length - 1
-									? 'danger'
-									: 'foreground'
-							}
-							href={route}>
-							{label}
-						</Link>
-					</NavbarMenuItem>
-				))}
-			</NavbarMenu>
+				<NavbarMenu className='top-40'>
+					{routes.map(({ label, route, index }) => (
+						<NavbarMenuItem key={`${route}-${index}`}>
+							<Link className='w-full text-l' href={route}>
+								{label}
+							</Link>
+						</NavbarMenuItem>
+					))}
+				</NavbarMenu>
 
-			{status === 'authenticated' ? (
-				<NavbarContent justify='end'>
+				{status === 'authenticated' ? (
 					<NavbarItem>
 						<Dropdown>
 							<DropdownTrigger>
-									<User
-									className="cursor-pointer"
-										avatarProps={
-											session?.token?.picture?.length > 5
-												? { src: session.token.picture }
-												: { src: session?.token?.user?.image_profile }
-										}
-									/>
+								<User
+									className='cursor-pointer w-fit h-fit'
+									avatarProps={
+										session?.token?.picture?.length > 5
+											? { src: session.token.picture }
+											: { src: session?.token?.user?.image_profile }
+									}
+								/>
 							</DropdownTrigger>
 							<DropdownMenu aria-label='Static Actions'>
 								<DropdownItem key='profile' textValue='profile'>
@@ -146,10 +142,8 @@ export default function Nav() {
 							</DropdownMenu>
 						</Dropdown>
 					</NavbarItem>
-				</NavbarContent>
-			) : (
-				<NavbarContent justify='end'>
-					<NavbarItem className='hidden lg:flex'>
+				) : (
+					<NavbarItem>
 						<Button
 							as={Link}
 							color='foreground'
@@ -159,18 +153,8 @@ export default function Nav() {
 							Login
 						</Button>
 					</NavbarItem>
-					<NavbarItem>
-						<Button
-							as={Link}
-							color='warning'
-							href='/auth'
-							variant='flat'
-							className='text-l'>
-							Sign Up
-						</Button>
-					</NavbarItem>
-				</NavbarContent>
-			)}
+				)}
+			</NavbarContent>
 		</Navbar>
 	);
 }
