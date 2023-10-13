@@ -24,6 +24,7 @@ export const middleware = async request => {
         }
         return NextResponse.redirect(url);
     }
+   
     const path = request.nextUrl.pathname;
     if (
         (session && path === '/dashboard') ||
@@ -49,9 +50,27 @@ export const middleware = async request => {
         url.search = `p=${requestedPage}`;
         return NextResponse.redirect(url);
     }
+
+    if (!session && request.nextUrl.pathname === '/paid-success') {
+        const requestedPage = request.nextUrl.pathname;
+        const url = request.nextUrl.clone();
+        url.pathname = '/auth';
+        url.search = `p=${requestedPage}`;
+        return NextResponse.redirect(url);
+    }
+
+    if (session && request.nextUrl.pathname === '/paid-success') {
+        const requestedPage = request.nextUrl.pathname;
+        const url = request.nextUrl.clone();
+        if(role < 1){
+            url.pathname = '/auth';
+            url.search = `p=${requestedPage}`;
+            return NextResponse.redirect(url);
+        }
+    }
     return NextResponse.next();
 };
 
 export const config = {
-    matcher: ['/course/:path*', '/auth', '/dashboard/:path*', '/profile/:path*'],
+    matcher: ['/course/:path*', '/auth', '/dashboard/:path*', '/profile/:path*', '/paid-success'],
 };
