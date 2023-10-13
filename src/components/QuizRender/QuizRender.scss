@@ -1,7 +1,8 @@
 @import "../../styles/base";
 
-.main {
+.mainQuiz {
     display: flex;
+    width: 290px;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -11,16 +12,100 @@
     margin-right: 15px;
     border-radius: 10px;
     padding: 12px;
+    word-wrap: break-word;
+
 
     @include md (){
-        margin-left: 35px;
-        margin-right: 35px;
+        width: 650px;
+        margin-left: 50px;
+        margin-right: 50px;
         padding: 30px;
     }
 
     @include lg () {
-        margin-left: 120px;
-        margin-right: 120px;
+        width: 900px;
+        
         padding: 50px;
     }
+}
+
+.mainQuiz h1 {
+    font-size: 25px;
+    white-space: normal;
+    margin-top: 7px;
+    margin-bottom: 13px;
+
+    @include lg {
+        font-size: 35px;
+    }
+
+}
+
+.mainQuiz h2 {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @include lg {
+        font-size: 18px;
+    }
+}
+
+.divPregunta {
+    display: flex;
+    flex-direction: column;
+    background-color: blue;
+    width: 250px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-top: 7px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+    border: 5px solid $red-2;
+    justify-content: center;
+
+    @include md {
+        width: 550px
+    }
+
+    @include lg {
+        width: 700px;
+    }
+}
+
+.divPregunta h3 {
+    font-size: 20px;
+    border-bottom: 5px solid $red-2;
+    padding-bottom: 7px;
+}
+
+.divOptions {
+    display: flex; 
+    align-items: center;    
+    gap: 10px; 
+    word-wrap: break-word;
+    width: 205px;
+    margin-left: 20px;
+    background-color: red;
+    border-radius: 5px;
+    margin-top:12px ;
+    padding: 5px;
+    padding-left: 15px;
+    cursor: pointer;
+
+    @include md {
+        width: 500px;
+    }
+
+    @include lg {
+        width: 650px
+    }
+}
+
+.quizButton {
+    background-color: blue;
+    border-radius: 8px;
+    width: 200px;
+    margin: 10px;
+    padding: 5px;
+    font-size: 25px;
 }

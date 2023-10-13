@@ -27,14 +27,14 @@ import { fetchData, renderVideo, renderDescription } from './fetchDataModules';
 
 export default function ModuleView() {
 	const { data: session } = useSession();
+	
 	const id = session?.token?.user?.id;
 	const role = session?.token?.user?.role;
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { user, getProfile } = useUserProfile();
-
-	const { modules, getModules } = useModulesStore();
+	const { modules, getModules, getQuiz, quiz } = useModulesStore();
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);
@@ -44,9 +44,11 @@ export default function ModuleView() {
 	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
+		getQuiz(modules[0].classModule[0].quiz[0])
 	}, []);
 
 	useEffect(() => {
+		console.log(quiz)
 		if (session) {
 			if (session?.token?.user) {
 				const { role } = session.token.user;
