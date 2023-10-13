@@ -29,7 +29,14 @@
 			margin-bottom: 3vh;
 			&-column {
 				padding: 1vw 0 2vw 0;
+				position: relative;
+				min-width: 30vw;
 				width: 30vw;
+				min-height: 30vh;
+				max-height: 60vh;
+				height: auto;
+				overflow-y: scroll;
+
 				background-color: rgba($orange-2, 0.8);
 				display: flex;
 				flex-direction: column;
@@ -54,27 +61,25 @@
 }
 
 @include sm {
-    @include lg-styles;
+	@include lg-styles;
 	.Container {
-		
-        &-row {
+		&-row {
 			display: flex;
-            flex-direction: column;
-            width: 100%;
+			flex-direction: column;
+			width: 100%;
+			align-items: center;
+			&-column {
+				position: relative;
 
-            &-column {
-                width: fit-content;
-                margin: 3vw;
-                > h3 {
-                    margin: 2vh 0 2vh 0;
-
-                }
-            }
-
-        }
+				width: 98%;
+				margin: 0 1%;
+				> h3 {
+					margin: 2vh 0 2vh 0;
+				}
+			}
+		}
 	}
 }
-
 
 @include lg {
 	@include lg-styles;
@@ -82,8 +87,8 @@
 
 @include md {
 	@include lg-styles;
-	.Container{
-		&-row{
+	.Container {
+		&-row {
 			margin: 0 auto;
 			flex-wrap: wrap;
 			justify-content: space-around;

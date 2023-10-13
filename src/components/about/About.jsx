@@ -1,120 +1,82 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './AboutStyles.scss';
-import '@/components/about-content/AboutContent';
+import EditableContent from './EditableContent';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import addIcon from '@/assets/svg/add-icon.svg';
+import { useDisclosure } from '@nextui-org/react';
+import AboutContent from '../about-content/AboutContent';
+import useFetch from '@/hooks/useFetch';
+import { useContent } from '@/zustand/store/updateContent';
 
 export default function About() {
-	let values = [
-		{
-			id: 1,
-			content: 'Este es el contenido del primer objeto.',
-			title: 'Título del primer objeto',
-		},
-		{
-			id: 2,
-			content: 'Este es el contenido del segundo objeto.',
-			title: 'Título del segundo objeto',
-		},
-		{
-			id: 3,
-			content: 'Este es el contenido del tercer objeto.',
-			title: 'Título del tercer objeto',
-		},
-		{
-			id: 4,
-			content: 'Este es el contenido del cuarto objeto.',
-			title: 'Título del cuarto objeto',
-		},
-		{
-			id: 5,
-			content: 'Este es el contenido del quinto objeto.',
-			title: 'Título del quinto objeto',
-		},
-	];
-	if (values.length < 1) {
-	}
+	const { isOpen, onOpen, onOpenChange } = useDisclosure()
+	const { data: session } = useSession();
+	const { abouts, getAllAbouts } = useContent()
+
+	const handleCreateContent = () => {
+	  onOpen();
+	};
+  
+	const { data, error, isLoading } = useFetch(`${process.env.API_BACKEND}about`);
+  
+	useEffect(() => {
+		getAllAbouts()
+	}, []);
+  
 	return (
 		<div className='Container'>
-			<h1>About us</h1>
-			<div className='Container-row'>
-				{values.map(({ id, content, title }) => {
-					return (
-						<React.Fragment key={id}>
-							<div className='Container-row-column'>
-								<h3>{title}</h3>
-								<p>{content}</p>
-							</div>
-						</React.Fragment>
-					);
-				})}
-			</div>
+			{!isLoading ? (
+        <>
+          <h1>About us</h1>
+          <div className='Container-row'>
+            {abouts?.map(({ _id, content, title }) => (
+              <React.Fragment key={_id}>
+                <EditableContent content={content} title={title} id={_id} update={getAllAbouts}/>
+              </React.Fragment>
+            ))}
+            {abouts?.length < 10 && session?.token?.user?.role >= 2 && (
+              <>
+                <div className='Container-row-column' onClick={handleCreateContent}>
+                  <h3>Agregar más contenido</h3>
+                  <Image src={addIcon} alt='addIcon' width={50} height={50} />
+                </div>
+                <AboutContent isOpen={isOpen} onOpenChange={onOpenChange} />
+              </>
+            )}
+          </div>
 
-			<div className='Container-row'>
-				<div className='Container-row-column'>
-					<h3>Historia:</h3>
-					<p>
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.
-					</p>
-				</div>
+          <h1>Testimonios</h1>
+          <div className='Container-row'>
+            <div className='Container-row-column'>
+              <h3>Testimonio 1:</h3>
+              <p>
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              </p>
+            </div>
 
-				<div className='Container-row-column'>
-					<h3>Método:</h3>
-					<p>
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.
-					</p>
-				</div>
+            <div className='Container-row-column'>
+              <h3>Testimonio 2:</h3>
+              <p>
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              </p>
+            </div>
 
-				<div className='Container-row-column'>
-					<h3>Metas:</h3>
-					<p>
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.
-					</p>
-				</div>
-			</div>
-
-			<h1>Testimonios</h1>
-			<div className='Container-row'>
-				<div className='Container-row-column'>
-					<h3>Testimonio 1:</h3>
-					<p>
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.
-					</p>
-				</div>
-
-				<div className='Container-row-column'>
-					<h3>Testimonio 2:</h3>
-					<p>
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.
-					</p>
-				</div>
-
-				<div className='Container-row-column'>
-					<h3>Testimonio 3:</h3>
-					<p>
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.
-					</p>
-				</div>
-			</div>
-
-			{/* <Image src={aboutImg2} alt='imagen about'></Image> */}
-		</div>
-	);
+            <div className='Container-row-column'>
+              <h3>Testimonio 3:</h3>
+              <p>
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              </p>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <h1>Cargando datos</h1>
+        </>
+      )}
+    </div>
+  );
 }
+
