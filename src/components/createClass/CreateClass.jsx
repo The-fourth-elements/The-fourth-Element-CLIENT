@@ -8,7 +8,7 @@ import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
-
+import {Select, SelectItem} from "@nextui-org/react";
 import { useState, useEffect } from 'react';
 
 import React from 'react';
@@ -18,9 +18,10 @@ import { validationSchemaCreateClass } from '@/helpers/validations';
 import { toastError, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
+import { all } from 'axios';
 
 function CreateClass() {
-	const { modules, getModules } = useModulesStore();
+	const { modules, getModules, allQuizes, getQuizes, quiz, getQuiz, addQuizToClass } = useModulesStore();
 
 	const [isloading, setIsLoading] = useState(true);
 	const route = useRouter();
@@ -33,6 +34,8 @@ function CreateClass() {
 	};
 
 	useEffect(() => {
+		getQuizes()
+		console.log(allQuizes)
 		const fetchModulesAndRedirect = async () => {
 			await getModules();
 			if (!(modules.length === 0)) setIsLoading(!isloading);
@@ -98,6 +101,13 @@ function CreateClass() {
 					state: 'completed',
 				}),
 			};
+
+			quiz.classId = classPostResponse._id
+			if(quiz.classId){
+				addQuizToClass(quiz)
+				console.log(quiz)
+			}
+
 			await fetch(url, options);
 
 			toastSuccess('¡Se subió la clase!!');
@@ -112,6 +122,12 @@ function CreateClass() {
 		console.log(e);
 		setVideo({ url, id:public_id });
 	};
+
+	const handleSelect = (event) => {
+		getQuiz(event.target.value)
+		console.log(quiz)
+	}
+
 
 	return (
 		<Card className='relative min-h-screen modern text-4xl '>
@@ -166,7 +182,16 @@ function CreateClass() {
 							label='Descripción'
 							name='description'
 						/>
-
+						<Select label="Quiz de la Clase"
+						placeholder="Seleccione un quiz"
+						className="max-w-xs"
+						onChange={handleSelect}>
+						{allQuizes.length > 0 && allQuizes.map((quiz) => (
+							<SelectItem key={quiz._id} value={quiz._id}>{quiz.name}</SelectItem>
+						)
+						)}
+						</Select>
+						
 						<h2 className='text-white'>Selecciona un video:</h2>
 						<CldUploadButton
 							className='cldButton'
@@ -179,6 +204,8 @@ function CreateClass() {
 								Video subido correctamente
 							</h5>
 						) : null}
+						
+						
 						<Button
 							type='submit'
 							size='lg'
