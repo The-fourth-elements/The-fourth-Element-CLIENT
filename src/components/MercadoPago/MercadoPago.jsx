@@ -2,14 +2,17 @@
 
 import { postData } from '@/hooks/postData';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
-import { Button } from '@nextui-org/react';
+import { Button, Link } from '@nextui-org/react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-
-function MercadoPago( { className } ) {
-    initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY);
+function MercadoPago({ className }) {
+	initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY);
 
 	const [preferenceId, setPreferenceId] = useState(null);
+	const session = useSession();
+	const router = useRouter();
 
 	const createPreference = async () => {
 		try {
@@ -19,7 +22,6 @@ function MercadoPago( { className } ) {
 
 			// Una vez que obtienes el ID de preferencia, establece el estado
 			setPreferenceId(id);
-
 		} catch (error) {
 			console.log(error);
 		}
@@ -27,19 +29,35 @@ function MercadoPago( { className } ) {
 
 	// Utiliza useEffect para observar cambios en preferenceId
 	useEffect(() => {
-		if (preferenceId) {
-		}
-	}, [preferenceId]);
+		createPreference();
+	}, []);
 
-	const handleBuy = async () => {
-		await createPreference();
+	
 
-	};
-	console.log("classname " ,  className);
 	return (
 		<div>
-			<button onClick={handleBuy} className={className}>Comprar</button>
-			{preferenceId && <Wallet initialization={{ preferenceId : preferenceId, redirectMode: 'modal'}} />}
+			{!session?.data?.token?.user?.id ? (
+				<button className='w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800'>
+					<Link href='/auth' className='text-white font-semibold'>
+							Crea una cuenta para comprar el curso
+					</Link>
+				</button>
+			) : (
+				preferenceId && (
+					<Wallet
+						customization={{
+							visual: {
+								buttonBackground: 'black',
+								borderRadius: '6px',
+							},
+						}}
+						initialization={{
+							preferenceId: preferenceId,
+							redirectMode: 'modal',
+						}}
+					/>
+				)
+			)}
 		</div>
 	);
 }

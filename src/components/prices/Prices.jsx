@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import Image from 'next/image';
@@ -7,7 +7,6 @@ import Submarca10 from '@/assets/img/TFE-Submarca10.png';
 import GreenCheckmark from '@/assets/img/greenCheckmark.png';
 
 import MercadoPago from '@/components/MercadoPago/MercadoPago';
-import { Button } from '@nextui-org/react';
 
 const PrecioCard = () => {
 	return (
@@ -82,17 +81,19 @@ const PrecioCard = () => {
 									title='Submit'
 									className='block w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800'>
 									<span className='text-white font-semibold'>
-										Envíanos un email
+										<a href='mailto:thefourthelement@gmail.com'>
+											Envíanos un email
+										</a>
 									</span>
 								</button>
 							</div>
 						</div>
 
-						<div className='relative group md:w-6/12 lg:w-7/12'>
+						<div className='flex flex-col relative group md:w-6/12 lg:w-7/12'>
 							<div
 								aria-hidden='true'
 								className='absolute top-0 w-full h-full rounded-2xl bg-white shadow-lg transition duration-500 group-hover:scale-105'></div>
-							<div className='relative p-6 pt-16 md:p-8 md:pl-12 md:rounded-r-2xl lg:pl-20 lg:p-16'>
+							<div className=' space-y-4 relative p-6 pt-16 md:p-8 md:pl-12 md:rounded-r-2xl lg:pl-20 lg:p-16'>
 								<ul
 									role='list'
 									className='w-max space-y-4 py-6 m-auto text-gray-600'>
@@ -121,7 +122,6 @@ const PrecioCard = () => {
 										<span>First premium advantage</span>
 									</li>
 								</ul>
-								<p className='text-gray-700'></p>
 								<MercadoPago className='block w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800'></MercadoPago>
 								<div className='mt-6 flex justify-between gap-6'></div>
 							</div>

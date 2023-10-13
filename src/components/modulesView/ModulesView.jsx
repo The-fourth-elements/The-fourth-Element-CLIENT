@@ -116,6 +116,7 @@ export default function ModuleView() {
 								}
 							);
 						})
+						console.log("moduleProgress ", moduleProgress);
 						if (!moduleProgress) {
 							// Este módulo aún no se ha iniciado.
 							return (
@@ -147,7 +148,7 @@ export default function ModuleView() {
 										<span className='cursor-pointer'>Entrar</span>
 									</div>
 									<span>
-										Clase bloqueada hasta {unlockDate.toLocaleString()}.
+										Clase bloqueada hasta {unlockDate.toLocaleString().slice(0, -3)}
 									</span>
 								</AccordionItem>
 							);

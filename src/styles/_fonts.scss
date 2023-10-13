@@ -47,6 +47,13 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'Lekton';
+	src: url('./Fonts/Lekton-Regular.ttf') format('truetype');
+	font-weight: 1000;
+	font-style: normal;
+}
+
 $font-primary: 'Suez One', sans-serif;
 $font-secondary: 'Roboto', Arial, sans-serif;
 $font-size-h1: 40px;
