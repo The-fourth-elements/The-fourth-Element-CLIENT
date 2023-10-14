@@ -1,49 +1,9 @@
 "use client"
-import "./QuizRender.scss"
+
 import { toastSuccess, toastError } from "@/helpers/toast"
 import { useState } from "react";
-
-const QuizRender = () => {
-    const quiz = {
-      description: "esta es la descipcion tal vez asi de larga esta bien",
-      name: "el titulo del quiz",
-      quest: [
-        {
-          answers: [
-            {
-              response: "option 1",
-              verdadera: false,
-            },
-            {
-              response: "option 2",
-              verdadera: true,
-            },
-            {
-              response: "option 3",
-              verdadera: false,
-            },
-          ],
-          question: "pregunta 1",
-        },
-        {
-          answers: [
-            {
-              response: "option 4",
-              verdadera: false,
-            },
-            {
-              response: "option 5",
-              verdadera: true,
-            },
-            {
-              response: "option 6",
-              verdadera: false,
-            },
-          ],
-          question: "pregunta 2",
-        },
-      ],
-    };
+import "./QuizRender.scss"
+const QuizRender = ({quiz}) => {
   
     const [selectedAnswers, setSelectedAnswers] = useState(new Array(quiz.quest.length).fill(null));
     const [correctQuestions, setCorrectQuestions] = useState(0);
@@ -77,26 +37,26 @@ const QuizRender = () => {
       };
   
     return (
-        <div className="main">
+        <div className="mainQuiz">
           <h1>{quiz.name}</h1>
           <h2>{quiz.description}</h2>
           {quiz.quest.map((pregunta, questionIndex) => (
-            <div key={questionIndex}>
+            <div className= "divPregunta" key={questionIndex}>
               <h3>{pregunta.question}</h3>
               {pregunta.answers.map((answer, answerIndex) => (
-                <div key={answerIndex}>
-                  <input
-                    type="radio"
-                    value={answerIndex}
-                    checked={selectedAnswers[questionIndex] === answerIndex}
-                    onChange={() => handleAnswerChange(questionIndex, answerIndex)}
-                  />
-                  <p>{answer.response}</p>
-                </div>
-              ))}
+              <label className="divOptions" key={answerIndex}>
+                <input
+                  type="radio"
+                  value={answerIndex}
+                  checked={selectedAnswers[questionIndex] === answerIndex}
+                  onChange={() => handleAnswerChange(questionIndex, answerIndex)}
+                />
+                <p>{answer.response}</p>
+              </label>
+            ))}
             </div>
           ))}
-          <button onClick={handleSendQuiz}>Enviar</button>
+          <button className="quizButton" onClick={handleSendQuiz}>Enviar</button>
         </div>
       );
   };
