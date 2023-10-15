@@ -45,7 +45,6 @@ const ModalEditClass = ({
 			id: public_id,
 			url,
 		};
-		console.log(infoVideo);
 		setNewVideo(infoVideo);
 	};
 

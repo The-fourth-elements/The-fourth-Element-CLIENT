@@ -44,11 +44,11 @@ export default function ModuleView() {
 	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
-		getQuiz(modules[0].classModule[0].quiz[0])
+		getQuiz(modules[0]?.classModule[0].quiz[0])
 	}, []);
 
 	useEffect(() => {
-		console.log(quiz)
+		// console.log(quiz)
 		if (session) {
 			if (session?.token?.user) {
 				const { role } = session.token.user;
@@ -105,18 +105,18 @@ export default function ModuleView() {
 					);
 				} else {
 					if (user) {
-						const moduleProgress = user?.progress?.modules?.find(
+						const moduleProgress = user?.progress?.modules?.map(
 							module => {
-								return module[moduleIndex]?.moduleId === modules[moduleIndex]._id}
+								return module?.classes;
+							}
 						);
-						const classInfo = moduleProgress?.map((module)=>{
-							return module?.classes?.find(
+						const classInfo = moduleProgress?.map((module,index)=>{
+							return module?.find(
 								classItem => {
 									return classItem.name === elem.name
 								}
 							);
 						})
-						console.log("moduleProgress ", moduleProgress);
 						if (!moduleProgress) {
 							// Este módulo aún no se ha iniciado.
 							return (
@@ -137,7 +137,6 @@ export default function ModuleView() {
 
 						if (unlockDate > currentDate) {
 							// Clase bloqueada hasta una fecha futura.
-							console.log(unlockDate, '<== unlock', '===> ahorra', currentDate);
 							return (
 								<AccordionItem
 									key={classIndex}
