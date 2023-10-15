@@ -1,5 +1,6 @@
 'use client';
 
+import { toastError } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { Button, Link } from '@nextui-org/react';
@@ -23,7 +24,8 @@ function MercadoPago({ className }) {
 			// Una vez que obtienes el ID de preferencia, establece el estado
 			setPreferenceId(id);
 		} catch (error) {
-			console.log(error);
+			if(typeof error === 'string') toastError(error)
+			toastError(error.message)
 		}
 	};
 

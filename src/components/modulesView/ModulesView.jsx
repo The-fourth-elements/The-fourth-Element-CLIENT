@@ -6,6 +6,11 @@ import {
 	AccordionItem,
 	accordion,
 	useDisclosure,
+	Modal,
+	ModalContent,
+	ModalBody,
+	ModalFooter,
+	Button,
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { setCookie } from 'cookies-next';
@@ -18,23 +23,27 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
-import { EditIcon } from '@/assets/svg-jsx/EditIcon';
-import { toastError, toastSuccess } from '@/helpers/toast';
-import ModalEditClass from '@/helpers/ModalEditClass';
+import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useUserProfile } from '@/zustand/store/userProfile';
 import { fetchData, renderVideo, renderDescription } from './fetchDataModules';
+import {
+	renderClassDefault,
+	renderClassLock,
+	renderClassNotProgress,
+	renderClassSpecialRole,
+} from './renderClasses';
 
 export default function ModuleView() {
 	const { data: session } = useSession();
-	
+
 	const id = session?.token?.user?.id;
 	const role = session?.token?.user?.role;
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { user, getProfile } = useUserProfile();
-	const { modules, getModules, getQuiz, quiz } = useModulesStore();
+	const { modules, getModules } = useModulesStore();
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);
@@ -44,11 +53,9 @@ export default function ModuleView() {
 	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
-		getQuiz(modules[0]?.classModule[0].quiz[0])
 	}, []);
 
 	useEffect(() => {
-		// console.log(quiz)
 		if (session) {
 			if (session?.token?.user) {
 				const { role } = session.token.user;
@@ -74,98 +81,51 @@ export default function ModuleView() {
 	const renderModuleClasses = (moduleData, moduleIndex) => {
 		if (moduleData) {
 			return moduleData[modules[moduleIndex].name]?.map((elem, classIndex) => {
-
 				if (access) {
 					//no bloquear clases para el usuario.
-					return (
-						<AccordionItem
-							key={classIndex}
-							textValue={elem?.name}
-							title={elem?.name}>
-							<div className='flex justify-between'>
-								<span
-									className='cursor-pointer'
-									onClick={() => handleClassClick(elem.name)}>
-									Entrar
-								</span>
-
-								<EditIcon
-									className='cursor-pointer rounded-full transition-background hover:opacity-70'
-									width='30'
-									height='30'
-									onClick={onOpen}
-								/>
-								<ModalEditClass
-									classValues={elem}
-									isOpen={isOpen}
-									handleDataUpdate={handleDataUpdate}
-									onOpenChange={onOpenChange}></ModalEditClass>
-							</div>
-						</AccordionItem>
+					return renderClassSpecialRole(
+						classIndex,
+						elem,
+						handleClassClick,
+						onOpen,
+						isOpen,
+						handleDataUpdate,
+						onOpenChange
 					);
 				} else {
 					if (user) {
-						const moduleProgress = user?.progress?.modules?.map(
-							module => {
-								return module?.classes;
-							}
-						);
-						const classInfo = moduleProgress?.map((module,index)=>{
-							return module?.find(
-								classItem => {
-									return classItem.name === elem.name
-								}
-							);
-						})
+						const modulesUser = user?.progress?.modules;
+						const moduleProgress = modulesUser?.map(module => {
+							return module?.classes;
+						});
+						const classInfo = moduleProgress?.map(module => {
+							return module?.find(classItem => {
+								return classItem.name === elem.name;
+							});
+						});
+						const classe = classInfo?.filter(clase => clase !== undefined);
 						if (!moduleProgress) {
-							// Este módulo aún no se ha iniciado.
-							return (
-								<AccordionItem
-									key={classIndex}
-									textValue={elem?.name}
-									title={elem?.name}
-									disabled={true}>
-									<div className='flex justify-between'>
-										<span className='cursor-pointer'>Entrar</span>
-									</div>
-									<span>Este módulo aún no se ha iniciado.</span>
-								</AccordionItem>
-							);
+							// Este modulo aun no se ha iniciado.
+							return renderClassNotProgress(classIndex, elem);
 						}
-						const unlockDate = new Date(classInfo[0]?.unlockDate);
+						const unlockDate = new Date(classe[0]?.unlockDate);
 						const currentDate = new Date();
 
 						if (unlockDate > currentDate) {
 							// Clase bloqueada hasta una fecha futura.
-							return (
-								<AccordionItem
-									key={classIndex}
-									textValue={elem?.name}
-									title={elem?.name}
-									disabled={true}>
-									<div className='flex justify-between'>
-										<span className='cursor-pointer'>Entrar</span>
-									</div>
-									<span>
-										Clase bloqueada hasta {unlockDate.toLocaleString().slice(0, -3)}
-									</span>
-								</AccordionItem>
-							);
+
+							return renderClassLock(classIndex, elem, unlockDate);
 						}
 						// Si ninguna de las condiciones anteriores se cumple, la clase está disponible.
-						return (
-							<AccordionItem
-								key={classIndex}
-								textValue={elem?.name}
-								title={elem?.name}>
-								<div className='flex justify-between'>
-									<span
-										className='cursor-pointer'
-										onClick={() => handleClassClick(elem.name)}>
-										Entrar
-									</span>
-								</div>
-							</AccordionItem>
+
+						return renderClassDefault(
+							isOpen,
+							onOpen,
+							onOpenChange,
+							classIndex,
+							elem,
+							handleClassClick,
+							currentClass
 						);
 					}
 				}
@@ -175,12 +135,32 @@ export default function ModuleView() {
 
 	const verifyProgressUser = async () => {
 		try {
+			const modulesProgress = user?.progress?.modules;
+			const countModulesUser = modulesProgress.length;
+			const countClassesUser = modulesProgress.reduce((totalClass, module) => {
+				return totalClass + module?.classes?.length;
+			}, 0);
+			const totalModules = modules.length;
+
+			const totalClasses = modules?.reduce((totalClass, module) => {
+				return totalClass + module?.classModule?.length;
+			}, 0);
+
 			if (user?.role < 2) {
 				if (!user?.progress) {
 					const progress = await postData(
 						`${process.env.API_BACKEND}startCourse/${id}`
 					);
 					toastSuccess(progress?.message);
+					getProfile(id);
+				} else if (
+					totalModules !== countModulesUser ||
+					totalClasses !== countClassesUser
+				) {
+					const progress = await postData(
+						`${process.env.API_BACKEND}startCourse/${id}`
+					);
+					toastInfo(progress?.message);
 					getProfile(id);
 				}
 			}
@@ -199,7 +179,7 @@ export default function ModuleView() {
 			return classEqual;
 		});
 		if (module) {
-			setCurrentModule(module.name);
+			setCurrentModule(module);
 		} else {
 			toastError('Algo ocurrio, porfavor contactese con un administrador');
 		}
@@ -212,7 +192,9 @@ export default function ModuleView() {
 					className={
 						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
 					}>
-					<div className='bg-black h-unit-8xl m-3 flex justify-center'>
+					<div
+						className='bg-black h-unit-8xl m-3 flex justify-center'
+						id='reproductor'>
 						{renderVideo(modules, currentClass, moduleData)}
 					</div>
 					<Card className='flex p-3 bg-transparent shadow-none'>
@@ -221,8 +203,7 @@ export default function ModuleView() {
 								h2Title +
 								' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
 							}>
-							{currentModule ? `Módulo: ${currentModule}` : ''}{' '}
-							{/* Renderizar el módulo seleccionado */}
+							{currentModule?.name ? `Módulo: ${currentModule?.name}` : ''}
 						</h2>
 						<Accordion>
 							<AccordionItem

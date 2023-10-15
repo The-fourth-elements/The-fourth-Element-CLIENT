@@ -35,7 +35,6 @@ function CreateClass() {
 
 	useEffect(() => {
 		getQuizes()
-		console.log(allQuizes)
 		const fetchModulesAndRedirect = async () => {
 			await getModules();
 			if (!(modules.length === 0)) setIsLoading(!isloading);
@@ -105,7 +104,6 @@ function CreateClass() {
 			quiz.classId = classPostResponse._id
 			if(quiz.classId){
 				addQuizToClass(quiz)
-				console.log(quiz)
 			}
 
 			await fetch(url, options);
@@ -119,13 +117,11 @@ function CreateClass() {
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
-		console.log(e);
 		setVideo({ url, id:public_id });
 	};
 
 	const handleSelect = (event) => {
 		getQuiz(event.target.value)
-		console.log(quiz)
 	}
 
 

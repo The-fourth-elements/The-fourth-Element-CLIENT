@@ -19,13 +19,11 @@ export const handleSubmitRegister = async (
     };
 
     const response = await postData(`${process.env.API_BACKEND}auth`, form);
-    console.log(response);
     if (response?.error) {
       throw response?.error
     }
     return response;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };

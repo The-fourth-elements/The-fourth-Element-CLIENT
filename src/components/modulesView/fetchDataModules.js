@@ -1,4 +1,3 @@
-import { CldVideoPlayer } from 'next-cloudinary'
 import 'next-cloudinary/dist/cld-video-player.css';
 
 export const fetchData = async (modules) => {
@@ -72,6 +71,7 @@ export const renderDescription = (currentClass, modules, moduleData) => {
                             Archivo
                         </a>
                     </h3>
+
                 </>
             );
         }
