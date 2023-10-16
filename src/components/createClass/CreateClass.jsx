@@ -1,7 +1,7 @@
 'use client';
 
 import { CldUploadButton } from 'next-cloudinary';
-import { Button, Card, CardBody } from '@nextui-org/react';
+import { Button, Card, CardBody, useDisclosure } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/navigation';
 import InputField from '@/helpers/InputField';
@@ -10,7 +10,6 @@ import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
 import { Select, SelectItem } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
-
 import React from 'react';
 import './CreateClassStyles.scss';
 
@@ -18,6 +17,7 @@ import { validationSchemaCreateClass } from '@/helpers/validations';
 import { toastError, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
+import ModalEditQuiz from '@/helpers/ModalEditQuiz';
 import { all } from 'axios';
 
 function CreateClass() {
@@ -30,6 +30,9 @@ function CreateClass() {
 		getQuiz,
 		addQuizToClass,
 	} = useModulesStore();
+
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
 
 	const [isloading, setIsLoading] = useState(true);
 	const route = useRouter();
@@ -207,12 +210,13 @@ function CreateClass() {
 									))}
 							</Select>
 
-							<Button
-								onPress={handleRouteToCreateQuiz}
-								size='lg'
-								className='bg-background rounded-lg submit max-w-xs hover:bg-primary mt-5 md:mt-0'>
-									Crear nuevo Quiz
-							</Button>
+
+							<Button variant='light' onPress={onOpen}>
+									Crear Quiz
+								</Button>
+
+								<ModalEditQuiz update={false} isOpenModal={isOpen} onOpenChangeModal={onOpenChange}></ModalEditQuiz>
+							
 						</div>
 
 						<h2 className='text-white'>Selecciona un video:</h2>
