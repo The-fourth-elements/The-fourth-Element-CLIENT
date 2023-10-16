@@ -6,11 +6,6 @@ import {
 	AccordionItem,
 	accordion,
 	useDisclosure,
-	Modal,
-	ModalContent,
-	ModalBody,
-	ModalFooter,
-	Button,
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { setCookie } from 'cookies-next';
@@ -134,41 +129,41 @@ export default function ModuleView() {
 	};
 
 	const verifyProgressUser = async () => {
-        try {
-            const modulesProgress = user?.progress?.modules;
-            console.log(modulesProgress);
-            const countModulesUser = modulesProgress?.length;
-            const countClassesUser = modulesProgress?.reduce((totalClass, module) => {
-                return totalClass + module?.classes?.length;
-            }, 0);
-            const totalModules = modules?.length;
-            const totalClasses = modules?.reduce((totalClass, module) => {
-                return totalClass + module?.classModule?.length;
-            }, 0);
-            if (user?.role < 2) {
-                if (!user?.progress) {
-                    console.log(user);
-                    const progress = await postData(
-                        `${process.env.API_BACKEND}startCourse/${id}`
-                    );
-                    toastSuccess(progress?.message);
-                    getProfile(id);
-                } else if (
-                    totalModules !== countModulesUser ||
-                    totalClasses !== countClassesUser
-                ) {
-                    const progress = await postData(
-                        `${process.env.API_BACKEND}startCourse/${id}`
-                    );
-                    toastInfo(progress?.message);
-                    getProfile(id);
-                }
-            }
-        } catch (error) {
-            toastError(error);
-        }
-    };
- 
+		try {
+			const modulesProgress = user?.progress?.modules;
+			console.log(modulesProgress);
+			const countModulesUser = modulesProgress?.length;
+			const countClassesUser = modulesProgress?.reduce((totalClass, module) => {
+				return totalClass + module?.classes?.length;
+			}, 0);
+			const totalModules = modules?.length;
+			const totalClasses = modules?.reduce((totalClass, module) => {
+				return totalClass + module?.classModule?.length;
+			}, 0);
+			if (user?.role < 2) {
+				if (!user?.progress) {
+					console.log(user);
+					const progress = await postData(
+						`${process.env.API_BACKEND}startCourse/${id}`
+					);
+					toastSuccess(progress?.message);
+					getProfile(id);
+				} else if (
+					totalModules !== countModulesUser ||
+					totalClasses !== countClassesUser
+				) {
+					const progress = await postData(
+						`${process.env.API_BACKEND}startCourse/${id}`
+					);
+					toastInfo(progress?.message);
+					getProfile(id);
+				}
+			}
+		} catch (error) {
+			toastError(error);
+		}
+	};
+
 	const handleClassClick = className => {
 		setCurrentClass(className);
 		setCurrentModule(className);
