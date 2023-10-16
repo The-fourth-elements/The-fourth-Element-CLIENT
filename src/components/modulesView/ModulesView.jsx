@@ -38,7 +38,7 @@ export default function ModuleView() {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { user, getProfile } = useUserProfile();
-	const { modules, getModules } = useModulesStore();
+	const { modules, getModules, getQuiz } = useModulesStore();
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);
@@ -48,6 +48,8 @@ export default function ModuleView() {
 	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
+		console.log("modules", modules);
+		getQuiz(modules[0]?.classModule[0]?.quiz[0])
 	}, []);
 
 	useEffect(() => {

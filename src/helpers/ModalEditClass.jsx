@@ -7,6 +7,7 @@ import {
 	ModalBody,
 	ModalFooter,
 	Button,
+	useDisclosure,
 } from '@nextui-org/react';
 // import '@/components/createClass/CreateClassStyles.scss'
 import '../components/createClass/CreateClassStyles.scss';
@@ -17,15 +18,20 @@ import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import { CldUploadButton } from 'next-cloudinary';
 import { toastInfo } from './toast';
+import ModalEditQuiz from './ModalEditQuiz'
+
+
+
 
 const ModalEditClass = ({
-	isOpen,
-	onOpenChange,
+	isOpenModal,
+	onOpenChangeModal,
 	classValues,
 	handleDataUpdate,
 }) => {
 	const [initialValuesEditClass, setInitialValuesEditClass] = useState({});
 	const [newVideo, setNewVideo] = useState({});
+	const { isOpen, onOpenChange, onOpen } = useDisclosure()
 	useEffect(() => {
 		const { name, description, powerPoint } = classValues;
 
@@ -51,8 +57,8 @@ const ModalEditClass = ({
 	return (
 		<>
 			<Modal
-				isOpen={isOpen}
-				onOpenChange={onOpenChange}
+				isOpen={isOpenModal}
+				onOpenChange={onOpenChangeModal}
 				backdrop='blur'
 				size='5xl'>
 				<ModalContent>
@@ -112,6 +118,12 @@ const ModalEditClass = ({
 								<Button color='danger' variant='light' onPress={onClose}>
 									Cancelar
 								</Button>
+								
+								<Button variant='light' onPress={onOpen}>
+									Editar Quiz
+								</Button>
+
+								<ModalEditQuiz idQuiz={classValues?.quiz[0]?._id}  isOpenModal={isOpen} onOpenChangeModal={onOpenChange}></ModalEditQuiz>
 							</ModalFooter>
 						</>
 					)}
