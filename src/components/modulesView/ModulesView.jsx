@@ -133,7 +133,6 @@ export default function ModuleView() {
 	const verifyProgressUser = async () => {
 		try {
 			const modulesProgress = user?.progress?.modules;
-			console.log(modulesProgress);
 			const countModulesUser = modulesProgress?.length;
 			const countClassesUser = modulesProgress?.reduce((totalClass, module) => {
 				return totalClass + module?.classes?.length;

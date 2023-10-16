@@ -8,7 +8,7 @@ export const useUserProfile = create((set, get) => ({
         .then((data) => {
             set((state) => ({
                 ...state,
-                user: data
+                user: { ...data }
             }))
         }
         ),

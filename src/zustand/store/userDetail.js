@@ -13,8 +13,9 @@ export const useUserDetail = create((set, get) => ({
             }))
         }
         ),
-    updateUserRole: (elbody) => {
-        upadateUserRole (elbody)
+    updateUserRole: async (elbody) => {
+        const l = await upadateUserRole(elbody)
+        return l
     }
 
 })
