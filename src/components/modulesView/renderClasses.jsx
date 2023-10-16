@@ -19,7 +19,6 @@ export const renderClassDefault = (
 	handleClassClick,
 	currentClass
 ) => {
-	console.log (elem)
 	return (
 		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
 			<div className='flex justify-between'>
@@ -97,9 +96,9 @@ export const renderClassSpecialRole = (
 				/>
 				<ModalEditClass
 					classValues={elem}
-					isOpen={isOpen}
+					isOpenModal={isOpen}
 					handleDataUpdate={handleDataUpdate}
-					onOpenChange={onOpenChange}></ModalEditClass>
+					onOpenChangeModal={onOpenChange}></ModalEditClass>
 			</div>
 		</AccordionItem>
 	);

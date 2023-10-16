@@ -1,38 +1,44 @@
-'use client'
-import { useState } from "react";
-import "./QuizForm.scss"
-import { useCreateQuiz } from "@/zustand/store/updataeQuizes";
+'use client';
+import { useState } from 'react';
+import './QuizForm.scss';
+import { useCreateQuiz } from '@/zustand/store/quizActions';
+import { Button } from '@nextui-org/react';
 
-const QuizForm = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const {createQuiz} = useCreateQuiz()
-  const [questions, setQuestions] = useState([]);
-  const [currentAnswer, setCurrentAnswer] = useState(''); 
-  const [correctAnswer, setCorrectAnswer] = useState('');
-  const [questionData, setQuestionData] = useState([
-    {
-      question: '',
-      answers: [],
-    },
-  ]);
-const [currentAnswers, setCurrentAnswers] = useState(Array(questionData.length).fill(''));
-const handleTitleChange = (e) => {
-  setTitle(e.target.value);
-};
-const handleDescriptionChange = (e) => {
-  setDescription(e.target.value);
-};
+// const QuizForm = () => {
+  // const [title, setTitle] = useState('');
+//   const [description, setDescription] = useState('');
+//   const {createQuiz} = useCreateQuiz()
+//   const [questions, setQuestions] = useState([]);
+//   const [currentAnswer, setCurrentAnswer] = useState(''); 
+//   const [correctAnswer, setCorrectAnswer] = useState('');
+//   const [questionData, setQuestionData] = useState([
+//     {
+//       question: '',
+//       answers: [],
+//     },
+//   ]);
+// const [currentAnswers, setCurrentAnswers] = useState(Array(questionData.length).fill(''));
 
-const handleAddQuestion = () => {
-  const newQuestionData = [...questionData, { question: '', answers: [], correctAnswer: '' }];
-  setQuestionData(newQuestionData);
-};
+
+const QuizForm = ({ update, idQuiz }) => {
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const { createQuiz, updateQuiz } = useCreateQuiz();
+	const [questions, setQuestions] = useState([]);
+	const [currentAnswer, setCurrentAnswer] = useState('');
+	const [currentAnswers, setCurrentAnswers] = useState([]);
+	const [correctAnswer, setCorrectAnswer] = useState('');
+	const [questionData, setQuestionData] = useState([
+		{
+			question: '',
+			answers: [],
+		},
+	]);
 
 const handleAddAnswer = (questionIndex) => {
   const newQuestionData = [...questionData];
   const newAnswer = { response: currentAnswers[questionIndex], verdadera: false };
-  newQuestionData[questionIndex].answers.push(newAnswer);
+  newQuestionData[questionIndex]?.answers.push(newAnswer);
   setQuestionData(newQuestionData);
 
   // Limpia el valor del campo de respuesta específico
@@ -41,32 +47,168 @@ const handleAddAnswer = (questionIndex) => {
   setCurrentAnswers(newCurrentAnswers);
 };
 
-const handleDeleteQuestion = (questionIndex) => {
-  const newQuestionData = [...questionData];
-  newQuestionData.splice(questionIndex, 1); // Elimina la pregunta en el índice questionIndex
-  setQuestionData(newQuestionData);
+const handleTitleChange = (e) => {
+  setTitle(e?.target?.value);
+};
+const handleDescriptionChange = (e) => {
+  setDescription(e?.target?.value);
+};
+	const handleAddQuestion = () => {
+		const newQuestionData = [
+			...questionData,
+			{ question: '', answers: [], correctAnswer: '' },
+		];
+		setQuestionData(newQuestionData);
+	};
+
+// 	const handleAddAnswer = questionIndex => {
+// 		const newQuestionData = [...questionData];
+// 		const newAnswer = { response: currentAnswer, verdadera: false };
+// 		newQuestionData[questionIndex].answers.push(newAnswer);
+// 		setQuestionData(newQuestionData);
+// 		setCurrentAnswer('');
+// 	};
+
+	const handleDeleteQuestion = questionIndex => {
+		const newQuestionData = [...questionData];
+		newQuestionData.splice(questionIndex, 1); // Elimina la pregunta en el índice questionIndex
+		setQuestionData(newQuestionData);
+	};
+
+	const handleDeleteAnswer = (questionIndex, ansIndex) => {
+		const updatedAnswers = [...questionData];
+		const newupdatedAnswers = updatedAnswers[questionIndex].answers.splice(
+			ansIndex,
+			1
+		);
+		setCurrentAnswers(newupdatedAnswers);
+	};
+
+	const handleQuestionChange = (text, questionIndex) => {
+		const newQuestionData = [...questionData];
+		newQuestionData[questionIndex].question = text;
+		setQuestionData(newQuestionData);
+	};
+
+	const handleCorrectAnswerChange = (answer, questionIndex) => {
+		const newQuestionData = [...questionData];
+		newQuestionData[questionIndex]?.answers?.forEach(ans => {
+			ans.verdadera = ans?.response === answer;
+		});
+		setQuestionData(newQuestionData);
+	};
+
+	const handleSaveQuestionnaire = () => {
+		const questionnaireData = {
+			name: title,
+			description: description,
+			quest: questionData,
+		};
+
+		update ? updateQuiz(questionnaireData, idQuiz) : createQuiz(questionnaireData);
+	};
+
+
+	return (
+		<div className='main h-[80vh]'>
+			<div className='header'>
+        {update	? <h1>Editar Cuestionario</h1> : <h1>Crear Cuestionario</h1> }
+
+				<input
+					className='inputHeader'
+					type='text'
+					placeholder='Título del cuestionario'
+					value={title}
+					onChange={handleTitleChange}
+				/>
+				<input
+					className='inputHeader'
+					type='text'
+					placeholder='Descripcion del cuestionario'
+					value={description}
+					onChange={handleDescriptionChange}
+				/>
+			</div>
+
+			<div className='body'>
+				{questionData.map((question, questionIndex) => (
+					<div className='divEveryQuestion' key={questionIndex}>
+						<h3>Pregunta {questionIndex + 1}</h3>
+						<input
+							className='input'
+							type='text'
+							placeholder='Nueva pregunta'
+							value={question?.question}
+							onChange={e =>
+								handleQuestionChange(e?.target?.value, questionIndex)
+							}
+						/>
+						<input
+  className="input"
+  type="text"
+  placeholder="Respuesta"
+  value={currentAnswers[questionIndex] || ''}
+  onChange={(e) => {
+    const newCurrentAnswers = [...currentAnswers];
+    newCurrentAnswers[questionIndex] = e.target.value;
+    setCurrentAnswers(newCurrentAnswers);
+  }}
+/>
+						<div>
+							{question.answers.map((answer, ansIndex) => (
+								<div className='inputElements' key={ansIndex}>
+									<div className='divInput'>
+										<input
+											className='inputRadio'
+											type='radio'
+											name={`correctAnswer_${questionIndex}`}
+											value={answer.response}
+											checked={answer.verdadera}
+											onChange={() =>
+												handleCorrectAnswerChange(
+													answer.response,
+													questionIndex
+												)
+											}
+										/>
+										<p className='pAnswer'>{answer.response}</p>
+									</div>
+									<div style={{ marginLeft: 'auto' }}>
+										<button
+											onClick={() =>
+												handleDeleteAnswer(questionIndex, ansIndex)
+											}>
+											<p className='pDelete'>Eliminar</p>
+										</button>
+									</div>
+								</div>
+							))}
+						</div>
+						<div className='guardaBotones '>
+							<Button onClick={() => handleAddAnswer(questionIndex)} className='bg-background'>
+								Agregar Respuesta
+							</Button>
+							<Button onClick={() => handleDeleteQuestion(questionIndex)} className='bg-danger-400'>
+								Eliminar pregunta
+							</Button>
+						</div>
+					</div>
+				))}
+			</div>
+			<Button className='p-7 mb-5 text-xl' onClick={handleAddQuestion}>
+				Agregar Pregunta
+			</Button>
+
+
+			<Button className='p-7 bg-background text-xl' onClick={handleSaveQuestionnaire} >
+				Guardar Cuestionario
+			</Button>
+		</div>
+	);
 };
 
-const handleDeleteAnswer = (questionIndex, ansIndex) => {
-  const updatedAnswers = [...questionData];
-  const newupdatedAnswers = updatedAnswers[questionIndex].answers.splice(ansIndex, 1)
-  setCurrentAnswers(newupdatedAnswers);
-};
 
-const handleQuestionChange = (text, questionIndex) => {
-  const newQuestionData = [...questionData];
-  newQuestionData[questionIndex].question = text;
-  setQuestionData(newQuestionData);
-};
-
-const handleCorrectAnswerChange = (answer, questionIndex) => {
-  const newQuestionData = [...questionData];
-  newQuestionData[questionIndex].answers.forEach((ans) => {
-    ans.verdadera = ans.response === answer;
-  });
-  setQuestionData(newQuestionData);
-};
-
+/*
 const handleSaveQuestionnaire = () => {
   const questionnaireData = {
     name: title,
@@ -156,5 +298,5 @@ return (
   </div>
 );
 }
-
+*/
   export default QuizForm;
