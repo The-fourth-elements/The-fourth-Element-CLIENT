@@ -9,7 +9,6 @@ const QuizForm = () => {
   const {createQuiz} = useCreateQuiz()
   const [questions, setQuestions] = useState([]);
   const [currentAnswer, setCurrentAnswer] = useState(''); 
-  const [currentAnswers, setCurrentAnswers] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [questionData, setQuestionData] = useState([
     {
@@ -17,7 +16,7 @@ const QuizForm = () => {
       answers: [],
     },
   ]);
-
+const [currentAnswers, setCurrentAnswers] = useState(Array(questionData.length).fill(''));
 const handleTitleChange = (e) => {
   setTitle(e.target.value);
 };
@@ -32,10 +31,14 @@ const handleAddQuestion = () => {
 
 const handleAddAnswer = (questionIndex) => {
   const newQuestionData = [...questionData];
-  const newAnswer = { response: currentAnswer, verdadera: false };
+  const newAnswer = { response: currentAnswers[questionIndex], verdadera: false };
   newQuestionData[questionIndex].answers.push(newAnswer);
   setQuestionData(newQuestionData);
-  setCurrentAnswer('');
+
+  // Limpia el valor del campo de respuesta específico
+  const newCurrentAnswers = [...currentAnswers];
+  newCurrentAnswers[questionIndex] = '';
+  setCurrentAnswers(newCurrentAnswers);
 };
 
 const handleDeleteQuestion = (questionIndex) => {
@@ -71,6 +74,7 @@ const handleSaveQuestionnaire = () => {
     quest:questionData,
     
   };
+  console.log(questionnaireData)
   createQuiz(questionnaireData)
 };
 
@@ -96,22 +100,26 @@ return (
 
     <div className="body">
     {questionData.map((question, questionIndex) => (
-  <div className="divEveryQuestion" key={questionIndex}>
-    <h3>Pregunta {questionIndex + 1}</h3>
-    <input
-      className="input"
-      type="text"
-      placeholder="Nueva pregunta"
-      value={question.question}
-      onChange={(e) => handleQuestionChange(e.target.value, questionIndex)}
-    />
-    <input
-      className="input"
-      type="text"
-      placeholder="Respuesta"
-      value={currentAnswer}
-      onChange={(e) => setCurrentAnswer(e.target.value)}
-    />
+          <div className="divEveryQuestion" key={questionIndex}>
+            <h3>Pregunta {questionIndex + 1}</h3>
+            <input
+              className="input"
+              type="text"
+              placeholder="Nueva pregunta"
+              value={question.question}
+              onChange={(e) => handleQuestionChange(e.target.value, questionIndex)}
+            />
+            <input
+  className="input"
+  type="text"
+  placeholder="Respuesta"
+  value={currentAnswers[questionIndex] || ''}
+  onChange={(e) => {
+    const newCurrentAnswers = [...currentAnswers];
+    newCurrentAnswers[questionIndex] = e.target.value;
+    setCurrentAnswers(newCurrentAnswers);
+  }}
+/>
     <div>
     {question.answers.map((answer, ansIndex) => (
   <div className="inputElements" key={ansIndex}>
