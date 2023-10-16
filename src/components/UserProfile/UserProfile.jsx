@@ -75,9 +75,10 @@ const UserProfile = () => {
 	const getNewAge = (event) => {
 		setNewAge(event.target.value)
 	}
-	const getNewImage = (event) => {
-		setNewImage(event.target.files[0])
-		console.log(event.target.files[0])
+	const getNewImage = (e) => {
+		const { info } = e;
+		const { url, public_id } = info;
+		setNewImage({ url, id:public_id });
 	}
 	const updateUserName = () => {
 		const update = {id: user?._id, username: newName}
@@ -123,19 +124,13 @@ const UserProfile = () => {
 	}
 	
 	const updateUserImage = () => {
-		// const update = {id: user?._id, image: {
-		// 	public_id: algo,
-		// 	secure_url: algo
-		// }}
-		// updateUserRole(update)
-		if (!newImage){
-			console.error('No se ha seleccionado un archivo.');
-      		return;
-		}
-		const formData = new FormData();
-    	formData.append('file', newImage);
-		console.log(formData)
-		setOpenImage(false)
+		const update = {id: user?._id, imagen: {
+			public_id: newImage.id,
+			secure_url: newImage.url
+		}}
+		updateUserRole(update)
+		console.log (update)
+
 	}
 	const selectCountry = (val) => {
 		setNewCountry(val);
@@ -152,7 +147,7 @@ const UserProfile = () => {
 		<article>
 		  {user && user?._id && Object.keys(user).length > 0 ? (
 			<Card className='main'>
-			  <UserProfileHeader updateUserImage={updateUserImage} getNewImage={getNewImage} openImage={openImage} user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName} session = {session}/>
+			  <UserProfileHeader newImage={newImage} updateUserImage={updateUserImage} getNewImage={getNewImage} openImage={openImage} user={user} openName={openName} handleChangeName={handleChangeName} handleChangePhoto={handleChangePhoto} updateUserName={updateUserName} getNewName = {getNewName} newName = {newName} session = {session}/>
 			  <UserProfileBody updateUserAge={updateUserAge} updateUserExp={updateUserExp} getNewAge={getNewAge} newAge={newAge} getNewExp={getNewExp} newExp={newExp} updateUserSport={updateUserSport} newSport={newSport} selectSport={selectSport} deportes={deportes} user={user} openCountry={openCountry} stringCountry={stringCountry} newCountry={newCountry} selectCountry={selectCountry} handleChangeCountry={handleChangeCountry} updateUserCountry={updateUserCountry} openCity={openCity} stringCity={stringCity} newCity={newCity} selectCity={selectCity} handleChangeCity={handleChangeCity} updateUserCity={updateUserCity} />
 			</Card>
 		  ) : (

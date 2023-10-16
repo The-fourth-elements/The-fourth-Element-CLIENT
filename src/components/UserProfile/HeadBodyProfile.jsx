@@ -5,8 +5,9 @@ import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { CountrySelect, CitySelect } from './SelectsProfile';
 import { useState } from 'react';
 import { InputAge, InputExp } from './inputExp';
+import { CldUploadButton } from 'next-cloudinary';
 
-export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName, session, openImage, getNewImage, updateUserImage}) => {
+export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName, session, openImage, getNewImage, updateUserImage, newImage}) => {
   const [hasErrors, setHasErrors] = useState(false);
 
   // Función para actualizar el estado de errores
@@ -33,7 +34,7 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
         </h1>
       )}
       { user?.profile_img ? (
-        <Image src={user?.profile_img} alt={user?.name} />
+        <Image src={user?.profile_img?.secure_url} alt={user?.name} />
       ) :
       session?.token?.picture ?(         
       <Image src={session?.token?.picture} alt="profileImage" />)
@@ -44,7 +45,8 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
           alt={user?.name}
         />
       )}
-      {openImage ? <div><input type="file" onChange={getNewImage}/> <Button onClick={updateUserImage}>Accept</Button></div>
+      {openImage ? <div><CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
+							disabled={newImage?.url?.length > 0} onSuccess={getNewImage}/> <Button onClick={updateUserImage}>Accept</Button></div>
       :<Button isIconOnly color="warning" variant="bordered" title="Edit Photo" onClick={handleChangePhoto}>
         <EditIcon />
       </Button>
