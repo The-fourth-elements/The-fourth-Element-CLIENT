@@ -4,8 +4,8 @@ import QuizRender from "@/components/QuizRender/QuizRender";
 const CreateQuiz = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <QuizForm/>
-            {/* <QuizRender/> */}
+        {/* <QuizForm/> */}
+            <QuizRender/>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import {
 	AccordionItem,
 	accordion,
 	useDisclosure,
+	Button
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { setCookie } from 'cookies-next';
@@ -24,6 +25,7 @@ import ModalEditClass from '@/helpers/ModalEditClass';
 import { postData } from '@/hooks/postData';
 import { useUserProfile } from '@/zustand/store/userProfile';
 import { fetchData, renderVideo, renderDescription } from './fetchDataModules';
+import QuizRender from '../QuizRender/QuizRender';
 
 export default function ModuleView() {
 	const { data: session } = useSession();
@@ -44,11 +46,11 @@ export default function ModuleView() {
 	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
-		getQuiz(modules[0].classModule[0].quiz[0])
+		
 	}, []);
 
 	useEffect(() => {
-		console.log(quiz)
+
 		if (session) {
 			if (session?.token?.user) {
 				const { role } = session.token.user;
@@ -82,24 +84,40 @@ export default function ModuleView() {
 							key={classIndex}
 							textValue={elem?.name}
 							title={elem?.name}>
-							<div className='flex justify-between'>
+							<div >
+								<div className='flex justify-between'>
 								<span
 									className='cursor-pointer'
 									onClick={() => handleClassClick(elem.name)}>
 									Entrar
 								</span>
-
+								
 								<EditIcon
 									className='cursor-pointer rounded-full transition-background hover:opacity-70'
 									width='30'
 									height='30'
 									onClick={onOpen}
 								/>
-								<ModalEditClass
+								</div>
+								<span
+									className='cursor-pointer'
+									// onClick={() => handleClassClick(elem.name)}>
+									>
+									Quiz
+								</span>
+								
+								{/* <ModalEditClass
 									classValues={elem}
 									isOpen={isOpen}
 									handleDataUpdate={handleDataUpdate}
-									onOpenChange={onOpenChange}></ModalEditClass>
+									onOpenChange={onOpenChange}></ModalEditClass> */}
+
+								<QuizRender
+								id={"652783f7891885c39132b2c5"}
+									classValues={elem}
+									isOpen={isOpen}
+									handleDataUpdate={handleDataUpdate}
+									onOpenChange={onOpenChange}></QuizRender>
 							</div>
 						</AccordionItem>
 					);

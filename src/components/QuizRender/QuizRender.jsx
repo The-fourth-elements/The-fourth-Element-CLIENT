@@ -1,14 +1,27 @@
 "use client"
-
+import { ModalContent, Modal, ModalHeader, ModalBody, ModalFooter, Button, } from '@nextui-org/react';
 import { toastSuccess, toastError } from "@/helpers/toast"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./QuizRender.scss"
-const QuizRender = ({quiz}) => {
-  
-    const [selectedAnswers, setSelectedAnswers] = useState(new Array(quiz.quest.length).fill(null));
+import { useModulesStore } from "@/zustand/store/modulesStore";
+import { CircularProgress } from "@nextui-org/react";
+const QuizRender = ({id, isOpen, onOpenChange}) => {
+
+  const { getQuiz, quiz } = useModulesStore();
+  useEffect(() => {
+    if(id){
+      getQuiz(id)
+    }
+
+  }, [])
+  useEffect(() => {
+
+    console.log(quiz)
+  }, [quiz])
+    const [selectedAnswers, setSelectedAnswers] = useState(new Array(quiz?.quest?.length).fill(null));
     const [correctQuestions, setCorrectQuestions] = useState(0);
   
-    const totalQuestions = quiz.quest.length;
+    const totalQuestions = quiz?.quest?.length;
   
     const handleAnswerChange = (questionIndex, selectedAnswerIndex) => {
         const newSelectedAnswers = [...selectedAnswers];
@@ -19,10 +32,10 @@ const QuizRender = ({quiz}) => {
     const handleSendQuiz = () => {
         let correctCount = 0;
         
-        for (let i = 0; i < quiz.quest.length; i++) {
+        for (let i = 0; i < quiz?.quest?.length; i++) {
           const selectedAnswerIndex = selectedAnswers[i];
           
-          if (selectedAnswerIndex !== null && quiz.quest[i].answers[selectedAnswerIndex].verdadera) {
+          if (selectedAnswerIndex !== null && quiz?.quest[i]?.responses[selectedAnswerIndex]?.verdadera) {
             correctCount++;
           }
         }
@@ -37,28 +50,52 @@ const QuizRender = ({quiz}) => {
       };
   
     return (
-        <div className="mainQuiz">
-          <h1>{quiz.name}</h1>
-          <h2>{quiz.description}</h2>
-          {quiz.quest.map((pregunta, questionIndex) => (
-            <div className= "divPregunta" key={questionIndex}>
-              <h3>{pregunta.question}</h3>
-              {pregunta.answers.map((answer, answerIndex) => (
-              <label className="divOptions" key={answerIndex}>
-                <input
-                  type="radio"
-                  value={answerIndex}
-                  checked={selectedAnswers[questionIndex] === answerIndex}
-                  onChange={() => handleAnswerChange(questionIndex, answerIndex)}
-                />
-                <p>{answer.response}</p>
-              </label>
-            ))}
+      Object.keys(quiz).length > 0 ? (
+        <Modal className="mainQuiz"
+        isOpen = {isOpen}
+        onOpenChange = {onOpenChange}
+        backdrop='blur'
+        size='5xl'
+        >
+          <ModalContent>{onClose => (
+            <>
+            <ModalBody>
+          <h1>{quiz?.name}</h1>
+          <h2>{quiz?.description}</h2>
+          
+
+          {quiz?.quest?.map((pregunta, questionIndex) => (
+            <div className="divPregunta" key={questionIndex}>
+              <h3>{pregunta?.question}</h3>
+              {pregunta?.responses?.map((answer, answerIndex) => (
+                <label className="divOptions" key={answerIndex}>
+                  <input
+                    type="radio"
+                    value={answerIndex}
+                    checked={selectedAnswers[questionIndex] === answerIndex}
+                    onChange={() => handleAnswerChange(questionIndex, answerIndex)}
+                  />
+                  <p>{answer?.response}</p>
+                </label>
+              ))}
             </div>
           ))}
           <button className="quizButton" onClick={handleSendQuiz}>Enviar</button>
+          </ModalBody>
+          </>
+          )}
+          </ModalContent>
+        </Modal>
+      ) : (
+        <div className='centered'>
+          <CircularProgress
+            className='loading'
+            label='Loading...'
+            color='warning'
+          />
         </div>
-      );
+      )
+    );
   };
 
 export default QuizRender;
