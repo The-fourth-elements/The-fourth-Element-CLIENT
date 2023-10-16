@@ -43,7 +43,7 @@ export default function ModuleView() {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { user, getProfile } = useUserProfile();
-	const { modules, getModules } = useModulesStore();
+	const { modules, getModules, getQuiz } = useModulesStore();
 	const [moduleData, setModuleData] = useState({});
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);

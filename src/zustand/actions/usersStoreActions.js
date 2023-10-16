@@ -195,3 +195,23 @@ export const createQuiz = body => {
 			console.error('There was a problem with the fetch operation:', error);
 		});
 };
+
+export const updateQuiz = (body, id) => {
+	let quiz 
+	console.log("id updateQuiz", id);
+	return fetch(`${process.env.API_BACKEND}quiz/${id}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({quiz:body}),
+	})
+		.then(response => response.json())
+		.then(data => {
+			toastSuccess(`se ha modificado con exito el quiz: ${body.name}`)
+			
+		})
+		.catch(error => {
+			console.error('There was a problem with the fetch operation:', error);
+		});
+};
