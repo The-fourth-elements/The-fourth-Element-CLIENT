@@ -20,7 +20,7 @@ import { Button } from '@nextui-org/react';
 // const [currentAnswers, setCurrentAnswers] = useState(Array(questionData.length).fill(''));
 
 
-const QuizForm = ({ update, idQuiz }) => {
+const QuizForm = ({ update, idQuiz, onClose }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const { createQuiz, updateQuiz } = useCreateQuiz();
@@ -106,6 +106,7 @@ const handleDescriptionChange = (e) => {
 		};
 
 		update ? updateQuiz(questionnaireData, idQuiz) : createQuiz(questionnaireData);
+		onClose()
 	};
 
 
