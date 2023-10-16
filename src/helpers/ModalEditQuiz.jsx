@@ -15,7 +15,6 @@ import QuizForm from '@/components/QuizForm/QuizForm';
 
 const ModalEditClass = ({ idQuiz , isOpenModal, onOpenChangeModal }) => {
 
-    console.log("idQuiz ", idQuiz);
 
 	return (
 		<>
@@ -23,11 +22,12 @@ const ModalEditClass = ({ idQuiz , isOpenModal, onOpenChangeModal }) => {
 				isOpen={isOpenModal}
 				onOpenChange={onOpenChangeModal}
 				backdrop='blur'
-				size='5xl'>
+				size='5xl'
+				>
 				<ModalContent>
 					{onClose => (
 						<>
-							<ModalHeader className='flex flex-col gap-1'>
+							<ModalHeader className='flex flex-col gap-1 '>
 								Editar Quiz
 							</ModalHeader>
 							<ModalBody>
