@@ -33,8 +33,9 @@ function CreateClass() {
 
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-
 	const [isloading, setIsLoading] = useState(true);
+	const [updated, setUpdated] = useState(false);
+
 	const route = useRouter();
 	const [video, setVideo] = useState({});
 	const initialValuesClass = {
@@ -54,6 +55,11 @@ function CreateClass() {
 			fetchModulesAndRedirect();
 		}
 	}, [modules]);
+
+	useEffect(() => {
+		getQuizes();
+		setUpdated(false);
+	}, [updated]);
 
 	function handleRouteChange() {
 		route.push('/dashboard/module/create');
@@ -135,12 +141,10 @@ function CreateClass() {
 		getQuiz(event.target.value);
 	};
 
-	const handleRouteToCreateQuiz = () => {
-		route.push('/dashboard/create-quiz');
-
+	const closeQuizModal = () => {
+		console.log('AAAAAAAAAAAAAAAAAAA');
+		setUpdated(true);
 	};
-
-	
 
 	return (
 		<Card className='relative min-h-screen modern text-4xl '>
@@ -210,13 +214,17 @@ function CreateClass() {
 									))}
 							</Select>
 
+							<Button
+								onPress={onOpen}
+								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3'>
+								Crear Quiz
+							</Button>
 
-							<Button variant='light' onPress={onOpen}>
-									Crear Quiz
-								</Button>
-
-								<ModalEditQuiz update={false} isOpenModal={isOpen} onOpenChangeModal={onOpenChange}></ModalEditQuiz>
-							
+							<ModalEditQuiz
+								onClose={closeQuizModal}
+								update={false}
+								isOpenModal={isOpen}
+								onOpenChangeModal={onOpenChange}></ModalEditQuiz>
 						</div>
 
 						<h2 className='text-white'>Selecciona un video:</h2>
@@ -233,9 +241,9 @@ function CreateClass() {
 						) : null}
 
 						<Button
+							size='md'
 							type='submit'
-							size='lg'
-							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'>
+							class='transition-all bg-background text-lg rounded-lg max-w-xs  mx-auto hover:bg-primary p-5 py-3'>
 							Enviar
 						</Button>
 					</Form>
