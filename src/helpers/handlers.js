@@ -19,26 +19,24 @@ export const handleSubmitRegister = async (
     };
 
     const response = await postData(`${process.env.API_BACKEND}auth`, form);
-    console.log(response);
     if (response?.error) {
       throw response?.error
     }
     return response;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };
 
-export const handleSubmitLogin = async form => {
-  try {
-    const response = await postData(`/login`, form);
-    if (!response?.error) return response;
-    throw new Error(response.error);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+// export const handleSubmitLogin = async form => {
+//   try {
+//     const response = await postData(`/login`, form);
+//     if (!response?.error) return response;
+//     throw new Error(response.error);
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
 
 export const handleSubmitEditClass = async (form, video, id) => {
   try {

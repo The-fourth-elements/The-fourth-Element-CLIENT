@@ -8,7 +8,7 @@ import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
-
+import { Select, SelectItem } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 
 import React from 'react';
@@ -18,9 +18,18 @@ import { validationSchemaCreateClass } from '@/helpers/validations';
 import { toastError, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
+import { all } from 'axios';
 
 function CreateClass() {
-	const { modules, getModules } = useModulesStore();
+	const {
+		modules,
+		getModules,
+		allQuizes,
+		getQuizes,
+		quiz,
+		getQuiz,
+		addQuizToClass,
+	} = useModulesStore();
 
 	const [isloading, setIsLoading] = useState(true);
 	const route = useRouter();
@@ -33,6 +42,7 @@ function CreateClass() {
 	};
 
 	useEffect(() => {
+		getQuizes();
 		const fetchModulesAndRedirect = async () => {
 			await getModules();
 			if (!(modules.length === 0)) setIsLoading(!isloading);
@@ -98,9 +108,15 @@ function CreateClass() {
 					state: 'completed',
 				}),
 			};
+
+			quiz.classId = classPostResponse._id;
+			if (quiz.classId) {
+				addQuizToClass(quiz);
+			}
+
 			await fetch(url, options);
 
-			toastSuccess('¡Se subió la clase!!');
+			toastSuccess('¡Se subió la clase!');
 			route.push('/dashboard');
 		} catch (error) {
 			toastError('No se pudo subir la clase, intente mas tarde');
@@ -109,9 +125,19 @@ function CreateClass() {
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
-		console.log(e);
-		setVideo({ url, id:public_id });
+		setVideo({ url, id: public_id });
 	};
+
+	const handleSelect = event => {
+		getQuiz(event.target.value);
+	};
+
+	const handleRouteToCreateQuiz = () => {
+		route.push('/dashboard/create-quiz');
+
+	};
+
+	
 
 	return (
 		<Card className='relative min-h-screen modern text-4xl '>
@@ -167,6 +193,28 @@ function CreateClass() {
 							name='description'
 						/>
 
+						<div className='flex flex-col items-center md:flex-row md:justify-evenly w-full'>
+							<Select
+								label='Quiz de la Clase'
+								placeholder='Seleccione un quiz'
+								className='md:max-w-[12rem] max-w-xs '
+								onChange={handleSelect}>
+								{allQuizes.length > 0 &&
+									allQuizes.map(quiz => (
+										<SelectItem key={quiz._id} value={quiz._id}>
+											{quiz.name}
+										</SelectItem>
+									))}
+							</Select>
+
+							<Button
+								onPress={handleRouteToCreateQuiz}
+								size='lg'
+								className='bg-background rounded-lg submit max-w-xs hover:bg-primary mt-5 md:mt-0'>
+									Crear nuevo Quiz
+							</Button>
+						</div>
+
 						<h2 className='text-white'>Selecciona un video:</h2>
 						<CldUploadButton
 							className='cldButton'
@@ -179,11 +227,11 @@ function CreateClass() {
 								Video subido correctamente
 							</h5>
 						) : null}
+
 						<Button
 							type='submit'
 							size='lg'
-							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'
-							>
+							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'>
 							Enviar
 						</Button>
 					</Form>

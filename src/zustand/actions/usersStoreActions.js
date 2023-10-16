@@ -55,10 +55,11 @@ export const upadateUserRole = elbody => {
 	})
 		.then(response => response.json())
 		.then(data => {
-			data;
+			return data;
 		})
 		.catch(error => {
 			console.error('There was a problem with the fetch operation:', error);
+			throw Error(error)
 		});
 };
 
@@ -129,28 +130,28 @@ export const getDeletedUsers = () => {
 };
 
 export const getCountCountries = () => {
-  return fetch(`${process.env.API_BACKEND}countriesC`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json(); // Parse the response as JSON
-    })
-    .catch((error) => {
-      console.error('There was a problem with the fetch operation:', error);
-    });
+	return fetch(`${process.env.API_BACKEND}countriesC`)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json(); // Parse the response as JSON
+		})
+		.catch((error) => {
+			console.error('There was a problem with the fetch operation:', error);
+		});
 }
 export const getCountAges = async () => {
-  try {
-    const response = await fetch(`${process.env.API_BACKEND}users/average`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const parsed = await response.json();
-    return parsed
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const response = await fetch(`${process.env.API_BACKEND}users/average`);
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+		const parsed = await response.json();
+		return parsed
+	} catch (error) {
+		console.log(error);
+	}
 }
 export const restoreUser = email => {
 	const apiUrl = `${process.env.API_BACKEND}user/reset`; // Reemplaza con tu URL real
@@ -169,7 +170,6 @@ export const restoreUser = email => {
 			if (response.status !== 200) {
 				throw new Error('Network response was not ok');
 			}
-			console.log('Respuesta restoreUser', response.data);
 			return response.data;
 		})
 		.catch(error => {
@@ -191,6 +191,26 @@ export const createQuiz = body => {
 			setTimeout(() => {
 				window.location.reload()
 			}, "3000")
+		})
+		.catch(error => {
+			console.error('There was a problem with the fetch operation:', error);
+		});
+};
+
+export const updateQuiz = (body, id) => {
+	let quiz 
+	console.log("id updateQuiz", id);
+	return fetch(`${process.env.API_BACKEND}quiz/${id}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({quiz:body}),
+	})
+		.then(response => response.json())
+		.then(data => {
+			toastSuccess(`se ha modificado con exito el quiz: ${body.name}`)
+			
 		})
 		.catch(error => {
 			console.error('There was a problem with the fetch operation:', error);

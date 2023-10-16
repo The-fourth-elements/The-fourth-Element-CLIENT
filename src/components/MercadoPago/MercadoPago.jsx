@@ -1,5 +1,6 @@
 'use client';
 
+import { toastError } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { Button, Link } from '@nextui-org/react';
@@ -14,16 +15,19 @@ function MercadoPago({ className }) {
 	const session = useSession();
 	const router = useRouter();
 
+	console.log("session ", session );
+
 	const createPreference = async () => {
 		try {
-			const response = await postData(`${process.env.API_BACKEND}create-order`);
+			const response = await postData(`${process.env.API_BACKEND}create-order?id=${session?.data?.token?.user?.id}`);
 
 			const { id } = response;
 
 			// Una vez que obtienes el ID de preferencia, establece el estado
 			setPreferenceId(id);
 		} catch (error) {
-			console.log(error);
+			if(typeof error === 'string') toastError(error)
+			toastError(error.message)
 		}
 	};
 

@@ -104,8 +104,8 @@ export const initialValues = {
 	password: '',
 	repeatPassword: '',
 	deporte: '',
-	edad: 0,
-	experiencia: 0,
+	edad: '',
+	experiencia: '',
 };
 
 export const initialValuesLogin = {
