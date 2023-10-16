@@ -9,7 +9,6 @@ import googleLogo from '../../assets/svg/google.svg';
 import InputField from '../../helpers/InputField';
 import InputFieldPassword from '@/helpers/InputFieldPassword';
 import { validationSchemaLogin } from '../../helpers/validations';
-// import { handleSubmitLogin } from '../../helpers/handlers';
 import { initialValuesLogin } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Card, CardBody, Button } from '@nextui-org/react';
@@ -20,8 +19,8 @@ import { useState } from 'react';
 
 export const LoginForm = ({ toogleDisplay }) => {
 
-	let [viewPassword, setViewPassword] = useState(false)
-	
+	let [viewPassword, setViewPassword] = useState(false);
+	const [disabled, setDisabled] = useState(false);
 	const handleSignIn = async () => {
 		signIn('google', { redirect: false });
 	};
@@ -37,6 +36,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 				initialValues={initialValuesLogin}
 				validationSchema={validationSchemaLogin}
 				onSubmit={async values => {
+					setDisabled(true);
 					try {
 						const response = await signIn('credentials', {
 							...values,
@@ -50,6 +50,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 						}
 					} catch (error) {
 						toastError(error.message);
+						setDisabled(false);
 					}
 				}}>
 				{({ errors }) => (
@@ -94,7 +95,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 								</span>
 							</div>
 
-							<Button type='submit' className='  border-large rounded-sm mb-12'>
+							<Button type='submit' className='  border-large rounded-sm mb-12' disabled={disabled}>
 								Ingresar
 							</Button>
 							<Button

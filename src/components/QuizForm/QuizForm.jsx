@@ -71,7 +71,6 @@ const handleSaveQuestionnaire = () => {
     quest:questionData,
     
   };
-  console.log(questionnaireData)
   createQuiz(questionnaireData)
 };
 
