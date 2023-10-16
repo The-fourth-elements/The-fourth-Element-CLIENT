@@ -4,6 +4,8 @@ import { toastSuccess, toastError } from '@/helpers/toast';
 import { useState } from 'react';
 import './QuizRender.scss';
 const QuizRender = ({ quiz, onClose }) => {
+
+  console.log(quiz)
 	const [selectedAnswers, setSelectedAnswers] = useState(
 		new Array(quiz?.quest?.length).fill(null)
 	);
@@ -53,7 +55,7 @@ const QuizRender = ({ quiz, onClose }) => {
 										handleAnswerChange(questionIndex, answerIndex)
 									}
 								/>
-								<p>{answer?.response}</p>
+								<p className='pAnswer'>{answer?.response}</p>
 							</label>
 						))}
 					</div>

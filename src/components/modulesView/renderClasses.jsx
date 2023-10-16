@@ -19,6 +19,7 @@ export const renderClassDefault = (
 	handleClassClick,
 	currentClass
 ) => {
+	console.log (elem)
 	return (
 		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
 			<div className='flex justify-between'>

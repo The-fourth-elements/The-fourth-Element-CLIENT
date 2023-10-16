@@ -43,6 +43,7 @@ export const getModules = () => {
   };
 
   export const addQuizToClass = body => {
+    console.log(body)
     return fetch(`${process.env.API_BACKEND}class/${body.classId}/quiz/${body._id}`, {
       method: 'PUT',
       headers: {

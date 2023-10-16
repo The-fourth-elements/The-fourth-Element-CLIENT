@@ -4,10 +4,10 @@ import InputName from './input';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { CountrySelect, CitySelect } from './SelectsProfile';
 import { useState } from 'react';
-import InputExp from './inputExp';
-import InputAge from './inputAge';
+import { InputAge, InputExp } from './inputExp';
+import { CldUploadButton } from 'next-cloudinary';
 
-export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName, session}) => {
+export const UserProfileHeader = ({ user, openName, handleChangeName, handleChangePhoto, updateUserName, getNewName, newName, session, openImage, getNewImage, updateUserImage, newImage}) => {
   const [hasErrors, setHasErrors] = useState(false);
 
   // Función para actualizar el estado de errores
@@ -33,20 +33,25 @@ export const UserProfileHeader = ({ user, openName, handleChangeName, handleChan
           </Button>
         </h1>
       )}
-      {session?.token?.picture ?(         
+      { user?.profile_img ? (
+        <Image src={user?.profile_img?.secure_url} alt={user?.name} />
+      ) :
+      session?.token?.picture ?(         
       <Image src={session?.token?.picture} alt="profileImage" />)
       :
-      user?.profile_img ? (
-        <Image src={user?.profile_img} alt={user?.name} />
-      ) : (
+      (
         <Image
           src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
           alt={user?.name}
         />
       )}
-      <Button isIconOnly color="warning" variant="bordered" title="Edit Photo" onClick={handleChangePhoto}>
+      {openImage ? <div><CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
+							disabled={newImage?.url?.length > 0} onSuccess={getNewImage}/> <Button onClick={updateUserImage}>Accept</Button></div>
+      :<Button isIconOnly color="warning" variant="bordered" title="Edit Photo" onClick={handleChangePhoto}>
         <EditIcon />
       </Button>
+      }
+      
     </CardHeader>
   )
 };
@@ -72,11 +77,11 @@ export const UserProfileBody = ({ user, openCountry, stringCountry, newCountry, 
       </select> <Button color="warning" variant="bordered" size="sm" onClick={updateUserSport} > Accept </Button> </h2>
       :<h2> Deporte: {user?.sport?.name}</h2>}
 
-      {!user?.age ? <h2>Edad:  <InputExp getNewAge={getNewAge} newAge={newAge}  /> <Button color="warning" variant="bordered" size="sm" onClick={updateUserAge} > Accept </Button> </h2>
+      {!user?.age ? <h2>Edad:  <InputAge getNewAge={getNewAge} newAge={newAge}  /> <Button color="warning" variant="bordered" size="sm" onClick={updateUserAge} > Accept </Button> </h2>
       : <h2> Edad: {user?.age} </h2>
       }
 
-      {!user?.expYearsSports ? <h2>Años de experiencia: <InputAge getNewExp={getNewExp} newExp={newExp}  /> <Button color="warning" variant="bordered" size="sm" onClick={updateUserExp} > Accept </Button> </h2>
+      {!user?.expYearsSports ? <h2>Años de experiencia: <InputExp getNewExp={getNewExp} newExp={newExp}  /> <Button color="warning" variant="bordered" size="sm" onClick={updateUserExp} > Accept </Button> </h2>
       : <h2> Años de experiencia: {user?.expYearsSports}  </h2> 
       }
       
