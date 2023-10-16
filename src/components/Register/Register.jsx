@@ -42,7 +42,6 @@ const Register = ({ toogleDisplay }) => {
 							toastSuccess(response.success);
 							toogleDisplay();
 						} 
-						console.log(response);
 					} catch (error) {
 						toastError(error?.message)
 					}

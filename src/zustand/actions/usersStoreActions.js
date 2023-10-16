@@ -129,28 +129,28 @@ export const getDeletedUsers = () => {
 };
 
 export const getCountCountries = () => {
-  return fetch(`${process.env.API_BACKEND}countriesC`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json(); // Parse the response as JSON
-    })
-    .catch((error) => {
-      console.error('There was a problem with the fetch operation:', error);
-    });
+	return fetch(`${process.env.API_BACKEND}countriesC`)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json(); // Parse the response as JSON
+		})
+		.catch((error) => {
+			console.error('There was a problem with the fetch operation:', error);
+		});
 }
 export const getCountAges = async () => {
-  try {
-    const response = await fetch(`${process.env.API_BACKEND}users/average`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const parsed = await response.json();
-    return parsed
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const response = await fetch(`${process.env.API_BACKEND}users/average`);
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+		const parsed = await response.json();
+		return parsed
+	} catch (error) {
+		console.log(error);
+	}
 }
 export const restoreUser = email => {
 	const apiUrl = `${process.env.API_BACKEND}user/reset`; // Reemplaza con tu URL real
@@ -169,7 +169,6 @@ export const restoreUser = email => {
 			if (response.status !== 200) {
 				throw new Error('Network response was not ok');
 			}
-			console.log('Respuesta restoreUser', response.data);
 			return response.data;
 		})
 		.catch(error => {

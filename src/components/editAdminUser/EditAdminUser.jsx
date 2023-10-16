@@ -28,8 +28,6 @@ const EditAdminUser = ({id}) => {
 		setCountry(detail?.nation?.name)
 		setCity(detail?.city?.name)
 	}
-	console.log(detail?.nation)
-	console.log(detail?.city)
   }, [ detail?.role, id]);
 
 
