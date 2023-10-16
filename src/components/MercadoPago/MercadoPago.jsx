@@ -14,9 +14,11 @@ function MercadoPago({ className }) {
 	const session = useSession();
 	const router = useRouter();
 
+	console.log("session ", session );
+
 	const createPreference = async () => {
 		try {
-			const response = await postData(`${process.env.API_BACKEND}create-order`);
+			const response = await postData(`${process.env.API_BACKEND}create-order?id=${session?.data?.token?.user?.id}`);
 
 			const { id } = response;
 

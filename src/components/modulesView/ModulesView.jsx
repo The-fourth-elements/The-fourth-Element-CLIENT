@@ -44,7 +44,8 @@ export default function ModuleView() {
 	const [currentModule, setCurrentModule] = useState('');
 	useEffect(() => {
 		getModules();
-		getQuiz(modules[0].classModule[0].quiz[0])
+		console.log("modules", modules);
+		getQuiz(modules[0]?.classModule[0]?.quiz[0])
 	}, []);
 
 	useEffect(() => {
