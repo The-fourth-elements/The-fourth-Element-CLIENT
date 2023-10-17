@@ -21,13 +21,20 @@ export const renderClassDefault = (
 ) => {
 	return (
 		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
-			<div className='flex justify-between'>
-				<span
-					className='cursor-pointer'
-					onClick={() => handleClassClick(elem.name)}>
+			<div className='flex justify-between items-center'>
+				<Button
+					className='cursor-pointer rounded-full'
+					onPress={() => handleClassClick(elem.name)}>
 					Entrar
-				</span>
-				{elem?.name === currentClass && <span onClick={onOpen}>quiz</span>}
+				</Button>
+				{elem?.name === currentClass && (
+					<Button
+					className='rounded-full bg-primary-500 text-black text-base'
+						onPress={onOpen}>
+							Quiz
+						
+					</Button>
+				)}
 				<Modal
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}
