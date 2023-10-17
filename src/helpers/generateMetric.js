@@ -7,8 +7,8 @@ export const generateMetric = (arrayKeyValue, title) => {
             const start = 'M' + t.substring(1, 5) + 'es de ';
             return start + last
         })
-    }
 
+    }
     return [
         {
             labels: transformed.length > 0 ? transformed : Object.keys(arrayKeyValue),
@@ -16,6 +16,7 @@ export const generateMetric = (arrayKeyValue, title) => {
                 {
                     label: 'Número de Usuarios por País',
                     data: Object.values(arrayKeyValue),
+                    fill: false,
                 },
             ],
         },
@@ -23,6 +24,9 @@ export const generateMetric = (arrayKeyValue, title) => {
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
+                customCanvasBackgroundColor: {
+                    color: 'red'
+                },
                 title: {
                     display: true,
                     text: title,
@@ -32,7 +36,7 @@ export const generateMetric = (arrayKeyValue, title) => {
                 legend: {
                     labels: {
                         font: {
-                            size: 22,
+                            size: 17,
                             color: 'white'
                         },
                     },

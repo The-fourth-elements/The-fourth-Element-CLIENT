@@ -3,7 +3,6 @@
 import React from 'react';
 
 import InputField from '@/helpers/InputField';
-import Yup from 'yup';
 import {
 	Modal,
 	ModalContent,
@@ -18,7 +17,6 @@ import { postData } from '@/hooks/postData';
 import { toastInfo, toastSuccess } from '@/helpers/toast';
 
 const Invitation = ({ isOpen, onOpen, onOpenChange }) => {
-	const validation = Yup;
 	return (
 		<>
 			<Modal

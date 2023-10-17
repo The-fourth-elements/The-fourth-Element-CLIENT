@@ -1,5 +1,22 @@
 @import './variables';
 
+::-webkit-scrollbar {
+	width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: $grey-2;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+	background: $orange-1;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+	background: $orange-3;
+  }
+  
 html {
 	font-size: 100%;
 }
