@@ -10,9 +10,10 @@ import {
 	CircularProgress,
 } from '@nextui-org/react';
 import { useNationAndCity } from '@/zustand/store/countryAndCityID';
+import { useSession } from 'next-auth/react';
 
 const UserDetail = ({ params }) => {
-	
+	const { data: session } = useSession();
 	const { detail, getDetail } = useUserDetail();
 	let [country, setCountry] = useState("");
 	let [city, setCity] = useState("");
@@ -34,18 +35,22 @@ const UserDetail = ({ params }) => {
 		<article>
 			 
 			{detail?.username && Object.keys(detail).length > 0 ? (
-				<Card className='main'>
-					<CardHeader className='elHeader'>
+				<div className='main'>
+					<div className='elHeader'>
 						<h1>Name: {detail?.username}</h1>
 						{detail?.profile_img ? <Image
-							src={detail?.profile_img}
+							src={detail?.profile_img?.secure_url}
 							alt={detail?.name}
-						/>: <Image
+						/>:
+						// session?.token?.picture ? (
+						// 	<Image src={session?.token?.picture} alt='profileImage' />
+						// ) :
+						<Image
 						src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
 						alt={detail?.name}
 					/>}
-					</CardHeader>
-					<CardBody className='elBody'>
+					</div>
+					<div className='elBody'>
 						<h2>Email: {detail?.email}</h2>
 						{detail?.role === 0 ? (
 							<h2>Plan: Free Plan</h2>
@@ -63,8 +68,8 @@ const UserDetail = ({ params }) => {
 							Registration date:
 							{new Date(detail?.createdAt).toLocaleDateString()}
 						</h2>
-					</CardBody>
-				</Card>
+					</div>
+				</div>
 			) : (
 				<div className='centered'>
 					<CircularProgress

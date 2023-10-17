@@ -37,7 +37,7 @@ export const UserProfileHeader = ({
 	};
 
 	return (
-		<CardHeader className='elHeader'>
+		<div className='elHeader'>
 			{openName ? (
 				<h1>
 					<InputName
@@ -46,6 +46,7 @@ export const UserProfileHeader = ({
 						handleValidationErrors={handleValidationErrors}
 					/>
 					<Button
+						className='button'
 						size='sm'
 						title='back to'
 						color='warning'
@@ -55,6 +56,7 @@ export const UserProfileHeader = ({
 						↩
 					</Button>
 					<Button
+						className='button'
 						color='warning'
 						variant='bordered'
 						size='sm'
@@ -67,6 +69,7 @@ export const UserProfileHeader = ({
 				<h1>
 					Name: {user?.username}
 					<Button
+					className='button'
 						title='Edit  Name'
 						color='warning'
 						variant='bordered'
@@ -79,9 +82,11 @@ export const UserProfileHeader = ({
 			)}
 			{user?.profile_img ? (
 				<Image src={user?.profile_img?.secure_url} alt={user?.name} />
-			) : session?.token?.picture ? (
+			) 
+			: session?.token?.picture ? (
 				<Image src={session?.token?.picture} alt='profileImage' />
-			) : (
+			) 
+			: (
 				<Image
 					src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
 					alt={user?.name}
@@ -89,15 +94,30 @@ export const UserProfileHeader = ({
 			)}
 			{openImage ? (
 				<div>
+					<Button
+						className='button'
+						size='sm'
+						title='back to'
+						color='warning'
+						variant='bordered'
+						onClick={handleChangePhoto}
+						isIconOnly>
+						↩
+					</Button>
 					<CldUploadButton
+						className='buttonImg'
 						uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
 						disabled={newImage?.url?.length > 0}
 						onSuccess={getNewImage}
 					/>
-					<Button onClick={updateUserImage} disabled={!newImage?.url}>Accept</Button>
+					<Button className='buttonImg'
+						color='warning'
+						variant='bordered'
+						size='sm' onClick={updateUserImage} disabled={!newImage?.url}>Accept</Button>
 				</div>
 			) : (
 				<Button
+				className='buttonImg'
 					isIconOnly
 					color='warning'
 					variant='bordered'
@@ -106,7 +126,7 @@ export const UserProfileHeader = ({
 					<EditIcon />
 				</Button>
 			)}
-		</CardHeader>
+		</div>
 	);
 };
 
@@ -135,7 +155,7 @@ export const UserProfileBody = ({
 	newAge,
 	updateUserAge,
 }) => (
-	<CardBody className='elBody'>
+	<div className='elBody'>
 		<h2>Email: {user?.email}</h2>
 		{user?.role === 0 ? (
 			<h2>Plan: Free Plan</h2>
@@ -174,6 +194,7 @@ export const UserProfileBody = ({
 					))}
 				</select>
 				<Button
+					className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'
@@ -189,6 +210,7 @@ export const UserProfileBody = ({
 			<h2>
 				Edad: <InputAge getNewAge={getNewAge} newAge={newAge} />{' '}
 				<Button
+					className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'
@@ -204,6 +226,7 @@ export const UserProfileBody = ({
 			<h2>
 				Años de experiencia: <InputExp getNewExp={getNewExp} newExp={newExp} />{' '}
 				<Button
+				className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'
@@ -214,5 +237,5 @@ export const UserProfileBody = ({
 		) : (
 			<h2> Años de experiencia: {user?.expYearsSports} </h2>
 		)}
-	</CardBody>
+	</div>
 );

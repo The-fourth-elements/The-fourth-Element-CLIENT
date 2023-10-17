@@ -127,10 +127,12 @@ const UserProfile = () => {
 					secure_url: newImage.url,
 				},
 			};
+			console.log(update)
 			await updateUserRole(update);
 			setUpdated(true);
 			toastInfo('A actualizado la foto de perfil');
 			setNewImage(null);
+			setOpenImage(false)
 		} catch (error) {
 			toastError(
 				'No se pudo cambiar la foto de perfil, contacta a un moderador si el problema persiste'
@@ -148,9 +150,9 @@ const UserProfile = () => {
 		setNewSport(event.target.value);
 	};
 	return (
-		<article>
+		<article style={{ display: 'flex', justifyContent: 'center' }}>
 			{user && user?._id && Object.keys(user).length > 0 ? (
-				<Card className='main'>
+				<div className='main'>
 					<UserProfileHeader
 						newImage={newImage}
 						updateUserImage={updateUserImage}
@@ -190,7 +192,7 @@ const UserProfile = () => {
 						handleChangeCity={handleChangeCity}
 						updateUserCity={updateUserCity}
 					/>
-				</Card>
+				</div>
 			) : (
 				<div className='centered'>
 					<CircularProgress

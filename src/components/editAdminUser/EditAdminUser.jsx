@@ -7,9 +7,9 @@ import "./styles.scss"
 import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 import { Modal } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-
+import { useSession } from 'next-auth/react';
 const EditAdminUser = ({id}) => {
-    
+    const { data: session } = useSession();
     const { detail, getDetail, updateUserRole } = useUserDetail();
 	const {getCityId, getCountryId, stringCity, stringCountry} = useNationAndCity()
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -59,18 +59,22 @@ const EditAdminUser = ({id}) => {
 		<article>
 			{showBackdrop && <div className="backdrop"></div>}
 			{detail?.username && Object.keys(detail).length > 0 ? (
-				<Card className='main'>
-					<CardHeader className='elHeader'>
+				<div className='main'>
+					<div className='elHeader'>
 						<h1>Name: {detail?.username}</h1>
 						{detail?.profile_img ? <Image
-							src={detail?.profile_img}
+							src={detail?.profile_img?.secure_url}
 							alt={detail?.name}
-						/>: <Image
+						/>: 
+						// session?.token?.picture ? (
+						// 	<Image src={session?.token?.picture} alt='profileImage' />
+						// ) :
+						 <Image
 						src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
 						alt={detail?.name}
 					/>}
-					</CardHeader>
-					<CardBody className='elBody'>
+					</div>
+					<div className='elBody'>
 						<h2>Email: {detail?.email}</h2>
                         <div className='editPlan'>
                         {!changePlan ? (detail?.role === 0 ? (
@@ -112,8 +116,8 @@ const EditAdminUser = ({id}) => {
 							Registration date:{' '}
 							{new Date(detail?.createdAt).toLocaleDateString()}
 						</h2>
-					</CardBody>
-				</Card>
+					</div>
+				</div>
 			) : (
 				<div className='centered'>
 					<CircularProgress
