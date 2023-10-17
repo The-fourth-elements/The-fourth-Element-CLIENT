@@ -80,7 +80,9 @@ export const UserProfileHeader = ({
 					</Button>
 				</h1>
 			)}
-			{user?.profile_img ? (
+			{newImage ? <Image src={newImage?.url} alt={newImage?.id} />
+			:
+			user?.profile_img ? (
 				<Image src={user?.profile_img?.secure_url} alt={user?.name} />
 			) 
 			: session?.token?.picture ? (

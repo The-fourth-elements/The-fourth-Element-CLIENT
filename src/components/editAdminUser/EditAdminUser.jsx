@@ -8,6 +8,7 @@ import { useNationAndCity } from '@/zustand/store/countryAndCityID';
 import { Modal } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import ModalChanges from '@/helpers/ModalChanges';
 const EditAdminUser = ({id}) => {
     const { data: session } = useSession();
     const { detail, getDetail, updateUserRole } = useUserDetail();
@@ -19,16 +20,21 @@ const EditAdminUser = ({id}) => {
 	let [country, setCountry] = useState("");
 	let [city, setCity] = useState("");
 	const router = useRouter()
+	const [updated, setUpdated] = useState(false)
 
   useEffect(() => {
-    if (id) {
+	if (id ) {
+		getDetail(id);
+	  }
+    if (id && updated) {
       getDetail(id);
+	  setUpdated(false)
     }
 	if(detail?.username && Object.keys(detail).length > 0){
 		setCountry(detail?.nation?.name)
 		setCity(detail?.city?.name)
 	}
-  }, [ detail?.role, id]);
+  }, [ detail?.role, id, updated]);
 
 
   const handleChangePlan = () => {
@@ -38,6 +44,7 @@ const EditAdminUser = ({id}) => {
   const handleChangeModal = () => {
     setShowConfirmationModal(!showConfirmationModal);
 	setShowBackdrop(!showBackdrop);
+	console.log(showConfirmationModal)
   };
 
   const selectPlan = (event) => {
@@ -45,19 +52,20 @@ const EditAdminUser = ({id}) => {
   };
 
   const updateRole = () => {
+	  console.log(showConfirmationModal)
 	if (selectedPlan !== null) {
 	  updateUserRole({id: id, role: selectedPlan});
 	  setChangePlan(!changePlan);
 	  handleChangeModal();
 	  setSelectedPlan(null)
-	  getDetail(id)
+	  setUpdated(true)
 	}
   };
 
 
     return (
 		<article>
-			{showBackdrop && <div className="backdrop"></div>}
+			
 			{detail?.username && Object.keys(detail).length > 0 ? (
 				<div className='main'>
 					<div className='elHeader'>
@@ -99,13 +107,12 @@ const EditAdminUser = ({id}) => {
                             </h2>)}
                         </div>
 						{showConfirmationModal && (
-							<div className="confirmation-modal">
-							<div className="modal-content">
-								<p>Are you sure you want to change the role?</p>
-								<button onClick={updateRole}>Change Plan</button>
-								<button onClick={handleChangeModal}>Cancel</button>
-							</div>
-							</div>
+							<ModalChanges
+							isOpen={true}
+							cerrador={handleChangeModal}
+							pregunta="¿Seguro que desea cambiar el rol del usuario?"
+							funcion={updateRole}
+							/>
 						)}
 						<h2>Country: {country}</h2>
 						<h2>City: {city}</h2>

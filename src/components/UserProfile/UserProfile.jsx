@@ -48,6 +48,7 @@ const UserProfile = () => {
 		setOpenCity(false);
 		setOpenName(false);
 		setOpenCountry(false);
+		setNewImage(null)
 	};
 	const handleChangeCountry = () => {
 		setOpenCountry(!openCountry);
@@ -93,11 +94,15 @@ const UserProfile = () => {
 		const update = { id: user?._id, age: newAge };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserExp = () => {
 		const update = { id: user?._id, expYearsSports: newExp };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserCountry = () => {
 		const update = { id: user?._id, nation: newCountry, city: newCity };
@@ -116,6 +121,8 @@ const UserProfile = () => {
 		const update = { id: user?._id, sport: newSport };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 
 	const updateUserImage = async () => {
@@ -127,7 +134,6 @@ const UserProfile = () => {
 					secure_url: newImage.url,
 				},
 			};
-			console.log(update)
 			await updateUserRole(update);
 			setUpdated(true);
 			toastInfo('A actualizado la foto de perfil');
