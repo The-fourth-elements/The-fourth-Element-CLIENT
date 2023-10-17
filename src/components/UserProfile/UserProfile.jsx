@@ -136,7 +136,7 @@ const UserProfile = () => {
 			};
 			await updateUserRole(update);
 			setUpdated(true);
-			toastInfo('A actualizado la foto de perfil');
+			toastInfo('Ha actualizado la foto de perfil');
 			setNewImage(null);
 			setOpenImage(false)
 		} catch (error) {
