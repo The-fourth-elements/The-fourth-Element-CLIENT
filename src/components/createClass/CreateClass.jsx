@@ -1,16 +1,15 @@
 'use client';
 
 import { CldUploadButton } from 'next-cloudinary';
-import { Button, Card, CardBody } from '@nextui-org/react';
+import { Button, Card, CardBody, useDisclosure } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/navigation';
 import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
 import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
-
+import { Select, SelectItem } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
-
 import React from 'react';
 import './CreateClassStyles.scss';
 
@@ -18,11 +17,25 @@ import { validationSchemaCreateClass } from '@/helpers/validations';
 import { toastError, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
+import ModalEditQuiz from '@/helpers/ModalEditQuiz';
+import { all } from 'axios';
 
 function CreateClass() {
-	const { modules, getModules } = useModulesStore();
+	const {
+		modules,
+		getModules,
+		allQuizes,
+		getQuizes,
+		quiz,
+		getQuiz,
+		addQuizToClass,
+	} = useModulesStore();
+
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const [isloading, setIsLoading] = useState(true);
+	const [updated, setUpdated] = useState(false);
+
 	const route = useRouter();
 	const [video, setVideo] = useState({});
 	const initialValuesClass = {
@@ -33,6 +46,7 @@ function CreateClass() {
 	};
 
 	useEffect(() => {
+		getQuizes();
 		const fetchModulesAndRedirect = async () => {
 			await getModules();
 			if (!(modules.length === 0)) setIsLoading(!isloading);
@@ -41,6 +55,11 @@ function CreateClass() {
 			fetchModulesAndRedirect();
 		}
 	}, [modules]);
+
+	useEffect(() => {
+		getQuizes();
+		setUpdated(false);
+	}, [updated]);
 
 	function handleRouteChange() {
 		route.push('/dashboard/module/create');
@@ -98,9 +117,15 @@ function CreateClass() {
 					state: 'completed',
 				}),
 			};
+
+			quiz.classId = classPostResponse._id;
+			if (quiz.classId) {
+				addQuizToClass(quiz);
+			}
+
 			await fetch(url, options);
 
-			toastSuccess('¡Se subió la clase!!');
+			toastSuccess('¡Se subió la clase!');
 			route.push('/dashboard');
 		} catch (error) {
 			toastError('No se pudo subir la clase, intente mas tarde');
@@ -109,8 +134,16 @@ function CreateClass() {
 	const handleSuccess = e => {
 		const { info } = e;
 		const { url, public_id } = info;
-		console.log(e);
-		setVideo({ url, id:public_id });
+		setVideo({ url, id: public_id });
+	};
+
+	const handleSelect = event => {
+		getQuiz(event.target.value);
+	};
+
+	const closeQuizModal = () => {
+		console.log('AAAAAAAAAAAAAAAAAAA');
+		setUpdated(true);
 	};
 
 	return (
@@ -167,6 +200,33 @@ function CreateClass() {
 							name='description'
 						/>
 
+						<div className='flex flex-col items-center md:flex-row md:justify-evenly w-full'>
+							<Select
+								label='Quiz de la Clase'
+								placeholder='Seleccione un quiz'
+								className='md:max-w-[12rem] max-w-xs '
+								onChange={handleSelect}>
+								{allQuizes.length > 0 &&
+									allQuizes.map(quiz => (
+										<SelectItem key={quiz._id} value={quiz._id}>
+											{quiz.name}
+										</SelectItem>
+									))}
+							</Select>
+
+							<Button
+								onPress={onOpen}
+								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3'>
+								Crear Quiz
+							</Button>
+
+							<ModalEditQuiz
+								onClose={closeQuizModal}
+								update={false}
+								isOpenModal={isOpen}
+								onOpenChangeModal={onOpenChange}></ModalEditQuiz>
+						</div>
+
 						<h2 className='text-white'>Selecciona un video:</h2>
 						<CldUploadButton
 							className='cldButton'
@@ -179,11 +239,11 @@ function CreateClass() {
 								Video subido correctamente
 							</h5>
 						) : null}
+
 						<Button
+							size='md'
 							type='submit'
-							size='lg'
-							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'
-							>
+							class='transition-all bg-background text-lg rounded-lg max-w-xs  mx-auto hover:bg-primary p-5 py-3'>
 							Enviar
 						</Button>
 					</Form>

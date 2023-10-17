@@ -7,11 +7,15 @@ export const middleware = async request => {
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
     let role = 0;
     if (id) {
-        const response = await fetch(
-            `${process.env.API_BACKEND}user?id=${id.value}`
-        );
-        const user = await response.json();
-        role = user.role;
+        try {
+            const response = await fetch(
+                `${process.env.API_BACKEND}user?id=${id.value}`
+            );
+            const user = await response.json();
+            role = user.role;
+        } catch (error) {
+            console.log(error);
+        }
     }
     if (session && request.nextUrl.pathname === '/auth') {
         const url = request.nextUrl.clone();
@@ -24,7 +28,7 @@ export const middleware = async request => {
         }
         return NextResponse.redirect(url);
     }
-   
+
     const path = request.nextUrl.pathname;
     if (
         (session && path === '/dashboard') ||
@@ -62,7 +66,7 @@ export const middleware = async request => {
     if (session && request.nextUrl.pathname === '/paid-success') {
         const requestedPage = request.nextUrl.pathname;
         const url = request.nextUrl.clone();
-        if(role < 1){
+        if (role < 1) {
             url.pathname = '/auth';
             url.search = `p=${requestedPage}`;
             return NextResponse.redirect(url);

@@ -6,7 +6,7 @@ import logo from '../../../src/assets/svg/logo.svg';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
-
+import { useEffect } from 'react';
 import {
 	Dropdown,
 	DropdownItem,
@@ -24,15 +24,24 @@ import {
 } from '@nextui-org/react';
 import { toastError } from '@/helpers/toast';
 import { deleteCookie } from 'cookies-next';
+import { useUserProfile } from '@/zustand/store/userProfile';
+import { getCookie } from 'cookies-next';
+
 
 export default function Nav() {
+	
 	const { status, data: session } = useSession();
 	const router = useRouter();
+	const {getProfile, user} = useUserProfile()
 	const routes = [
 		{ label: 'Acerca', route: '/about' },
 		{ label: 'Precios', route: '/prices' },
 	];
+	const cookie = getCookie("jsdklfsdjklfdsjfds")
 
+	useEffect (() => {
+			getProfile(cookie)
+		}, [])
 	const handleLogout = async () => {
 		try {
 			deleteCookie('jsdklfsdjklfdsjfds');
@@ -44,7 +53,7 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header h-52'>
+		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header h-44'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -107,6 +116,7 @@ export default function Nav() {
 								<User
 									className='cursor-pointer w-fit h-fit'
 									avatarProps={
+										user?.profile_img?.secure_url ? {src: user?.profile_img?.secure_url} :
 										session?.token?.picture?.length > 5
 											? { src: session.token.picture }
 											: { src: session?.token?.user?.image_profile }
@@ -149,7 +159,7 @@ export default function Nav() {
 							color='foreground'
 							href='/auth'
 							variant='flat'
-							className='  text-l text-foreground border-solid border-1 border-blue-500'>
+							className=' bg-primary text-foreground rounded-full px-9 h-fit py-1.5 '>
 							Login
 						</Button>
 					</NavbarItem>

@@ -82,7 +82,7 @@ export const authOptions = {
 			return session;
 		},
 	},
-	debug: true,
+	debug: false,
 };
 
 const handler = NextAuth(authOptions);

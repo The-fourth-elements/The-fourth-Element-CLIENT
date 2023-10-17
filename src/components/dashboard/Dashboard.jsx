@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useUsersStore } from '../../zustand/store/usersStore';
 import { generateMetric } from '@/helpers/generateMetric';
 import { toastError } from '@/helpers/toast';
+import BarChart from '../metrics/Bar';
 
 const dashboard = () => {
 	const { getUsers, users, countriesCount, getCountOfUsersPerCountry, agesCount, getCountOfUsersPerAge } = useUsersStore();
@@ -81,7 +82,7 @@ const dashboard = () => {
 						<section className={section2}>
 							<h2>Usuarios por país: </h2>
 							{data1?.labels?.length >= 1 && (
-								<Metric data={data1} options={option1}></Metric>
+								<BarChart data={data1} options={option1}></BarChart>
 							)}
 						</section>
 						<section className={section3}>

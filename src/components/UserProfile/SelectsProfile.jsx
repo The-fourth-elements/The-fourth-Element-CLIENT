@@ -21,7 +21,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
       ) : (
         <h2>
           Country: {newCountry}
-          <Button isIconOnly color="warning" variant="bordered" title="Edit Country" onClick={handleChangeCountry}>
+          <Button className='button' isIconOnly color="warning" variant="bordered" title="Edit Country" onClick={handleChangeCountry}>
             <EditIcon />
           </Button>
         </h2>
@@ -42,7 +42,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
             onChange={selectCity}
             className='group-select'
           />
-          <Button isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCountry}> ↩ </Button>
+          <Button className='button' isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCountry}> ↩ </Button>
           <Button color="warning" variant="bordered" onClick={updateUserCountry}> Accept </Button>
         </h2>
       )
@@ -56,13 +56,13 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
             onChange={selectCity}
             className='group-select'
           />
-          <Button isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCity}> ↩ </Button>
+          <Button className='button' isIconOnly color="warning" variant="bordered" title="back to" onClick={handleChangeCity}> ↩ </Button>
           <Button color="warning" variant="bordered" onClick={updateUserCity}> Accept </Button>
         </h2>
       ) : (
         <h2>
           City: {newCity}
-          <Button color="warning" isIconOnly variant="bordered" title="Edit City" onClick={handleChangeCity}>
+          <Button className='button' color="warning" isIconOnly variant="bordered" title="Edit City" onClick={handleChangeCity}>
             <EditIcon />
           </Button>
         </h2>

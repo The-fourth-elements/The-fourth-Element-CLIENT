@@ -41,7 +41,7 @@ const Filters = () => {
     }, [filterNationality, filterPlan]);
 
     return (
-        <div className="main">
+        <div className="mainFilter">
             <div className="diver">
                 <label htmlFor="">FILTER BY COUNTRY</label>
                 <select className="select" label="Select a country" onChange={handleFilterNationality} value={filterNationality}>

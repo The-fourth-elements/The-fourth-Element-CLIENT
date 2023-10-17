@@ -104,8 +104,8 @@ export const initialValues = {
 	password: '',
 	repeatPassword: '',
 	deporte: '',
-	edad: 0,
-	experiencia: 0,
+	edad: '',
+	experiencia: '',
 };
 
 export const initialValuesLogin = {
@@ -122,3 +122,9 @@ export const initialValuesLanding = {
 	Titulo: '',
 	Contenido: ''
 }
+
+export const validationSchemaInvitation = Yup.object({
+	Email: Yup.string()
+		.email('Ingresa un correo electrónico válido')
+		.required('El correo electrónico es obligatorio')
+})

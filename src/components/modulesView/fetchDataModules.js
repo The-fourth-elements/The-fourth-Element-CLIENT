@@ -1,3 +1,5 @@
+import 'next-cloudinary/dist/cld-video-player.css';
+
 export const fetchData = async (modules) => {
     const fetchedModuleData = {};
 
@@ -23,6 +25,7 @@ export const fetchData = async (modules) => {
 };
 
 
+
 export const renderVideo = (modules, currentClass, moduleData) => {
     if (currentClass) {
         const selectedModule = modules.find(module =>
@@ -31,9 +34,16 @@ export const renderVideo = (modules, currentClass, moduleData) => {
         const selectedClassData = moduleData[selectedModule]?.find(
             elem => elem.name === currentClass
         );
-
         if (selectedClassData) {
-            return <video src={selectedClassData?.video?.url} controls={true} />;
+
+            return (
+                <>
+                    <video
+                        src={selectedClassData?.video?.url}
+                        controls
+                        id='video'
+                    />
+                </>)
         }
     }
     return <p>Selecciona una clase para ver el video.</p>;
@@ -61,6 +71,7 @@ export const renderDescription = (currentClass, modules, moduleData) => {
                             Archivo
                         </a>
                     </h3>
+
                 </>
             );
         }

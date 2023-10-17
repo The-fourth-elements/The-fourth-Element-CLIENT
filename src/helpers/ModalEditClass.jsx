@@ -7,6 +7,7 @@ import {
 	ModalBody,
 	ModalFooter,
 	Button,
+	useDisclosure,
 } from '@nextui-org/react';
 // import '@/components/createClass/CreateClassStyles.scss'
 import '../components/createClass/CreateClassStyles.scss';
@@ -17,15 +18,20 @@ import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import { CldUploadButton } from 'next-cloudinary';
 import { toastInfo } from './toast';
+import ModalEditQuiz from './ModalEditQuiz'
+
+
+
 
 const ModalEditClass = ({
-	isOpen,
-	onOpenChange,
+	isOpenModal,
+	onOpenChangeModal,
 	classValues,
 	handleDataUpdate,
 }) => {
 	const [initialValuesEditClass, setInitialValuesEditClass] = useState({});
 	const [newVideo, setNewVideo] = useState({});
+	const { isOpen, onOpenChange, onOpen } = useDisclosure()
 	useEffect(() => {
 		const { name, description, powerPoint } = classValues;
 
@@ -45,15 +51,14 @@ const ModalEditClass = ({
 			id: public_id,
 			url,
 		};
-		console.log(infoVideo);
 		setNewVideo(infoVideo);
 	};
 
 	return (
 		<>
 			<Modal
-				isOpen={isOpen}
-				onOpenChange={onOpenChange}
+				isOpen={isOpenModal}
+				onOpenChange={onOpenChangeModal}
 				backdrop='blur'
 				size='5xl'>
 				<ModalContent>
@@ -81,7 +86,7 @@ const ModalEditClass = ({
 										}
 									}}
 									validationSchema={validationSchemaEditClass}>
-									<Form className='sm:w-full md:w-3/4 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
+									<Form className='sm:w-full md:w-3/4 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-primary p-10 rounded-lg'>
 										<InputField
 											name='editedName'
 											type='string'
@@ -103,7 +108,7 @@ const ModalEditClass = ({
 											onSuccess={handleSuccessVideo}
 											uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
 										/>
-										<Button color='primary' type='submit'>
+										<Button type='submit'>
 											Editar
 										</Button>
 									</Form>
@@ -113,6 +118,12 @@ const ModalEditClass = ({
 								<Button color='danger' variant='light' onPress={onClose}>
 									Cancelar
 								</Button>
+								
+								<Button variant='light' onPress={onOpen}>
+									Editar Quiz
+								</Button>
+
+								<ModalEditQuiz idQuiz={classValues?.quiz[0]?._id}  isOpenModal={isOpen} onOpenChangeModal={onOpenChange} update={true}></ModalEditQuiz>
 							</ModalFooter>
 						</>
 					)}
