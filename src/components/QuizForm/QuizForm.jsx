@@ -1,15 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './QuizForm.scss';
 import { useCreateQuiz } from '@/zustand/store/quizActions';
 import { Button } from '@nextui-org/react';
 
 // const QuizForm = () => {
-  // const [title, setTitle] = useState('');
+// const [title, setTitle] = useState('');
 //   const [description, setDescription] = useState('');
 //   const {createQuiz} = useCreateQuiz()
 //   const [questions, setQuestions] = useState([]);
-//   const [currentAnswer, setCurrentAnswer] = useState(''); 
+//   const [currentAnswer, setCurrentAnswer] = useState('');
 //   const [correctAnswer, setCorrectAnswer] = useState('');
 //   const [questionData, setQuestionData] = useState([
 //     {
@@ -19,8 +19,7 @@ import { Button } from '@nextui-org/react';
 //   ]);
 // const [currentAnswers, setCurrentAnswers] = useState(Array(questionData.length).fill(''));
 
-
-const QuizForm = ({ update, idQuiz, onClose }) => {
+const QuizForm = ({ data, update, idQuiz, onClose }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const { createQuiz, updateQuiz } = useCreateQuiz();
@@ -35,24 +34,57 @@ const QuizForm = ({ update, idQuiz, onClose }) => {
 		},
 	]);
 
-const handleAddAnswer = (questionIndex) => {
-  const newQuestionData = [...questionData];
-  const newAnswer = { response: currentAnswers[questionIndex], verdadera: false };
-  newQuestionData[questionIndex]?.answers.push(newAnswer);
-  setQuestionData(newQuestionData);
+	useEffect(() => {
+		if (data) {
+			// Establecer el título y la descripción desde data
+			setTitle(data.name);
+			setDescription(data.description);
 
-  // Limpia el valor del campo de respuesta específico
-  const newCurrentAnswers = [...currentAnswers];
-  newCurrentAnswers[questionIndex] = '';
-  setCurrentAnswers(newCurrentAnswers);
-};
+			// Mapear las preguntas y respuestas desde data y establecerlas en questionData y currentAnswers
+			const mappedQuestions = data.quest.map(question => ({
+				question: question.question,
+				answers: question.responses.map(response => ({
+					response: response.response,
+					verdadera: response.verdadera,
+				})),
+			}));
 
-const handleTitleChange = (e) => {
-  setTitle(e?.target?.value);
-};
-const handleDescriptionChange = (e) => {
-  setDescription(e?.target?.value);
-};
+			setQuestionData(mappedQuestions);
+
+			// Crear un array de respuestas actuales basado en la longitud de las preguntas
+			const currentAns = Array(mappedQuestions.length).fill('');
+			setCorrectAnswer(currentAns);
+			setCurrentAnswers(currentAns);
+		}
+	}, [data]);
+
+	// if (data) {
+	// 	setTitle(data?.name)
+	// }
+
+	// console.log("data name" , data.name);
+
+	const handleAddAnswer = questionIndex => {
+		const newQuestionData = [...questionData];
+		const newAnswer = {
+			response: currentAnswers[questionIndex],
+			verdadera: false,
+		};
+		newQuestionData[questionIndex]?.answers.push(newAnswer);
+		setQuestionData(newQuestionData);
+
+		// Limpia el valor del campo de respuesta específico
+		const newCurrentAnswers = [...currentAnswers];
+		newCurrentAnswers[questionIndex] = '';
+		setCurrentAnswers(newCurrentAnswers);
+	};
+
+	const handleTitleChange = e => {
+		setTitle(e?.target?.value);
+	};
+	const handleDescriptionChange = e => {
+		setDescription(e?.target?.value);
+	};
 	const handleAddQuestion = () => {
 		const newQuestionData = [
 			...questionData,
@@ -61,13 +93,13 @@ const handleDescriptionChange = (e) => {
 		setQuestionData(newQuestionData);
 	};
 
-// 	const handleAddAnswer = questionIndex => {
-// 		const newQuestionData = [...questionData];
-// 		const newAnswer = { response: currentAnswer, verdadera: false };
-// 		newQuestionData[questionIndex].answers.push(newAnswer);
-// 		setQuestionData(newQuestionData);
-// 		setCurrentAnswer('');
-// 	};
+	// 	const handleAddAnswer = questionIndex => {
+	// 		const newQuestionData = [...questionData];
+	// 		const newAnswer = { response: currentAnswer, verdadera: false };
+	// 		newQuestionData[questionIndex].answers.push(newAnswer);
+	// 		setQuestionData(newQuestionData);
+	// 		setCurrentAnswer('');
+	// 	};
 
 	const handleDeleteQuestion = questionIndex => {
 		const newQuestionData = [...questionData];
@@ -105,15 +137,16 @@ const handleDescriptionChange = (e) => {
 			quest: questionData,
 		};
 
-		update ? updateQuiz(questionnaireData, idQuiz) : createQuiz(questionnaireData);
-		onClose()
+		update
+			? updateQuiz(questionnaireData, idQuiz)
+			: createQuiz(questionnaireData);
+		onClose();
 	};
-
 
 	return (
 		<div className='main h-[80vh]'>
 			<div className='header'>
-        {update	? <h1>Editar Cuestionario</h1> : <h1>Crear Cuestionario</h1> }
+				{update ? <h1>Editar Cuestionario</h1> : <h1>Crear Cuestionario</h1>}
 
 				<input
 					className='inputHeader'
@@ -145,16 +178,16 @@ const handleDescriptionChange = (e) => {
 							}
 						/>
 						<input
-  className="input"
-  type="text"
-  placeholder="Respuesta"
-  value={currentAnswers[questionIndex] || ''}
-  onChange={(e) => {
-    const newCurrentAnswers = [...currentAnswers];
-    newCurrentAnswers[questionIndex] = e.target.value;
-    setCurrentAnswers(newCurrentAnswers);
-  }}
-/>
+							className='input'
+							type='text'
+							placeholder='Respuesta'
+							value={currentAnswers[questionIndex] || ''}
+							onChange={e => {
+								const newCurrentAnswers = [...currentAnswers];
+								newCurrentAnswers[questionIndex] = e.target.value;
+								setCurrentAnswers(newCurrentAnswers);
+							}}
+						/>
 						<div>
 							{question.answers.map((answer, ansIndex) => (
 								<div className='inputElements' key={ansIndex}>
@@ -186,10 +219,14 @@ const handleDescriptionChange = (e) => {
 							))}
 						</div>
 						<div className='guardaBotones '>
-							<Button onClick={() => handleAddAnswer(questionIndex)} className='bg-background'>
+							<Button
+								onClick={() => handleAddAnswer(questionIndex)}
+								className='bg-background'>
 								Agregar Respuesta
 							</Button>
-							<Button onClick={() => handleDeleteQuestion(questionIndex)} className='bg-danger-400'>
+							<Button
+								onClick={() => handleDeleteQuestion(questionIndex)}
+								className='bg-danger-400'>
 								Eliminar pregunta
 							</Button>
 						</div>
@@ -200,14 +237,14 @@ const handleDescriptionChange = (e) => {
 				Agregar Pregunta
 			</Button>
 
-
-			<Button className='p-7 bg-background text-xl' onClick={handleSaveQuestionnaire} >
+			<Button
+				className='p-7 bg-background text-xl'
+				onClick={handleSaveQuestionnaire}>
 				Guardar Cuestionario
 			</Button>
 		</div>
 	);
 };
-
 
 /*
 const handleSaveQuestionnaire = () => {
@@ -300,4 +337,4 @@ return (
 );
 }
 */
-  export default QuizForm;
+export default QuizForm;
