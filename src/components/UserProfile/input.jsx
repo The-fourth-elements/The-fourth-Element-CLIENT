@@ -7,7 +7,7 @@ const InputName = ({ getNewName, name, handleValidationErrors  }) => {
     const nameSchema = Yup.string()
         .min(2, "El nombre debe tener al menos 2 caracteres")
         .max(20, "El nombre no puede tener más de 20 caracteres")
-        .matches(/^[a-zA-Z0-9_-]+$/, "El nombre solo puede contener letras, números, guiones bajos (_) y guiones (-)");
+        .matches(/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ.,?! ]+$/, "El nombre no puede contener guiones bajos (_) y guiones (-)");
 
     const [errors, setErrors] = useState({});
   

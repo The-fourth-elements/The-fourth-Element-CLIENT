@@ -168,6 +168,7 @@ export const UserProfileBody = ({
 			<h2>Plan: Moderador</h2>
 		)}
 		<CountrySelect
+			user = {user}
 			stringCountry={stringCountry}
 			openCountry={openCountry}
 			newCountry={newCountry}
@@ -176,6 +177,7 @@ export const UserProfileBody = ({
 			updateUserCountry={updateUserCountry}
 		/>
 		<CitySelect
+			user = {user}
 			openCountry={openCountry}
 			handleChangeCountry={handleChangeCountry}
 			updateUserCountry={updateUserCountry}
