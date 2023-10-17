@@ -45,7 +45,7 @@ import "./input.scss"
           key="outside"
           type="text"
           label="Edad"
-          labelPlacement="outside"
+          // labelPlacement="outside"
           onChange={getNewAge}
           onBlur={validateName}
         />
@@ -78,7 +78,7 @@ export const InputExp = ({ getNewExp, newExp }) => {
           key="outside"
           type="text"
           label="Experiencia"
-          labelPlacement="outside"
+          // labelPlacement="outside"
           onChange={getNewExp}
           onBlur={validateName}
         />

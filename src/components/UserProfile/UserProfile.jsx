@@ -42,6 +42,7 @@ const UserProfile = () => {
 		if (!user.sport) {
 			console.log('no deporte');
 		}
+		console.log(user)
 	}, [user?.username, user?.id, updated]);
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage);
@@ -110,12 +111,16 @@ const UserProfile = () => {
 		setOpenCountry(false);
 		setOpenCity(false);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserCity = () => {
 		const update = { id: user?._id, city: newCity };
 		updateUserRole(update);
 		setOpenCity(false);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserSport = () => {
 		const update = { id: user?._id, sport: newSport };
@@ -148,6 +153,7 @@ const UserProfile = () => {
 	const selectCountry = val => {
 		setNewCountry(val);
 		setNewCity('');
+		console.log()
 	};
 	const selectCity = val => {
 		setNewCity(val);
