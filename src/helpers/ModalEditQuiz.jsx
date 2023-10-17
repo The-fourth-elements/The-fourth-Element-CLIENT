@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import {
 	ModalContent,
@@ -9,12 +8,34 @@ import {
 	Button,
 	useDisclosure,
 } from '@nextui-org/react';
-// import '@/components/createClass/CreateClassStyles.scss'
 import '../components/createClass/CreateClassStyles.scss';
 import QuizForm from '@/components/QuizForm/QuizForm';
+import { getQuiz } from '@/zustand/actions/modulesStoreActions';
 
-const ModalEditQuiz = ({ idQuiz , isOpenModal, onOpenChangeModal, update, onClose}) => {
+const ModalEditQuiz = ({
+	idQuiz,
+	isOpenModal,
+	onOpenChangeModal,
+	update,
+	onClose,
+}) => {
+	const [quizData, setQuizData] = useState(null);
 
+	useEffect(() => {
+		// Función asincrónica para obtener los datos del quiz
+		async function fetchQuizData() {
+			try {
+				const data = await getQuiz(idQuiz);
+				setQuizData(data);
+				console.log(data);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		// Llamar a la función para cargar los datos
+		fetchQuizData();
+	}, [idQuiz]);
 
 	return (
 		<>
@@ -23,16 +44,21 @@ const ModalEditQuiz = ({ idQuiz , isOpenModal, onOpenChangeModal, update, onClos
 				onOpenChange={onOpenChangeModal}
 				backdrop='blur'
 				size='5xl'
-				onClose={onClose}
-				>
+				onClose={onClose}>
 				<ModalContent>
-					{(onClose) => (
+					{onClose => (
 						<>
 							<ModalHeader className='flex flex-col gap-1 '>
-								{update ? "Editar Quiz" : "Crear Quiz"}
+								{update ? 'Editar Quiz' : 'Crear Quiz'}
 							</ModalHeader>
 							<ModalBody>
-								<QuizForm onClose={onClose} update={update} idQuiz={idQuiz}/>
+								{/* Pasar quizData como prop a QuizForm */}
+								<QuizForm
+									data={quizData}
+									onClose={onClose}
+									update={update}
+									idQuiz={idQuiz}
+								/>
 							</ModalBody>
 							<ModalFooter>
 								<Button color='danger' variant='light' onPress={onClose}>
