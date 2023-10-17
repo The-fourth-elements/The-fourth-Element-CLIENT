@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/react';
 import { EditIcon } from "@/assets/svg-jsx/EditIcon";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
-  export const CountrySelect = ({stringCountry, openCountry, newCountry, selectCountry, handleChangeCountry, updateUserCountry }) => (
+  export const CountrySelect = ({stringCountry, openCountry, newCountry, selectCountry, handleChangeCountry, updateUserCountry,user }) => (
     <div>
       {openCountry ? (
         <h2>
@@ -20,7 +20,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
         </h2>
       ) : (
         <h2>
-          País: {newCountry}
+          País: {user?.nation?.name}
           <Button className='button' isIconOnly color="warning" variant="bordered" title="Edit Country" onClick={handleChangeCountry}>
             <EditIcon />
           </Button>
@@ -29,7 +29,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
     </div>
   );
 
-  export const CitySelect = ({ openCity, stringCity, newCountry, newCity, selectCity, handleChangeCity, updateUserCity, handleChangeCountry, openCountry, updateUserCountry }) => (
+  export const CitySelect = ({ openCity, stringCity, newCountry, newCity, selectCity, handleChangeCity, updateUserCity, handleChangeCountry, openCountry, updateUserCountry, user }) => (
     <div>
       {openCountry ? 
       (
@@ -61,7 +61,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
         </h2>
       ) : (
         <h2>
-          Ciudad: {newCity}
+          Ciudad: {user?.city?.name}
           <Button className='button' color="warning" isIconOnly variant="bordered" title="Edit City" onClick={handleChangeCity}>
             <EditIcon />
           </Button>
