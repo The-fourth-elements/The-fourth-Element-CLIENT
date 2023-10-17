@@ -86,7 +86,7 @@ const ModalEditClass = ({
 										}
 									}}
 									validationSchema={validationSchemaEditClass}>
-									<Form className='sm:w-full md:w-3/4 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-blue-100 p-10 rounded-lg'>
+									<Form className='sm:w-full md:w-3/4 flex flex-col space-y-5  items-center mx-auto  mt-10 mb-10 bg-primary p-10 rounded-lg'>
 										<InputField
 											name='editedName'
 											type='string'
@@ -108,7 +108,7 @@ const ModalEditClass = ({
 											onSuccess={handleSuccessVideo}
 											uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
 										/>
-										<Button color='primary' type='submit'>
+										<Button type='submit'>
 											Editar
 										</Button>
 									</Form>

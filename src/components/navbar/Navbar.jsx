@@ -159,7 +159,7 @@ export default function Nav() {
 							color='foreground'
 							href='/auth'
 							variant='flat'
-							className='  text-l text-foreground border-solid border-1 border-blue-500'>
+							className=' bg-primary text-foreground rounded-full px-9 h-fit py-1.5 '>
 							Login
 						</Button>
 					</NavbarItem>
