@@ -1,28 +1,23 @@
 @import "../../styles/base";
 
 .main {
+    
+  border-top: solid $grey-2 5px;
+  border-bottom: solid $grey-2 5px;
+  
+  @include md (){
     display: flex;
     flex-direction: column; 
     align-items: center;
-  justify-content: center;
-    border-top: solid $grey-2 5px;
-    border-bottom: solid $grey-2 5px;
-    border-radius: 0;
-    
-    
-    @include md (){
-      display: flex;
-      flex-direction: column; 
-      align-items: center;
-      justify-content: center;
-    }
+    justify-content: space-between;
+  }
 
-    @include lg (){
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    }
-    
+  @include lg (){
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
 
 }
 
@@ -80,20 +75,19 @@
   }
 
   @include lg () {
-    align-self: flex-start;
-    width: 600px; 
-    height: 80vh;
-    align-items: center;
+    width: 360px; 
+    height: 100%;
     justify-content: center;
-    padding-bottom: 80px;
-    padding-left: 80px;
+    margin: 20px;
+    padding: 10px;
   }
 }
 
 .elHeader img{
   border-radius: 50%;
   border: solid $orange-4 7px;
-  width: 350px;
+  width: 300px;
+  height: 300px;
   @include md (){
   }
 }
@@ -108,6 +102,7 @@
   padding-right: 15px;
   border-radius: 10px;
   border-bottom: solid $orange-4 7px;
+  text-align: center;
   @include md (){
     font-size: 45px;
     margin: 30px;
@@ -117,8 +112,9 @@
 .elBody{
   display: flex;
   flex-direction: column; 
-  padding-top: 5px;
-  padding-bottom: 60px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  padding: 10px;
 
   @include md (){
     display: flex;
@@ -127,21 +123,19 @@
     margin: 20px;
   }
 
-  @include lg () {
-    
-    flex-direction: column; 
+  @include lg () { 
     width: 600px;
+    height: 100%;
     margin: 20px;
-    align-self: flex-end;
-    padding-right: 200px;
-    height: 80vh;
     justify-content: center;
+    padding-bottom: 0;
+    padding: 20px;
   }
 }
-
 .elBody h2{
-  padding: 3px;
-  font-size: 20px;
+  overflow-wrap: break-word;
+  padding: 7px;
+  font-size: 18px;
   border-bottom: solid $red-2 2px;
   @include md (){
     padding: 7px;

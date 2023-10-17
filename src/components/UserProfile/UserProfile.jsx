@@ -48,6 +48,7 @@ const UserProfile = () => {
 		setOpenCity(false);
 		setOpenName(false);
 		setOpenCountry(false);
+		setNewImage(null)
 	};
 	const handleChangeCountry = () => {
 		setOpenCountry(!openCountry);
@@ -93,11 +94,15 @@ const UserProfile = () => {
 		const update = { id: user?._id, age: newAge };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserExp = () => {
 		const update = { id: user?._id, expYearsSports: newExp };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserCountry = () => {
 		const update = { id: user?._id, nation: newCountry, city: newCity };
@@ -116,6 +121,8 @@ const UserProfile = () => {
 		const update = { id: user?._id, sport: newSport };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 
 	const updateUserImage = async () => {
@@ -131,6 +138,7 @@ const UserProfile = () => {
 			setUpdated(true);
 			toastInfo('A actualizado la foto de perfil');
 			setNewImage(null);
+			setOpenImage(false)
 		} catch (error) {
 			toastError(
 				'No se pudo cambiar la foto de perfil, contacta a un moderador si el problema persiste'
@@ -148,9 +156,9 @@ const UserProfile = () => {
 		setNewSport(event.target.value);
 	};
 	return (
-		<article>
+		<article style={{ display: 'flex', justifyContent: 'center' }}>
 			{user && user?._id && Object.keys(user).length > 0 ? (
-				<Card className='main'>
+				<div className='main'>
 					<UserProfileHeader
 						newImage={newImage}
 						updateUserImage={updateUserImage}
@@ -190,7 +198,7 @@ const UserProfile = () => {
 						handleChangeCity={handleChangeCity}
 						updateUserCity={updateUserCity}
 					/>
-				</Card>
+				</div>
 			) : (
 				<div className='centered'>
 					<CircularProgress
