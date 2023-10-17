@@ -1,7 +1,7 @@
 'use client';
 
 import { CldUploadButton } from 'next-cloudinary';
-import { Button, Card, CardBody } from '@nextui-org/react';
+import { Button, Card, CardBody, useDisclosure } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/navigation';
 import InputField from '@/helpers/InputField';
@@ -10,7 +10,6 @@ import TextAreaField from '@/helpers/TextAreaField';
 import CustomModal from '@/helpers/CustomModal';
 import { Select, SelectItem } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
-
 import React from 'react';
 import './CreateClassStyles.scss';
 
@@ -18,6 +17,7 @@ import { validationSchemaCreateClass } from '@/helpers/validations';
 import { toastError, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
+import ModalEditQuiz from '@/helpers/ModalEditQuiz';
 import { all } from 'axios';
 
 function CreateClass() {
@@ -31,7 +31,11 @@ function CreateClass() {
 		addQuizToClass,
 	} = useModulesStore();
 
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
 	const [isloading, setIsLoading] = useState(true);
+	const [updated, setUpdated] = useState(false);
+
 	const route = useRouter();
 	const [video, setVideo] = useState({});
 	const initialValuesClass = {
@@ -51,6 +55,11 @@ function CreateClass() {
 			fetchModulesAndRedirect();
 		}
 	}, [modules]);
+
+	useEffect(() => {
+		getQuizes();
+		setUpdated(false);
+	}, [updated]);
 
 	function handleRouteChange() {
 		route.push('/dashboard/module/create');
@@ -132,12 +141,10 @@ function CreateClass() {
 		getQuiz(event.target.value);
 	};
 
-	const handleRouteToCreateQuiz = () => {
-		route.push('/dashboard/create-quiz');
-
+	const closeQuizModal = () => {
+		console.log('AAAAAAAAAAAAAAAAAAA');
+		setUpdated(true);
 	};
-
-	
 
 	return (
 		<Card className='relative min-h-screen modern text-4xl '>
@@ -208,11 +215,16 @@ function CreateClass() {
 							</Select>
 
 							<Button
-								onPress={handleRouteToCreateQuiz}
-								size='lg'
-								className='bg-background rounded-lg submit max-w-xs hover:bg-primary mt-5 md:mt-0'>
-									Crear nuevo Quiz
+								onPress={onOpen}
+								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3'>
+								Crear Quiz
 							</Button>
+
+							<ModalEditQuiz
+								onClose={closeQuizModal}
+								update={false}
+								isOpenModal={isOpen}
+								onOpenChangeModal={onOpenChange}></ModalEditQuiz>
 						</div>
 
 						<h2 className='text-white'>Selecciona un video:</h2>
@@ -229,9 +241,9 @@ function CreateClass() {
 						) : null}
 
 						<Button
+							size='md'
 							type='submit'
-							size='lg'
-							className='bg-background rounded-lg submit max-w-xs  mx-auto hover:bg-primary'>
+							class='transition-all bg-background text-lg rounded-lg max-w-xs  mx-auto hover:bg-primary p-5 py-3'>
 							Enviar
 						</Button>
 					</Form>

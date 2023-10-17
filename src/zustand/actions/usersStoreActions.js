@@ -178,6 +178,8 @@ export const restoreUser = email => {
 };
 
 export const createQuiz = body => {
+
+	
 	return fetch(`${process.env.API_BACKEND}quiz`, {
 		method: 'POST',
 		headers: {
@@ -187,13 +189,14 @@ export const createQuiz = body => {
 	})
 		.then(response => response.json())
 		.then(data => {
+			if (data.error) {
+				throw data.error;
+			}
 			toastSuccess(`se ha creado con exito el quiz: ${data.name}`)
-			setTimeout(() => {
-				window.location.reload()
-			}, "3000")
 		})
+		
 		.catch(error => {
-			console.error('There was a problem with the fetch operation:', error);
+			toastError(error);
 		});
 };
 

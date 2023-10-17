@@ -13,7 +13,7 @@ import {
 import '../components/createClass/CreateClassStyles.scss';
 import QuizForm from '@/components/QuizForm/QuizForm';
 
-const ModalEditClass = ({ idQuiz , isOpenModal, onOpenChangeModal }) => {
+const ModalEditQuiz = ({ idQuiz , isOpenModal, onOpenChangeModal, update, onClose}) => {
 
 
 	return (
@@ -23,15 +23,16 @@ const ModalEditClass = ({ idQuiz , isOpenModal, onOpenChangeModal }) => {
 				onOpenChange={onOpenChangeModal}
 				backdrop='blur'
 				size='5xl'
+				onClose={onClose}
 				>
 				<ModalContent>
-					{onClose => (
+					{(onClose) => (
 						<>
 							<ModalHeader className='flex flex-col gap-1 '>
-								Editar Quiz
+								{update ? "Editar Quiz" : "Crear Quiz"}
 							</ModalHeader>
 							<ModalBody>
-								<QuizForm update={true} idQuiz={idQuiz}/>
+								<QuizForm onClose={onClose} update={update} idQuiz={idQuiz}/>
 							</ModalBody>
 							<ModalFooter>
 								<Button color='danger' variant='light' onPress={onClose}>
@@ -46,4 +47,4 @@ const ModalEditClass = ({ idQuiz , isOpenModal, onOpenChangeModal }) => {
 	);
 };
 
-export default ModalEditClass;
+export default ModalEditQuiz;

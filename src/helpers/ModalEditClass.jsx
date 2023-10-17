@@ -123,7 +123,7 @@ const ModalEditClass = ({
 									Editar Quiz
 								</Button>
 
-								<ModalEditQuiz idQuiz={classValues?.quiz[0]?._id}  isOpenModal={isOpen} onOpenChangeModal={onOpenChange}></ModalEditQuiz>
+								<ModalEditQuiz idQuiz={classValues?.quiz[0]?._id}  isOpenModal={isOpen} onOpenChangeModal={onOpenChange} update={true}></ModalEditQuiz>
 							</ModalFooter>
 						</>
 					)}
