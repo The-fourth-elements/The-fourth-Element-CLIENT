@@ -62,14 +62,14 @@ const Filters = () => {
                     <option value="moderators">Moderator</option>
                 </select>
             </div>
-            <div className="diver">
+            {/* <div className="diver">
                 <label htmlFor="">ORDER BY NAME</label>
                 <select className="select"
                 label="Select a name"onChange={handleOrderName} value={orderName}>
                     <option value="nameDesc">A - Z</option>
                     <option value="nameAsc">Z - A</option>
                 </select>
-            </div>
+            </div> */}
             
         </div>
     );
