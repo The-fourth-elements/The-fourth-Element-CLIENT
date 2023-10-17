@@ -1,5 +1,5 @@
 "use client"
-import {Card, CardHeader, CardBody, Image, CircularProgress, Button } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { EditIcon } from "@/assets/svg-jsx/EditIcon";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
@@ -7,7 +7,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
     <div>
       {openCountry ? (
         <h2>
-          Country:
+          País:
           <CountryDropdown
             name='country'
             autoComplete='on'
@@ -20,7 +20,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
         </h2>
       ) : (
         <h2>
-          Country: {newCountry}
+          País: {newCountry}
           <Button className='button' isIconOnly color="warning" variant="bordered" title="Edit Country" onClick={handleChangeCountry}>
             <EditIcon />
           </Button>
@@ -34,7 +34,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
       {openCountry ? 
       (
         <h2>
-          City:
+          Ciudad:
           <RegionDropdown
             country={newCountry}
             value={newCity}
@@ -48,7 +48,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
       )
       :openCity ? (
         <h2>
-          City:
+          Ciudad:
           <RegionDropdown
             country={newCountry}
             value={newCity}
@@ -61,7 +61,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
         </h2>
       ) : (
         <h2>
-          City: {newCity}
+          Ciudad: {newCity}
           <Button className='button' color="warning" isIconOnly variant="bordered" title="Edit City" onClick={handleChangeCity}>
             <EditIcon />
           </Button>

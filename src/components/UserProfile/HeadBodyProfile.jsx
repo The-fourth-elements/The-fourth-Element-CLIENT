@@ -62,12 +62,12 @@ export const UserProfileHeader = ({
 						size='sm'
 						onClick={updateUserName}
 						disabled={hasErrors}>
-						Accept
+						Aceptar
 					</Button>
 				</h1>
 			) : (
 				<h1>
-					Name: {user?.username}
+					Nombre: {user?.username}
 					<Button
 					className='button'
 						title='Edit  Name'
@@ -111,11 +111,12 @@ export const UserProfileHeader = ({
 						uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
 						disabled={newImage?.url?.length > 0}
 						onSuccess={getNewImage}
+						children={'Subir Imagen'}
 					/>
 					<Button className='buttonImg'
 						color='warning'
 						variant='bordered'
-						size='sm' onClick={updateUserImage} disabled={!newImage?.url}>Accept</Button>
+						size='sm' onClick={updateUserImage} disabled={!newImage?.url}>Aceptar</Button>
 				</div>
 			) : (
 				<Button
@@ -160,11 +161,11 @@ export const UserProfileBody = ({
 	<div className='elBody'>
 		<h2>Email: {user?.email}</h2>
 		{user?.role === 0 ? (
-			<h2>Plan: Free Plan</h2>
+			<h2>Plan: Gratuito</h2>
 		) : user?.role === 1 ? (
-			<h2>Plan: Pay Plan</h2>
+			<h2>Plan: Pago</h2>
 		) : (
-			<h2>Plan: Admin </h2>
+			<h2>Plan: Moderador</h2>
 		)}
 		<CountrySelect
 			stringCountry={stringCountry}
@@ -201,7 +202,7 @@ export const UserProfileBody = ({
 					variant='bordered'
 					size='sm'
 					onClick={updateUserSport}>
-					Accept
+					Aceptar
 				</Button>
 			</h2>
 		) : (
@@ -217,7 +218,7 @@ export const UserProfileBody = ({
 					variant='bordered'
 					size='sm'
 					onClick={updateUserAge}>
-					Accept
+					Aceptar
 				</Button>
 			</h2>
 		) : (
@@ -233,7 +234,7 @@ export const UserProfileBody = ({
 					variant='bordered'
 					size='sm'
 					onClick={updateUserExp}>
-					Accept
+					Aceptar
 				</Button>
 			</h2>
 		) : (
