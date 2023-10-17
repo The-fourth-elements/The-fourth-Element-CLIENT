@@ -122,3 +122,9 @@ export const initialValuesLanding = {
 	Titulo: '',
 	Contenido: ''
 }
+
+export const validationSchemaInvitation = Yup.object({
+	Email: Yup.string()
+		.email('Ingresa un correo electrónico válido')
+		.required('El correo electrónico es obligatorio')
+})
