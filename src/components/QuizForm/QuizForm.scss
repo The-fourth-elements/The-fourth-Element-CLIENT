@@ -1,12 +1,11 @@
 @import '../../styles/base';
 
 .main {
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
-	background-color: $grey-1;
-	border: 10px solid $red-2;
 	width: 100%;
 	border-radius: 10px;
 	padding: 12px;
