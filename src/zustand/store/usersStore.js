@@ -33,7 +33,8 @@ export const useUsersStore = create((set, get) => ({
       });
   },
 
-  filterUsers: (nationality, plan) => {
+  filterUsers: (nationality, plan, sport) => {
+    console.log(sport)
     const filteredUsers = get().usersFilter.filter((user) => {
         const nationalityFilter = nationality === "all" || user?.nation?._id === nationality;
         const planFilter =
@@ -41,7 +42,8 @@ export const useUsersStore = create((set, get) => ({
             (plan === "free" && user?.role === 0) ||
             (plan === "pay" && user?.role === 1) ||
             (plan === "moderators" && user?.role === 2);
-        return nationalityFilter && planFilter;
+        const sportFilter = sport === "all" || user?.sport?._id === sport
+        return nationalityFilter && planFilter && sportFilter;
     });
 
     set((state) => ({
