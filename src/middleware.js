@@ -42,7 +42,7 @@ export const middleware = async request => {
         if (role > 1) {
             return NextResponse.next();
         } else {
-            url.pathname = '/course';
+            url.pathname = '/profile';
         }
         return NextResponse.redirect(url);
     }
