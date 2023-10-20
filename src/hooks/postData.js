@@ -1,10 +1,10 @@
-export const postData = async (url, data = {}, token) => {
+export const postData = async (url, data = {}, header) => {
     try {
         const headers = {
             "Content-Type": "application/json",
         };
 
-        if (token) {
+        if (header) {
             headers["Authorization"] = `${token}`;
         }
 
@@ -17,7 +17,6 @@ export const postData = async (url, data = {}, token) => {
             referrerPolicy: "no-referrer",
             body: JSON.stringify(data),
         });
-
         const responseParsed = await response.json();
         return responseParsed;
     } catch (error) {
