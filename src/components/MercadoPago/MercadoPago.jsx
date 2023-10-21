@@ -9,12 +9,13 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Button } from 'semantic-ui-react';
+import Stripe from '../stripe/Stripe';
 
 function ErrorMessage({ message }) {
   return (
     <Button
       href='/auth'
-      className='w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800 text-white font-semibold'
+      className='w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800 text-white font-semibold flex justify-center'
     >
       {message}
     </Button>
@@ -67,6 +68,7 @@ function MercadoPago({ className }) {
               }}
             />
             <Paypal />
+            <Stripe />
           </>
         ) : (
           <ErrorMessage message="Cargando preferencia de pago..." />
