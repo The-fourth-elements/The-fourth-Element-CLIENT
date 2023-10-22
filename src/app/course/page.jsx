@@ -1,10 +1,10 @@
-import ModuleView from '@/components/modulesView/ModulesView';
+import Modules from '@/components/Modules/Modules';
 import User from '@/components/user/User';
 
 const page = () => {
 	return (
 		<main>
-			<ModuleView></ModuleView>
+			<Modules></Modules>
 			<User></User>
 		</main>
 	);
