@@ -10,6 +10,7 @@ import { useUserProfile } from '@/zustand/store/userProfile';
 import { getCookie } from 'cookies-next';
 import { deportes } from '@/utils/dataRegister';
 import { toastError, toastInfo } from '@/helpers/toast';
+import UserRecords from '../user-records/UserRecords';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
@@ -40,9 +41,11 @@ const UserProfile = () => {
 			setUpdated(false);
 		}
 		if (!user.sport) {
-			console.log('no deporte');
+			// console.log('no deporte')
 		}
-		console.log(user)
+		return ()=>{
+			
+		}
 	}, [user?.username, user?.id, updated]);
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage);
@@ -129,7 +132,6 @@ const UserProfile = () => {
 		setUpdated(true);
 
 	};
-
 	const updateUserImage = async () => {
 		try {
 			const update = {
@@ -153,7 +155,6 @@ const UserProfile = () => {
 	const selectCountry = val => {
 		setNewCountry(val);
 		setNewCity('');
-		console.log()
 	};
 	const selectCity = val => {
 		setNewCity(val);
@@ -162,7 +163,7 @@ const UserProfile = () => {
 		setNewSport(event.target.value);
 	};
 	return (
-		<article style={{ display: 'flex', justifyContent: 'center' }}>
+		<article className='flex flex-col justify-center items-center gap-2'>
 			{user && user?._id && Object.keys(user).length > 0 ? (
 				<div className='main'>
 					<UserProfileHeader
@@ -214,6 +215,7 @@ const UserProfile = () => {
 					/>
 				</div>
 			)}
+			<UserRecords user={user} session={session} />
 		</article>
 	);
 };
