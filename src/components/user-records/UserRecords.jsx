@@ -32,7 +32,7 @@ const UserRecords = ({ user, session }) => {
 		datasets: [
 			{
 				label: 'My First Dataset',
-				data: [65, 59, 90, 81, 56, 55, 40],
+				data: [7,3,5,2,2,5,5],
 				fill: true,
 				backgroundColor: 'rgba(255, 99, 132, 0.2)',
 				borderColor: 'rgb(255, 99, 132)',
@@ -43,7 +43,7 @@ const UserRecords = ({ user, session }) => {
 			},
 			{
 				label: 'My Second Dataset',
-				data: [28, 48, 40, 19, 96, 27, 100],
+				data: [1, 5, 2, 2, 6, 7, 1],
 				fill: true,
 				backgroundColor: 'rgba(54, 162, 235, 0.2)',
 				borderColor: 'rgb(54, 162, 235)',

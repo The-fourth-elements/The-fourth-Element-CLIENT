@@ -56,6 +56,7 @@ export const authOptions = {
 						const form = {
 							username: user.name,
 							email: token?.email,
+							id: user?.id,
 							provider: true,
 						};
 						await postData(`${process.env.API_BACKEND}auth`, form);
