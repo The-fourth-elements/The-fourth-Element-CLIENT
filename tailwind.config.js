@@ -48,7 +48,7 @@ const config = {
 							foreground: '#ffffff',
 						},
 						secondary:{
-							600: '#d93b20',
+							600: '#1e1e1e',
 							700: '#fe8100',
 							800: '#cc5e02',
 							900: '#a1490b',
