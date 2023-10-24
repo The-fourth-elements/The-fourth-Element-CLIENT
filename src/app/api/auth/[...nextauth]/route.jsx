@@ -56,7 +56,7 @@ export const authOptions = {
 						const form = {
 							username: user.name,
 							email: token?.email,
-							id: user?.id,
+							providerId: user?.id,
 							provider: true,
 						};
 						await postData(`${process.env.API_BACKEND}auth`, form);
@@ -67,6 +67,7 @@ export const authOptions = {
 							provider: true,
 						});
 						const decodedToken = Jwt.decode(lol?.token);
+						console.log(decodedToken);
 						if (user) token.user = decodedToken?.data;
 						return token;
 					}
@@ -75,7 +76,7 @@ export const authOptions = {
 				}
 			}
 			if (user) token.user = user;
-
+			console.log(token);
 			return token;
 		},
 		async session({ session, token }) {
