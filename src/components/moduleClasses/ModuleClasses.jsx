@@ -46,32 +46,46 @@ export default function ModuleClasses({ idModule }) {
 
 	const { user, getProfile } = useUserProfile();
 	const { modules, getModules, getQuiz } = useModulesStore();
-	const [moduleData, setModuleData] = useState({});
+	const [moduleData, setModuleData] = useState([]);
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentClass, setCurrentClass] = useState(null);
 	const [access, setAccess] = useState(false);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [dataUpdated, setDataUpdated] = useState(false);
 	const [currentModule, setCurrentModule] = useState('');
+	const [firstEffectExecuted, setFirstEffectExecuted] = useState(false);
 
 	useEffect(() => {
-		getModule(idModule);
-		console.log('module', module);
+		
+		getModule(idModule).then(() => {
+			setFirstEffectExecuted(true);
+		});
 	}, []);
 
 	useEffect(() => {
-		if (session) {
-			if (session?.token?.user) {
-				const { role } = session.token.user;
-				role > 2 && setAccess(true);
-				const id = session?.token?.user?.id;
-				getProfile(id);
+		if (firstEffectExecuted) {
+			if (session) {
+				if (session?.token?.user) {
+					const { role } = session.token.user;
+					role > 2 && setAccess(true);
+					const id = session?.token?.user?.id;
+					getProfile(id);
+				}
+				console.log("condicion useEffect ", moduleData?.length)
+
+				if (moduleData?.length === 0) {
+				console.log("condicion useEffect ", moduleData?.length)
+
+					fetchDataSingleModule(module).then(data => {
+						setModuleData(data);
+						setModulesDataLoaded(true);
+					})
+				}
+
+				verifyProgressUser()
 			}
 		}
-		fetchDataSingleModule(module).then(data => setModuleData(data));
-		console.log('moduleData', moduleData);
-		setModulesDataLoaded(true);
-	}, [module, session, dataUpdated]);
+	}, [firstEffectExecuted, module, session, dataUpdated]);
 
 	useEffect(() => {
 		if (dataUpdated) {
@@ -86,6 +100,7 @@ export default function ModuleClasses({ idModule }) {
 	const renderModuleClasses = moduleData => {
 		if (moduleData) {
 			return moduleData.map((elem, classIndex) => {
+				console.log("elem" , elem);
 				if (access) {
 					// Render clases con acceso especial
 					return renderClassSpecialRole(
@@ -98,14 +113,33 @@ export default function ModuleClasses({ idModule }) {
 						onOpenChange
 					);
 				} else {
-					// Lógica para otras condiciones de acceso
-					// Puedes personalizar esto según tus necesidades
+					
 					if (user) {
 						const modulesUser = user?.progress?.modules;
 						const moduleProgress = modulesUser?.map(module => {
 							return module?.classes;
 						});
-						// Resto de la lógica aquí
+
+						const classInfo = moduleProgress?.map(module => {
+							return module?.find(classItem => {
+								return classItem.name === elem.name;
+							});
+						});
+						const classe = classInfo?.filter(clase => clase !== undefined);
+						if (!moduleProgress) {
+							// Este modulo aun no se ha iniciado.
+							return renderClassNotProgress(classIndex, elem);
+						}
+						
+						return renderClassDefault(
+							isOpen,
+							onOpen,
+							onOpenChange,
+							classIndex,
+							elem,
+							handleClassClick,
+							currentClass
+						);
 					}
 				}
 			});
@@ -113,44 +147,56 @@ export default function ModuleClasses({ idModule }) {
 	};
 
 	const verifyProgressUser = async () => {
+		console.log("VERIFY PROGRESS USER");
 		try {
-			const modulesProgress = user?.progress?.modules;
-			const countModulesUser = modulesProgress?.length;
-			const countClassesUser = modulesProgress?.reduce((totalClass, module) => {
-				return totalClass + module?.classes?.length;
-			}, 0);
-			const totalModules = modules?.length;
-			const totalClasses = modules?.reduce((totalClass, module) => {
-				return totalClass + module?.classModule?.length;
-			}, 0);
-			if (user?.role < 2) {
-				if (!user?.progress) {
-					console.log(user);
-					const progress = await postData(
-						`${process.env.API_BACKEND}startCourse/${id}`
-					);
-					toastSuccess(progress?.message);
-					getProfile(id);
-				} else if (
-					totalModules !== countModulesUser ||
-					totalClasses !== countClassesUser
-				) {
-					const progress = await postData(
-						`${process.env.API_BACKEND}startCourse/${id}`
-					);
-					toastInfo(progress?.message);
-					getProfile(id);
-				}
+		  const modulesProgress = user?.progress?.modules;
+		  const totalClasses = module.classModule.length;
+
+		  console.log("module.classModule" , module.classModule);
+	  
+		  if (user?.role < 2) {
+			if (!user?.progress) {
+				console.log("HOLA1");
+
+			  console.log(user);
+			  const progress = await postData(
+				`${process.env.API_BACKEND}startCourse/${id}`
+			  );
+			  console.log("HOLA");
+			  toastSuccess(progress?.message);
+			  getProfile(id);
+			} else {
+				console.log("HOLA2");
+
+			  const countClassesUser = modulesProgress
+				.find((elem) => elem._id === module._id)
+				?.classes?.length;
+
+				console.log("totalClasses ", totalClasses , "countClassesUser " , countClassesUser);
+	  
+			  if (totalClasses !== countClassesUser) {
+				console.log("HOLA3");
+
+				const progress = await postData(
+				  `${process.env.API_BACKEND}startCourse/${id}`
+				);
+				console.log("HOLA4");
+
+				toastInfo(progress?.message);
+				getProfile(id);
+			  }
 			}
+		  }
 		} catch (error) {
-			toastError(error);
+		  toastError(error);
 		}
-	};
+	  };
+	  
 
 	const handleClassClick = className => {
 		setCurrentClass(className);
 		setCurrentModule(className);
-		
+
 		if (moduleData) {
 			setCurrentModule(module);
 		} else {
@@ -195,7 +241,7 @@ export default function ModuleClasses({ idModule }) {
 					<nav
 						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
 						<ul className='m-2'>
-							{moduleData.length > 0 ? (
+							{modulesDataLoaded ? (
 								<Accordion
 									itemClasses={{
 										title: 'text-black text-medium',
@@ -203,7 +249,7 @@ export default function ModuleClasses({ idModule }) {
 									{renderModuleClasses(moduleData)}
 								</Accordion>
 							) : (
-								<h1>Esperando a que se carguen los datos...</h1>
+								<h1 className='text-black'>Esperando a que se carguen los datos...</h1>
 							)}
 						</ul>
 					</nav>

@@ -10,50 +10,20 @@ import QuizRender from '../QuizRender/QuizRender';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import ModalEditClass from '@/helpers/ModalEditClass';
 
-export const renderClassDefault = (
-	isOpen,
-	onOpen,
-	onOpenChange,
-	classIndex,
+export const renderExercises = (
+	exerciseIndex,
 	elem,
-	handleClassClick,
-	currentClass
+	handleExerciseClick,
 ) => {
 	return (
-		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
+		<AccordionItem key={exerciseIndex} textValue={elem?.question} title={elem?.question}>
 			<div className='flex justify-between items-center'>
 				<Button
 					className='cursor-pointer rounded-full'
-					onPress={() => handleClassClick(elem.name)}>
+					onPress={() => handleExerciseClick(elem?.question)}>
 					Entrar
 				</Button>
-				{elem?.name === currentClass && (
-					<Button
-						className='rounded-full bg-primary-500 text-black text-base'
-						onPress={onOpen}>
-						Quiz
-					</Button>
-				)}
-				<Modal
-					isOpen={isOpen}
-					onOpenChange={onOpenChange}
-					backdrop='blur'
-					size='5xl'>
-					<ModalContent>
-						{onClose => (
-							<>
-								<ModalBody>
-									<QuizRender quiz={elem?.quiz} onClose={onClose}></QuizRender>
-								</ModalBody>
-								<ModalFooter>
-									<Button color='danger' variant='light' onPress={onClose}>
-										cerrar
-									</Button>
-								</ModalFooter>
-							</>
-						)}
-					</ModalContent>
-				</Modal>
+				
 			</div>
 		</AccordionItem>
 	);

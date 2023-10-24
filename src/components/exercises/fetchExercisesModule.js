@@ -26,20 +26,16 @@ export const fetchDataSingleModule = async module => {
 	return fetchedModuleData;
 };
 
-export const renderVideo = (currentClass, moduleData) => {
-	if (currentClass) {
-		const selectedClassData = moduleData?.find(
-			elem => elem.name === currentClass
-		);
-		if (selectedClassData) {
+export const renderTextSection = (question) => {
+	console.log("question", question);
+	if (question) {
+		
 			return (
-				<>
-					<video src={selectedClassData?.video?.url} controls id='video' />
-				</>
+					<p className='p-5'> {question} </p>
 			);
-		}
 	}
-	return <p>Selecciona una clase para ver el video.</p>;
+
+	return <p className='p-5'>Selecciona un ejercicio para responder.</p>;
 };
 
 export const renderDescription = (currentClass, moduleData) => {

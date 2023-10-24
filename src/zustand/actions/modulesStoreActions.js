@@ -17,17 +17,24 @@ export const getModules = () => {
   };
 
   export const getModule = (id) => {
-    return fetch(`${process.env.API_BACKEND}moduls/${id}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); 
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
+    return new Promise((resolve, reject) => {
+      fetch(`${process.env.API_BACKEND}moduls/${id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          resolve(data); // Resolve the promise with the fetched data
+        })
+        .catch((error) => {
+          console.error('There was a problem with the fetch operation:', error);
+          reject(error); // Reject the promise in case of an error
+        });
+    });
   };
+  
 
   export const getQuizes = () => {
     return fetch(`${process.env.API_BACKEND}quizzes`)

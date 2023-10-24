@@ -1,11 +1,9 @@
-import Modules from '@/components/Modules/Modules';
-import User from '@/components/user/User';
+import Modules from '@/components/modules/Modules';
 
 const page = () => {
 	return (
 		<main>
 			<Modules></Modules>
-			<User></User>
 		</main>
 	);
 };
