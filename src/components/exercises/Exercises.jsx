@@ -31,7 +31,11 @@ import {
 } from './fetchExercisesModule';
 import { renderExercises } from './renderExercises';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
+import { useExercisesStore } from '@/zustand/store/exercisesStore';
 import { exercises } from './mockExercises';
+import BackToCourseBtn from '@/helpers/BackToCourseBtn';
+
+
 
 export default function Exercises({ idModule }) {
 	const { data: session } = useSession();
@@ -42,6 +46,8 @@ export default function Exercises({ idModule }) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { module, getModule } = useSelectedModule();
+	// const { exercises, getExercises } = useExercisesStore();
+
 
 	const { user, getProfile } = useUserProfile();
 	const { modules, getModules, getQuiz } = useModulesStore();
@@ -54,7 +60,7 @@ export default function Exercises({ idModule }) {
 	const [currentModule, setCurrentModule] = useState('');
 	const [firstEffectExecuted, setFirstEffectExecuted] = useState(false);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		getModule(idModule).then(() => {
 			setFirstEffectExecuted(true);
 		});
@@ -90,72 +96,21 @@ export default function Exercises({ idModule }) {
 			setDataUpdated(false);
 		}
 	}, [dataUpdated]);
-
+*/
 	const handleDataUpdate = () => {
 		setDataUpdated(true);
 	};
 
-	const renderModuleExercises = exercises => {
+	const renderModuleExercises = () => {
 		if (exercises) {
 			return exercises.map((elem, exerciseIndex) => {
 				console.log('elem en map', elem);
-				if (access) {
 					return renderExercises(exerciseIndex, elem, handleExerciseClick);
-				}
 			});
 		}
 	};
 
-	const verifyProgressUser = async () => {
-		console.log('VERIFY PROGRESS USER');
-		try {
-			const modulesProgress = user?.progress?.modules;
-			const totalClasses = module.classModule.length;
-
-			console.log('module.classModule', module.classModule);
-
-			if (user?.role < 2) {
-				if (!user?.progress) {
-					console.log('HOLA1');
-
-					console.log(user);
-					const progress = await postData(
-						`${process.env.API_BACKEND}startCourse/${id}`
-					);
-					console.log('HOLA');
-					toastSuccess(progress?.message);
-					getProfile(id);
-				} else {
-					console.log('HOLA2');
-
-					const countClassesUser = modulesProgress.find(
-						elem => elem._id === module._id
-					)?.classes?.length;
-
-					console.log(
-						'totalClasses ',
-						totalClasses,
-						'countClassesUser ',
-						countClassesUser
-					);
-
-					if (totalClasses !== countClassesUser) {
-						console.log('HOLA3');
-
-						const progress = await postData(
-							`${process.env.API_BACKEND}startCourse/${id}`
-						);
-						console.log('HOLA4');
-
-						toastInfo(progress?.message);
-						getProfile(id);
-					}
-				}
-			}
-		} catch (error) {
-			toastError(error);
-		}
-	};
+	
 
 	const handleExerciseClick = question => {
 		setCurrentQuestion(question);
@@ -165,13 +120,16 @@ export default function Exercises({ idModule }) {
 			<Card className={containerVideos + ' navcolor md:h-[81vh]'} > 
 				<main
 					className={
-						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
+						div1 + ' parent  bg-foreground'
 					}>
+					<BackToCourseBtn></BackToCourseBtn>
+						
 					<div
 						className='  flex-col bg-primary m-3 flex'
 						id='reproductor'>
 						{renderTextSection(currentQuestion)}
 						{currentQuestion ? (
+							
 							<Formik
 								initialValues={{ answer: '' }}
 								onSubmit={async (values, { resetForm }) => {
@@ -208,6 +166,7 @@ export default function Exercises({ idModule }) {
 					</div>
 
 					<Card className='flex p-3 bg-transparent shadow-none'>
+
 						<h2
 							className={
 								h2Title +

@@ -73,14 +73,14 @@ export default function ModuleClasses({ idModule }) {
 				}
 				console.log("condicion useEffect ", moduleData?.length)
 
-				if (moduleData?.length === 0) {
-				console.log("condicion useEffect ", moduleData?.length)
+				// if (moduleData?.length === 0) {
+				// console.log("condicion useEffect ", moduleData?.length)
 
 					fetchDataSingleModule(module).then(data => {
 						setModuleData(data);
 						setModulesDataLoaded(true);
 					})
-				}
+				// }
 
 				verifyProgressUser()
 			}
