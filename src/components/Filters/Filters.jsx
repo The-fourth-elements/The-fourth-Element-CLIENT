@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import { Select, SelectSection, SelectItem, Button } from '@nextui-org/react';
 import { useAllCountrys } from '@/zustand/store/allCountrys';
 import './styles.scss';
+import { useAllSports } from '@/zustand/store/allSports';
 
 const Filters = () => {
     const { usersFilter, users, orderUsersName, getUsers } = useUsersStore();
+    const {allSports, getSports} = useAllSports()
     const { getCountrys, allCountrys } = useAllCountrys();
     const { filterUsers } = useUsersStore();
     let [orderName, setOrderName] = useState("");
@@ -21,10 +23,12 @@ const Filters = () => {
 
     useEffect(() => {
         getCountrys();
+        getSports()
     }, []);
 
     let [filterNationality, setFilterNationality] = useState("all");
     let [filterPlan, setFilterPlan] = useState("all");
+    let [filterSport, setFilterSport] = useState("all")
 
     const handleFilterNationality = (event) => {
         const selectedNationality = event.target.value;
@@ -36,16 +40,22 @@ const Filters = () => {
         setFilterPlan(selectedTypePlan);
     };
 
+    const handleFilterSport = (event) => {
+        const selectedSport = event.target.value;
+        setFilterSport(selectedSport);
+        console.log(allSports)
+    };
+
     useEffect(() => {
-        filterUsers(filterNationality, filterPlan);
-    }, [filterNationality, filterPlan]);
+        filterUsers(filterNationality, filterPlan, filterSport);
+    }, [filterNationality, filterPlan, filterSport]);
 
     return (
         <div className="mainFilter">
             <div className="diver">
-                <label htmlFor="">FILTER BY COUNTRY</label>
+                <label htmlFor="">FILTER POR PAIS</label>
                 <select className="select" label="Select a country" onChange={handleFilterNationality} value={filterNationality}>
-                    <option value="all">Everyone</option>
+                    <option value="all">Todos</option>
                     {allCountrys.map((country) => (
                         <option value={country?._id} key={country?._id}>
                             {country?.name}
@@ -54,12 +64,12 @@ const Filters = () => {
                 </select>
             </div>
             <div className="diver">
-                <label htmlFor="">FILTER BY PLAN</label>
+                <label htmlFor="">FILTRAR POR PLAN</label>
                 <select className="select" label="Select a plan" onChange={handleFilterPlan} value={filterPlan}>
-                    <option value="all">Everyone</option>
-                    <option value="free">Free Plan</option>
-                    <option value="pay">Pay Plan</option>
-                    <option value="moderators">Moderator</option>
+                    <option value="all">Todos</option>
+                    <option value="free">Plan Gratis</option>
+                    <option value="pay">Plan Pago</option>
+                    <option value="moderators">Moderador</option>
                 </select>
             </div>
             {/* <div className="diver">
@@ -70,7 +80,19 @@ const Filters = () => {
                     <option value="nameAsc">Z - A</option>
                 </select>
             </div> */}
-            
+            <div className="diver">
+                <label htmlFor="">FILTRAR POR DEPORTE</label>
+                <select className="select" label="Select a sport" onChange={handleFilterSport} value={filterSport}>
+                    <option value="all">Todos</option>
+                    {
+                        allSports.map((deporte) => (
+                            <option key={deporte?._id} value={deporte?._id}>
+                                {deporte?.name}
+                            </option>
+                        ))
+                    }
+                </select>
+            </div>
         </div>
     );
 };

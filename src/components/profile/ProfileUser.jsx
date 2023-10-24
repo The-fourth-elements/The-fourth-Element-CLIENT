@@ -30,7 +30,6 @@ const ProfileUser = ({ params }) => {
 	let token = {};
 	if (session?.token) {
 		token = session.token;
-		console.log(token);
 	}
 
 	let imageSRC = 'https://cdn.pnghd.pics/data/862/user-profile-png-15.png';

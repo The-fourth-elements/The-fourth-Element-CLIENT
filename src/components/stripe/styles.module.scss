@@ -1,0 +1,39 @@
+.Stripe {
+    background-color: #ffffff82;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    min-width: 100%;
+    width: auto;
+    
+    .Item{
+        font-family: 'Input Serif';
+        cursor: pointer;
+        transition: 0.4s;
+        background: #492686;
+        min-width: 100%;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        &:hover{
+            background: #604492;
+        }
+        img{
+            width: auto;
+            height: auto;
+        };
+        .content{
+
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            span {
+                text-wrap: balance;
+            }
+        }
+    }
+}

@@ -1,16 +1,11 @@
-'use client';
-
-import React from 'react';
 import Image from 'next/image';
-import Submarca5 from '@/assets/img/TFE-Submarca5.png';
-import Submarca10 from '@/assets/img/TFE-Submarca10.png';
 import GreenCheckmark from '@/assets/img/greenCheckmark.png';
 
 import MercadoPago from '@/components/MercadoPago/MercadoPago';
 
 const PrecioCard = () => {
 	return (
-		<div>
+		<>
 			<div className='bg-gradient-to-b from-primary to-primary-600 h-full'>
 				<div className='container m-auto px-6 py-20 md:px-12 lg:px-20'>
 					<div className='m-auto text-center lg:w-8/12 xl:w-7/12'>
@@ -31,7 +26,7 @@ const PrecioCard = () => {
 									<div className='relative flex justify-around'>
 										<div className='flex items-end'>
 											<span className='text-8xl text-gray-800 font-bold leading-0'>
-												9.99
+												1000
 											</span>
 											<div className='pb-2'>
 												<span className='block text-xl text-gray-800 font-bold'>
@@ -91,8 +86,7 @@ const PrecioCard = () => {
 
 						<div className='flex flex-col relative group md:w-6/12 lg:w-7/12'>
 							<div
-								aria-hidden='true'
-								className='absolute top-0 w-full h-full rounded-2xl bg-white shadow-lg transition duration-500 group-hover:scale-105'></div>
+								aria-hidden='true' className='absolute top-0 w-full h-full rounded-2xl bg-white shadow-lg transition duration-500 group-hover:scale-105'></div>
 							<div className=' space-y-4 relative p-6 pt-16 md:p-8 md:pl-12 md:rounded-r-2xl lg:pl-20 lg:p-16'>
 								<ul
 									role='list'
@@ -129,7 +123,7 @@ const PrecioCard = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
