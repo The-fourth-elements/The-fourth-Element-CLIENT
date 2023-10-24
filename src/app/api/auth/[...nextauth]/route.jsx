@@ -67,7 +67,6 @@ export const authOptions = {
 							provider: true,
 						});
 						const decodedToken = Jwt.decode(lol?.token);
-						console.log(decodedToken);
 						if (user) token.user = decodedToken?.data;
 						return token;
 					}
@@ -76,7 +75,6 @@ export const authOptions = {
 				}
 			}
 			if (user) token.user = user;
-			console.log(token);
 			return token;
 		},
 		async session({ session, token }) {

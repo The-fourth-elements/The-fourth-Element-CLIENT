@@ -6,14 +6,22 @@ import { Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
+import { useUserProfile } from '@/zustand/store/userProfile';
+
 import React, { useEffect } from 'react';
+import { setCookie } from 'cookies-next';
 
 function Modules() {
 	const { modules, getModules } = useModulesStore();
+	const { user, getProfile } = useUserProfile(); // se usara luego para obtener el progreso del usuario, para el desbloqueo de clases.
+
 	const { data: session } = useSession();
 	const role = session?.token?.user?.role;
 
-
+	const id = session?.token?.user?.id;
+	if (id) {
+		setCookie('jsdklfsdjklfdsjfds', id);
+	}
 	const items = [
 		{
 		  key: "classes",
@@ -33,6 +41,10 @@ function Modules() {
 
 	useEffect(() => {
 		getModules();
+		if(id)
+		{
+			getProfile(id);
+		}
 	}, []);
 
 	return (
