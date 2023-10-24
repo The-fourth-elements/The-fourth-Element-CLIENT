@@ -1,30 +1,4 @@
-import 'next-cloudinary/dist/cld-video-player.css';
-export const fetchDataSingleModule = async module => {
-	const fetchedModuleData = [];
-	
-	try {
-		for (const elem of module.classModule) {
-			const url = `${process.env.API_BACKEND}class/${elem._id}`;
-			const response = await fetch(url);
 
-			if (response.ok) {
-				const classData = await response.json();
-				fetchedModuleData.push(classData);
-			} else {
-				console.error(
-					`Error al obtener datos de clase para el módulo ${module._id}. Código de respuesta: ${response.status}`
-				);
-			}
-		}
-	} catch (error) {
-		console.error(
-			`Error general al obtener datos del módulo ${module._id}:`,
-			error
-		);
-	}
-
-	return fetchedModuleData;
-};
 
 export const renderTextSection = (question) => {
 	console.log("question", question);

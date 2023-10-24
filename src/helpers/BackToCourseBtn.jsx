@@ -18,7 +18,7 @@ export default function BackToCourseBtn() {
 			src={back}
 			width={40}
 			className='z-10  cursor-pointer absolute top-2 left-2 bg-primary-500
-    rounded-md hover:g-primary-600'
+    rounded-md hover:bg-primary-700'
 			onClick={handlePress}
 		/>
 	);
