@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { getFrases } from "../actions/ExcersicesActions";
+import { getFrases, createExcersice } from "../actions/ExcersicesActions";
 
 export const useExcersices = create ((set, get) => ({
-    Frases: {},
+    Frases: [],
     getFrases: (id) => {
         getFrases(id)
         .then((data) => {
@@ -11,5 +11,8 @@ export const useExcersices = create ((set, get) => ({
                 Frases: data 
             }))
         })
+    },
+    createExcersice: (body) => {
+        createExcersice(body)
     }
 }))

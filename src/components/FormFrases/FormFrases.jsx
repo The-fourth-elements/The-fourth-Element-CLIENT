@@ -1,14 +1,15 @@
 "use client"
 import { useState, useEffect } from "react";
 import { Button } from "@nextui-org/react";
+import "./FormFrases.scss"
+import { useExcersices } from "@/zustand/store/ExcersicesStore";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
-const FormFrases = () => {
+const FormFrases = ({handleSaveForm, ...props}) => {
+	// const {createExcersices} = useExcersices()
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [title, setTitle] = useState("")
-    const [fraseData, setFraseData] = useState([
-        {
-            frase: "",
-            answer: ""
-        }
+    const [fraseData, setFraseData] = useState([""
     ])
 
     const handleTitleChange = e => {
@@ -17,7 +18,7 @@ const FormFrases = () => {
 
     const handleFraseChange = (text, fraseIndex) => {
 		const newFraseData = [...fraseData];
-		newFraseData[fraseIndex].frase = text;
+		newFraseData[fraseIndex] = text;
 		setFraseData(newFraseData);
 	};
 
@@ -29,61 +30,69 @@ const FormFrases = () => {
     const handleAddFrase = () => {
 		const newFraseData = [
 			...fraseData,
-			{ frase: '', answer: ""},
+			""
 		];
 		setFraseData(newFraseData);
 	};
 
-    const handleSaveForm = () => {
-		const theFrasesData = {
-			name: title,
-			frases: fraseData,
-		};
+    // const handleSaveForm = () => {
+		
+	// 	const filteredFraseData = fraseData.filter((frase) => frase !== "" )
+	// 	const theFrasesData = {
+	// 		name: title,
+	// 		excersices: filteredFraseData,
+	// 	};
 
-		// update
-		// 	? updateQuiz(questionnaireData, idQuiz)
-		// 	: createQuiz(questionnaireData);
-		// onClose();
-        console.log(theFrasesData)
-	};
+	// 	// update
+	// 	// 	? updateQuiz(questionnaireData, idQuiz)
+	// 	// 	: createQuiz(questionnaireData);
+	// 	// onClose();
+    //     console.log(theFrasesData)
+	// };
 
     return(
-        <div>
-           <input placeholder="Titulo pasa los ejercicios" value={title} onChange={handleTitleChange} type="text" />
-           <div  >
-				{fraseData.map((frase, fraseIndex) => (
-					<div key={fraseIndex}>
-						<label>Frase {fraseIndex + 1}</label>
-						<input
-							type='text'
-							placeholder='Nueva frase'
-							value={frase?.frase}
-							onChange={e =>
-								handleFraseChange(e?.target?.value, fraseIndex)
-							}
-						/>
-						
-						<div>
-							<Button
-								onClick={() => handleDeleteFrase(fraseIndex)}
-								className='bg-danger-400'>
-								Eliminar Frase
-							</Button>
+		<Modal isOpen={isOpen} onOpenChange={onOpenChange} {...props}>
+		<ModalContent>
+			{(onClose) => (
+			<ModalBody>
+			<article className="mainFrasesRender">
+				<h1>Crear Ejercicio</h1>
+			<input className="titleInput" placeholder="Titulo pasa los ejercicios" value={title} onChange={handleTitleChange} type="text" />
+			<section className="sectionFrases" >
+					{fraseData.map((frase, fraseIndex) => (
+						<div className="divFrase" key={fraseIndex}>
+							<label>Frase {fraseIndex + 1}</label>
+							<input
+								type='text'
+								placeholder='Nueva frase'
+								value={frase}
+								onChange={e =>
+									handleFraseChange(e?.target?.value, fraseIndex)
+								}
+							/>
+							
+								<Button
+									onClick={() => handleDeleteFrase(fraseIndex)}
+									className='bg-danger-400 deleteButton'>
+									Eliminar Frase
+								</Button>
 						</div>
-					</div>
-				))}
-                <Button className='p-7 mb-5 text-xl' onClick={handleAddFrase}>
-				Agregar Frase
-			</Button>
+					))}
+					<Button className='p-7 mb-5 text-xl addFrase' onClick={handleAddFrase}>
+					Agregar Frase
+				</Button>
 
-			<Button
-				className='p-7 bg-background text-xl'
-				onClick={handleSaveForm}>
-				Guardar Cuestionario
-			</Button>
-			</div> 
-            
-        </div>
+				<Button
+					className='p-7 bg-background text-xl saveExcersice'
+					onClick={handleSaveForm}>
+					Guardar Ejercicio
+				</Button>
+				</section> 
+				
+			</article>
+			</ModalBody>)}
+		</ModalContent>
+		</Modal>
     )
 }
 
