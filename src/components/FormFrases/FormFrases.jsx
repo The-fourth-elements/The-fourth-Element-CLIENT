@@ -1,7 +1,5 @@
 "use client"
 import { useState, useEffect } from "react";
-import { Button } from "@nextui-org/react";
-import "./FormFrases.scss"
 import { useExcersices } from "@/zustand/store/ExcersicesStore";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
