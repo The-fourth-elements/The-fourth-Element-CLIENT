@@ -42,12 +42,24 @@ const ModuleForm = () => {
 			paid: values.paid === 'true' ? true : false,
 			// quiz: parseInt(values.quiz),
 		};
+		
+		const handleSaveForm = (fraseData, title) => {
+		
+				const filteredFraseData = fraseData.filter((frase) => frase !== "" )
+				const theFrasesData = {
+					name: title,
+					excersices: filteredFraseData,
+				};
+
+				console.log(theFrasesData)
+			};
 
 		try {
 			const postResponse = await postData(
 				`${process.env.API_BACKEND}moduls`,
 				formattedValues
 			);
+			
 			if (postResponse?._id) {
 				toastSuccess('¡Se subió el módulo!');
 			}
