@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import { useExcersices } from "@/zustand/store/ExcersicesStore";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import "./FormFrases.scss"
 
-const FormFrases = ({handleSaveForm, ...props}) => {
-	// const {createExcersices} = useExcersices()
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
+	const {createExcersice} = useExcersices()
+	const { onOpen, onOpenChange } = useDisclosure();
     const [title, setTitle] = useState("")
+	const [description, setDescription] = useState("")
     const [fraseData, setFraseData] = useState([""
     ])
 
@@ -14,6 +16,10 @@ const FormFrases = ({handleSaveForm, ...props}) => {
 		setTitle(e?.target?.value);
 	};
 
+	const handleDescriptionChange = e => {
+		setDescription(e?.target?.value);
+	}
+ 
     const handleFraseChange = (text, fraseIndex) => {
 		const newFraseData = [...fraseData];
 		newFraseData[fraseIndex] = text;
@@ -33,29 +39,26 @@ const FormFrases = ({handleSaveForm, ...props}) => {
 		setFraseData(newFraseData);
 	};
 
-    // const handleSaveForm = () => {
+    const handleSaveForm = () => {
 		
-	// 	const filteredFraseData = fraseData.filter((frase) => frase !== "" )
-	// 	const theFrasesData = {
-	// 		name: title,
-	// 		excersices: filteredFraseData,
-	// 	};
-
-	// 	// update
-	// 	// 	? updateQuiz(questionnaireData, idQuiz)
-	// 	// 	: createQuiz(questionnaireData);
-	// 	// onClose();
-    //     console.log(theFrasesData)
-	// };
+		const filteredFraseData = fraseData.filter((frase) => frase !== "" )
+		const theFrasesData = {
+			name: title,
+			description,
+			questions: filteredFraseData,
+		};
+        createExcersice(theFrasesData)
+	};
 
     return(
 		<Modal isOpen={isOpen} onOpenChange={onOpenChange} {...props}>
 		<ModalContent>
-			{(onClose) => (
+			{(handleFrasesModal) => (
 			<ModalBody>
 			<article className="mainFrasesRender">
 				<h1>Crear Ejercicio</h1>
 			<input className="titleInput" placeholder="Titulo pasa los ejercicios" value={title} onChange={handleTitleChange} type="text" />
+			<input className="descriptionInput" type="text" placeholder="Description" value={description} onChange={handleDescriptionChange}/>
 			<section className="sectionFrases" >
 					{fraseData.map((frase, fraseIndex) => (
 						<div className="divFrase" key={fraseIndex}>
@@ -88,7 +91,7 @@ const FormFrases = ({handleSaveForm, ...props}) => {
 				</section> 
 				
 			</article>
-			</ModalBody>)}
+		 	</ModalBody>)}
 		</ModalContent>
 		</Modal>
     )

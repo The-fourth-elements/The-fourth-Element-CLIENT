@@ -1,7 +1,7 @@
 'use client';
 
 import './style.scss';
-import { Card, CardBody, Button } from '@nextui-org/react';
+import { Card, CardBody, Button, Select, SelectItem, useDisclosure } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
 import InputField from '@/helpers/InputField';
 import SelectField from '@/helpers/SelectField';
@@ -13,9 +13,15 @@ import back from '@/assets/svg/arrowBack.svg';
 import { useRouter } from 'next/navigation';
 import useFetch from '@/hooks/useFetch';
 import { postData } from '@/hooks/postData';
+import FormFrases from '../FormFrases/FormFrases';
+import { useState, useEffect } from 'react';
+import { useExcersices } from '@/zustand/store/ExcersicesStore';
 
 const ModuleForm = () => {
 	const router = useRouter();
+	const [frasesModal, setFrasesModal] = useState(false)
+	// const [excersicesValue, setExcersicesValue] = useState("")
+	const {getAllExcersices, AllExersices, getFrases} = useExcersices()
 	// const handleFileChange = event => {
 	// 	const fileInput = event.target;
 	// 	const isVideo = fileInput.files.length > 0 &&
@@ -24,6 +30,20 @@ const ModuleForm = () => {
 	// 		fileInput.value = '';
 	// 	}
 	// };
+
+	useEffect(() => {
+		getAllExcersices()
+	}, [])
+
+	const handleFrasesModal = () => {
+		setFrasesModal(!frasesModal)
+		console.log(frasesModal)
+	}
+
+	const handleSelect = event => {
+		getFrases(event.target.value);
+		console.log (event.target.value)
+	};
 
 	const initialValuesModule = {
 		name: '',
@@ -43,22 +63,14 @@ const ModuleForm = () => {
 			// quiz: parseInt(values.quiz),
 		};
 		
-		const handleSaveForm = (fraseData, title) => {
-		
-				const filteredFraseData = fraseData.filter((frase) => frase !== "" )
-				const theFrasesData = {
-					name: title,
-					excersices: filteredFraseData,
-				};
-
-				console.log(theFrasesData)
-			};
 
 		try {
 			const postResponse = await postData(
 				`${process.env.API_BACKEND}moduls`,
 				formattedValues
 			);
+
+
 			
 			if (postResponse?._id) {
 				toastSuccess('¡Se subió el módulo!');
@@ -129,6 +141,29 @@ const ModuleForm = () => {
 								text: elem.label,
 							}))}
 						/>
+						<div className='createExcersice'>
+						<Select
+								label='Ejercios'
+								placeholder='Seleccione un ejercicio'
+								className='md:max-w-[12rem] max-w-xs createExcersiceSize'
+								onChange={handleSelect}>
+								{AllExersices.length > 0 &&
+									AllExersices.map(excersice => (
+										<SelectItem key={excersice._id} value={excersice._id}>
+											{excersice.name}
+										</SelectItem>
+									))}
+							</Select>
+						<Button
+								onClick={handleFrasesModal}
+								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3 createExcersiceSize'>
+								Crear Ejercicio
+							</Button>
+							</div>
+							{frasesModal &&<FormFrases
+								isOpen={true}
+								handleFrasesModal= {handleFrasesModal}
+							/>}
 
 						<Button
 							type='submit'
