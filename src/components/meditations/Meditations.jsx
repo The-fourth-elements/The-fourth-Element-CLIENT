@@ -30,10 +30,12 @@ import { useSelectedModule } from '@/zustand/store/selectedModule';
 import { useExercisesStore } from '@/zustand/store/exercisesStore';
 import { meditations } from './mockMeditations';
 import BackToCourseBtn from '@/helpers/BackToCourseBtn';
+import useMeditationsStore from '@/zustand/store/meditationsStore';
 
 
 
 export default function Meditations({ idModule }) {
+	const { meditations, getMeditations } = useMeditationsStore();
 	const { data: session } = useSession();
 
 	const id = session?.token?.user?.id;
@@ -42,6 +44,11 @@ export default function Meditations({ idModule }) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { module, getModule } = useSelectedModule();
+
+	useEffect(() => {
+		// Llama a la acción para obtener las meditaciones cuando el componente se monta
+		getMeditations();
+	  }, []);
 	// const { exercises, getExercises } = useExercisesStore();
 
 
@@ -100,7 +107,7 @@ export default function Meditations({ idModule }) {
 	};
 
 	const renderModuleMeditations = () => {
-		if (meditations) {
+		if (meditations.length > 0) {
 			return meditations.map((elem, meditationIndex) => {
 					return renderMeditations(meditationIndex, elem, handleMeditationClick);
 			});
@@ -154,7 +161,7 @@ export default function Meditations({ idModule }) {
 					<nav
 						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
 						<ul className='m-2'>
-							{true ? (
+							{meditations.length > 0 ? (
 								<Accordion
 									itemClasses={{
 										title: 'text-black text-medium',
