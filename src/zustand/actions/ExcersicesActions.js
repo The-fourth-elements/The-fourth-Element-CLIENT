@@ -31,6 +31,27 @@ export const getFrases = (id) => {
   }
 
   export const createExcersice = (body) => {
+    return fetch (`${process.env.API_BACKEND}exercise/${body.moduleId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+    .then(response => response.json())
+		.then(data => {
+			if (data.error) {
+				throw data.error;
+			}
+			toastSuccess("se ha creado con exito el excersice")
+		})
+		
+		.catch(error => {
+			toastError(error);
+		});
+  }
+
+  export const createOnlyExcersice = (body) => {
     return fetch (`${process.env.API_BACKEND}exercise`, {
       method: 'POST',
       headers: {
@@ -51,7 +72,7 @@ export const getFrases = (id) => {
 		});
   }
 
-	const addExcersiceToModule = () => {
+	export const addExcersiceToModule = () => {
 		return fetch (`${process.env.API_BACKEND}exercise`, {
 			method: 'POST',
 			headers: {

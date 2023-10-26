@@ -20,6 +20,7 @@ import { useExcersices } from '@/zustand/store/ExcersicesStore';
 const ModuleForm = () => {
 	const router = useRouter();
 	const [frasesModal, setFrasesModal] = useState(false)
+	const [createEjercicio, setCreateEjercicio] = useState(false)
 	// const [excersicesValue, setExcersicesValue] = useState("")
 	const {getAllExcersices, AllExersices, getFrases} = useExcersices()
 	// const handleFileChange = event => {
@@ -141,7 +142,8 @@ const ModuleForm = () => {
 								text: elem.label,
 							}))}
 						/>
-						<div className='createExcersice'>
+						
+						{createEjercicio ? <div className='createExcersice'>
 						<Select
 								label='Ejercios'
 								placeholder='Seleccione un ejercicio'
@@ -159,7 +161,11 @@ const ModuleForm = () => {
 								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3 createExcersiceSize'>
 								Crear Ejercicio
 							</Button>
+							<p onClick={() => setCreateEjercicio(!createEjercicio)}>¿No deseas agregar un ejercicio?</p>
 							</div>
+							:
+							<p onClick={() => setCreateEjercicio(!createEjercicio)}>¿Deseas agregar un ejercicio?</p>
+							}
 							{frasesModal &&<FormFrases
 								isOpen={true}
 								handleFrasesModal= {handleFrasesModal}
