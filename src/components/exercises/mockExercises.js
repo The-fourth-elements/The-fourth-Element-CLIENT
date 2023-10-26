@@ -1,23 +1,26 @@
 export const exercises = [
     {
+      name: 'Ejercicio 1',
       id: 1,
-      question: 'What is the capital of France?',
-      answer: '',
+      questions: ['What is the capital of France?', 'What is the capital of France2?', 'What is the capital of France3?'],
+
     },
     {
+      name: 'Ejercicio 2',
       id: 2,
-      question: 'How many planets are there in the solar system?',
-      answer: '',
+      questions: ['Ejercicio 2.1', 'Ejercicio 2.2', 'Ejercicio 2.3'],
+
     },
     {
+      name: 'Ejercicio 3',
       id: 3,
-      question: 'In which year was the Declaration of Independence of the United States signed?',
-      answer: '',
+      questions: ['Ejercicio 3.1', 'Ejercicio 3.2', 'Ejercicio 3.3'],
+
     },
     {
+      name: 'Ejercicio 4',
       id: 4,
-      question: 'What is the chemical symbol for gold?',
-      answer: '',
+      questions: ['Ejercicio 4.1', 'Ejercicio 4.2', 'Ejercicio 4.3'],
+
     },
-    // You can add more exercises here
   ];

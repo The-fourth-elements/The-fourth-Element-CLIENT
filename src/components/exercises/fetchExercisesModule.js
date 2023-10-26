@@ -1,20 +1,7 @@
 
 
-export const renderTextSection = (question) => {
-	console.log("question", question);
-	if (question) {
-		
-			return (
-					<p className='p-5'> {question} </p>
-			);
-	}
-
-	return <p className='p-5'>Selecciona un ejercicio para responder.</p>;
-};
-
 export const renderDescription = (currentClass, moduleData) => {
 	if (currentClass) {
-		
 		const selectedClassData = moduleData?.find(
 			elem => elem?.name === currentClass
 		);

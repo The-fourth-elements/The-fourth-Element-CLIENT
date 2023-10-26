@@ -142,7 +142,6 @@ function CreateClass() {
 	};
 
 	const closeQuizModal = () => {
-		console.log('AAAAAAAAAAAAAAAAAAA');
 		setUpdated(true);
 	};
 
