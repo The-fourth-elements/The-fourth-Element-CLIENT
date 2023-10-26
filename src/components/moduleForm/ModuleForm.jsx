@@ -143,7 +143,10 @@ const ModuleForm = () => {
 							}))}
 						/>
 						
-						{createEjercicio ? <div className='createExcersice'>
+						{createEjercicio ? 
+						<div
+						className='showExcersice'>
+							<div className='createExcersice'>
 						<Select
 								label='Ejercios'
 								placeholder='Seleccione un ejercicio'
@@ -161,10 +164,14 @@ const ModuleForm = () => {
 								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3 createExcersiceSize'>
 								Crear Ejercicio
 							</Button>
-							<p onClick={() => setCreateEjercicio(!createEjercicio)}>¿No deseas agregar un ejercicio?</p>
+							</div>
+							<p className='showButtonsExcersice' onClick={() => setCreateEjercicio(!createEjercicio)}>¿No deseas agregar un ejercicio?</p>
+							
 							</div>
 							:
-							<p onClick={() => setCreateEjercicio(!createEjercicio)}>¿Deseas agregar un ejercicio?</p>
+							<div className='createExcersice'>
+							<p className='showButtonsExcersice' onClick={() => setCreateEjercicio(!createEjercicio)}>¿Deseas agregar un ejercicio?</p>
+							</div>
 							}
 							{frasesModal &&<FormFrases
 								isOpen={true}
