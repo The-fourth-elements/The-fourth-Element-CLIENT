@@ -3,7 +3,7 @@ import UserIcon from '@/assets/svg-jsx/UserIcon';
 import VideoPlusIcon from '@/assets/svg-jsx/VideoPlusIcon.jsx';
 import CreateModuleIcon from '@/assets/svg-jsx/CreateModuleIcon.jsx';
 
-
+import BrainIcon from '@/assets/svg-jsx/BrainIcon.jsx';
 
 export const routes = [
 	{
@@ -44,7 +44,7 @@ export const routes = [
 		to: '/dashboard/users-section',
 		text: 'Usuarios',
 		svg: (
-            <UserIcon/>
+			<UserIcon />
 
 		),
 	},
@@ -52,22 +52,29 @@ export const routes = [
 		to: '/dashboard/module/create',
 		text: 'Crear Módulo',
 		svg: (
-			<CreateModuleIcon/>
+			<CreateModuleIcon />
 		),
 	},
-    {
+	{
 
 		to: '/dashboard/class/create',
 		text: 'Crear clase',
 		svg: (
-			<VideoPlusIcon/>
+			<VideoPlusIcon />
 		),
 	},
 	{
 		to: '/dashboard/meditation/create',
 		text: 'Crear Meditación',
 		svg: (
-			<MeditationIcon/>
+			<MeditationIcon />
+		),
+	},
+	{
+		to: '/dashboard/knowledge',
+		text: 'Crear Autorregistro',
+		svg: (
+			<BrainIcon />
 		),
 	},
 ];
