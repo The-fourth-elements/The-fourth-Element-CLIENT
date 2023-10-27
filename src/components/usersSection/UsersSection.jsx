@@ -96,7 +96,7 @@ export default function UsersSection() {
 
 	return (
 		<div className='mainDiv'>
-			<Button className='deletedUsersBtn absolute top-44 md:left-96 left-72 md:text-base whitespace-normal md:whitespace-nowrap w-auto' onClick={handleGetDeletedUsers}>
+			<Button className=' px-16 sm:px-5 sm:absolute sm:top-48 md:top-52 sm:left-96 md:text-base whitespace-normal md:whitespace-nowrap' onClick={handleGetDeletedUsers}>
 				{showDeletedUsers ? 'Ver usuarios eliminados' : 'Ver usuarios existentes'}
 			</Button>
 			{isLoading && (
