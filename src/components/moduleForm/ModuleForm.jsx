@@ -21,8 +21,9 @@ const ModuleForm = () => {
 	const router = useRouter();
 	const [frasesModal, setFrasesModal] = useState(false)
 	const [createEjercicio, setCreateEjercicio] = useState(false)
+	const [exercisesId, setExercisesId] = useState("")
 	// const [excersicesValue, setExcersicesValue] = useState("")
-	const {getAllExcersices, AllExersices, getFrases} = useExcersices()
+	const {getAllExcersices, AllExersices, getFrases, addExcersiceToModule} = useExcersices()
 	// const handleFileChange = event => {
 	// 	const fileInput = event.target;
 	// 	const isVideo = fileInput.files.length > 0 &&
@@ -38,12 +39,10 @@ const ModuleForm = () => {
 
 	const handleFrasesModal = () => {
 		setFrasesModal(!frasesModal)
-		console.log(frasesModal)
 	}
 
 	const handleSelect = event => {
-		getFrases(event.target.value);
-		console.log (event.target.value)
+		setExercisesId(event.target.value);
 	};
 
 	const initialValuesModule = {
@@ -71,7 +70,16 @@ const ModuleForm = () => {
 				formattedValues
 			);
 
+			
 
+			if(exercisesId !== "" && createEjercicio){
+				
+				const addExcersice = {
+				exercisesId,
+				moduleId: postResponse?._id
+			}
+				addExcersiceToModule(addExcersice)
+			}
 			
 			if (postResponse?._id) {
 				toastSuccess('¡Se subió el módulo!');
@@ -144,21 +152,21 @@ const ModuleForm = () => {
 						/>
 						
 						{createEjercicio ? 
-						<div
+						(<div
 						className='showExcersice'>
 							<div className='createExcersice'>
-						<Select
+						{AllExersices?.length > 0 && <Select
 								label='Ejercios'
 								placeholder='Seleccione un ejercicio'
 								className='md:max-w-[12rem] max-w-xs createExcersiceSize'
 								onChange={handleSelect}>
-								{AllExersices.length > 0 &&
-									AllExersices.map(excersice => (
-										<SelectItem key={excersice._id} value={excersice._id}>
-											{excersice.name}
+								{AllExersices?.length > 0 &&
+									AllExersices?.map(excersice => (
+										<SelectItem key={excersice?._id} value={excersice?._id}>
+											{excersice?.name}
 										</SelectItem>
 									))}
-							</Select>
+							</Select>}
 						<Button
 								onClick={handleFrasesModal}
 								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3 createExcersiceSize'>
@@ -167,7 +175,7 @@ const ModuleForm = () => {
 							</div>
 							<p className='showButtonsExcersice' onClick={() => setCreateEjercicio(!createEjercicio)}>¿No deseas agregar un ejercicio?</p>
 							
-							</div>
+							</div>)
 							:
 							<div className='createExcersice'>
 							<p className='showButtonsExcersice' onClick={() => setCreateEjercicio(!createEjercicio)}>¿Deseas agregar un ejercicio?</p>

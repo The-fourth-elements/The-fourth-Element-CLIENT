@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { useExcersices } from "@/zustand/store/ExcersicesStore";
-import { Button, useDisclosure, Select, SelectItem, Modal, ModalContent, ModalBody } from "@nextui-org/react";
+import { Button, useDisclosure, Select, SelectItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import "./FormFrases.scss"
 import { useModulesStore } from "@/zustand/store/modulesStore";
 import CustomModal from "@/helpers/CustomModal";
@@ -17,13 +17,12 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
     const [fraseData, setFraseData] = useState([""
     ])
 	const [moduleId, setModuleId] = useState("")
+
 	const router =useRouter()
 	const pathname = usePathname()
 
 	useEffect(() => {
 		getModules()
-		console.log(modules)
-		console.log(pathname)
 	}, [])
     const handleTitleChange = e => {
 		setTitle(e?.target?.value);
@@ -80,6 +79,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 			
 		};
         createOnlyExcersice(theFrasesData)
+		handleFrasesModal()
 		// console.log(theFrasesData)
 
 	};
@@ -161,10 +161,13 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 		// </Modal>
     )
 	:
-	<Modal isOpen={isOpen} onOpenChange={onOpenChange} {...props}>
+	<Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop='blur'
+	size='5xl'
+	scrollBehavior="inside"
+	>
 		<ModalContent>
-			{(handleFrasesModal) => (
-			<ModalBody>
+			{(onClose) => (
+			<ModalBody className="mainFrasesRender">
 		<article className="mainFrasesRender">
 		<h1>Crear Ejercicio</h1>
 	<input className="titleInput" placeholder="Titulo pasa los ejercicios" value={title} onChange={handleTitleChange} type="text" />
@@ -192,12 +195,18 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 			<Button className='p-7 mb-5 text-xl addFrase' onClick={handleAddFrase}>
 			Agregar Frase
 		</Button>
-		
+		<div>
 		<Button
 			className='p-7 bg-background text-xl saveExcersice'
 			onClick={handleSaveOnlyForm}>
 			Guardar Ejercicio
 		</Button>
+		<Button
+		className='bg-danger-400 deleteButton'
+		onClick={handleFrasesModal}>
+			Cancelar
+		</Button>
+		</div>
 		</section> 
 		
 	</article>
