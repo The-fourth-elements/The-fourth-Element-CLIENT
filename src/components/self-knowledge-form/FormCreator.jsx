@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import {
 	Button,
@@ -11,35 +12,27 @@ import {
 import FormSection from './FormSection';
 import Question from './Question';
 import PreviewSelf from '../preview-self-knowledge/PreviewSelf';
+import SelectModule from '@/helpers/select-module/SelectModule';
+import { addQuestion, saveQuestion } from './form-creator-self-knowledge';
+import { postData } from '@/hooks/postData';
+import { toastError, toastSuccess } from '@/helpers/toast';
 
 const FormCreator = () => {
 	const [form, setForm] = useState({
-		id: 0,
 		name: '',
 		description: '',
 		questions: [],
 	});
+	const [moduleSelected, setModuleSelected] = useState('');
 	const [accumulatorData, setAccumulatorData] = useState([]);
 	const [isAddingQuestion, setIsAddingQuestion] = useState(false);
 	const [newQuestion, setNewQuestion] = useState('');
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const addNewSection = () => {
-		if (form.name && form.description) {
+		if (form.name && form.description && form.questions.length !== 0) {
 			setAccumulatorData([...accumulatorData, form]);
-			setForm({ id: form.id + 1, name: '', description: '', questions: [] });
+			setForm({ name: '', description: '', questions: [] });
 		}
-	};
-	const addQuestion = (sectionName, question) => {
-		const updatedForm = { ...form };
-		const sectionIndex = form.questions.findIndex(
-			section => section.name === sectionName
-		);
-		if (sectionIndex === -1) {
-			updatedForm.questions.push(question);
-		} else {
-			updatedForm.questions[sectionIndex].questions.push(question);
-		}
-		setForm(updatedForm);
 	};
 
 	const handleChange = (e, property) => {
@@ -55,26 +48,40 @@ const FormCreator = () => {
 		setNewQuestion('');
 	};
 
-	const saveQuestion = () => {
-		if (form.name && form.description && newQuestion.length > 0) {
-			addQuestion(form.name, newQuestion);
-			setIsAddingQuestion(false);
-			setNewQuestion('');
-		}
-	};
 	const handleClearSections = () => {
 		setAccumulatorData([]);
 		setForm({
-			id: 0,
 			name: '',
 			description: '',
 			questions: [],
 		});
+		setModuleSelected('');
 	};
+	const handleSendKnowledge = async () => {
+		try {
+			if (moduleSelected !== '') {
+				const form = {
+					selfKnowledge: accumulatorData,
+				}
+				const response = await postData(
+					`${process.env.API_BACKEND}selfK/${moduleSelected}`
+				, form);
+				if (response?.statusCode === 404) {
+					throw Error(response?.message);
+				}
+				toastSuccess(response?.message);
+				handleClearSections();
+			}
+		} catch (error) {
+			toastError(error);
+			toastError('no se pudo crear el autoconocimiento');
+		}
+	};
+
 	return (
 		<>
-			<Card className='min-h-[20vh] max-h-[80vh] overflow-auto'>
-				<CardHeader className='flex justify-center'>
+			<Card className='min-h-[30vh]'>
+				<CardHeader className='flex justify-center '>
 					<h3 className='text-xl'>{form.name}</h3>
 				</CardHeader>
 				<CardBody>
@@ -102,11 +109,14 @@ const FormCreator = () => {
 							isAddingQuestion={isAddingQuestion}
 							newQuestion={newQuestion}
 							saveQuestion={saveQuestion}
+							currentForm={form}
 							startAddingQuestion={startAddingQuestion}
 							setNewQuestion={setNewQuestion}
+							setIsAddingQuestion={setIsAddingQuestion}
+							setForm={setForm}
 						/>
 					</form>
-					<div className='flex align-middle justify-between mt-5'>
+					<div className='flex align-middle justify-center gap-4 flex-wrap mt-5'>
 						<Button onClick={addNewSection} className='bg-primary '>
 							Agregar nueva sección
 						</Button>
@@ -125,6 +135,10 @@ const FormCreator = () => {
 							</>
 						)}
 					</div>
+					<SelectModule moduleSelected={setModuleSelected} />
+					<Button onClick={handleSendKnowledge} className='bg-primary-700'>
+						Crear
+					</Button>
 				</CardBody>
 			</Card>
 		</>

@@ -14,20 +14,20 @@ const PreviewSelf = ({ isOpen, onOpen, onOpenChange, data }) => {
 	const [disableBack, setDisableBack] = useState(false);
 	const [disableNext, setDisableNext] = useState(false);
 	const sections = data.length;
-	const handleSectionChange = (nextOrBack) => {
+	const handleSectionChange = nextOrBack => {
 		const newPreview = sectionPreview + nextOrBack;
 		if (newPreview >= 0 && newPreview < sections) {
-		  setSectionPreview(newPreview);
-		  setDisableBack(newPreview === 0);
-		  setDisableNext(newPreview === sections - 1);
+			setSectionPreview(newPreview);
+			setDisableBack(newPreview === 0);
+			setDisableNext(newPreview === sections - 1);
 		}
-	  };
+	};
 	return (
 		<Modal
 			isOpen={isOpen}
 			onOpen={onOpen}
 			onOpenChange={onOpenChange}
-			size='4xl'>
+			size='3xl'>
 			<ModalContent>
 				{onClose => (
 					<>
@@ -35,9 +35,11 @@ const PreviewSelf = ({ isOpen, onOpen, onOpenChange, data }) => {
 							<h3 className='text-xl'>Preview</h3>
 						</ModalHeader>
 						<ModalBody>
+							<div className='absolute top-10 left-6 bg-black rounded-sm'>
+								{sectionPreview + 1}/{sections}
+							</div>
 							<div className='flex flex-col max-h-full min-h-[30vh] justify-center h-[80vh] '>
-								<PreviewSelfSection
-									data={data[sectionPreview]}/>
+								<PreviewSelfSection data={data[sectionPreview]} />
 							</div>
 						</ModalBody>
 						<ModalFooter className='flex justify-between bg-black'>
