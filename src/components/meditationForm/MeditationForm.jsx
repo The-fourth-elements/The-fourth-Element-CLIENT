@@ -13,6 +13,8 @@ import {
 	initialValuesMeditation,
 	validationSchemaCreateMeditation,
 } from '@/helpers/validations';
+import { cldButton } from '@/helpers/cldButon.module.scss';
+import { RenderTracksForm } from './RenderTracksForm';
 
 function MeditationForm() {
 	const { modules, getModules } = useModulesStore();
@@ -120,13 +122,12 @@ function MeditationForm() {
 								}))}
 							/>
 						) : null}
-
-						<div className='mb-5'>
-							<h2 className='text-white'>
+						<div className='space-y-4 flex flex-col items-center bg-secondary-600 p-8 rounded-xl'>
+							<p className='text-white text-lg'>
 								Seleccione los tracks para la meditación:
-							</h2>
+							</p>
 							<CldUploadButton
-								className='p-5 bg-blue-700 rounded-lg'
+								className={cldButton}
 								onSuccess={handleSuccess}
 								uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
 							/>
@@ -136,17 +137,17 @@ function MeditationForm() {
 
 							<SelectField
 								isRequired
-								className='mb-12'
-								name='tracks' // Define un nombre para este campo
+								className='mb-2'
+								name='tracks'
 								label='Seleccionar Tracks'
-								selectionMode='multiple' // Habilita la selección múltiple
+								selectionMode='multiple'
 								options={tracks.map((track, index) => ({
-									value: track.public_id, // Utiliza un identificador único para el valor
-									text: 'track ' + (index + 1), // El nombre del track que se mostrará al usuario
+									value: track.public_id,
+									text: 'Track ' + (index + 1),
 								}))}
 							/>
+							<RenderTracksForm tracks={tracks} />
 						</div>
-
 						<Button
 							size='md'
 							type='submit'

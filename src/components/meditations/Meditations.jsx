@@ -35,7 +35,9 @@ import useMeditationsStore from '@/zustand/store/meditationsStore';
 
 
 export default function Meditations({ idModule }) {
-	const { meditations, getMeditations } = useMeditationsStore();
+	
+	const { module, getModule } = useSelectedModule();
+
 	const { data: session } = useSession();
 
 	const id = session?.token?.user?.id;
@@ -43,72 +45,23 @@ export default function Meditations({ idModule }) {
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
-	const { module, getModule } = useSelectedModule();
 
-	useEffect(() => {
-		// Llama a la acción para obtener las meditaciones cuando el componente se monta
-		getMeditations();
-	  }, []);
-	// const { exercises, getExercises } = useExercisesStore();
-
-
-	const { user, getProfile } = useUserProfile();
-	const { modules, getModules, getQuiz } = useModulesStore();
-	const [moduleData, setModuleData] = useState([]);
 	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
 	const [currentMeditation, setCurrentMeditation] = useState(null);
-	const [access, setAccess] = useState(false);
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const [dataUpdated, setDataUpdated] = useState(false);
-	const [currentModule, setCurrentModule] = useState('');
-	const [firstEffectExecuted, setFirstEffectExecuted] = useState(false);
 	const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
 
-	/*useEffect(() => {
-		getModule(idModule).then(() => {
-			setFirstEffectExecuted(true);
-		});
+	useEffect(() => {
+		getModule(idModule)
+		setModulesDataLoaded(true);
+		
 	}, []);
 
-	useEffect(() => {
-		if (firstEffectExecuted) {
-			if (session) {
-				if (session?.token?.user) {
-					const { role } = session.token.user;
-					role > 2 && setAccess(true);
-					const id = session?.token?.user?.id;
-					getProfile(id);
-				}
-				console.log('condicion useEffect ', moduleData?.length);
-
-				if (moduleData?.length === 0) {
-					console.log('condicion useEffect ', moduleData?.length);
-
-					// fetchDataSingleModule(module).then(data => {
-					// 	setModuleData(data);
-					// 	setModulesDataLoaded(true);
-					// });
-				}
-
-				verifyProgressUser();
-			}
-		}
-	}, [firstEffectExecuted, module, session, dataUpdated]);
-
-	useEffect(() => {
-		if (dataUpdated) {
-			setDataUpdated(false);
-		}
-	}, [dataUpdated]);
-*/
-	const handleDataUpdate = () => {
-		setDataUpdated(true);
-	};
 
 	const renderModuleMeditations = () => {
-		if (meditations.length > 0) {
-			return meditations.map((elem, meditationIndex) => {
+		console.log("module" , module);
+		if (module?.meditation?.length > 0) {
+			return module.meditation.map((elem, meditationIndex) => {
 					return renderMeditations(meditationIndex, elem, handleMeditationClick);
 			});
 		}
@@ -124,7 +77,7 @@ export default function Meditations({ idModule }) {
 
 	return (                                // h-[81vh]
 			<Card className={containerVideos + ' bg-white navcolor md:h-[81vh]'} > 
-				<main
+				<section
 					className={
 						div1 + ' parent  bg-foreground  mt-12'
 					}>
@@ -146,22 +99,13 @@ export default function Meditations({ idModule }) {
 							}>
 							{module?.name ? `Módulo: ${module?.name}` : ''}
 						</h2>
-						<Accordion>
-							<AccordionItem
-								className={
-									acordionItem +
-									' p-2 m-1 bg-transparent rounded md:m-0 text-background'
-								}
-								title='Recursos'
-								textValue={`${accordion}`}></AccordionItem>
-						</Accordion>
 					</Card>
-				</main>
+				</section>
 				<aside className={`${div2} bg-foreground md:w-96  mt-12`}>
 					<nav
 						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
 						<ul className='m-2'>
-							{meditations.length > 0 ? (
+							{modulesDataLoaded ? (
 								<Accordion
 									itemClasses={{
 										title: 'text-black text-medium',

@@ -1,6 +1,6 @@
 export const getExercises = async (set) => {
     try {
-      const response = await fetch(`${process.env.API_BACKEND}ejercicios`);
+      const response = await fetch(`${process.env.API_BACKEND}exercises`);
       if (response.ok) {
         const data = await response.json();
         set({ exercises: data }); // Almacenar los datos en el estado exercises.
