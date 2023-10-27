@@ -24,8 +24,8 @@ export const routes = [
 		),
 	},
 	{
-		to: '/dashboard/modules',
-		text: 'Modulos',
+		to: '/course',
+		text: 'Curso',
 		svg: (
 			<svg
 				width='20'

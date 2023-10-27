@@ -23,14 +23,10 @@ import {
 import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { useUserProfile } from '@/zustand/store/userProfile';
-import {
-	fetchDataSingleModule,
-	renderDescription,
-} from './fetchExercisesModule';
+
 import { renderExercises, renderTextSection } from './renderExercises';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
 import { useExercisesStore } from '@/zustand/store/exercisesStore';
-import { exercises } from './mockExercises';
 import BackToCourseBtn from '@/helpers/BackToCourseBtn';
 
 export default function Exercises({ idModule }) {
@@ -42,18 +38,23 @@ export default function Exercises({ idModule }) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { module, getModule } = useSelectedModule();
-	// const { exercises, getExercises } = useExercisesStore();
+	const { exercises, getExercises } = useExercisesStore();
 
 	const { user, getProfile } = useUserProfile();
 	const { modules, getModules, getQuiz } = useModulesStore();
 	const [moduleData, setModuleData] = useState([]);
-	const [modulesDataLoaded, setModulesDataLoaded] = useState(false);
+	const [exercisesDataLoaded, setExercisesDataLoaded] = useState(false);
 	const [currentQuestion, setCurrentQuestion] = useState(null);
 	const [access, setAccess] = useState(false);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [dataUpdated, setDataUpdated] = useState(false);
 	const [currentModule, setCurrentModule] = useState('');
 	const [firstEffectExecuted, setFirstEffectExecuted] = useState(false);
+
+	useEffect(() => {
+		getModule(idModule)
+		setExercisesDataLoaded(true)
+	}, []);
 
 	/*useEffect(() => {
 		getModule(idModule).then(() => {
@@ -97,8 +98,8 @@ export default function Exercises({ idModule }) {
 	};
 
 	const renderModuleExercises = () => {
-		if (exercises) {
-			return exercises.map((elem, exerciseIndex) => {
+		if (module.exercises) {
+			return module.exercises.map((elem, exerciseIndex) => {
 				console.log('elem en map', elem);
 				return renderExercises(exerciseIndex, elem, handleExerciseClick);
 			});
@@ -131,27 +132,19 @@ export default function Exercises({ idModule }) {
 						}>
 						{module?.name ? `Módulo: ${module?.name}` : ''}
 					</h2>
-					<Accordion>
-						<AccordionItem
-							className={
-								acordionItem +
-								' p-2 m-1 bg-transparent rounded md:m-0 text-background'
-							}
-							title='Recursos'
-							textValue={`${accordion}`}></AccordionItem>
-					</Accordion>
+					
 				</Card>
 			</main>
 			<aside className={`${div2} bg-foreground md:w-96  mt-12`}>
 				<nav
 					className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
 					<ul className='m-2'>
-						{true ? (
+						{exercisesDataLoaded ? (
 							<Accordion
 								itemClasses={{
 									title: 'text-black text-medium',
 								}}>
-								{renderModuleExercises(exercises)}
+								{renderModuleExercises()}
 							</Accordion>
 						) : (
 							<h1 className='text-black'>
