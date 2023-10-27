@@ -37,6 +37,10 @@
     }
 }
 
+.descriptionInput {
+    width: 80%;
+}
+
 .sectionFrases {
     display: flex;
     flex-direction: column;
@@ -86,4 +90,16 @@
 .addFrase {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.createExcersice {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 30px;
+
+    @include sm {
+        flex-direction: column;
+        justify-content: center;
+    }
 }

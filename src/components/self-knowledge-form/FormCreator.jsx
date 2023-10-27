@@ -6,9 +6,11 @@ import {
 	CardHeader,
 	Input,
 	Textarea,
+	useDisclosure,
 } from '@nextui-org/react';
 import FormSection from './FormSection';
 import Question from './Question';
+import PreviewSelf from '../preview-self-knowledge/PreviewSelf';
 
 const FormCreator = () => {
 	const [form, setForm] = useState({
@@ -20,8 +22,7 @@ const FormCreator = () => {
 	const [accumulatorData, setAccumulatorData] = useState([]);
 	const [isAddingQuestion, setIsAddingQuestion] = useState(false);
 	const [newQuestion, setNewQuestion] = useState('');
-	const [otherForm, setOtherForm] = useState({});
-
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const addNewSection = () => {
 		if (form.name && form.description) {
 			setAccumulatorData([...accumulatorData, form]);
@@ -61,6 +62,15 @@ const FormCreator = () => {
 			setNewQuestion('');
 		}
 	};
+	const handleClearSections = () => {
+		setAccumulatorData([]);
+		setForm({
+			id: 0,
+			name: '',
+			description: '',
+			questions: [],
+		});
+	};
 	return (
 		<>
 			<Card className='min-h-[20vh] max-h-[80vh] overflow-auto'>
@@ -97,10 +107,23 @@ const FormCreator = () => {
 						/>
 					</form>
 					<div className='flex align-middle justify-between mt-5'>
-					<Button onClick={addNewSection} className='bg-primary '>
-						Agregar nueva sección
-					</Button>
-					<Button onClick={()=>{console.log('perateweon')}}>Vista previa</Button>
+						<Button onClick={addNewSection} className='bg-primary '>
+							Agregar nueva sección
+						</Button>
+						<Button onClick={handleClearSections}>
+							Limpiar todas las secciones
+						</Button>
+						{accumulatorData.length > 0 && (
+							<>
+								<Button onClick={onOpen}>Previsualizar</Button>
+								<PreviewSelf
+									isOpen={isOpen}
+									onOpen={onOpen}
+									onOpenChange={onOpenChange}
+									data={accumulatorData}
+								/>
+							</>
+						)}
 					</div>
 				</CardBody>
 			</Card>
