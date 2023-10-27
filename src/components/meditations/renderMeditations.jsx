@@ -22,22 +22,22 @@ export const renderMeditations = (
 	);
 };
 
-export const renderTrack = (elem, currentTrackIndex, setCurrentTrackIndex) => {
+export const renderTrack = (currentMeditation, currentTrackIndex, setCurrentTrackIndex) => {
+	console.log("currentMeditation", currentMeditation);
 	if (
-		elem?.tracks &&
-		elem.tracks.length > 0 &&
-		elem.tracks[currentTrackIndex]?.url
+		currentMeditation?.tracks
+		
 	) {
 		return (
 			<div className='flex flex-col justify-between h-full items-center'>
-				<h1>{elem.name}</h1>
-				<h2>{elem.description}</h2>
+				<h1>{currentMeditation.name}</h1>
+				<h2>{currentMeditation.description}</h2>
 
-				<audio className=' w-full sm:w-11/12 md:w-3/5'  controls controlsList="nodownload" src={elem.tracks[currentTrackIndex].url}></audio>
+				<audio className=' w-full sm:w-11/12 md:w-3/5'  controls controlsList="nodownload" src={currentMeditation.tracks[currentTrackIndex].url}></audio>
 				<div>
 					<Pagination
 					showControls
-						total={elem.tracks.length}
+						total={currentMeditation.tracks.length}
 						page={currentTrackIndex + 1}
 						classNames={{
 							item: "w-8 h-8 text-small rounded-none bg-transparent",
