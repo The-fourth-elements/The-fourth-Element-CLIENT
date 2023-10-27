@@ -26,8 +26,9 @@ export const useExcersices = create ((set, get) => ({
         console.log(body)
         createExcersice(body)
     },
-    addExcersiceToModule: () => {
-        addExcersiceToModule()
+    addExcersiceToModule: (body) => {
+        console.log(body)
+        addExcersiceToModule(body)
     },
     createOnlyExcersice: (body) => {
         createOnlyExcersice(body)

@@ -72,9 +72,9 @@ export const getFrases = (id) => {
 		});
   }
 
-	export const addExcersiceToModule = () => {
-		return fetch (`${process.env.API_BACKEND}exercise`, {
-			method: 'POST',
+	export const addExcersiceToModule = (body) => {
+		return fetch (`${process.env.API_BACKEND}exercisesToModule`, {
+			method: 'PUT',
 			headers: {
 			  'Content-Type': 'application/json',
 			},
@@ -85,7 +85,7 @@ export const getFrases = (id) => {
 				  if (data.error) {
 					  throw data.error;
 				  }
-				  toastSuccess("se ha creado con exito el excersice")
+				  toastSuccess("se ha agregado el ejercicio con exito")
 			  })
 			  
 			  .catch(error => {
