@@ -53,7 +53,7 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header h-44'>
+		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header sm:h-44 h-36'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>

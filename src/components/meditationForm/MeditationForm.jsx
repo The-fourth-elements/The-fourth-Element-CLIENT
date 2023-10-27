@@ -58,8 +58,8 @@ function MeditationForm() {
 				};
 
 				await fetch(url, options);
-				
-        toastSuccess('¡Meditación creada con éxito!');
+
+				toastSuccess('¡Meditación creada con éxito!');
 			} else {
 				toastError(
 					'No se pudo crear la meditación, inténtelo de nuevo más tarde.'
@@ -75,10 +75,6 @@ function MeditationForm() {
 		const { info } = e;
 		const { url, public_id } = info;
 
-		// Agrega el nuevo track a la lista de tracks seleccionados
-		// const newTracks = [...tracks, { public_id, url }];
-		// console.log("newTracks", newTracks);
-		// Actualiza el estado de tracks con la nueva lista
 		setTracks(prevTracks => [...prevTracks, { public_id, url }]);
 
 		console.log('tracks', tracks);
