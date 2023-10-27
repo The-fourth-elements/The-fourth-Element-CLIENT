@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getFrases, createExcersice, getAllExcersices, addExcersiceToModule } from "../actions/ExcersicesActions";
+import { getFrases, createExcersice, getAllExcersices, addExcersiceToModule, createOnlyExcersice } from "../actions/ExcersicesActions";
 
 export const useExcersices = create ((set, get) => ({
     Frases: {},
@@ -28,5 +28,8 @@ export const useExcersices = create ((set, get) => ({
     },
     addExcersiceToModule: () => {
         addExcersiceToModule()
+    },
+    createOnlyExcersice: (body) => {
+        createOnlyExcersice(body)
     }
 }))
