@@ -1,10 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-module.exports = nextConfig
-
-
-module.exports = {
+const nextConfig = {
   env: {
     APIKEY: process.env.APIKEY,
     AUTH_DOMAIN: process.env.AUTH_DOMAIN,
@@ -15,7 +10,14 @@ module.exports = {
     API_BACKEND: process.env.API_BACKEND,
     PASS: process.env.PASS,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    UPLOAD_PRESET: process.env.UPLOAD_PRESET
+    NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET
   }
-};
+}
+
+module.exports = nextConfig
+
+
+// module.exports = {
+ 
+// };
 

@@ -56,6 +56,7 @@ export const routes = [
 		),
 	},
     {
+
 		to: '/dashboard/class/create',
 		text: 'Crear clase',
 		svg: (
