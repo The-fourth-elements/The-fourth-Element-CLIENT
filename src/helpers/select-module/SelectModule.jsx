@@ -16,7 +16,7 @@ const SelectModule = ({moduleSelected}) => {
 			{modules?.map((f, index) => {
 				return (
 					<SelectItem key={index} value={f?._id} onClick={()=>{moduleSelected(f?._id)}}>
-						Modulo {index + 1}
+						{`Módulo ${index + 1}`}
 					</SelectItem>
 				);
 			})}

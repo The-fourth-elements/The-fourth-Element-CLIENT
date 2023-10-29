@@ -59,8 +59,8 @@ const FormCreator = () => {
 	};
 	const handleSendKnowledge = async () => {
 		try {
-			if (moduleSelected == '') throw 'No selecciono ningún modulo'
-				if(accumulatorData.length === 0) throw 'No se hay ninguna sección agregada'
+			if (moduleSelected == '') throw 'No seleccionó ningún modulo'
+				if(accumulatorData.length === 0) throw 'No hay ninguna sección agregada'
 				const form = {
 					selfKnowledge: accumulatorData,
 				}

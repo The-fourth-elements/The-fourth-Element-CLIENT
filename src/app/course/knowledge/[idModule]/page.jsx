@@ -10,34 +10,25 @@ import {
 	CircularProgress,
 	useDisclosure,
 } from '@nextui-org/react';
+import { useSelectedModule } from '@/zustand/store/selectedModule';
+
 
 function page({ params }) {
 	const { idModule } = params;
-	//con este idModule debo traer los autoconocimiento delos modulos;
-	const { data, error, isLoading } = useFetch(
-		`${process.env.API_BACKEND}moduls/${idModule}`
-	);
-	console.log(data);
-	const [knowledge, setKnowledge] = useState([
-		{
-			name: 'Motivacion',
-			description:
-				'descripcion de ejemplo de la motivacion para un mockeo de datos',
-			questions: [
-				'pregutna nro1 : dkfdkjdkfjdskfjsdkfdsjk',
-				'pregunta numero 2 ; no me preguntes we',
-			],
-		},
-		{
-			name: 'Persecpcion de la realidad segun alguien',
-			description: 'jejejejjejeejej',
-			questions: ['pregunta 1 seccion 2', 'jejejejejejejeje'],
-		},
-	]);
+	const [isLoading, setIsLoading] = useState(true)	
+	const {module, getModule} = useSelectedModule()
+
+
+	useEffect(() => {
+		getModule(idModule).then(() => {
+			setIsLoading(false);
+		  });
+
+	}, [])
+	
+
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	// const { data, error, isLoading } = useFetch(
-	// 	`${process.env.API_BACKEND}users`
-	// );
+	
 	if (isLoading) {
 		return (
 			<>
@@ -46,9 +37,6 @@ function page({ params }) {
 		);
 	}
 
-	if (error && !isLoading) {
-		return <>No se puedo renddiar nada</>;
-	}
 	return (
 		<>
 			<Card className='w-full'>
@@ -66,7 +54,7 @@ function page({ params }) {
 			</Card>
 			<Button onClick={onOpen}>abrir modal prueba</Button>
 			<RenderSelfKnowledge
-				data={knowledge}
+				data={module?.selfKnowledge}
 				isOpen={isOpen}
 				onOpenChange={onOpenChange}
 				onOpen={onOpen}
