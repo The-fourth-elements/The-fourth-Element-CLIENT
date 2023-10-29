@@ -35,6 +35,10 @@ function Modules() {
 		  key: "meditations",
 		  label: "Meditacion",
 		},
+		{
+			key: "knowledge",
+			label: "Autoconocimiento"
+		},
 	  ];
 
 	const router = useRouter();

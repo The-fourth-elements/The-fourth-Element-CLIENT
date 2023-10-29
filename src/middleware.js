@@ -30,13 +30,7 @@ export const middleware = async request => {
     }
 
     const path = request.nextUrl.pathname;
-    if (
-        (session && path === '/dashboard') ||
-        (session && path === '/dashboard/users-section') ||
-        (session && path === '/dashboard/modules') ||
-        (session && path === '/dashboard/class/create') ||
-        (session && path === '/dashboard/module/create')
-    ) {
+    if (session && path.startsWith('/dashboard')) {
         const url = request.nextUrl.clone();
         //verificar el rol
         if (role > 1) {
