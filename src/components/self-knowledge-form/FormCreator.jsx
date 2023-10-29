@@ -59,7 +59,8 @@ const FormCreator = () => {
 	};
 	const handleSendKnowledge = async () => {
 		try {
-			if (moduleSelected !== '') {
+			if (moduleSelected == '') throw 'No selecciono ningún modulo'
+				if(accumulatorData.length === 0) throw 'No se hay ninguna sección agregada'
 				const form = {
 					selfKnowledge: accumulatorData,
 				}
@@ -71,10 +72,10 @@ const FormCreator = () => {
 				}
 				toastSuccess(response?.message);
 				handleClearSections();
-			}
+			
 		} catch (error) {
 			toastError(error);
-			toastError('no se pudo crear el autoconocimiento');
+			toastError('No se pudo crear el autoconocimiento');
 		}
 	};
 
