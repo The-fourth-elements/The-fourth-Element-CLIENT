@@ -46,7 +46,7 @@ function page({ params }) {
 				<CardBody className=''>
 					<p className='bg-white text-black w-[50%]'>
 						Esta es una charla introductoria a lo que vera el usuario cuando
-						este viendo este autoconocimientoo sin saber que es, puede
+						este viendo este autoconocimiento sin saber que es, puede
 						explicarle que es lo que vera y que tendra que hacer para poder
 						tener un mejor entendimiento del tema.
 					</p>
