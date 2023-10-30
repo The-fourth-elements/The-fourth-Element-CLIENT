@@ -52,7 +52,7 @@ function Modules() {
 	}, []);
 
 	return (
-		<div className='mt-10 flex start-0'>
+		<div className='mt-10 sm:flex-wrap gap-7 sm:flex space-y-5 sm:space-y-0  items-center'>
 			{modules?.map((elem, index) => {
 				return (
 					(!elem.paid || role > 0) &&

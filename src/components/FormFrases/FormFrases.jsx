@@ -170,7 +170,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 			<ModalBody className="mainFrasesRender">
 		<article className="mainFrasesRender">
 		<h1>Crear Ejercicio</h1>
-	<input className="titleInput" placeholder="Titulo pasa los ejercicios" value={title} onChange={handleTitleChange} type="text" />
+	<input className="titleInput" placeholder="Titulo para los ejercicios" value={title} onChange={handleTitleChange} type="text" />
 	<input className="descriptionInput" type="text" placeholder="Description" value={description} onChange={handleDescriptionChange}/>
 	<section className="sectionFrases" >
 			{fraseData.map((frase, fraseIndex) => (
