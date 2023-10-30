@@ -35,7 +35,7 @@ export default function About() {
                 <EditableContent content={content} title={title} id={_id} update={getAllAbouts}/>
               </React.Fragment>
             ))}
-            {abouts?.error || abouts?.length < 10 ?
+            {(abouts?.error && session?.token?.user?.role > 1) || (abouts?.length < 10 && session?.token?.user?.role > 1) ?
             (
               <>
                 <div className='Container-row-column' onClick={handleCreateContent}>
