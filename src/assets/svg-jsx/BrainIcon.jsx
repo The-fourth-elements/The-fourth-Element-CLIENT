@@ -4,7 +4,7 @@ const BrainIcon = () => {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
-			fill='none'
+			fill='#8F8F8F'
 			width='24' 
 			height='24'
 			viewBox='0 0 24 24'
