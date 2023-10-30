@@ -20,7 +20,6 @@ export default function About() {
 	};
   
 	const { data, error, isLoading } = useFetch(`${process.env.API_BACKEND}about`);
-  
 	useEffect(() => {
 		getAllAbouts()
 	}, []);
@@ -31,18 +30,23 @@ export default function About() {
         <>
           <h1>About us</h1>
           <div className='Container-row'>
-            {abouts?.map(({ _id, content, title }) => (
+            {!abouts?.error && abouts?.map(({ _id, content, title }) => (
               <React.Fragment key={_id}>
                 <EditableContent content={content} title={title} id={_id} update={getAllAbouts}/>
               </React.Fragment>
             ))}
-            {abouts?.length < 10 && session?.token?.user?.role >= 2 && (
+            {abouts?.error || abouts?.length < 10 ?
+            (
               <>
                 <div className='Container-row-column' onClick={handleCreateContent}>
                   <h3>Agregar más contenido</h3>
                   <Image src={addIcon} alt='addIcon' width={50} height={50} />
                 </div>
                 <AboutContent isOpen={isOpen} onOpenChange={onOpenChange} />
+              </>
+            ):(
+              <>
+                <h1></h1>
               </>
             )}
           </div>
