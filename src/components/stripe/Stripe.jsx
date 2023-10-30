@@ -29,7 +29,6 @@ const Stripe = () => {
 				{ priceId: id, userId: userId }
 			);
 			toastInfo('Se creo la orden de compra');
-			alert(JSON.stringify(response))
 			window.location.href = response.url;
 			return;
 		} catch (error) {
