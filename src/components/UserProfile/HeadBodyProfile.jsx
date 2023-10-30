@@ -11,7 +11,7 @@ import {
 import InputName from './input';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { CountrySelect, CitySelect } from './SelectsProfile';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { InputAge, InputExp } from './inputExp';
 import { CldUploadButton } from 'next-cloudinary';
 
@@ -37,7 +37,7 @@ export const UserProfileHeader = ({
 	};
 
 	return (
-		<CardHeader className='elHeader'>
+		<div className='elHeader'>
 			{openName ? (
 				<h1>
 					<InputName
@@ -46,6 +46,7 @@ export const UserProfileHeader = ({
 						handleValidationErrors={handleValidationErrors}
 					/>
 					<Button
+						className='button'
 						size='sm'
 						title='back to'
 						color='warning'
@@ -55,18 +56,20 @@ export const UserProfileHeader = ({
 						↩
 					</Button>
 					<Button
+						className='button'
 						color='warning'
 						variant='bordered'
 						size='sm'
 						onClick={updateUserName}
 						disabled={hasErrors}>
-						Accept
+						Aceptar
 					</Button>
 				</h1>
 			) : (
 				<h1>
-					Name: {user?.username}
+					Nombre: {user?.username}
 					<Button
+					className='button'
 						title='Edit  Name'
 						color='warning'
 						variant='bordered'
@@ -77,11 +80,15 @@ export const UserProfileHeader = ({
 					</Button>
 				</h1>
 			)}
-			{user?.profile_img ? (
+			{newImage ? <Image src={newImage?.url} alt={newImage?.id} />
+			:
+			user?.profile_img ? (
 				<Image src={user?.profile_img?.secure_url} alt={user?.name} />
-			) : session?.token?.picture ? (
+			) 
+			: session?.token?.picture ? (
 				<Image src={session?.token?.picture} alt='profileImage' />
-			) : (
+			) 
+			: (
 				<Image
 					src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
 					alt={user?.name}
@@ -89,15 +96,31 @@ export const UserProfileHeader = ({
 			)}
 			{openImage ? (
 				<div>
+					<Button
+						className='button'
+						size='sm'
+						title='back to'
+						color='warning'
+						variant='bordered'
+						onClick={handleChangePhoto}
+						isIconOnly>
+						↩
+					</Button>
 					<CldUploadButton
+						className='buttonImg'
 						uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
 						disabled={newImage?.url?.length > 0}
 						onSuccess={getNewImage}
+						children={'Subir Imagen'}
 					/>
-					<Button onClick={updateUserImage} disabled={!newImage?.url}>Accept</Button>
+					<Button className='buttonImg'
+						color='warning'
+						variant='bordered'
+						size='sm' onClick={updateUserImage} disabled={!newImage?.url}>Aceptar</Button>
 				</div>
 			) : (
 				<Button
+				className='buttonImg'
 					isIconOnly
 					color='warning'
 					variant='bordered'
@@ -106,7 +129,7 @@ export const UserProfileHeader = ({
 					<EditIcon />
 				</Button>
 			)}
-		</CardHeader>
+		</div>
 	);
 };
 
@@ -135,16 +158,17 @@ export const UserProfileBody = ({
 	newAge,
 	updateUserAge,
 }) => (
-	<CardBody className='elBody'>
+	<div className='elBody'>
 		<h2>Email: {user?.email}</h2>
 		{user?.role === 0 ? (
-			<h2>Plan: Free Plan</h2>
+			<h2>Plan: Gratuito</h2>
 		) : user?.role === 1 ? (
-			<h2>Plan: Pay Plan</h2>
+			<h2>Plan: Pago</h2>
 		) : (
-			<h2>Plan: Admin </h2>
+			<h2>Plan: Moderador</h2>
 		)}
 		<CountrySelect
+			user = {user}
 			stringCountry={stringCountry}
 			openCountry={openCountry}
 			newCountry={newCountry}
@@ -153,6 +177,7 @@ export const UserProfileBody = ({
 			updateUserCountry={updateUserCountry}
 		/>
 		<CitySelect
+			user = {user}
 			openCountry={openCountry}
 			handleChangeCountry={handleChangeCountry}
 			updateUserCountry={updateUserCountry}
@@ -169,16 +194,19 @@ export const UserProfileBody = ({
 			<h2>
 				Deporte:
 				<select value={newSport} onChange={selectSport}>
-					{deportes.map(deporte => (
+					{deportes.map((deporte, index) => (
+						<React.Fragment key={index}>
 						<option> {deporte}</option>
+						</React.Fragment>
 					))}
 				</select>
 				<Button
+					className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'
 					onClick={updateUserSport}>
-					Accept
+					Aceptar
 				</Button>
 			</h2>
 		) : (
@@ -189,11 +217,12 @@ export const UserProfileBody = ({
 			<h2>
 				Edad: <InputAge getNewAge={getNewAge} newAge={newAge} />{' '}
 				<Button
+					className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'
 					onClick={updateUserAge}>
-					Accept
+					Aceptar
 				</Button>
 			</h2>
 		) : (
@@ -204,15 +233,16 @@ export const UserProfileBody = ({
 			<h2>
 				Años de experiencia: <InputExp getNewExp={getNewExp} newExp={newExp} />{' '}
 				<Button
+				className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'
 					onClick={updateUserExp}>
-					Accept
+					Aceptar
 				</Button>
 			</h2>
 		) : (
 			<h2> Años de experiencia: {user?.expYearsSports} </h2>
 		)}
-	</CardBody>
+	</div>
 );

@@ -21,13 +21,19 @@ export const renderClassDefault = (
 ) => {
 	return (
 		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
-			<div className='flex justify-between'>
-				<span
-					className='cursor-pointer'
-					onClick={() => handleClassClick(elem.name)}>
+			<div className='flex justify-between items-center'>
+				<Button
+					className='cursor-pointer rounded-full'
+					onPress={() => handleClassClick(elem.name)}>
 					Entrar
-				</span>
-				{elem?.name === currentClass && <span onClick={onOpen}>quiz</span>}
+				</Button>
+				{elem?.name === currentClass && (
+					<Button
+						className='rounded-full bg-primary-500 text-black text-base'
+						onPress={onOpen}>
+						Quiz
+					</Button>
+				)}
 				<Modal
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}
@@ -61,7 +67,9 @@ export const renderClassLock = (classIndex, elem, unlockDate) => {
 			title={elem?.name}
 			disabled={true}>
 			<div className='flex justify-between'>
-				<span className='cursor-pointer'>Entrar</span>
+				<Button className='cursor-pointer rounded-full' isDisabled>
+					Entrar
+				</Button>
 			</div>
 			<span>
 				Clase bloqueada hasta {unlockDate.toLocaleString().slice(0, -3)}
@@ -82,11 +90,11 @@ export const renderClassSpecialRole = (
 	return (
 		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
 			<div className='flex justify-between'>
-				<span
-					className='cursor-pointer'
-					onClick={() => handleClassClick(elem.name)}>
+				<Button
+					className='cursor-pointer rounded-full'
+					onPress={() => handleClassClick(elem.name)}>
 					Entrar
-				</span>
+				</Button>
 
 				<EditIcon
 					className='cursor-pointer rounded-full transition-background hover:opacity-70'
@@ -112,7 +120,9 @@ export const renderClassNotProgress = (classIndex, elem) => {
 			title={elem?.name}
 			disabled={true}>
 			<div className='flex justify-between'>
-				<span className='cursor-pointer'>Entrar</span>
+				<Button className='cursor-pointer rounded-full' isDisabled>
+					Entrar
+				</Button>
 			</div>
 			<span>Este módulo aún no se ha iniciado.</span>
 		</AccordionItem>

@@ -3,14 +3,14 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { deleteCookie } from 'cookies-next';
 import { toastError } from '@/helpers/toast';
 
 
 
 function paidSuccess() {
-	const session = useSession();
+	
 	const router = useRouter();
 
 	const handleLogout = async () => {

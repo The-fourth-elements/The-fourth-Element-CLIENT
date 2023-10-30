@@ -57,20 +57,20 @@ const ProfileUser = ({ params }) => {
 							{session?.token?.user?.city ? (
 								<>
 									<h3 className='text-xl m-3'>
-										City: {session?.token?.user?.city}
+										Ciudad: {session?.token?.user?.city}
 									</h3>
 									<h3 className='text-xl m-3'>
-										Country {session?.token?.user?.nationality}
+										Pais: {session?.token?.user?.nationality}
 									</h3>
 								</>
 							) : (
 								<></>
 							)}
-							<Button className='self-end'>edit</Button>
+							<Button className='self-end'>Editar</Button>
 						</Card>
 						<CardBody className='cardBody p-0 m-2 w-auto'>
 							<Card className='titles'>
-								<h4 className='flex justify-center text-xl m-2'>Titles</h4>
+								<h4 className='flex justify-center text-xl m-2'>Titulos</h4>
 								<Accordion>
 									{modules.map((title, index) => {
 										return (
@@ -86,7 +86,7 @@ const ProfileUser = ({ params }) => {
 								</Accordion>
 							</Card>
 							<Card className='progress'>
-								<h4 className='flex justify-center text-xl m-2'>Progress</h4>
+								<h4 className='flex justify-center text-xl m-2'>Progreso</h4>
 								<div className='divProgress'>
 									<Progress
 										aria-label='Loading...'

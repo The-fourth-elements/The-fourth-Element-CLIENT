@@ -56,6 +56,7 @@ export const authOptions = {
 						const form = {
 							username: user.name,
 							email: token?.email,
+							providerId: user?.id,
 							provider: true,
 						};
 						await postData(`${process.env.API_BACKEND}auth`, form);
@@ -74,7 +75,6 @@ export const authOptions = {
 				}
 			}
 			if (user) token.user = user;
-
 			return token;
 		},
 		async session({ session, token }) {
@@ -82,7 +82,7 @@ export const authOptions = {
 			return session;
 		},
 	},
-	debug: true,
+	debug: false,
 };
 
 const handler = NextAuth(authOptions);

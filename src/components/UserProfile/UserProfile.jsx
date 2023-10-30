@@ -10,6 +10,7 @@ import { useUserProfile } from '@/zustand/store/userProfile';
 import { getCookie } from 'cookies-next';
 import { deportes } from '@/utils/dataRegister';
 import { toastError, toastInfo } from '@/helpers/toast';
+import UserRecords from '../user-records/UserRecords';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
@@ -40,7 +41,10 @@ const UserProfile = () => {
 			setUpdated(false);
 		}
 		if (!user.sport) {
-			console.log('no deporte');
+			// console.log('no deporte')
+		}
+		return ()=>{
+			
 		}
 	}, [user?.username, user?.id, updated]);
 	const handleChangePhoto = () => {
@@ -48,6 +52,7 @@ const UserProfile = () => {
 		setOpenCity(false);
 		setOpenName(false);
 		setOpenCountry(false);
+		setNewImage(null)
 	};
 	const handleChangeCountry = () => {
 		setOpenCountry(!openCountry);
@@ -93,11 +98,15 @@ const UserProfile = () => {
 		const update = { id: user?._id, age: newAge };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserExp = () => {
 		const update = { id: user?._id, expYearsSports: newExp };
 		updateUserRole(update);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserCountry = () => {
 		const update = { id: user?._id, nation: newCountry, city: newCity };
@@ -105,19 +114,24 @@ const UserProfile = () => {
 		setOpenCountry(false);
 		setOpenCity(false);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserCity = () => {
 		const update = { id: user?._id, city: newCity };
 		updateUserRole(update);
 		setOpenCity(false);
 		getProfile(cookie);
+		setUpdated(true);
+
 	};
 	const updateUserSport = () => {
 		const update = { id: user?._id, sport: newSport };
 		updateUserRole(update);
 		getProfile(cookie);
-	};
+		setUpdated(true);
 
+	};
 	const updateUserImage = async () => {
 		try {
 			const update = {
@@ -129,8 +143,9 @@ const UserProfile = () => {
 			};
 			await updateUserRole(update);
 			setUpdated(true);
-			toastInfo('A actualizado la foto de perfil');
+			toastInfo('Ha actualizado la foto de perfil');
 			setNewImage(null);
+			setOpenImage(false)
 		} catch (error) {
 			toastError(
 				'No se pudo cambiar la foto de perfil, contacta a un moderador si el problema persiste'
@@ -148,9 +163,9 @@ const UserProfile = () => {
 		setNewSport(event.target.value);
 	};
 	return (
-		<article>
+		<article className='flex flex-col justify-center items-center gap-2'>
 			{user && user?._id && Object.keys(user).length > 0 ? (
-				<Card className='main'>
+				<div className='main'>
 					<UserProfileHeader
 						newImage={newImage}
 						updateUserImage={updateUserImage}
@@ -190,7 +205,7 @@ const UserProfile = () => {
 						handleChangeCity={handleChangeCity}
 						updateUserCity={updateUserCity}
 					/>
-				</Card>
+				</div>
 			) : (
 				<div className='centered'>
 					<CircularProgress
@@ -200,6 +215,7 @@ const UserProfile = () => {
 					/>
 				</div>
 			)}
+			<UserRecords user={user} session={session} />
 		</article>
 	);
 };

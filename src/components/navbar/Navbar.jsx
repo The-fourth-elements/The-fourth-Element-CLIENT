@@ -53,7 +53,7 @@ export default function Nav() {
 	};
 
 	return (
-		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header h-44'>
+		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header sm:h-44 h-36'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -159,7 +159,7 @@ export default function Nav() {
 							color='foreground'
 							href='/auth'
 							variant='flat'
-							className='  text-l text-foreground border-solid border-1 border-blue-500'>
+							className=' bg-primary text-foreground rounded-full px-9 h-fit py-1.5 '>
 							Login
 						</Button>
 					</NavbarItem>

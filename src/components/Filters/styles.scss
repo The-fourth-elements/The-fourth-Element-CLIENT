@@ -1,7 +1,7 @@
 @import "../../styles/base";
 
 
-.main {
+.mainFilter {
     flex-wrap: nowrap;
     display: flex;
     flex-direction: row;
@@ -16,7 +16,7 @@
     }
 }
 
-.main label {
+.mainFilter label {
     font-size: 12px;
     @include sm () {
         white-space: nowrap;
@@ -38,7 +38,7 @@
 
     }
 }
-.main option {
+.mainFilter option {
     font-size: 20px;
     background-color: rgb(0, 0, 0);
     @include sm () {
@@ -46,7 +46,7 @@
     }
 }
 
-.main .diver {
+.mainFilter .diver {
     width: 150px;
     margin-left: 10px;
     justify-content: center;
