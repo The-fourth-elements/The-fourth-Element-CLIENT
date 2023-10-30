@@ -59,20 +59,20 @@ const FormCreator = () => {
 	};
 	const handleSendKnowledge = async () => {
 		try {
-			if (moduleSelected == '') throw 'No selecciono ningún modulo'
-				if(accumulatorData.length === 0) throw 'No se hay ninguna sección agregada'
-				const form = {
-					selfKnowledge: accumulatorData,
-				}
-				const response = await postData(
-					`${process.env.API_BACKEND}selfK/${moduleSelected}`
-				, form);
-				if (response?.statusCode === 404) {
-					throw Error(response?.message);
-				}
-				toastSuccess(response?.message);
-				handleClearSections();
-			
+			if (moduleSelected == '') throw 'No seleccionó ningún modulo';
+			if (accumulatorData.length === 0) throw 'No hay ninguna sección agregada';
+			const form = {
+				selfKnowledge: accumulatorData,
+			};
+			const response = await postData(
+				`${process.env.API_BACKEND}selfK/${moduleSelected}`,
+				form
+			);
+			if (response?.statusCode === 404) {
+				throw Error(response?.message);
+			}
+			toastSuccess(response?.message);
+			handleClearSections();
 		} catch (error) {
 			toastError(error);
 			toastError('No se pudo crear el autoconocimiento');
@@ -80,69 +80,73 @@ const FormCreator = () => {
 	};
 
 	return (
-		<>
-			<Card className='min-h-[30vh]'>
-				<CardHeader className='flex justify-center '>
-					<h3 className='text-xl'>{form.name}</h3>
-				</CardHeader>
-				<CardBody>
-					<form className='flex justify-center flex-col gap-5'>
-						<Input
-							type='text'
-							placeholder='Nombre de la sección'
-							value={form.name}
-							onChange={e => {
-								handleChange(e, 'name');
-							}}
-						/>
-						<Textarea
-							placeholder='Descripción de la sección'
-							value={form.description}
-							onChange={e => {
-								handleChange(e, 'description');
-							}}
-						/>
-						{form.questions.length > 0 && (
-							<Question form={form} setForm={setForm} />
-						)}
-						<FormSection
-							cancelAddingQuestion={cancelAddingQuestion}
-							isAddingQuestion={isAddingQuestion}
-							newQuestion={newQuestion}
-							saveQuestion={saveQuestion}
-							currentForm={form}
-							startAddingQuestion={startAddingQuestion}
-							setNewQuestion={setNewQuestion}
-							setIsAddingQuestion={setIsAddingQuestion}
-							setForm={setForm}
-						/>
-					</form>
-					<div className='flex align-middle justify-center gap-4 flex-wrap mt-5'>
-						<Button onClick={addNewSection} className='bg-primary '>
+		<Card shadow='none' className='min-h-[30vh] p-5'>
+			<CardHeader className='flex justify-center '>
+				<SelectModule moduleSelected={setModuleSelected} />
+			</CardHeader>
+
+			<CardHeader className='flex justify-center '>
+				<h3 className='text-xl'>{form.name}</h3>
+			</CardHeader>
+			<CardBody className='space-y-5'>
+				<form className='flex justify-center flex-col gap-5'>
+					<Input
+						type='text'
+						placeholder='Nombre de la sección'
+						value={form.name}
+						onChange={e => {
+							handleChange(e, 'name');
+						}}
+					/>
+					<Textarea
+						placeholder='Descripción de la sección'
+						value={form.description}
+						onChange={e => {
+							handleChange(e, 'description');
+						}}
+					/>
+					{form.questions.length > 0 && (
+						<Question form={form} setForm={setForm} />
+					)}
+					<FormSection
+						cancelAddingQuestion={cancelAddingQuestion}
+						isAddingQuestion={isAddingQuestion}
+						newQuestion={newQuestion}
+						saveQuestion={saveQuestion}
+						currentForm={form}
+						startAddingQuestion={startAddingQuestion}
+						setNewQuestion={setNewQuestion}
+						setIsAddingQuestion={setIsAddingQuestion}
+						setForm={setForm}
+					/>
+				</form>
+				<div className='flex align-middle justify-center gap-4 flex-wrap mt-5'>
+					
+						<Button onClick={addNewSection} className='ml-[1.8vw] bg-primary rounded-lg'>
 							Agregar nueva sección
 						</Button>
-						<Button onClick={handleClearSections}>
+						<Button onClick={handleClearSections} className='rounded-lg'>
 							Limpiar todas las secciones
 						</Button>
-						{accumulatorData.length > 0 && (
-							<>
-								<Button onClick={onOpen}>Previsualizar</Button>
-								<PreviewSelf
-									isOpen={isOpen}
-									onOpen={onOpen}
-									onOpenChange={onOpenChange}
-									data={accumulatorData}
-								/>
-							</>
-						)}
-					</div>
-					<SelectModule moduleSelected={setModuleSelected} />
-					<Button onClick={handleSendKnowledge} className='bg-primary-700'>
-						Crear
-					</Button>
-				</CardBody>
-			</Card>
-		</>
+					{accumulatorData.length > 0 && (
+						<>
+							<Button onClick={onOpen}>Previsualizar</Button>
+							<PreviewSelf
+								isOpen={isOpen}
+								onOpen={onOpen}
+								onOpenChange={onOpenChange}
+								data={accumulatorData}
+							/>
+						</>
+					)}
+				</div>
+				<Button
+					onClick={handleSendKnowledge}
+					className='bg-blue-700 w-fit px-5 mx-auto rounded-lg hover:bg-sky-600'>
+					Crear
+				</Button>
+			</CardBody>
+		</Card>
 	);
 };
 

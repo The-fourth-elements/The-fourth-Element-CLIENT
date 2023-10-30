@@ -22,7 +22,7 @@ const FormSection = ({
 						value={newQuestion}
 						onChange={e => setNewQuestion(e.target.value)}
 					/>
-					<div className='flex justify-center p-4 gap-5'>
+					<div className='flex flex-wrap justify-center p-4 gap-5'>
 						<Button
 							onClick={() => {
 								saveQuestion(
@@ -33,16 +33,16 @@ const FormSection = ({
 									setForm
 								);
 							}}
-							className='bg-primary-900'>
+							className='bg-green-700 rounded-lg'>
 							Guardar Pregunta
 						</Button>
-						<Button onClick={cancelAddingQuestion} className='bg-danger'>
+						<Button onClick={cancelAddingQuestion} className='bg-danger rounded-lg'>
 							Cancelar
 						</Button>
 					</div>
 				</div>
 			) : (
-				<Button onClick={startAddingQuestion} className='bg-primary-500 w-full'>
+				<Button onClick={startAddingQuestion} className='bg-primary-500 w-fit px-5 mx-auto rounded-lg'>
 					Agregar Pregunta
 				</Button>
 			)}

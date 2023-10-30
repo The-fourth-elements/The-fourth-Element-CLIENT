@@ -4,11 +4,11 @@ import FormCreator from './FormCreator';
 const ModalSelf = () => {
 	return (
 		<div className='flex justify-center mt-8'>
-			<Card className='w-3/4 flex justify-center items-center'>
+			<Card shadow='none' className='w-3/4 flex justify-center items-center'>
 				<CardHeader className='bg-primary-500'>
-					<h3 className={`w-full text-center text-2xl`}>Autoconocimiento</h3>
+					<h1 className={`w-full text-center text-2xl`}>Autoconocimiento</h1>
 				</CardHeader>
-				<CardBody className='h-full bg-primary-500 relative'>
+				<CardBody className='h-full relative'>
 					<FormCreator />
 				</CardBody>
 			</Card>
