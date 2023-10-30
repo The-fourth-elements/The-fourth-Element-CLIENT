@@ -16,7 +16,7 @@ const Sidebar = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
 	const [open, setOpen] = useState(false);
 	return (
-		<div className={`sticky top-0 ${open ? 'z-30' : 'z-30'}`}>
+		<div className={`sticky top-11 ${open ? 'z-30' : 'z-30'}`} style={{top:'150px'}}>
 			<div
 				className={
 					open ? sidebarOpen + ' absolute z-30' : sidebar + ' absolute z-30'

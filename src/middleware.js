@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const middleware = async request => {
     const develop = 'next-auth.session-token';
     const production = '__Secure-next-auth.session-token';
-    const session = request.cookies.get(production);
+    const session = request.cookies.get(develop);
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
     let role = 0;
     if (id) {
@@ -30,19 +30,13 @@ export const middleware = async request => {
     }
 
     const path = request.nextUrl.pathname;
-    if (
-        (session && path === '/dashboard') ||
-        (session && path === '/dashboard/users-section') ||
-        (session && path === '/dashboard/modules') ||
-        (session && path === '/dashboard/class/create') ||
-        (session && path === '/dashboard/module/create')
-    ) {
+    if (session && path.startsWith('/dashboard')) {
         const url = request.nextUrl.clone();
         //verificar el rol
         if (role > 1) {
             return NextResponse.next();
         } else {
-            url.pathname = '/course';
+            url.pathname = '/profile';
         }
         return NextResponse.redirect(url);
     }

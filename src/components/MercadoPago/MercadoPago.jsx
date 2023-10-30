@@ -1,68 +1,82 @@
 'use client';
-
 import { toastError } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
-import { Button, Link } from '@nextui-org/react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import Paypal from '../paypal/Paypal';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { Button } from 'semantic-ui-react';
+import Stripe from '../stripe/Stripe';
+
+function ErrorMessage({ message }) {
+	return (
+		<div className='w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800 text-white font-semibold flex justify-center'>
+			{message}
+		</div>
+	);
+}
 
 function MercadoPago({ className }) {
 	initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY);
-
-	const [preferenceId, setPreferenceId] = useState(null);
-	const session = useSession();
 	const router = useRouter();
-
-	console.log("session ", session );
+	const { data: session } = useSession();
+	const [preferenceId, setPreferenceId] = useState(null);
+	const idUser = getCookie('jsdklfsdjklfdsjfds');
 
 	const createPreference = async () => {
 		try {
-			const response = await postData(`${process.env.API_BACKEND}create-order?id=${session?.data?.token?.user?.id}`);
+			if (!idUser) return;
 
+			const response = await postData(
+				`${process.env.API_BACKEND}create-order-mp?id=${idUser}`
+			);
 			const { id } = response;
-
-			// Una vez que obtienes el ID de preferencia, establece el estado
 			setPreferenceId(id);
 		} catch (error) {
-			if(typeof error === 'string') toastError(error)
-			toastError(error.message)
+			toastError(error.message);
 		}
 	};
 
-	// Utiliza useEffect para observar cambios en preferenceId
 	useEffect(() => {
-		createPreference();
-	}, []);
+		if (idUser && !preferenceId) createPreference();
+	}, [preferenceId]);
 
-	
+	if (!session?.token || !preferenceId) {
+		return <ErrorMessage message='Necesita una cuenta para comprar' />;
+	}
 
 	return (
-		<div>
-			{!session?.data?.token?.user?.id ? (
-				<button className='w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800'>
-					<Link href='/auth' className='text-white font-semibold'>
-							Crea una cuenta para comprar el curso
-					</Link>
-				</button>
-			) : (
-				preferenceId && (
-					<Wallet
-						customization={{
-							visual: {
-								buttonBackground: 'black',
-								borderRadius: '6px',
-							},
-						}}
-						initialization={{
-							preferenceId: preferenceId,
-							redirectMode: 'modal',
-						}}
-					/>
-				)
-			)}
-		</div>
+		<>
+			<>
+				{idUser ? (
+					preferenceId ? (
+						<>
+							<Wallet
+								customization={{
+									visual: {
+										buttonBackground: 'black',
+										borderRadius: '6px',
+									},
+								}}
+								initialization={{
+									preferenceId: preferenceId,
+									redirectMode: 'modal',
+								}}
+							/>
+							<Paypal />
+							<Stripe />
+						</>
+					) : (
+						<ErrorMessage message='Cargando preferencia de pago...' />
+					)
+				) : (
+					<ErrorMessage message='Necesita una cuenta para comprar' />
+				)}
+			</>
+		</>
 	);
 }
 

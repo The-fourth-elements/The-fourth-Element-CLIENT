@@ -34,9 +34,25 @@ export const registerSchema = (country, region) => {
 			.oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir'),
 		country: validarcountryYregion(country, region),
 		region: validarcountryYregion(country, region),
-		deporte: Yup.string().required("El campo es requerido"),
-		edad: Yup.number("La edad no puede estar vacia").typeError("Debe ser un numero válido").positive("La edad debe ser un número positivo").integer("La edad debe ser un número entero").min("La edad no puede ser menor a cero").min(Yup.ref('experiencia'), "La edad no puede ser menor que la experiencia").max(120, "La edad no puede ser mayor a 120 años").required("La edad no puede estar vacia"),
-		experiencia: Yup.number("La experiencia no puede estar vacía").typeError("Debe ser un numero válido").positive("La experiencia debe ser un número positivo").integer("La edad debe ser un número entero").min(0, "La experencia puede ser mayor o igual a cero").max(100, "La experiencia no puede ser mayor a 100").required("La experiencia no puede estar vacia")
+		deporte: Yup.string().required('El campo es requerido'),
+		edad: Yup.number('La edad no puede estar vacia')
+			.typeError('Debe ser un numero válido')
+			.positive('La edad debe ser un número positivo')
+			.integer('La edad debe ser un número entero')
+			.min('La edad no puede ser menor a cero')
+			.min(
+				Yup.ref('experiencia'),
+				'La edad no puede ser menor que la experiencia'
+			)
+			.max(120, 'La edad no puede ser mayor a 120 años')
+			.required('La edad no puede estar vacia'),
+		experiencia: Yup.number('La experiencia no puede estar vacía')
+			.typeError('Debe ser un numero válido')
+			.positive('La experiencia debe ser un número positivo')
+			.integer('La edad debe ser un número entero')
+			.min(0, 'La experencia puede ser mayor o igual a cero')
+			.max(100, 'La experiencia no puede ser mayor a 100')
+			.required('La experiencia no puede estar vacia'),
 	});
 };
 
@@ -88,15 +104,18 @@ export const validationSchemaCreateClass = Yup.object({
 
 export const validationSchemaEditClass = Yup.object({
 	editedName: Yup.string().required('El nombre no puede estar vacío'),
-	editedDescription: Yup.string().required('La descripcion no puede estar vacía'),
-	editedPowerPoint: Yup.string().url("Debe ser una url valida").required("La url es requerida")
+	editedDescription: Yup.string().required(
+		'La descripcion no puede estar vacía'
+	),
+	editedPowerPoint: Yup.string()
+		.url('Debe ser una url valida')
+		.required('La url es requerida'),
 });
 
 export const validationSchemaLanding = Yup.object({
 	Titulo: Yup.string().required('El título no puede estar vacío'),
-	Contenido: Yup.string().required('El contenido no puede estar vacío')
+	Contenido: Yup.string().required('El contenido no puede estar vacío'),
 });
-
 
 export const initialValues = {
 	username: '',
@@ -120,11 +139,28 @@ export const initialValuesRecovery = {
 
 export const initialValuesLanding = {
 	Titulo: '',
-	Contenido: ''
-}
+	Contenido: '',
+};
 
 export const validationSchemaInvitation = Yup.object({
 	Email: Yup.string()
 		.email('Ingresa un correo electrónico válido')
-		.required('El correo electrónico es obligatorio')
-})
+		.required('El correo electrónico es obligatorio'),
+});
+
+export const initialValuesMeditation = {
+	name: '', // Valor inicial del campo "Nombre de la Meditación"
+	description: '', // Valor inicial del campo "Descripción"
+};
+
+export const validationSchemaCreateMeditation = Yup.object().shape({
+	name: Yup.string()
+		.required('El nombre de la meditación es requerido')
+		.max(
+			255,
+			'El nombre de la meditación debe tener como máximo 255 caracteres'
+		),
+	description: Yup.string()
+		.min(10, 'La descripción debe tener al menos 10 caracteres')
+		.max(500, 'La descripción debe tener como máximo 500 caracteres'),
+});

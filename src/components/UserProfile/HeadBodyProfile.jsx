@@ -11,7 +11,7 @@ import {
 import InputName from './input';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import { CountrySelect, CitySelect } from './SelectsProfile';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { InputAge, InputExp } from './inputExp';
 import { CldUploadButton } from 'next-cloudinary';
 
@@ -194,8 +194,10 @@ export const UserProfileBody = ({
 			<h2>
 				Deporte:
 				<select value={newSport} onChange={selectSport}>
-					{deportes.map(deporte => (
+					{deportes.map((deporte, index) => (
+						<React.Fragment key={index}>
 						<option> {deporte}</option>
+						</React.Fragment>
 					))}
 				</select>
 				<Button

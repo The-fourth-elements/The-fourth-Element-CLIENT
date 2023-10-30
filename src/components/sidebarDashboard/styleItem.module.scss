@@ -129,9 +129,9 @@
 /* Hovers Sidebar Abierta */
 .linkOpen:hover {
     p {
-        color: white;
+        color: white !important;;
     }
     path {
-        fill: white;
+        fill: white !important;;
     }
 }

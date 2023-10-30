@@ -24,3 +24,28 @@
 // 		background-color: blue;
 // 	}
 // }
+
+.createExcersice {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 30px;
+}
+
+.createExcersiceSize {
+    height: 56px;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.showExcersice {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.showButtonsExcersice {
+    font-size: 15px;
+    cursor: pointer;
+
+}

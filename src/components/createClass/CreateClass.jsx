@@ -91,7 +91,7 @@ function CreateClass() {
 			return;
 		}
 
-		let form = {
+		const form = {
 			module: values.module,
 			name: values.name,
 			description: values.description,
@@ -103,14 +103,14 @@ function CreateClass() {
 
 		const parsedModule = parseInt(form.module);
 
-		form.module = modules[parsedModule - 1]._id;
+		form.module = modules[parsedModule - 1]?._id;
 
 		try {
 			const classPostResponse = await postData(
 				`${process.env.API_BACKEND}class`,
 				form
 			);
-			const url = `${process.env.API_BACKEND}module/${form.module}/class/${classPostResponse._id}`;
+			const url = `${process.env.API_BACKEND}module/${form.module}/class/${classPostResponse?._id}`;
 			const options = {
 				method: 'PUT',
 				body: JSON.stringify({
@@ -119,7 +119,7 @@ function CreateClass() {
 			};
 
 			quiz.classId = classPostResponse._id;
-			if (quiz.classId) {
+			if (quiz?.classId) {
 				addQuizToClass(quiz);
 			}
 
@@ -142,7 +142,6 @@ function CreateClass() {
 	};
 
 	const closeQuizModal = () => {
-		console.log('AAAAAAAAAAAAAAAAAAA');
 		setUpdated(true);
 	};
 
@@ -206,8 +205,8 @@ function CreateClass() {
 								placeholder='Seleccione un quiz'
 								className='md:max-w-[12rem] max-w-xs '
 								onChange={handleSelect}>
-								{allQuizes.length > 0 &&
-									allQuizes.map(quiz => (
+								{allQuizes?.length > 0 &&
+									allQuizes?.map(quiz => (
 										<SelectItem key={quiz._id} value={quiz._id}>
 											{quiz.name}
 										</SelectItem>

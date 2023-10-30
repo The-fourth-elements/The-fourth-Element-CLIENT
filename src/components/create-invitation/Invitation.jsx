@@ -14,7 +14,7 @@ import {
 import { Formik, Form } from 'formik';
 import { validationSchemaInvitation } from '@/helpers/validations';
 import { postData } from '@/hooks/postData';
-import { toastInfo, toastSuccess } from '@/helpers/toast';
+import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
 
 const Invitation = ({ isOpen, onOpen, onOpenChange }) => {
 	return (
@@ -53,6 +53,8 @@ const Invitation = ({ isOpen, onOpen, onOpenChange }) => {
 											}
 										} catch (error) {
 											console.log(error);
+											toastError('Ocurrio un error al invitar a este usuario')
+											toastError(error)
 										}
 									}}>
 									{({ errors }) => (
