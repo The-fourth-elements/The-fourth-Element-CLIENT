@@ -13,7 +13,7 @@ import { items } from '@/utils/categoryItems';
 import { handleCategoryClick } from '@/helpers/handleCategoryClick';
 
 function ModuleCard({ moduleName, moduleIndex, moduleId }) {
-	const moduleNameWords = moduleName.split(' ').length;
+	const moduleNameWords = moduleName?.split(' ').length;
 	const router = useRouter();
 
 	return (

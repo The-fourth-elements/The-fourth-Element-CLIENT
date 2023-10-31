@@ -14,14 +14,15 @@ import {
 import { useSelectedModule } from '@/zustand/store/selectedModule';
 
 function page() {
-	
-	let moduleId
-   
+	let moduleId;
+
 	const [isLoading, setIsLoading] = useState(true);
 	const { module, getModule } = useSelectedModule();
 
 	useEffect(() => {
-		moduleId = localStorage.getItem('moduleId');
+		if (typeof window !== 'undefined') {
+			moduleId = localStorage.getItem('moduleId');
+		}
 		getModule(moduleId).then(() => {
 			setIsLoading(false);
 		});
@@ -54,19 +55,21 @@ function page() {
 					</p>
 				</CardBody>
 				<CardFooter>
-				{module?.selfKnowledge ? ( 
-					<>
-					<Button onClick={onOpen} className='mx-auto w-fit px-5'>
-						Resgistrar 
-					</Button>
-					<RenderSelfKnowledge
-						data={module?.selfKnowledge}
-						isOpen={isOpen}
-						onOpenChange={onOpenChange}
-						onOpen={onOpen}
-					/>
-					</>
-					) : <p> No hay autorregistros en el módulo</p>}
+					{module?.selfKnowledge ? (
+						<>
+							<Button onClick={onOpen} className='mx-auto w-fit px-5'>
+								Resgistrar
+							</Button>
+							<RenderSelfKnowledge
+								data={module?.selfKnowledge}
+								isOpen={isOpen}
+								onOpenChange={onOpenChange}
+								onOpen={onOpen}
+							/>
+						</>
+					) : (
+						<p> No hay autorregistros en el módulo</p>
+					)}
 				</CardFooter>
 			</Card>
 		</div>

@@ -5,11 +5,10 @@ import React, { useEffect } from 'react';
 
 function page() {
 	let moduleId;
-	useEffect(() => {
+	if (typeof window !== 'undefined') {
 		moduleId = localStorage.getItem('moduleId');
-    console.log("localStorage", localStorage);
-	}, []);
-	return <Meditations idModule={moduleId} />;
+		return <Meditations idModule={moduleId} />;
+	}
 }
 
 export default page;

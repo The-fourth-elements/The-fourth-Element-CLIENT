@@ -1,23 +1,29 @@
 'use client'
-
 import { Button } from '@nextui-org/react';
-import React from 'react';
 import ModuleCard from '../moduleCard/ModuleCard';
 import { items } from '@/utils/categoryItems';
 import { useRouter } from 'next/navigation';
 import { handleCategoryClick } from '@/helpers/handleCategoryClick';
+import { useEffect } from 'react'
 
 
 
 function ModulesNavigation() {
 	const router = useRouter();
+	let moduleId = null;
+	let moduleIndex = null;
+	let moduleName = null;
+	if(typeof window !== 'undefined'){
+		moduleId = localStorage.getItem('moduleId');
+		moduleIndex = localStorage.getItem('moduleIndex');
+		moduleName = localStorage.getItem('moduleName');
+	}
+	
+		
 
-
-
-		let moduleId = localStorage.getItem('moduleId');
-		let moduleIndex = localStorage.getItem('moduleIndex');
-		let moduleName = localStorage.getItem('moduleName');
-
+	if(moduleId === null){
+		return (<></>)
+	}
 
 	return (
 		<div className='flex flex-col items-center space-y-4'>
