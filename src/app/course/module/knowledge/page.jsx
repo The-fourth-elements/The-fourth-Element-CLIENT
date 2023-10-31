@@ -13,13 +13,13 @@ import {
 } from '@nextui-org/react';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
 
-function page({ params }) {
-	const { idModule } = params;
+function page() {
+	const { moduleId } = localStorage;
 	const [isLoading, setIsLoading] = useState(true);
 	const { module, getModule } = useSelectedModule();
 
 	useEffect(() => {
-		getModule(idModule).then(() => {
+		getModule(moduleId).then(() => {
 			setIsLoading(false);
 		});
 	}, []);
@@ -51,8 +51,10 @@ function page({ params }) {
 					</p>
 				</CardBody>
 				<CardFooter>
+				{module?.selfKnowledge ? ( 
+					<>
 					<Button onClick={onOpen} className='mx-auto w-fit px-5'>
-						Autorregistro
+						Resgistrar 
 					</Button>
 					<RenderSelfKnowledge
 						data={module?.selfKnowledge}
@@ -60,6 +62,8 @@ function page({ params }) {
 						onOpenChange={onOpenChange}
 						onOpen={onOpen}
 					/>
+					</>
+					) : <p> No hay autorregistros en el módulo</p>}
 				</CardFooter>
 			</Card>
 		</div>

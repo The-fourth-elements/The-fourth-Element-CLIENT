@@ -2,24 +2,32 @@
 
 import { useModulesStore } from '@/zustand/store/modulesStore';
 
-import {
-	Button,
-	Dropdown,
-	DropdownTrigger,
-	DropdownMenu,
-	DropdownItem,
-} from '@nextui-org/react';
+
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import { useUserProfile } from '@/zustand/store/userProfile';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { setCookie } from 'cookies-next';
+import ModuleCard from '../moduleCard/ModuleCard';
+
+function modulesList(modules) {
+	
+	return (
+		<div className='flex lg:h-[614px]  flex-col flex-wrap items-center justify-start gap-4 '>
+			{modules.map((module, index) => (
+				<ModuleCard key={index} moduleName={module.name}  moduleId={module._id}  moduleIndex={index+1} />
+			))}
+		</div>
+	);
+}
 
 function Modules() {
 	const { modules, getModules } = useModulesStore();
 	const { user, getProfile } = useUserProfile(); // se usara luego para obtener el progreso del usuario, para el desbloqueo de clases.
+	const [ modulesLoaded, setModulesLoaded ] = useState(false); // se usara luego para obtener el progreso del usuario, para el desbloqueo de clases.
+	 
 
 	const { data: session } = useSession();
 	const role = session?.token?.user?.role;
@@ -28,80 +36,22 @@ function Modules() {
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
-	const items = [
-		{
-			key: 'classes',
-			label: 'Clases',
-		},
-		{
-			key: 'exercises',
-			label: 'Ejercicios',
-		},
-		{
-			key: 'meditations',
-			label: 'Meditacion',
-		},
-		{
-			key: 'knowledge',
-			label: 'Autoconocimiento',
-		},
-	];
+	
 
 	const router = useRouter();
 
 	useEffect(() => {
 		getModules();
+		setModulesLoaded(true)
 		if (id) {
 			getProfile(id);
 		}
 	}, []);
 
-	return (
-		<div className='mt-10 sm:flex-wrap gap-7 sm:flex space-y-5 sm:space-y-0  items-center'>
-			{modules?.map((elem, index) => {
-				return (
-					(!elem.paid || role > 0) && (
-						<React.Fragment key={index}>
-							<div className='mx-auto max-w-[240px] bg-secondary-600 h-fit w-fit p-3 px-8  flex flex-col rounded-xl'>
-								<p className='my-1 ' style={{ whiteSpace: 'normal' }}>
-									{elem.name}
-								</p>
-								<div className='mr-24'>
-									<h1 className='text-6xl mb-10 mt-2 mr-5'>
-										M{`${index + 1}`}
-									</h1>
-									<Dropdown>
-										<DropdownTrigger>
-											<Button
-												className=' w-fit px-4 py-2 rounded-lg bg-primary transition-background hover:bg-primary-500'
-												variant='bordered'>
-												Categoría
-											</Button>
-										</DropdownTrigger>
-										<DropdownMenu aria-label='Dynamic Actions' items={items}>
-											{item => (
-												<DropdownItem
-													onClick={() =>
-														router.push(`/course/${item.key}/${elem._id}`)
-													}
-													key={item.key}
-													color={item.key === 'delete' ? 'danger' : 'default'}
-													className={
-														item.key === 'delete' ? 'text-danger' : ''
-													}>
-													{item.label}
-												</DropdownItem>
-											)}
-										</DropdownMenu>
-									</Dropdown>
-								</div>
-							</div>
-						</React.Fragment>
-					)
-				);
-			})}
-		</div>
-	);
+	return <div className=' bg-secondary-700  py-10 flex flex-col items-center'>
+		{modulesLoaded ? (modulesList(modules)):(<h1>Cargando modulos</h1>)}
+		
+		</div>;
 }
 
 export default Modules;
