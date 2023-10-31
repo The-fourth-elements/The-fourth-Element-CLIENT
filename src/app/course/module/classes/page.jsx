@@ -3,10 +3,8 @@ import ModuleClasses from '@/components/moduleClasses/ModuleClasses';
 import React from 'react';
 
 function page() {
-	let moduleId;
-	useEffect(() => {
-		moduleId = localStorage.getItem('moduleId');
-	}, []);
+	
+	let	moduleId = localStorage.getItem('moduleId');
 	return <ModuleClasses idModule={moduleId} />;
 }
 

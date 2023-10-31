@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { Button } from '@nextui-org/react';
 import React from 'react';
@@ -12,7 +12,13 @@ import { handleCategoryClick } from '@/helpers/handleCategoryClick';
 function ModulesNavigation() {
 	const router = useRouter();
 
-	const { category, moduleId, moduleIndex, moduleName } = localStorage;
+
+
+		let moduleId = localStorage.getItem('moduleId');
+		let moduleIndex = localStorage.getItem('moduleIndex');
+		let moduleName = localStorage.getItem('moduleName');
+
+
 	return (
 		<div className='flex flex-col items-center space-y-4'>
 			<ModuleCard
@@ -22,8 +28,9 @@ function ModulesNavigation() {
 			/>
 
 			<div className='flex justify-center flex-wrap'>
-				{items.map(item => (
+				{items.map((item, index) => (
 					<Button
+					key={index}
 						onPress={() =>
 							handleCategoryClick(
 								item.key,

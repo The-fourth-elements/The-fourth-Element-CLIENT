@@ -1,7 +1,6 @@
-'use client';
+'use client'
 
 import ModulesNavigation from '@/components/modulesNavigation/ModulesNavigation';
-import React from 'react';
 function layout({ children }) {
 
 	return (
