@@ -1,12 +1,13 @@
-'use client'
+'use client';
 
 import Meditations from '@/components/meditations/Meditations';
-import React from 'react'
+import React from 'react';
 function page() {
-    const { moduleId } = localStorage;
-  return (
-    <Meditations idModule={moduleId}/>
-  )
+	let moduleId;
+	useEffect(() => {
+		moduleId = localStorage.getItem('moduleId');
+	}, []);
+	return <Meditations idModule={moduleId} />;
 }
 
-export default page
+export default page;

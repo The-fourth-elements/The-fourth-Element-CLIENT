@@ -1,12 +1,13 @@
-'use client'
+'use client';
 import ModuleClasses from '@/components/moduleClasses/ModuleClasses';
-import React from 'react'
+import React from 'react';
 
 function page() {
-    const {moduleId} = localStorage
-  return (
-    <ModuleClasses idModule={moduleId}/>
-  )
+	let moduleId;
+	useEffect(() => {
+		moduleId = localStorage.getItem('moduleId');
+	}, []);
+	return <ModuleClasses idModule={moduleId} />;
 }
 
-export default page
+export default page;

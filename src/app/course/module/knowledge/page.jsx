@@ -14,11 +14,14 @@ import {
 import { useSelectedModule } from '@/zustand/store/selectedModule';
 
 function page() {
-	const { moduleId } = localStorage;
+	
+	let moduleId
+   
 	const [isLoading, setIsLoading] = useState(true);
 	const { module, getModule } = useSelectedModule();
 
 	useEffect(() => {
+		moduleId = localStorage.getItem('moduleId');
 		getModule(moduleId).then(() => {
 			setIsLoading(false);
 		});
