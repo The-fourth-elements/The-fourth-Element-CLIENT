@@ -47,6 +47,8 @@ export const middleware = async request => {
             url.pathname = '/profile';
             url.search = `p=${requestedPage}`;
             return NextResponse.redirect(url);
+        } else {
+            return NextResponse.next();
         }
     }
     if (!session && path !== '/auth') {
