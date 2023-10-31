@@ -1,11 +1,11 @@
+'use client'
 import ModuleClasses from '@/components/moduleClasses/ModuleClasses';
 import React from 'react'
 
-function page({ params }) {
-    console.log(params.idModule);
-    const {idModule} = params
+function page() {
+    const {moduleId} = localStorage
   return (
-    <ModuleClasses idModule={idModule}/>
+    <ModuleClasses idModule={moduleId}/>
   )
 }
 
