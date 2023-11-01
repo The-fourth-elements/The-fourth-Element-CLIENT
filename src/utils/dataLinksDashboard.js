@@ -79,7 +79,7 @@ export const routes = [
 		),
 	},
 	{
-		to: '/dashboard/create-excersice',
+		to: '/dashboard/create-exercise',
 		text: 'Crear ejercicios',
 		svg: (
 			<Storm />
