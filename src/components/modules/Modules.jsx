@@ -58,7 +58,6 @@ function Modules() {
 	const router = useRouter();
 
 	useEffect(() => {
-		localStorage.clear();
 		getModules();
 		setModulesLoaded(true);
 		console.log('modules de effect', modules);
