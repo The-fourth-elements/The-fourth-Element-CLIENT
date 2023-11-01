@@ -8,6 +8,7 @@ export const useModulesStore = create((set, get) => ({
 	getModules: async () => {
 		try {
 			const data = await getModules(); // Espera a que se complete la función getModules
+			console.log(data)
 			set(state => ({
 				...state,
 				modules: data,
