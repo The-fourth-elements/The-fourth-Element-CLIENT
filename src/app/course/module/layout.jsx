@@ -1,16 +1,18 @@
 'use client';
 
 import ModulesNavigation from '@/components/modulesNavigation/ModulesNavigation';
-import React from 'react';
 function layout({ children }) {
+	let moduleId
+	if (typeof window !== 'undefined') {
+		moduleId = localStorage.getItem('moduleId');
+		return (
+			<main className=' bg-secondary-700  py-12'>
+				<ModulesNavigation />
 
-	return (
-		<main className=' bg-secondary-700  py-12'>
-			<ModulesNavigation />
-
-			<div>{children}</div>
-		</main>
-	);
+				<div>{children}</div>
+			</main>
+		);
+	}
 }
 
 export default layout;
