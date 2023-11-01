@@ -2,13 +2,15 @@
 import ModuleClasses from '@/components/moduleClasses/ModuleClasses';
 import React from 'react';
 
+import { getCookie } from 'cookies-next';
+
+
 function page() {
 	let	moduleId = null;
-	if(typeof window !== 'undefined'){
-		moduleId = localStorage.getItem('moduleId');
+	
+		moduleId = getCookie('moduleId');
 	    return <ModuleClasses idModule={moduleId} />;
 
-	}
 
 }
 

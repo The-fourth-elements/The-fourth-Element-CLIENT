@@ -35,7 +35,7 @@ const ProfileUser = ({ params }) => {
 	let imageSRC = 'https://cdn.pnghd.pics/data/862/user-profile-png-15.png';
 
 	return (
-		<main>
+		<div>
 			<Card className='cardDisplay'>
 				<h1 className='h1Name text-xl'>Profile</h1>
 				{session?.token && token && (
@@ -99,7 +99,7 @@ const ProfileUser = ({ params }) => {
 					</>
 				)}
 			</Card>
-		</main>
+		</div>
 	);
 };
 

@@ -19,7 +19,7 @@ function ModuleCard({ moduleName, moduleIndex, moduleId }) {
 	return (
 		<div className='flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 '>
 			<h1 className='max-w-full px-10 sm:px-16 p-3 text-7xl text-secondary-900'>
-				{parseInt(moduleIndex)}
+				{moduleIndex}
 			</h1>
 			<div className='max-w-full my-3 flex flex-col gap-1'>
 				<p className='text-xl '>Módulo</p>

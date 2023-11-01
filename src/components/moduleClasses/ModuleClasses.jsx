@@ -71,16 +71,12 @@ export default function ModuleClasses({ idModule }) {
 					const id = session?.token?.user?.id;
 					getProfile(id);
 				}
-				console.log("condicion useEffect ", moduleData?.length)
 
-				// if (moduleData?.length === 0) {
-				// console.log("condicion useEffect ", moduleData?.length)
 
 					fetchDataSingleModule(module).then(data => {
 						setModuleData(data);
 						setModulesDataLoaded(true);
 					})
-				// }
 
 				verifyProgressUser()
 			}
@@ -100,7 +96,6 @@ export default function ModuleClasses({ idModule }) {
 	const renderModuleClasses = moduleData => {
 		if (moduleData) {
 			return moduleData.map((elem, classIndex) => {
-				console.log("elem" , elem);
 				if (access) {
 					// Render clases con acceso especial
 					return renderClassSpecialRole(
@@ -147,40 +142,31 @@ export default function ModuleClasses({ idModule }) {
 	};
 
 	const verifyProgressUser = async () => {
-		console.log("VERIFY PROGRESS USER");
 		try {
 		  const modulesProgress = user?.progress?.modules;
 		  const totalClasses = module.classModule.length;
 
-		  console.log("module.classModule" , module.classModule);
 	  
 		  if (user?.role < 2) {
 			if (!user?.progress) {
-				console.log("HOLA1");
 
-			  console.log(user);
 			  const progress = await postData(
 				`${process.env.API_BACKEND}startCourse/${id}`
 			  );
-			  console.log("HOLA");
 			  toastSuccess(progress?.message);
 			  getProfile(id);
 			} else {
-				console.log("HOLA2");
 
 			  const countClassesUser = modulesProgress
 				.find((elem) => elem._id === module._id)
 				?.classes?.length;
 
-				console.log("totalClasses ", totalClasses , "countClassesUser " , countClassesUser);
 	  
 			  if (totalClasses !== countClassesUser) {
-				console.log("HOLA3");
 
 				const progress = await postData(
 				  `${process.env.API_BACKEND}startCourse/${id}`
 				);
-				console.log("HOLA4");
 
 				toastInfo(progress?.message);
 				getProfile(id);
@@ -205,9 +191,8 @@ export default function ModuleClasses({ idModule }) {
 	};
 
 	return (
-		<>
 			<Card className={containerVideos + ' navcolor '}>
-				<main
+				<section
 					className={
 						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
 					}>
@@ -236,7 +221,7 @@ export default function ModuleClasses({ idModule }) {
 							</AccordionItem>
 						</Accordion>
 					</Card>
-				</main>
+				</section>
 				<aside className={`${div2} bg-foreground md:w-96`}>
 					<nav
 						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
@@ -255,6 +240,5 @@ export default function ModuleClasses({ idModule }) {
 					</nav>
 				</aside>
 			</Card>
-		</>
 	);
 }

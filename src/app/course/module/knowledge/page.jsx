@@ -12,6 +12,7 @@ import {
 	useDisclosure,
 } from '@nextui-org/react';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
+import { getCookie } from 'cookies-next';
 
 function page() {
 	let moduleId;
@@ -21,7 +22,7 @@ function page() {
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
-			moduleId = localStorage.getItem('moduleId');
+			moduleId = getCookie('moduleId');
 		}
 		getModule(moduleId).then(() => {
 			setIsLoading(false);

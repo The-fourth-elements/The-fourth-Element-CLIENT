@@ -19,7 +19,9 @@ export const getModules = () => {
 
   export const getModule = (id) => {
     return new Promise((resolve, reject) => {
-      fetch(`${process.env.API_BACKEND}moduls/${id}`)
+      fetch(`${process.env.API_BACKEND}moduls/${id}`, {
+        credentials: 'include'
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
