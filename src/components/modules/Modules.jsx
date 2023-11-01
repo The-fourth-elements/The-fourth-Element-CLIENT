@@ -12,20 +12,24 @@ import { setCookie } from 'cookies-next';
 import ModuleCard from '../moduleCard/ModuleCard';
 
 function modulesList(modules, userPlan) {
-	
+	const freeModules = modules.filter(module => !module.paid);
 
-	if (userPlan === 0) {
-		return (
-			<div className='flex lg:h-[614px]  flex-col flex-wrap items-center justify-start gap-4 '>
-				<ModuleCard
-					key={1}
-					moduleName={modules[0]?.name}
-					moduleId={modules[0]?._id}
-					moduleIndex={1}
-				/>
-			</div>
-		);
-	}
+
+	 if (userPlan === 0) {
+	 	return (
+	 		<div className='flex lg:h-[614px]  flex-col flex-wrap items-center justify-start gap-4 '>
+	 		{freeModules.map((module, index) => (
+	 			<ModuleCard
+	 				key={index}
+	 				moduleName={module.name}
+	 				moduleId={module._id}
+	 				moduleIndex={index + 1}
+	 				isModulePaid={module.paid}
+	 			/>
+	 		))}
+	 	</div>
+	 	);
+	 }
 
 	return (
 		<div className='flex lg:h-[614px]  flex-col flex-wrap items-center justify-start gap-4 '>
