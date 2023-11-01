@@ -6,10 +6,12 @@ import "./FormFrases.scss"
 import { useModulesStore } from "@/zustand/store/modulesStore";
 import CustomModal from "@/helpers/CustomModal";
 import { useRouter, usePathname} from "next/navigation";
+import { toastError } from "@/helpers/toast";
+import { CldUploadButton } from 'next-cloudinary';
 
 
 const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
-	const {createExcersice, createOnlyExcersice} = useExcersices()
+	const {createExcersice, createOnlyExcersice, update, setUpdate } = useExcersices()
 	const { onOpen, onOpenChange } = useDisclosure();
 	const {modules, getModules} = useModulesStore()
     const [title, setTitle] = useState("")
@@ -17,6 +19,8 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
     const [fraseData, setFraseData] = useState([""
     ])
 	const [moduleId, setModuleId] = useState("")
+	const [newImage, setNewImage] = useState(null);
+	const [confirm, setConfirm] = useState(false)
 
 	const router =useRouter()
 	const pathname = usePathname()
@@ -35,7 +39,13 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 	const handleSelect = (e) => {
 		setModuleId(e?.target?.value)
 	}
- 
+
+	const getNewImage = e => {
+		const { info } = e;
+		const { url, public_id } = info;
+		setNewImage({ url, id: public_id });
+	};
+
     const handleFraseChange = (text, fraseIndex) => {
 		const newFraseData = [...fraseData];
 		newFraseData[fraseIndex] = text;
@@ -56,32 +66,54 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 	};
 
     const handleSaveForm = () => {
-		
-		const filteredFraseData = fraseData.filter((frase) => frase !== "" )
-		const theFrasesData = {
-			name: title,
-			description,
-			questions: filteredFraseData,
-			moduleId
-		};
-        createExcersice(theFrasesData)
-		// console.log(theFrasesData)
+		// Validar que los campos obligatorios no estén vacíos
+		const filteredFraseData = fraseData.filter((frase) => frase.trim() !== "" );
+		if (title.trim() === "" || description.trim() === "" || filteredFraseData.length === 0 || !newImage || moduleId === "") {
+			// Mostrar un mensaje de error o tomar la acción necesaria
+			toastError("Por favor, complete todos los campos.");
+		} else {
 
+			const theFrasesData = {
+				name: title,
+				description,
+				questions: filteredFraseData,
+				moduleId,
+				imagen: {
+					public_id: newImage.id,
+					secure_url: newImage.url,
+				}
+			};
+			// createExcersice(theFrasesData);
+			console.log(theFrasesData)
+		}
 	};
 
 	const handleSaveOnlyForm = () => {
-		
-		const filteredFraseData = fraseData.filter((frase) => frase !== "" )
-		const theFrasesData = {
-			name: title,
-			description,
-			questions: filteredFraseData,
-			
-		};
-        createOnlyExcersice(theFrasesData)
-		handleFrasesModal()
-		// console.log(theFrasesData)
+		const filteredFraseData = fraseData.filter((frase) => frase.trim() !== "" );
+		if (title.trim() === "" || description.trim() === "" || filteredFraseData.length === 0 || !newImage) {
+			// Mostrar un mensaje de error o tomar la acción necesaria
+			toastError("Por favor, complete todos los campos.");
+		} else {
 
+			const theFrasesData = {
+				name: title,
+				description,
+				questions: filteredFraseData,
+				moduleId,
+				imagen: {
+					public_id: newImage.id,
+					secure_url: newImage.url,
+				}
+			};
+        createOnlyExcersice(theFrasesData)
+		setUpdate()
+		console.log(theFrasesData)
+		setTimeout(() => {
+			handleFrasesModal()
+		}, 2000)
+
+		// console.log(theFrasesData)
+		}
 	};
 
 	const handleRouteChange = () => {
@@ -93,7 +125,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 		// <ModalContent>
 		// 	{(handleFrasesModal) => (
 		// 	<ModalBody>
-		pathname === "/dashboard/create-excersice" ? (!Array.isArray(modules) || modules?.length === 0 ?
+		pathname === "/dashboard/create-exercise" ? (!Array.isArray(modules) || modules?.length === 0 ?
 		(
 			<CustomModal
 				isOpen={true}
@@ -123,7 +155,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 									handleFraseChange(e?.target?.value, fraseIndex)
 								}
 							/>
-							
+
 								<Button
 									onClick={() => handleDeleteFrase(fraseIndex)}
 									className='bg-danger-400 deleteButton'>
@@ -135,6 +167,20 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 					<Button className='p-7 mb-5 text-xl addFrase' onClick={handleAddFrase}>
 					Agregar Frase
 				</Button>
+				{!newImage ? (<CldUploadButton
+						className='p-7 text-l'
+						uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
+						disabled={newImage?.url?.length > 0}
+						onSuccess={getNewImage}
+						children={'Subir Imagen'}
+					/>)
+				: (
+					<div>
+					<img className="w-[200px] h-[200px]" src={newImage?.url} alt={newImage?.id}/>
+					<Button className='p-7 m-5 text-l' onClick={() => setNewImage(null)}>Eliminar Imagen</Button>
+					</div>
+				)
+				}
 				<Select
 					label='Modulos'
 					placeholder='Seleccione un modulo'
@@ -153,8 +199,8 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 					onClick={handleSaveForm}>
 					Guardar Ejercicio
 				</Button>
-				</section> 
-				
+				</section>
+
 			</article>)
 		//  	</ModalBody>)}
 		// </ModalContent>
@@ -168,7 +214,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 		<ModalContent>
 			{(onClose) => (
 			<ModalBody className="mainFrasesRender">
-		<article className="mainFrasesRender">
+		<form onSubmit={handleSaveOnlyForm} className="mainFrasesRender">
 		<h1>Crear Ejercicio</h1>
 	<input className="titleInput" placeholder="Titulo para los ejercicios" value={title} onChange={handleTitleChange} type="text" />
 	<input className="descriptionInput" type="text" placeholder="Description" value={description} onChange={handleDescriptionChange}/>
@@ -184,7 +230,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 							handleFraseChange(e?.target?.value, fraseIndex)
 						}
 					/>
-					
+
 						<Button
 							onClick={() => handleDeleteFrase(fraseIndex)}
 							className='bg-danger-400 deleteButton'>
@@ -195,10 +241,25 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 			<Button className='p-7 mb-5 text-xl addFrase' onClick={handleAddFrase}>
 			Agregar Frase
 		</Button>
+
+		{!newImage ? (<CldUploadButton
+						className='p-7 text-l'
+						uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET}
+						disabled={newImage?.url?.length > 0}
+						onSuccess={getNewImage}
+						children={'Subir Imagen'}
+					/>)
+		: (
+			<div>
+			<img className="w-[200px] h-[200px]" src={newImage?.url} alt={newImage?.id}/>
+			<Button className='p-7 m-5 text-l' onClick={() => setNewImage(null)}>Eliminar Imagen</Button>
+			</div>
+		)
+		}
 		<div>
 		<Button
 			className='p-7 bg-background text-xl saveExcersice'
-			onClick={handleSaveOnlyForm}>
+			type="submit">
 			Guardar Ejercicio
 		</Button>
 		<Button
@@ -207,9 +268,9 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 			Cancelar
 		</Button>
 		</div>
-		</section> 
-		
-	</article>
+		</section>
+
+	</form>
   	</ModalBody>)}
  </ModalContent>
  </Modal>
