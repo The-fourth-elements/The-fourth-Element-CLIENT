@@ -1,48 +1,44 @@
-'use client'
+'use client';
 import { Button } from '@nextui-org/react';
 import ModuleCard from '../moduleCard/ModuleCard';
 import { items } from '@/utils/categoryItems';
 import { useRouter } from 'next/navigation';
 import { handleCategoryClick } from '@/helpers/handleCategoryClick';
-import { useEffect } from 'react'
-
-
+import { getCookie } from 'cookies-next';
+import { useState, useEffect } from 'react';
 
 function ModulesNavigation() {
 	const router = useRouter();
-	let moduleId = null;
-	let moduleIndex = null;
-	let moduleName = null;
-	if(typeof window !== 'undefined'){
-		moduleId = localStorage.getItem('moduleId');
-		moduleIndex = localStorage.getItem('moduleIndex');
-		moduleName = localStorage.getItem('moduleName');
-	}
-	
-		
 
-	if(moduleId === null){
-		return (<></>)
-	}
+	const [moduleData, setModuleData] = useState({});
+
+	useEffect(() => {
+		setModuleData({
+			moduleId: getCookie('moduleId'),
+			moduleIndex: getCookie('moduleIndex'),
+			moduleName: getCookie('moduleName'),
+		});
+	}, []);
+
 
 	return (
 		<div className='flex flex-col items-center space-y-4'>
 			<ModuleCard
-				moduleName={moduleName}
-				moduleId={moduleId}
-				moduleIndex={parseInt(moduleIndex)}
+				moduleName={moduleData?.moduleName}
+				moduleId={moduleData?.moduleId}
+				moduleIndex={moduleData?.moduleIndex}
 			/>
 
 			<div className='flex justify-center flex-wrap'>
 				{items.map((item, index) => (
 					<Button
-					key={index}
+						key={index}
 						onPress={() =>
 							handleCategoryClick(
 								item.key,
-								moduleId,
-								moduleIndex,
-								moduleName,
+								moduleData?.moduleId,
+								moduleData?.moduleIndex,
+								moduleData?.moduleName,
 								router
 							)
 						}
@@ -52,7 +48,9 @@ function ModulesNavigation() {
 				))}
 			</div>
 
-            <Button onPress={() => router.push('/course')}> VOLVER A TODOS LOS MÓDULOS </Button>
+			<Button onPress={() => router.push('/course')}>
+				VOLVER A TODOS LOS MÓDULOS
+			</Button>
 		</div>
 	);
 }

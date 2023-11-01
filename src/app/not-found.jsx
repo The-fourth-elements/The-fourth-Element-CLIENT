@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const custom404 = () => {
 	return (
-		<main className='h-screen w-full flex flex-col justify-center items-center bg-[#1a1b1f]'>
+		<div className='h-screen w-full flex flex-col justify-center items-center bg-[#1a1b1f]'>
 			<h1 className='text-9xl font-extrabold text-white tracking-widest'>
 				404
 			</h1>
@@ -18,7 +18,7 @@ const custom404 = () => {
 					</span>
 				</div>
 			</button>
-		</main>
+		</div>
 	);
 };
 

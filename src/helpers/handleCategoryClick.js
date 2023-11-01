@@ -1,3 +1,7 @@
+'use client'
+
+import { setCookie } from 'cookies-next';
+
 export function handleCategoryClick(
 	item,
 	moduleId,
@@ -5,11 +9,10 @@ export function handleCategoryClick(
 	moduleName,
 	router
 ) {
-	// Guarda los valores en el localStorage
-	localStorage.setItem('category', item);
-	localStorage.setItem('moduleId', moduleId);
-	localStorage.setItem('moduleIndex', moduleIndex);
-	localStorage.setItem('moduleName', moduleName);
+	setCookie('moduleId', moduleId)
+	setCookie('moduleIndex', moduleIndex);
+	setCookie('moduleName', moduleName);
+
 
 	router.push(`/course/module/${item}`);
 }

@@ -1,18 +1,21 @@
 'use client';
 
 import ModulesNavigation from '@/components/modulesNavigation/ModulesNavigation';
+
+
 function layout({ children }) {
-	let moduleId
-	if (typeof window !== 'undefined') {
-		moduleId = localStorage.getItem('moduleId');
+	
+
 		return (
-			<main className=' bg-secondary-700  py-12'>
+			<div className=' bg-secondary-700  py-12'>
 				<ModulesNavigation />
 
 				<div>{children}</div>
-			</main>
+			</div>
 		);
-	}
+	// else{
+	// 	return <>CARGANDO </>
+	// }
 }
 
 export default layout;

@@ -23,7 +23,7 @@ const RenderSelfKnowledge = ({ isOpen, onOpen, onOpenChange, data }) => {
 			setDisableNext(newPreview === sections - 1);
 		}
 	};
-    const initialAnswers = data.map(section => section.questions.map(() => 0))
+    const initialAnswers = data?.map(section => section?.questions?.map(() => 0))
 	const [answers, setAnswers] = useState(initialAnswers);
 
   // Función para manejar cambios en las respuestas
