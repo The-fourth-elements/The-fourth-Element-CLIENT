@@ -21,32 +21,32 @@ const LandingDesktop = () => {
 				</div>
 				<div className='Container-welcome-text'>
 					<p>
-						¡Bienvenidos a <b> The Fourth Element</b>! Durante 10 semanas
-						explorarás una plataforma educativa que fusiona
-						<b> teoría y práctica </b> en un enfoque único. Fundamentado en
-						datos científicos, nuestro programa se nutre de la biología
-						cerebral, neurociencias y psicología deportiva cognitivo-conductual.
+						¡Bienvenidos a <b>The Fourth Element</b>! Durante 10 semanas explorarás una
+						plataforma educativa que fusiona teoría y práctica en un enfoque
+						único. Fundamentado en datos científicos, nuestro programa se nutre
+						de la biología cerebral, neurociencias y psicología deportiva
+						cognitivo-conductual.
 					</p>
 				</div>
+
 				<div className='Container-take-a-tour-container'>
 					<div className='Container-take-a-tour-container-images'>
-						<Image alt='placeholder image' src={videoPlaceholder} />
-						<Image alt='placeholder image' src={videoPlaceholder} />
-						<Image alt='placeholder image' src={videoPlaceholder} />
+						{/* <Image alt='placeholder image' src={videoPlaceholder} /> */}
+						{/* video estatico de youtube */}
+						{/* <video src={} /> */}
+						<iframe id='Staticvideo' width="" height="" src="https://www.youtube.com/embed/CQu6vs58tOg?si=uyurBDNXDWgaTdyD" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+
 					</div>
 				</div>
 				<div className='Container-buttons'>
 					<button>
-						<Link href='/course'>Get started (free trial)</Link>
+						<Link href='/course'>Acceder ahora</Link>
 					</button>
 					<button>
-						<Link href='/groups'>Grupos</Link>
+						<Link href='/groups'>Módulo 1 gratis</Link>
 					</button>
 				</div>
 				<div className='Container-description'>
-					<h3>
-						<b>The Fourth Element</b> está diseñado para...
-					</h3>
 					<p>
 						Cualquier atleta comprometido con el alto rendimiento, ya sea en
 						disciplinas individuales o de equipo. También, es una oportunidad

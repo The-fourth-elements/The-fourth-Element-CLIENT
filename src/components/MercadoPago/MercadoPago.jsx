@@ -3,12 +3,10 @@ import { toastError } from '@/helpers/toast';
 import { postData } from '@/hooks/postData';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import Paypal from '../paypal/Paypal';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { Button } from 'semantic-ui-react';
 import Stripe from '../stripe/Stripe';
 
 function ErrorMessage({ message }) {
