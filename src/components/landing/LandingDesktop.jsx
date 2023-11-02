@@ -4,13 +4,15 @@ import videoPlaceholder from '../../assets/img/videoPlaceholder.png';
 
 import './LandingDesktopStyles.scss';
 import Link from 'next/link';
+import ModulesCardsLanding from '../modules-card-landing/ModulesCardsLanding';
+import CounterOfCourse from '../counter-of-course/CounterOfCourse';
 
 const LandingDesktop = () => {
 	return (
 		<div>
 			<div className='Container'>
 				<div className='Container-banner'>
-					<Image alt='landing image' src={landingImg} />
+					<Image alt='landing image' src={landingImg} priority={true} />
 					<div className='Container-banner-text'>
 						<h1>
 							TU ENTRENAMIENTO MENTAL Y CEREBRAL PARA POTENCIAR <br />
@@ -54,6 +56,10 @@ const LandingDesktop = () => {
 						como entrenadores, preparadores físicos, managers, kinesiólogos,
 						nutricionistas, fisioterapeutas, psicólogos, y más.
 					</p>
+				</div>
+				<div className='container-modules'>
+					<CounterOfCourse />
+					<ModulesCardsLanding />
 				</div>
 			</div>
 		</div>
