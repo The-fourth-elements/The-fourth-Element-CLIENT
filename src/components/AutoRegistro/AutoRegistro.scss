@@ -1,0 +1,33 @@
+@import "../../styles/base";
+
+.horizontal-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ratings {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+  }
+  
+  .rating-item {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .rating-item.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .selected-rating-text {
+    margin-top: 10px;
+  }

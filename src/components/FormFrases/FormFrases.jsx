@@ -78,12 +78,12 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 				description,
 				questions: filteredFraseData,
 				moduleId,
-				imagen: {
+				image: {
 					public_id: newImage.id,
 					secure_url: newImage.url,
 				}
 			};
-			// createExcersice(theFrasesData);
+			createExcersice(theFrasesData);
 			console.log(theFrasesData)
 		}
 	};
@@ -100,7 +100,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 				description,
 				questions: filteredFraseData,
 				moduleId,
-				imagen: {
+				image: {
 					public_id: newImage.id,
 					secure_url: newImage.url,
 				}
@@ -112,7 +112,7 @@ const FormFrases = ({isOpen, handleFrasesModal, ...props}) => {
 			handleFrasesModal()
 		}, 2000)
 
-		// console.log(theFrasesData)
+		console.log(theFrasesData)
 		}
 	};
 
