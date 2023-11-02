@@ -1,0 +1,36 @@
+@import '../../styles/mixins';
+
+@include lg {
+	@include landing-modules(3);
+}
+@include md {
+	@include landing-modules(2);
+}
+
+.Card {
+    border-top: solid 1px white;
+    padding-top: 1.2rem;
+    min-width: 18.75rem;
+    width: auto;
+    max-width: 30%;
+    .cardModule{
+        margin-top: 1.45rem;
+        font-weight: 700;
+        font-size: 2.25rem;
+        line-height: 45px;
+        font-family: 'Input Mono';
+	}
+    .cardSubtitle{
+        
+        font-weight: 1000;
+        font-size: 2rem;
+        font-family: 'Input Mono';
+        line-height: 45px;
+    }
+	p {
+		line-height: 19px;
+        font-weight: 275;
+        font-family: 'Input Mono';
+        text-wrap: balance;
+	}
+}

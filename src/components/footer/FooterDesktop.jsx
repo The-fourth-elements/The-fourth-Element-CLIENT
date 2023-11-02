@@ -55,11 +55,6 @@ const FooterDesktop = () => {
 					</ul>
 				</div>
 			</div>
-			{/* <div className='brandContainer'>
-				<h3>Revoke consent</h3>
-
-				<h1>Train the Mind®</h1>
-			</div> */}
 		</>
 	);
 };
