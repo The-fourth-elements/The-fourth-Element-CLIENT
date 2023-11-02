@@ -164,7 +164,7 @@ $screen-lg: 1024px;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	background-color: #18181b
+	background-color: #000000;
 }
 
 @mixin landing-modules($cols) {
@@ -181,6 +181,6 @@ $screen-lg: 1024px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 0rem;
+		gap: 4rem;
     }
 }
