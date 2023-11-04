@@ -63,7 +63,12 @@ export const authOptions = {
 							providerId: user?.id,
 							provider: true,
 						};
-						await postData(`${process.env.API_BACKEND}auth`, form);
+						const response = await postData(`${process.env.API_BACKEND}auth`, form);
+						if(response?.success){
+							if(user){
+								user.id = response.userId;
+							}
+						}
 					} else {
 						const lol = await postData(`${process.env.API_BACKEND}login`, {
 							email: token.email,
