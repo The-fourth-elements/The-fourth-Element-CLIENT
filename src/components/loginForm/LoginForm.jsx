@@ -1,5 +1,4 @@
 'use client';
-import { EyeOpen, EyeSlash } from './eyeIcons';
 import { Formik, Form } from 'formik';
 import './style.scss';
 import '@/helpers/CustomComponentsStyles.scss';
@@ -42,11 +41,19 @@ export const LoginForm = ({ toogleDisplay }) => {
 							...values,
 							redirect: false,
 						});
-						if (response.error == null) {
+						if (response?.status === 401) {
+							toastError('Credenciales no válidas')
+							setDisabled(false)
+							return;
+						}
+						if (response?.error == null) {
 							toastSuccess('Éxito');
 							router.push('/dashboard');
-						} else {
-							throw new Error('Ocurrio un error en el inicio de sesión');
+							return
+						} 
+						
+						else {
+							throw  Error('Ocurrio un error en el inicio de sesión');
 						}
 					} catch (error) {
 						toastError(error.message);
