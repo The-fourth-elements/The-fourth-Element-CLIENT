@@ -19,7 +19,6 @@ function ErrorMessage({ message }) {
 
 function MercadoPago({ className }) {
 	initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY);
-	const router = useRouter();
 	const { data: session } = useSession();
 	const [preferenceId, setPreferenceId] = useState(null);
 	const idUser = getCookie('jsdklfsdjklfdsjfds');
