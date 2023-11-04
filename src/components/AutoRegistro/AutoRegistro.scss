@@ -1,33 +1,31 @@
 @import "../../styles/base";
 
-.horizontal-selector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .ratings {
-    display: flex;
-    justify-content: space-between;
-    width: 300px;
-  }
-  
-  .rating-item {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .rating-item.selected {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .selected-rating-text {
-    margin-top: 10px;
-  }
+.sectionContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.sectionContainer h3 {
+  grid-column-start: 1;
+  grid-column-end: -1;
+}
+
+.nameInput {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.sectionQuestions { 
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.addQuest {
+  grid-column-start: 2;
+}
+
+

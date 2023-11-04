@@ -1,7 +1,13 @@
 "use client"
-import { useState } from "react";
+import './AutoRegistro.scss'
+import { useState, useEffect } from "react";
+import { useAutoRegistro } from "@/zustand/store/autoRegistroStore";
+import { useModulesStore } from "@/zustand/store/modulesStore";
+import { Button, useDisclosure, Select, SelectItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 
 const AutoRegistro = () => {
+    const {modules, getModules} = useModulesStore()
+    const {createAutoRegistro} = useAutoRegistro()
     const [moduleId, setModuleId] = useState('')
     const [selfRegister, setSelfRegister] = useState ([{
         name: '',
@@ -12,6 +18,14 @@ const AutoRegistro = () => {
         disagree: ''
         }]     
     }])
+
+    useEffect(() => {
+		getModules()
+	}, [])
+
+    const handleSelect = (e) => {
+		setModuleId(e?.target?.value)
+	}
 
     const handleAddSection = () => {
         const newSection = [
@@ -82,14 +96,11 @@ const AutoRegistro = () => {
         setSelfRegister(newRegister)
     }
     
-    const createAutoRegistro = () => {
-        const completeAutoRegistro ={
-            name: title,
-            type: description,
-            selfRegister: questions
+    const saveAutoRegistro = () => {
+        const newSelfRegister = {
+            selfRegister
         }
-        
-        console.log('hola')
+        createAutoRegistro(newSelfRegister, moduleId)
     }
 
  
@@ -99,12 +110,13 @@ const AutoRegistro = () => {
             <h1>Crear Autorregistro</h1>
             <article>
                 {selfRegister.map((section, index) => (
-                    <section key={index}>
+                    <section className='sectionContainer' key={index}>
                         <h3>Seccion {index + 1}</h3>
                         <input type="text"
                         placeholder="Nombre de la seccion"
                         value={section.name}
                         onChange={e => handleWriteName(e?.target?.value, index)}
+                        className='nameInput'
                         />
                         <input type="text"
                         placeholder="Tipo de la seccion"
@@ -112,7 +124,7 @@ const AutoRegistro = () => {
                         onChange={e => handleWriteType(e?.target?.value, index)}
                         />
                         { section.questions.map((questions, indexQuestion) => (
-                            <section key={indexQuestion}>
+                            <section className='sectionQuestions' key={indexQuestion}>
                                  <input type="text" 
                                 placeholder="Question"
                                 value={questions.selfQuestion}
@@ -125,14 +137,34 @@ const AutoRegistro = () => {
                                 placeholder="Disagree"
                                 value={questions.disagree}
                                 onChange={e => handleWriteDisgree(e?.target?.value, index, indexQuestion)}/>
+                                
+                                <button onClick={() => handleDeleteQuestion(index, indexQuestion)}>
+                                    Eliminar Pregunta
+                                </button>
                             </section>
                         ))
                         
                         }
-
+                        <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
+                        <button onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
                     </section>
                 ))}
-                <button onClick={handleAddSection}>click</button>
+                <button onClick={handleAddSection}>Agregar Seccion</button>
+
+                <button onClick={() => saveAutoRegistro()}>Crear Auto-Registro</button>
+
+                <Select
+					label='Modulos'
+					placeholder='Seleccione un modulo'
+					className='md:max-w-[12rem] max-w-xs '
+					onChange={handleSelect}>
+					{modules.length > 0 &&
+						modules.map(modulo => (
+							<SelectItem key={modulo._id} value={modulo._id}>
+								{modulo.name}
+							</SelectItem>
+									))}
+				</Select>
             </article>
 
         </main>
