@@ -7,10 +7,13 @@ import { deportes } from '@/utils/dataRegister';
 import './styles.scss';
 import { handleSubmitRegister } from '../../helpers/handlers';
 import { registerSchema, initialValues } from '../../helpers/validations';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import InputField from '../../helpers/InputField';
 import InputFieldPassword from '@/helpers/InputFieldPassword';
 import { Button, Card, CardBody } from '@nextui-org/react';
+import {
+	AnimatedCountryDropdown,
+	AnimatedRegionDropdown,
+} from './DropdownSelectorRegion';
 
 const Register = ({ toogleDisplay }) => {
 	const [country, setCountry] = useState('');
@@ -27,7 +30,7 @@ const Register = ({ toogleDisplay }) => {
 	};
 
 	return (
-		<Card className='Main text-4xl'>
+		<Card className='text-4xl InputMono'>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={registerSchema(country, region)}
@@ -41,14 +44,14 @@ const Register = ({ toogleDisplay }) => {
 						if (response?.success) {
 							toastSuccess(response.success);
 							toogleDisplay();
-						} 
+						}
 					} catch (error) {
-						toastError(error?.message)
+						toastError(error?.message);
 					}
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col space-y-5 items-center mx-auto mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10  p-10 rounded-lg justify-center bg-[#F29222]'>
 							<InputField
 								type='string'
 								name='username'
@@ -95,19 +98,16 @@ const Register = ({ toogleDisplay }) => {
 								name={'deporte'}
 								label={'deporte'}></SelectField>
 
-							<label htmlFor='country' className='text-black mb-5'>
+							<label htmlFor='country' className='text-black mb-10'>
 								Country:
 							</label>
-							<CountryDropdown
-								name='country'
-								autoComplete='on'
-								id='country'
-								value={country}
+							<AnimatedCountryDropdown
+								className={'select'}
 								onChange={val => {
 									setCountry(val);
 									setRegion('');
 								}}
-								className='select text-medium  w-auto'
+								country={country}
 							/>
 
 							{country && (
@@ -115,10 +115,9 @@ const Register = ({ toogleDisplay }) => {
 									<label className='text-black ' htmlFor='state'>
 										Estado/Region:
 									</label>
-									<RegionDropdown
+									<AnimatedRegionDropdown
 										country={country}
 										value={region}
-										id='state'
 										onChange={val => setRegion(val)}
 										className='select mt-10 group-select max-w-full text-white'
 									/>
@@ -130,8 +129,8 @@ const Register = ({ toogleDisplay }) => {
 								className='toogle text-2xl text-black hover:cursor-pointer underline mt-5 mb-5'>
 								¿Ya tienes una cuenta?
 							</span>
-							<Button type='submit' className='submit'>
-								Register
+							<Button type='submit' className='rounded-lg mb-12 p-7 bg-[#C4161C] text-lg min-w-[12.5rem]'>
+								REGISTRAR
 							</Button>
 						</Form>
 					</CardBody>
