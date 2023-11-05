@@ -13,7 +13,7 @@ const AnimatedCountryDropdown = ({ className, country, onChange }) => {
 				name='country'
 				autoComplete='on'
 				id='country'
-				onChange={onChange}></CountryDropdown>
+				onChange={onChange}/>
 		</motion.div>
 	);
 };

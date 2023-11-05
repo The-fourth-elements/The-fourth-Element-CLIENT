@@ -87,14 +87,14 @@ export const LoginForm = ({ toogleDisplay }) => {
 								/>
 							<div className='flex flex-col items-center text-2xl'>
 								<span
-									className='toogle text-black hover:cursor-pointer underline spanLogin'
+									className='toogle text-black hover:cursor-pointer spanLogin hover:underline'
 									onClick={() => {
 										router.push('/auth/reset-password');
 									}}>
 									¿Olvidó su contraseña?
 								</span>
 								<span
-									className='toogle text-black hover:cursor-pointer underline spanLogin '
+									className='toogle text-black hover:cursor-pointer spanLogin hover:underline '
 									onClick={() => {
 										toogleDisplay();
 									}}>

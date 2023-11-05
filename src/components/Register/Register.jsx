@@ -13,7 +13,7 @@ import { Button, Card, CardBody } from '@nextui-org/react';
 import {
 	AnimatedCountryDropdown,
 	AnimatedRegionDropdown,
-} from './DropdownSelectorRegion';
+} from '../animated-components/DropdownSelectorRegion';
 
 const Register = ({ toogleDisplay }) => {
 	const [country, setCountry] = useState('');
@@ -99,7 +99,7 @@ const Register = ({ toogleDisplay }) => {
 								label={'deporte'}></SelectField>
 
 							<label htmlFor='country' className='text-black mb-10'>
-								Country:
+								País:
 							</label>
 							<AnimatedCountryDropdown
 								className={'select'}
