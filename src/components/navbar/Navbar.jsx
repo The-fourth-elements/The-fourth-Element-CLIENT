@@ -25,7 +25,7 @@ import {
 import { toastError } from '@/helpers/toast';
 import { deleteCookie } from 'cookies-next';
 import { useUserProfile } from '@/zustand/store/userProfile';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 
 export default function Nav() {
 	const { status, data: session } = useSession();
@@ -34,7 +34,13 @@ export default function Nav() {
 	const cookie = getCookie('jsdklfsdjklfdsjfds');
 
 	useEffect(() => {
-		getProfile(cookie);
+		if (cookie) {
+			getProfile(cookie);
+		} else if (session?.token?.user?.id) {
+			const id = session?.token?.user?.id;
+			setCookie("jsdklfsdjklfdsjfds", id);
+			getProfile(id);
+		}
 	}, [session]);
 
 	const handleLogout = async () => {

@@ -4,6 +4,8 @@ const config = {
 	content: [
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/features/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/features/**/**/*.{js,ts,jsx,tsx,mdx}',
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 	],
 	darkMode: 'class',
@@ -47,7 +49,7 @@ const config = {
 							DEFAULT: '#e85721',
 							foreground: '#ffffff',
 						},
-						secondary:{
+						secondary: {
 							600: '#1e1e1e',
 							700: '#4d4b45',
 							800: '#3E3B39',

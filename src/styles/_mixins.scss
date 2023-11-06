@@ -84,58 +84,6 @@ $screen-lg: 1024px;
 	justify-content: space-evenly;
 	background-color: rgb(219 234 254 / var(--tw-bg-opacity));
 
-/*
-	.group {
-		text-align: center;
-		width: 100%;
-		input {
-			font-size: 1.3rem;
-		}
-		div {
-			span {
-				color: red;
-			}
-		}
-		label{
-			font-size: 1rem;
-		}
-		select{
-			width: 100%;
-			border-radius: 9px;
-			color: #ffffff;
-			font-size: 1.4rem;
-			option{
-				font-size: 1rem;
-			}
-		}
-	}
-	.toogle {
-		color: rgb(0, 0, 0);
-		cursor: pointer;
-		&:hover {
-			text-decoration: underline;
-		}
-	}
-	.submit {
-		padding: 0 50px 0 50px;
-		color: #ffffff;
-		width: fit-content;
-		background-color: #ce171e;
-		transition: box-shadow 0.3s;
-		font-size: x-large;
-
-		&:hover {
-			box-shadow: 2px 2px 10px #4a0303;
-		}
-
-		&:focus {
-			outline: unset;
-		}
-		&:active {
-			background: linear-gradient(to bottom, #4a0303, #ce171e);
-		}
-	}
-*/
 	.googleBtn {
 		color: #ffffff;
 		width: fit-content;

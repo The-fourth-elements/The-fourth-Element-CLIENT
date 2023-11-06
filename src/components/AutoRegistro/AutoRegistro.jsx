@@ -1,110 +1,170 @@
 "use client"
-import { useState } from "react";
+import './AutoRegistro.scss'
+import { useState, useEffect } from "react";
+import { useAutoRegistro } from "@/zustand/store/autoRegistroStore";
+import { useModulesStore } from "@/zustand/store/modulesStore";
+import { Button, useDisclosure, Select, SelectItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 
 const AutoRegistro = () => {
-    const [questions, setQuestions] = useState ([{
-        question: '',
-        motivation: 0
-    }])
-    const [title, setTitle] = useState('')
+    const {modules, getModules} = useModulesStore()
+    const {createAutoRegistro} = useAutoRegistro()
     const [moduleId, setModuleId] = useState('')
-    const [description, setDescription] = useState('')
-    const handleChangeTitle = (event) => {
-        setTitle(event.target.value)
-    }
-    const handleChangeDescription = (event) => {
-        setDescription(event.target.value)
-    }
-    const handleAddQuestion = () => {
-        const newQuestions = [
-            ...questions,
+    const [selfRegister, setSelfRegister] = useState ([{
+        name: '',
+        type: '',
+        questions: [{
+            selfQuestion: '',
+        agree: '',
+        disagree: ''
+        }]     
+    }])
+
+    useEffect(() => {
+		getModules()
+	}, [])
+
+    const handleSelect = (e) => {
+		setModuleId(e?.target?.value)
+	}
+
+    const handleAddSection = () => {
+        const newSection = [
+            ...selfRegister,
             {
-                question: '',
-                motivation: 0
+                name: '',
+                type: '',
+                questions: [{
+                    selfQuestion: '',
+                agree: '',
+                disagree: ''
+                }]
             }
         ]
-        setQuestions(newQuestions)
+        setSelfRegister(newSection)
     }
 
-    const handleDeleteQuestion = (index) => {
-        const newQuestions = [...questions]
-        newQuestions.splice(index, 1)
-        setQuestions(newQuestions)
-    }
-
-    const handleWriteQuestion = (text, index) => {
-        const newQuestions = [...questions]
-        newQuestions[index].question = text
-        setQuestions(newQuestions)
+    const handleAddQuestion = (index) => {
+        const newRegister = [...selfRegister]
+        const newQuestion = {
+            selfQuestion: '',
+            agree: '',
+            disagree: ''
         }
-
-    const handleChangeMotivation = (number, index) => {
-            const newQuestions = [...questions]
-            newQuestions[index].motivation = +number
-            setQuestions(newQuestions)
-            }
-    
-    const createAutoRegistro = () => {
-        console.log('hola')
+        newRegister[index]?.questions.push(newQuestion)
+        setSelfRegister(newRegister)
     }
-    const [seleccion, setSeleccion] = useState(3);
 
-  const handleSeleccion = (e) => {
-    setSeleccion(parseInt(e.target.value, 10));
-  };
-    const opciones = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4', 'Opción 5'];
+    const handleDeleteSection = (index) => {
+        const newRegister = [...selfRegister]
+        newRegister.splice(index, 1)
+        setSelfRegister(newRegister)
+    }
+
+    const handleDeleteQuestion = (index, indexQuestion) => {
+        const newRegister = [...selfRegister]
+        newRegister[index].questions.splice(indexQuestion, 1)
+        setSelfRegister(newRegister)
+    }
+
+    const handleWriteName = (text, index) => {
+        const newRegister = [...selfRegister]
+        newRegister[index].name = text
+        setSelfRegister(newRegister)
+    }
+
+    const handleWriteType = (text, index) => {
+        const newRegister = [...selfRegister]
+        newRegister[index].type = text
+        setSelfRegister(newRegister)
+    }
+
+    const handleWriteQuestion = (text, index, indexQuestion) => {
+        const newRegister = [...selfRegister]
+        newRegister[index].questions[indexQuestion].selfQuestion = text
+        setSelfRegister(newRegister)
+        }
+    
+    const handleWriteAgree = (text, index, indexQuestion) => {
+        const newRegister = [...selfRegister]
+        newRegister[index].questions[indexQuestion].agree = text
+        setSelfRegister(newRegister)
+    }
+
+    const handleWriteDisgree = (text, index, indexQuestion) => {
+        const newRegister = [...selfRegister]
+        newRegister[index].questions[indexQuestion].disagree = text
+        setSelfRegister(newRegister)
+    }
+    
+    const saveAutoRegistro = () => {
+        const newSelfRegister = {
+            selfRegister
+        }
+        createAutoRegistro(newSelfRegister, moduleId)
+    }
+
+ 
     return (
         <main>
-            <header>
+            
             <h1>Crear Autorregistro</h1>
-                <input
-                        type='text'
-                        placeholder='Título del Autorregistro'
-                        value={title}
-                        onChange={handleChangeTitle}
-                    />
-                <input
-                        type='text'
-                        placeholder='Descripcion del Autorregistro'
-                        value={description}
-                        onChange={handleChangeDescription}
-                    />    
-            </header>
             <article>
-                {
-                    questions.map((pregunta, index) =>  (
-                        <section>
-                            <h3>Pregunta {index + 1}</h3>
-                            <input
-							className='input'
-							type='text'
-							placeholder='Escribe una pregunta'
-							value={pregunta?.question}
-							onChange={e =>
-								handleWriteQuestion(e?.target?.value, index)
-							}
-						/>
-                             <input
-                                type="range"
-                                min="1"
-                                max="5"
-                                step="1"
-                                value={seleccion}
-                                onChange={handleSeleccion}
-                                list="opciones"
-                            />
-                            <datalist id="opciones">
-        {opciones.map((opcion, index) => (
-          <option key={index} value={index + 1}>
-            {opcion}
-          </option>
-        ))}
-      </datalist>
-      <p>Seleccion: {opciones[seleccion - 1]}</p>
+                {selfRegister.map((section, index) => (
+                    <section className='sectionContainer' key={index}>
+                        <h3>Seccion {index + 1}</h3>
+                        <input type="text"
+                        placeholder="Nombre de la seccion"
+                        value={section.name}
+                        onChange={e => handleWriteName(e?.target?.value, index)}
+                        className='nameInput'
+                        />
+                        <input type="text"
+                        placeholder="Tipo de la seccion"
+                        value={section.type}
+                        onChange={e => handleWriteType(e?.target?.value, index)}
+                        />
+                        { section.questions.map((questions, indexQuestion) => (
+                            <section className='sectionQuestions' key={indexQuestion}>
+                                 <input type="text" 
+                                placeholder="Question"
+                                value={questions.selfQuestion}
+                                onChange={e => handleWriteQuestion(e?.target?.value, index, indexQuestion)}/>
+                                <input type="text" 
+                                placeholder="Agree"
+                                value={questions.agree}
+                                onChange={e => handleWriteAgree(e?.target?.value, index, indexQuestion)}/>
+                                <input type="text" 
+                                placeholder="Disagree"
+                                value={questions.disagree}
+                                onChange={e => handleWriteDisgree(e?.target?.value, index, indexQuestion)}/>
+                                
+                                <button onClick={() => handleDeleteQuestion(index, indexQuestion)}>
+                                    Eliminar Pregunta
+                                </button>
+                            </section>
+                        ))
+                        
+                        }
+                        <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
+                        <button onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
+                    </section>
+                ))}
+                <button onClick={handleAddSection}>Agregar Seccion</button>
 
-                        </section>
-                    ))
-                }
+                <button onClick={() => saveAutoRegistro()}>Crear Auto-Registro</button>
+
+                <Select
+					label='Modulos'
+					placeholder='Seleccione un modulo'
+					className='md:max-w-[12rem] max-w-xs '
+					onChange={handleSelect}>
+					{modules.length > 0 &&
+						modules.map(modulo => (
+							<SelectItem key={modulo._id} value={modulo._id}>
+								{modulo.name}
+							</SelectItem>
+									))}
+				</Select>
             </article>
 
         </main>

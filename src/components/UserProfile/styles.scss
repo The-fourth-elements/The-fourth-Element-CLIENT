@@ -3,18 +3,18 @@
 
 
 .main {
-    
+    max-width: 100%;
     border-top: solid $grey-2 5px;
     border-bottom: solid $grey-2 5px;
     
-    @include md (){
+    @include md {
       display: flex;
       flex-direction: column; 
       align-items: center;
       justify-content: space-between;
     }
 
-    @include lg (){
+    @include lg {
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -29,14 +29,14 @@
   align-items: center;
   padding-bottom: 0;
 
-  @include md (){
+  @include md {
     display: flex;
     flex-direction: column; 
     align-items: center;
     justify-content: center;
   }
 
-  @include lg () {
+  @include lg  {
     width: 360px; 
     height: 100%;
     justify-content: center;
@@ -50,7 +50,7 @@
   border: solid $orange-4 7px;
   width: 300px;
   height: 300px;
-  @include md (){
+  @include md {
   }
 }
 
@@ -65,7 +65,7 @@
   border-radius: 10px;
   border-bottom: solid $orange-4 7px;
   text-align: center;
-  @include md (){
+  @include md {
     font-size: 45px;
     margin: 30px;
   }
@@ -78,14 +78,14 @@
   margin-bottom: 40px;
   padding: 10px;
 
-  @include md (){
+  @include md {
     display: flex;
     flex-direction: column; 
     width: 700px;
     margin: 20px;
   }
 
-  @include lg () { 
+  @include lg  { 
     width: 600px;
     height: 100%;
     margin: 20px;
@@ -99,11 +99,11 @@
   padding: 7px;
   font-size: 18px;
   border-bottom: solid $red-2 2px;
-  @include md (){
+  @include md {
     padding: 7px;
     font-size: 25px;
   }
-  @include lg () {
+  @include lg  {
     padding: 10px;
     font-size: 25px;
   }
