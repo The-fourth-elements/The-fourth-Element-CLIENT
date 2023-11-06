@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
 	Button,
@@ -11,27 +11,44 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { items } from '@/utils/categoryItems';
 import { handleCategoryClick } from '@/helpers/handleCategoryClick';
+import { button } from './ModuleCard.module.scss'
 
-function ModuleCard({ moduleName, moduleIndex, moduleId }) {
+function ModuleCard({ moduleName, moduleIndex, moduleId, className }) {
 	const moduleNameWords = moduleName?.split(' ').length;
 	const router = useRouter();
 
 	return (
-		<div className='flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 '>
-			<h1 className='max-w-full px-10 sm:px-16 p-3 text-7xl text-secondary-900'>
+		<div
+			className={
+				!className
+					? `flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 `
+					: `flex h-full max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 ${className}`
+			}>
+			<h3
+				style={{ fontWeight: 700 }}
+				className={
+					className
+						? 'bg-secondary-700 max-w-full px-4 rounded-xl sm:mx-16 text-6xl text-secondary-900'
+						: 'max-w-full px-10 sm:px-16 p-3 text-7xl text-secondary-900'
+				}>
 				{moduleIndex}
-			</h1>
+			</h3>
 			<div className='max-w-full my-3 flex flex-col gap-1'>
-				<p className='text-xl '>Módulo</p>
-				<Dropdown
+				<h5
+					
+					className='text-xl '>
+					Módulo
+				</h5>
+				<Dropdown isDisabled={`true`}
 					classNames={{
 						base: 'p-0 bg-background border-divider',
 					}}>
 					<DropdownTrigger className='w-full'>
 						<Button
+						
 							className={`${
 								moduleNameWords >= 2 ? 'text-base' : 'text-xl w-full '
-							}  w-full p-0 rounded-lg border-none  text-white`}
+							} ${button} w-full p-0 rounded-lg border-none  text-white`}
 							variant='bordered'>
 							{moduleName}
 						</Button>

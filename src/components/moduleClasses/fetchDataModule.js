@@ -33,9 +33,9 @@ export const renderVideo = (currentClass, moduleData) => {
 		);
 		if (selectedClassData) {
 			return (
-				<>
-					<video src={selectedClassData?.video?.url} controls id='video' />
-				</>
+				<div className='flex bg-black rounded-xl w-full h-full justify-center '>
+					<video className='aspect-video ' src={selectedClassData?.video?.url} controls id='video' />
+				</div>
 			);
 		}
 	}

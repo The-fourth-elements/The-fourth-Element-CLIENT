@@ -70,11 +70,20 @@
 }
 
 @font-face {
-	font-family: 'Input Mono Conpressed Black';
-	src: url('./Fonts/InputMonoCompressed-Black.ttf') format('truetype');
+	font-family: 'Input Mono Light';
+	src: url('./Fonts/InputMono-Light.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
+
+@font-face {
+	font-family: 'Input Mono Thin';
+	src: url('./Fonts/InputMono-Thin.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
 
 
 $font-primary: 'Suez One', sans-serif;

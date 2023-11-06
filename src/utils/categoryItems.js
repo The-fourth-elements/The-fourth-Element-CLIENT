@@ -7,12 +7,14 @@ export const items = [
 		key: 'exercises',
 		label: 'Ejercicios',
 	},
-	{
-		key: 'meditations',
-		label: 'Meditacion',
-	},
+	
 	{
 		key: 'knowledge',
 		label: 'Autoregistro',
 	},
+
+	{
+		key: 'meditations',
+		label: 'Meditaciones',
+	}
 ];

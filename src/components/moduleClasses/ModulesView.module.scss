@@ -33,9 +33,7 @@
 .acordionItem{
     margin: 0.25rem;
     border: solid 2px black;
-    span{
-        color: black;
-    }
+   
     @media (max-width: 768px) {
         margin: 0.25rem;
     }
