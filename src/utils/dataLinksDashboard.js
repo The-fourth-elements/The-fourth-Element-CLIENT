@@ -2,6 +2,7 @@ import MeditationIcon from '@/assets/svg-jsx/MeditationIcon.jsx';
 import UserIcon from '@/assets/svg-jsx/UserIcon';
 import VideoPlusIcon from '@/assets/svg-jsx/VideoPlusIcon.jsx';
 import CreateModuleIcon from '@/assets/svg-jsx/CreateModuleIcon.jsx';
+import Storm from '@/assets/svg-jsx/brain.jsx';
 
 import BrainIcon from '@/assets/svg-jsx/BrainIcon.jsx';
 
@@ -50,7 +51,7 @@ export const routes = [
 	},
 	{
 		to: '/dashboard/module/create',
-		text: 'Crear Módulo',
+		text: 'Crear módulo',
 		svg: (
 			<CreateModuleIcon />
 		),
@@ -65,16 +66,23 @@ export const routes = [
 	},
 	{
 		to: '/dashboard/meditation/create',
-		text: 'Crear Meditación',
+		text: 'Crear meditación',
 		svg: (
 			<MeditationIcon />
 		),
 	},
 	{
 		to: '/dashboard/knowledge',
-		text: 'Crear Autorregistro',
+		text: 'Crear autorregistro',
 		svg: (
 			<BrainIcon />
+		),
+	},
+	{
+		to: '/dashboard/create-exercise',
+		text: 'Crear ejercicios',
+		svg: (
+			<Storm />
 		),
 	},
 ];

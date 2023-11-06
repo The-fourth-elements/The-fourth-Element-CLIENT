@@ -1,5 +1,4 @@
 'use client';
-import { EyeOpen, EyeSlash } from './eyeIcons';
 import { Formik, Form } from 'formik';
 import './style.scss';
 import '@/helpers/CustomComponentsStyles.scss';
@@ -31,7 +30,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 	const router = useRouter()	
 
 	return (
-		<Card className='Main text-4xl'>
+		<Card className='Main text-4xl '>
 			<Formik
 				initialValues={initialValuesLogin}
 				validationSchema={validationSchemaLogin}
@@ -42,11 +41,19 @@ export const LoginForm = ({ toogleDisplay }) => {
 							...values,
 							redirect: false,
 						});
-						if (response.error == null) {
+						if (response?.status === 401) {
+							toastError('Credenciales no válidas')
+							setDisabled(false)
+							return;
+						}
+						if (response?.error == null) {
 							toastSuccess('Éxito');
 							router.push('/dashboard');
-						} else {
-							throw new Error('Ocurrio un error en el inicio de sesión');
+							return
+						} 
+						
+						else {
+							throw  Error('Ocurrio un error en el inicio de sesión');
 						}
 					} catch (error) {
 						toastError(error.message);
@@ -55,7 +62,7 @@ export const LoginForm = ({ toogleDisplay }) => {
 				}}>
 				{({ errors }) => (
 					<CardBody className='body'>
-						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10 bg-primary-500 p-10 rounded-lg justify-center'>
+						<Form className='claseForm relative sm:w-full md:w-3/4 lg:w-1/2 flex flex-col items-center mx-auto  space-y-5 mt-10 mb-10  p-10 rounded-lg justify-center bg-[#F29222]'>
 								<InputField
 									name='Email'
 									type='email'
@@ -80,14 +87,14 @@ export const LoginForm = ({ toogleDisplay }) => {
 								/>
 							<div className='flex flex-col items-center text-2xl'>
 								<span
-									className='toogle text-black hover:cursor-pointer underline'
+									className='toogle text-black hover:cursor-pointer spanLogin hover:underline'
 									onClick={() => {
 										router.push('/auth/reset-password');
 									}}>
 									¿Olvidó su contraseña?
 								</span>
 								<span
-									className='toogle text-black hover:cursor-pointer underline'
+									className='toogle text-black hover:cursor-pointer spanLogin hover:underline '
 									onClick={() => {
 										toogleDisplay();
 									}}>
@@ -95,12 +102,12 @@ export const LoginForm = ({ toogleDisplay }) => {
 								</span>
 							</div>
 
-							<Button type='submit' className='  border-large rounded-sm mb-12' disabled={disabled}>
-								Ingresar
+							<Button type='submit' className='rounded-lg mb-12 p-7 bg-[#C4161C] text-lg min-w-[12.5rem]' disabled={disabled}>
+								INGRESAR
 							</Button>
 							<Button
 								type='button'
-								className='googleBtn mb-12 aspect-ratio-1/1'
+								className='googleBtn mb-12'
 								onClick={handleSignIn}>
 								<Image src={googleLogo} alt='' className='googleLogo' />
 							</Button>

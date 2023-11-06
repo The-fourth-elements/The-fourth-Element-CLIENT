@@ -1,10 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
-
-import Facebook from '../../assets/svg/facebook.svg';
-import Instagram from '../../assets/svg/instagram.svg';
-import Linkedin from '../../assets/svg/linkedin.svg';
-import Twitter from '../../assets/svg/twitter.svg';
+import React from 'react'
 
 import './FooterStyles.scss';
 
@@ -19,7 +14,7 @@ const FooterDesktop = () => {
 			route: '/emailUs',
 		},
 		{
-			label: 'Stay up to date with Train the Mind ®',
+			label: 'Mantente al día con The Fourth Element',
 			route: '/stayUp',
 		},
 	];
@@ -35,7 +30,7 @@ const FooterDesktop = () => {
 	];
 	return (
 		<>
-			<div className='footerLinksContainer w-full'>
+			<div className='footerLinksContainer w-full' id='os'>
 				<div className='linksContainer w-full'>
 					<ul className='footerLinks w-full'>
 						{links.map(({ label, route }) => (
@@ -55,47 +50,10 @@ const FooterDesktop = () => {
 							<input
 								placeholder='Your email address'
 								className='inputFooter'></input>
-							<button className='footerButton'>Get updates</button>
 							</div>
 						</li>
 					</ul>
 				</div>
-			</div>
-
-			<div className='iconsContainer'>
-				<a
-					href='https://www.facebook.com'
-					target='_blank'
-					rel='noopener noreferrer'
-					className='iconLink'>
-					<Image src={Facebook} alt='iconFacebook' className='icons'></Image>
-				</a>
-				<a
-					href='https://www.instagram.com'
-					target='_blank'
-					rel='noopener noreferrer'
-					className='iconLink'>
-					<Image src={Twitter} alt='iconInstagram' className='icons'></Image>
-				</a>
-				<a
-					href='https://www.instagram.com'
-					target='_blank'
-					rel='noopener noreferrer'
-					className='iconLink'>
-					<Image src={Instagram} alt='iconInstagram' className='icons'></Image>
-				</a>
-				<a
-					href='https://www.instagram.com'
-					target='_blank'
-					rel='noopener noreferrer'
-					className='iconLink'>
-					<Image src={Linkedin} alt='iconInstagram' className='icons'></Image>
-				</a>
-			</div>
-			<div className='brandContainer'>
-				<h3>Revoke consent</h3>
-
-				<h1>Train the Mind®</h1>
 			</div>
 		</>
 	);

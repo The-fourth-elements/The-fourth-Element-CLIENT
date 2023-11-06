@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const middleware = async request => {
     const develop = 'next-auth.session-token';
     const production = '__Secure-next-auth.session-token';
-    const session = request.cookies.get(production);
+    const session = request.cookies.get(develop);
     const id = request.cookies.get('jsdklfsdjklfdsjfds');
     let role = 0;
     if (id) {
@@ -40,25 +40,35 @@ export const middleware = async request => {
         }
         return NextResponse.redirect(url);
     }
-
-    if (!session && request.nextUrl.pathname !== '/auth') {
-        const requestedPage = request.nextUrl.pathname;
+    if (path === '/prices') {
+        if (role === 1) {
+            const requestedPage = path;
+            const url = request.nextUrl.clone();
+            url.pathname = '/profile';
+            url.search = `p=${requestedPage}`;
+            return NextResponse.redirect(url);
+        } else {
+            return NextResponse.next();
+        }
+    }
+    if (!session && path !== '/auth') {
+        const requestedPage = path;
         const url = request.nextUrl.clone();
         url.pathname = '/auth';
         url.search = `p=${requestedPage}`;
         return NextResponse.redirect(url);
     }
 
-    if (!session && request.nextUrl.pathname === '/paid-success') {
-        const requestedPage = request.nextUrl.pathname;
+    if (!session && path === '/paid-success') {
+        const requestedPage = path;
         const url = request.nextUrl.clone();
         url.pathname = '/auth';
         url.search = `p=${requestedPage}`;
         return NextResponse.redirect(url);
     }
 
-    if (session && request.nextUrl.pathname === '/paid-success') {
-        const requestedPage = request.nextUrl.pathname;
+    if (session && path === '/paid-success') {
+        const requestedPage = path;
         const url = request.nextUrl.clone();
         if (role < 1) {
             url.pathname = '/auth';
@@ -70,5 +80,12 @@ export const middleware = async request => {
 };
 
 export const config = {
-    matcher: ['/course/:path*', '/auth', '/dashboard/:path*', '/profile/:path*', '/paid-success'],
+    matcher: [
+        '/course/:path*',
+        '/auth',
+        '/dashboard/:path*',
+        '/profile/:path*',
+        '/paid-success',
+        '/prices',
+    ],
 };

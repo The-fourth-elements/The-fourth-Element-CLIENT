@@ -1,0 +1,31 @@
+@import "../../styles/base";
+
+.sectionContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.sectionContainer h3 {
+  grid-column-start: 1;
+  grid-column-end: -1;
+}
+
+.nameInput {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.sectionQuestions { 
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.addQuest {
+  grid-column-start: 2;
+}
+
+

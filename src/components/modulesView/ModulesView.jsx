@@ -184,7 +184,7 @@ export default function ModuleView() {
 	return (
 		<>
 			<Card className={containerVideos + ' navcolor '}>
-				<main
+				<div
 					className={
 						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
 					}>
@@ -213,7 +213,7 @@ export default function ModuleView() {
 							</AccordionItem>
 						</Accordion>
 					</Card>
-				</main>
+				</div>
 				<aside className={`${div2} bg-foreground md:w-96`}>
 					<nav
 						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>

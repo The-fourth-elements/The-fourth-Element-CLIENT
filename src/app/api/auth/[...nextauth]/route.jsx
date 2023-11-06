@@ -17,26 +17,30 @@ export const authOptions = {
 				username: { label: 'Username', type: 'text', placeholder: 'iope' },
 			},
 			async authorize(credentials) {
-				const form = {
-					email: credentials.Email,
-					password: credentials.Password,
-				};
-				//esto se usa para el logueo del usuario ya registrado.
-				//manejo la peticiondel front (/api/auth) y la preparo para el back
-				const response = await postData(
-					`${process.env.API_BACKEND}login`,
-					form
-				);
-				// Decodifica el token JWT para obtener el ID
-				const decodedToken = Jwt.decode(response.token);
-				// CookieOption("idk", {value: "este es el valor"})
-				const user = {
-					...decodedToken?.data,
-				};
-				return {
-					...user,
-					id: user.id.toString(),
-				};
+				try {
+					const form = {
+						email: credentials.Email,
+						password: credentials.Password,
+					};
+					const response = await postData(
+						`${process.env.API_BACKEND}login`,
+						form
+					);
+					if(response?.error){
+						throw response;
+					}
+					const decodedToken = Jwt.decode(response.token);
+					const user = {
+						...decodedToken?.data,
+					};
+					return {
+						...user,
+						id: user.id.toString(),
+					};
+				} catch (error) {
+					console.log(error);
+				}
+				
 			},
 		}),
 	],
@@ -59,7 +63,12 @@ export const authOptions = {
 							providerId: user?.id,
 							provider: true,
 						};
-						await postData(`${process.env.API_BACKEND}auth`, form);
+						const response = await postData(`${process.env.API_BACKEND}auth`, form);
+						if(response?.success){
+							if(user){
+								user.id = response.userId;
+							}
+						}
 					} else {
 						const lol = await postData(`${process.env.API_BACKEND}login`, {
 							email: token.email,

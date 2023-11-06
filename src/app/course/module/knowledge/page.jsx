@@ -12,14 +12,19 @@ import {
 	useDisclosure,
 } from '@nextui-org/react';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
+import { getCookie } from 'cookies-next';
 
-function page({ params }) {
-	const { idModule } = params;
+function page() {
+	let moduleId;
+
 	const [isLoading, setIsLoading] = useState(true);
 	const { module, getModule } = useSelectedModule();
 
 	useEffect(() => {
-		getModule(idModule).then(() => {
+		if (typeof window !== 'undefined') {
+			moduleId = getCookie('moduleId');
+		}
+		getModule(moduleId).then(() => {
 			setIsLoading(false);
 		});
 	}, []);
@@ -51,15 +56,21 @@ function page({ params }) {
 					</p>
 				</CardBody>
 				<CardFooter>
-					<Button onClick={onOpen} className='mx-auto w-fit px-5'>
-						Autorregistro
-					</Button>
-					<RenderSelfKnowledge
-						data={module?.selfKnowledge}
-						isOpen={isOpen}
-						onOpenChange={onOpenChange}
-						onOpen={onOpen}
-					/>
+					{module?.selfKnowledge ? (
+						<>
+							<Button onClick={onOpen} className='mx-auto w-fit px-5'>
+								Resgistrar
+							</Button>
+							<RenderSelfKnowledge
+								data={module?.selfKnowledge}
+								isOpen={isOpen}
+								onOpenChange={onOpenChange}
+								onOpen={onOpen}
+							/>
+						</>
+					) : (
+						<p> No hay autorregistros en el módulo</p>
+					)}
 				</CardFooter>
 			</Card>
 		</div>

@@ -59,7 +59,6 @@ export default function Meditations({ idModule }) {
 
 
 	const renderModuleMeditations = () => {
-		console.log("module" , module);
 		if (module?.meditation?.length > 0) {
 			return module.meditation.map((elem, meditationIndex) => {
 					return renderMeditations(meditationIndex, elem, handleMeditationClick);
@@ -71,7 +70,6 @@ export default function Meditations({ idModule }) {
 
 	const handleMeditationClick = meditation => {
 		setCurrentTrackIndex(0)
-		console.log("currentTrackIndex " , currentTrackIndex);
 		setCurrentMeditation(meditation);
 	};
 
@@ -81,7 +79,6 @@ export default function Meditations({ idModule }) {
 					className={
 						div1 + ' parent  bg-foreground  mt-12'
 					}>
-					<BackToCourseBtn></BackToCourseBtn>
 						
 					<div
 						className='min-h-[15rem] h-[25vh]  flex-col bg-primary m-3 flex p-5'

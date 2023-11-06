@@ -49,7 +49,7 @@ const Paypal = () => {
 	};
 	const onCancel = async data => {
 		console.log(data, 'soy la data');
-		toastError('No se concreto la compra');
+		toastError('No se concretó la compra');
 	};
 
 	return (

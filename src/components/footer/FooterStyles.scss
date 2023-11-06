@@ -1,5 +1,11 @@
 @import '../../styles/_base';
 
+@include lg {
+    #os{
+        margin-bottom: 10%;
+    }
+}
+
 @mixin lg-styles {
     .footerLinksContainer {
         background-color: $black-1;

@@ -1,8 +1,19 @@
 @import '../styles/base';
 
+.input-container {
+	font-family: 'Input Mono';
+	text-align: center;
+	font-size: .75rem;
+	div {
+		div {
+			background-color: #2D3445;
+			border-radius: .668rem;
+		}
+	}
+}
+
 @include sm {
 	.error-message {
-		font-size: 20px;
 		position: static;
     // color: red;
 	}
@@ -17,6 +28,7 @@
 		position: static; /* Ensure relative positioning */
 		height: auto; /* Set a fixed or maximum height as needed */
 		width: 100%;
+		color: $black-1;
 	}
 
   .error-message.visible {
@@ -37,7 +49,7 @@
 	}
 
 	.error-message {
-		// color: red;
+		color: $black-1;
 		visibility: hidden;
 	}
 
@@ -64,6 +76,7 @@
 		position: relative; 
 		height: auto;
 		width: 100%;
+		color: $black-1;
 	}
 
   .input-wrapper {

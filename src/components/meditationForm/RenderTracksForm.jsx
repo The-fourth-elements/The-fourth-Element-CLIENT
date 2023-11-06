@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 export const RenderTracksForm = tracks => {
     const tracksArray = tracks.tracks
 	const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-    console.log("tracks en rendertracks ", tracks );
-	if (tracks) {
+	if (tracksArray.length > 0) {
 		
 
 		return (
@@ -32,6 +31,6 @@ export const RenderTracksForm = tracks => {
 			</div>
 		);
 	} else {
-		return <p>Seleccione una meditación</p>;
+		return <p>Cargue un track</p>;
 	}
 };

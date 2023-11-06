@@ -25,23 +25,24 @@ import {
 import { toastError } from '@/helpers/toast';
 import { deleteCookie } from 'cookies-next';
 import { useUserProfile } from '@/zustand/store/userProfile';
-import { getCookie } from 'cookies-next';
-
+import { getCookie, setCookie } from 'cookies-next';
 
 export default function Nav() {
-	
 	const { status, data: session } = useSession();
 	const router = useRouter();
-	const {getProfile, user} = useUserProfile()
-	const routes = [
-		{ label: 'Acerca', route: '/about' },
-		{ label: 'Precios', route: '/prices' },
-	];
-	const cookie = getCookie("jsdklfsdjklfdsjfds")
+	const { getProfile, user } = useUserProfile();
+	const cookie = getCookie('jsdklfsdjklfdsjfds');
 
-	useEffect (() => {
-			getProfile(cookie)
-		}, [])
+	useEffect(() => {
+		if (cookie) {
+			getProfile(cookie);
+		} else if (session?.token?.user?.id) {
+			const id = session?.token?.user?.id;
+			setCookie("jsdklfsdjklfdsjfds", id);
+			getProfile(id);
+		}
+	}, [session]);
+
 	const handleLogout = async () => {
 		try {
 			deleteCookie('jsdklfsdjklfdsjfds');
@@ -51,9 +52,18 @@ export default function Nav() {
 			toastError('Ocurrio un error en el cierre de sesión');
 		}
 	};
-
+	let routesNav = [
+		{ label: 'Acerca', route: '/about' },
+		{ label: 'Precios', route: '/prices' },
+	];
+	if (user?.role === 1) {
+		routesNav = routesNav.filter(route => route.route !== '/prices');
+	}
+	const routes = routesNav;
 	return (
-		<Navbar isBordered className=' bg-background justify-items-stretch p-3 w-full fix-Header sm:h-44 h-36'>
+		<Navbar
+			isBordered
+			className=' bg-background justify-items-stretch p-3 w-full fix-Header sm:h-44 h-36'>
 			<NavbarContent className='sm:hidden' justify='start'>
 				<NavbarMenuToggle className='text-foreground' />
 			</NavbarContent>
@@ -100,13 +110,15 @@ export default function Nav() {
 				</NavbarContent>
 
 				<NavbarMenu className='top-40'>
-					{routes.map(({ label, route, index }) => (
-						<NavbarMenuItem key={`${route}-${index}`}>
-							<Link className='w-full text-l' href={route}>
-								{label}
-							</Link>
-						</NavbarMenuItem>
-					))}
+					{routes.map(({ label, route, index }) => {
+						return (
+							<NavbarMenuItem key={`${route}-${index}`}>
+								<Link className='w-full text-l' href={route}>
+									{label}
+								</Link>
+							</NavbarMenuItem>
+						);
+					})}
 				</NavbarMenu>
 
 				{status === 'authenticated' ? (
@@ -116,8 +128,9 @@ export default function Nav() {
 								<User
 									className='cursor-pointer w-fit h-fit'
 									avatarProps={
-										user?.profile_img?.secure_url ? {src: user?.profile_img?.secure_url} :
-										session?.token?.picture?.length > 5
+										user?.profile_img?.secure_url
+											? { src: user?.profile_img?.secure_url }
+											: session?.token?.picture?.length > 5
 											? { src: session.token.picture }
 											: { src: session?.token?.user?.image_profile }
 									}
