@@ -3,7 +3,14 @@ import { getFrases, createExcersice, getAllExcersices, addExcersiceToModule, cre
 
 export const useExcersices = create ((set, get) => ({
     Frases: {},
-    AllExersices: [], 
+    AllExersices: [],
+    update: false,
+    setUpdate: () => {
+        set((state) => ({
+            ...state,
+            update: !state.update
+        }))
+    },
     getFrases: (id) => {
         getFrases(id)
         .then((data) => {

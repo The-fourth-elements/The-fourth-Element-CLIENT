@@ -22,7 +22,42 @@
 	}
 }
 
+@keyframes selct {
+	0%{
+		opacity: 0;
+	}
+	100%{
+		opacity: 1;
+	}
+}
+
+
 .select {
-	width: 90%;
+	width: 100%;
 	font-size: medium;
+	background-color: #2D3445;
+	min-height: 2.5rem;
+	padding: 1rem;
+	border-radius: 0.668rem;
+	overflow-y: hidden;
+
+	option {
+		
+		animation: selct infinite ease-in-out infinite both linear;
+		cursor: pointer;
+		&:hover {
+			cursor: pointer;
+		}
+		&:enabled{
+			
+			cursor: e-resize;
+		}
+		&:checked{
+			background: rgb(117, 144, 171)
+		}
+	}
+}
+
+.InputMono {
+	font-family: "Input Mono";
 }

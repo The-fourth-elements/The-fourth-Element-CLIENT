@@ -28,14 +28,14 @@
 @font-face {
 	font-family: 'RussoOne Regular';
 	src: url('./Fonts/RussoOne-Regular.ttf') format('truetype');
-	font-weight: 1000;
+	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Roboto Medium';
 	src: url('./Fonts/ROBOTO-MEDIUM.TTF') format('truetype');
-	font-weight: 1000;
+	font-weight: normal;
 	font-style: normal;
 }
 
@@ -43,16 +43,48 @@
 @font-face {
 	font-family: 'Input Serif';
 	src: url('./Fonts/InputSerif.ttf') format('truetype');
-	font-weight: 1000;
+	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Lekton';
 	src: url('./Fonts/Lekton-Regular.ttf') format('truetype');
-	font-weight: 1000;
+	font-weight: normal;
 	font-style: normal;
 }
+
+
+@font-face {
+	font-family: 'Input Mono';
+	src: url('./Fonts/InputMono.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Input Mono Conpressed Black';
+	src: url('./Fonts/InputMonoCompressed-Black.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Input Mono Light';
+	src: url('./Fonts/InputMono-Light.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Input Mono Thin';
+	src: url('./Fonts/InputMono-Thin.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+
 
 $font-primary: 'Suez One', sans-serif;
 $font-secondary: 'Roboto', Arial, sans-serif;

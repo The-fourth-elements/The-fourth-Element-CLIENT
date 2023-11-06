@@ -5,6 +5,8 @@ export const RenderTracksForm = tracks => {
     const tracksArray = tracks.tracks
 	const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 	if (tracksArray.length > 0) {
+		
+
 		return (
 			<div className='space-y-4 flex flex-col justify-between h-full items-center w-full'>
 						<audio

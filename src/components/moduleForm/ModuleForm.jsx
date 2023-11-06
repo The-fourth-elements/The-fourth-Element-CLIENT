@@ -23,7 +23,7 @@ const ModuleForm = () => {
 	const [createEjercicio, setCreateEjercicio] = useState(false)
 	const [exercisesId, setExercisesId] = useState("")
 	// const [excersicesValue, setExcersicesValue] = useState("")
-	const {getAllExcersices, AllExersices, getFrases, addExcersiceToModule} = useExcersices()
+	const {getAllExcersices, AllExersices, getFrases, addExcersiceToModule, update, setUpdate} = useExcersices()
 	// const handleFileChange = event => {
 	// 	const fileInput = event.target;
 	// 	const isVideo = fileInput.files.length > 0 &&
@@ -35,7 +35,12 @@ const ModuleForm = () => {
 
 	useEffect(() => {
 		getAllExcersices()
-	}, [])
+
+		if(update){
+			getAllExcersices()
+			setUpdate()
+		}
+	}, [update])
 
 	const handleFrasesModal = () => {
 		setFrasesModal(!frasesModal)

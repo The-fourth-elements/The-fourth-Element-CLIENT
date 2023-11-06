@@ -1,5 +1,18 @@
 @import '../../styles/_base';
 
+@include lg {
+	#Staticvideo{
+		width: 100%;
+		height: 700px;
+	}
+}
+@include md {
+	#Staticvideo{
+		width: 100%;
+		height: 350px;
+	}
+}
+
 // Mixin para estilos compartidos en todos los tamaños de pantalla
 @mixin sharedStyles {
 	.Container {
@@ -109,9 +122,9 @@
 			margin: 5vw 5vw 0 5vw;
 			width: 100%;
 			padding: 5% 10% 5% 10%;
-			color: $black-1;
-			font-size: 2vw;
-			background-color: $orange-1;
+			color: #ffffff;
+			font-size: 2.25rem;
+			background-color: $orange-landing;
 
 			> h3 {
 				margin-bottom: 6vh;
@@ -187,20 +200,24 @@
 				background-color: #ccc;
 			}
 
-			&-images {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: center;
-				gap: 3%;
-				row-gap: 3%;
-				margin: 2vw 0 4vw 0;
+			// &-images {
+			// 	// display: flex;
+			// 	// flex-wrap: wrap;
+			// 	// justify-content: center;
+			// 	// gap: 3%;
+			// 	// row-gap: 3%;
+			// 	// margin: 2vw 0 4vw 0;
 
-				> img {
-					margin-top: 2vw;
-					height: auto;
-					width: 40%;
-				}
-			}
+			// 	// > img {
+			// 	// 	margin-top: 2vw;
+			// 	// 	height: auto;
+			// 	// 	width: 40%;
+			// 	// }
+			// }
+			// width: 100%;
+			// height: 100%;
+			// iframe{
+			// }
 		}
 
 		&-buttons {
@@ -237,4 +254,16 @@
 			}
 		}
 	}
+}
+
+
+.container-modules {
+	width: 80%;
+	margin-top: 4rem;
+	margin-bottom: 4rem;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 5rem;
+
 }

@@ -71,18 +71,14 @@ export default function ModuleClasses({ idModule }) {
 					const id = session?.token?.user?.id;
 					getProfile(id);
 				}
-				console.log("condicion useEffect ", moduleData?.length)
 
-				// if (moduleData?.length === 0) {
-				// console.log("condicion useEffect ", moduleData?.length)
 
 					fetchDataSingleModule(module).then(data => {
 						setModuleData(data);
 						setModulesDataLoaded(true);
 					})
-				// }
 
-				verifyProgressUser()
+				// verifyProgressUser()
 			}
 		}
 	}, [firstEffectExecuted, module, session, dataUpdated]);
@@ -100,7 +96,6 @@ export default function ModuleClasses({ idModule }) {
 	const renderModuleClasses = moduleData => {
 		if (moduleData) {
 			return moduleData.map((elem, classIndex) => {
-				console.log("elem" , elem);
 				if (access) {
 					// Render clases con acceso especial
 					return renderClassSpecialRole(
@@ -147,40 +142,31 @@ export default function ModuleClasses({ idModule }) {
 	};
 
 	const verifyProgressUser = async () => {
-		console.log("VERIFY PROGRESS USER");
 		try {
 		  const modulesProgress = user?.progress?.modules;
 		  const totalClasses = module.classModule.length;
 
-		  console.log("module.classModule" , module.classModule);
 	  
 		  if (user?.role < 2) {
 			if (!user?.progress) {
-				console.log("HOLA1");
 
-			  console.log(user);
 			  const progress = await postData(
 				`${process.env.API_BACKEND}startCourse/${id}`
 			  );
-			  console.log("HOLA");
 			  toastSuccess(progress?.message);
 			  getProfile(id);
 			} else {
-				console.log("HOLA2");
 
 			  const countClassesUser = modulesProgress
 				.find((elem) => elem._id === module._id)
 				?.classes?.length;
 
-				console.log("totalClasses ", totalClasses , "countClassesUser " , countClassesUser);
 	  
 			  if (totalClasses !== countClassesUser) {
-				console.log("HOLA3");
 
 				const progress = await postData(
 				  `${process.env.API_BACKEND}startCourse/${id}`
 				);
-				console.log("HOLA4");
 
 				toastInfo(progress?.message);
 				getProfile(id);
@@ -204,31 +190,30 @@ export default function ModuleClasses({ idModule }) {
 		}
 	};
 
-	return (
-		<>
-			<Card className={containerVideos + ' navcolor '}>
-				<main
+	return (  
+			<Card className={containerVideos + ' bg-secondary-700 navcolor '}>
+				<section
 					className={
-						div1 + ' parent grid grid-row-1 md:grid-row-2 bg-foreground'
+						div1 + '  parent grid grid-rows-1 md:grid-rows-2'
 					}>
 					<div
-						className='bg-black h-unit-8xl m-3 flex justify-center'
+						className='  border-[0.75rem] border-secondary-800 bg-secondary-800 h-unit-8xl flex justify-center'
 						id='reproductor'>
 						{renderVideo(currentClass, moduleData)}
 					</div>
-					<Card className='flex p-3 bg-transparent shadow-none'>
-						<h2
+					<Card className='flex p-3 bg-transparent shadow-none border-secondary-800 sm:border-r-[0.75rem]'>
+						<h3
 							className={
 								h2Title +
-								' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
+								' flex p-2 text-white justify-center md:justify-start text-2xl bg-secondary-800 rounded'
 							}>
 							{currentModule?.name ? `Módulo: ${currentModule?.name}` : ''}
-						</h2>
+						</h3>
 						<Accordion>
 							<AccordionItem
 								className={
 									acordionItem +
-									' p-2 m-1 bg-transparent rounded md:m-0 text-background'
+									' p-2 m-1 bg-secondary-800 rounded md:m-0 text-white'
 								}
 								title='Recursos'
 								textValue={`${accordion}`}>
@@ -236,10 +221,10 @@ export default function ModuleClasses({ idModule }) {
 							</AccordionItem>
 						</Accordion>
 					</Card>
-				</main>
-				<aside className={`${div2} bg-foreground md:w-96`}>
+				</section>
+				<aside className={`${div2} bg-secondary-800 p-3 md:w-96 `}>
 					<nav
-						className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
+						className={`${navtContainer} flex flex-col bg-secondary  rounded-lg`}>
 						<ul className='m-2'>
 							{modulesDataLoaded ? (
 								<Accordion
@@ -255,6 +240,5 @@ export default function ModuleClasses({ idModule }) {
 					</nav>
 				</aside>
 			</Card>
-		</>
 	);
 }

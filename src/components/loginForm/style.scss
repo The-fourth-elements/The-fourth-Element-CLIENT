@@ -1,5 +1,13 @@
 @import '../../styles/base';
 
+.spanLogin{
+	font-family: 'Input Mono';
+	font-weight: 1000;
+	padding: 1rem;
+	// font-size: 15px;
+}
+
+
 @include lg {
 	.Main {
 		@include common-container-styles;

@@ -1,0 +1,18 @@
+.CardCourseData{
+    width: 11.75rem;
+    min-height: 12.875rem;
+    height: auto;
+    max-height: 14rem;
+    text-wrap: balance;
+    text-align: center;
+    border-radius: .9rem;
+
+    span{
+        color: #030303;
+        font-size: 5.6rem;
+    }
+    p {
+        color: #030303;
+        font-size: .9rem;
+    }
+}

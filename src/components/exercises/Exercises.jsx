@@ -116,9 +116,8 @@ export default function Exercises({ idModule }) {
 
 	return (
 		// h-[81vh]
-		<Card className={containerVideos + ' bg-white navcolor md:h-[81vh]'}>
-			<main className={div1 + ' parent  bg-foreground  mt-12'}>
-				<BackToCourseBtn></BackToCourseBtn>
+		<Card className={containerVideos + ' bg-white navcolor '}>
+			<section className={div1 + ' parent  bg-foreground  mt-12'}>
 
 				<div className='  flex-col bg-primary m-3 flex' id='reproductor'>
 					{renderTextSection(currentQuestion)}
@@ -134,7 +133,7 @@ export default function Exercises({ idModule }) {
 					</h2>
 					
 				</Card>
-			</main>
+			</section>
 			<aside className={`${div2} bg-foreground md:w-96  mt-12`}>
 				<nav
 					className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>

@@ -28,9 +28,9 @@ const Detail = () => {
 
 
     return (
-        <article>
+        <div>
             {detail && Object.keys(detail).length > 0 ? ( 
-            <main>
+            <section>
                 <img src={detail.profile_img} alt={detail.name} />
                 <header>
                     <h1>Name: {detail.name}</h1>
@@ -47,11 +47,11 @@ const Detail = () => {
                 type: Date,
                 default: Date.now()
                 }  */}
-            </main>
+            </section>
         ) : (
         <>estaria bueno poner aqui un componente que de una pantalla de carga</>
         )}
-        </article>
+        </div>
     )
 }
     // tambien solo me faltaria que este archivo sea hijo de la ruta de valentin
