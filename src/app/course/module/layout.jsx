@@ -10,7 +10,7 @@ function layout({ children }) {
 			<div className=' bg-secondary-700  py-12'>
 				<ModulesNavigation />
 
-				<div>{children}</div>
+				{children}
 			</div>
 		);
 	// else{

@@ -116,7 +116,7 @@ export default function Exercises({ idModule }) {
 
 	return (
 		// h-[81vh]
-		<Card className={containerVideos + ' bg-white navcolor md:h-[81vh]'}>
+		<Card className={containerVideos + ' bg-white navcolor '}>
 			<section className={div1 + ' parent  bg-foreground  mt-12'}>
 
 				<div className='  flex-col bg-primary m-3 flex' id='reproductor'>
