@@ -1,18 +1,10 @@
 'use client';
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	Image,
-	CircularProgress,
-	Button,
-	select,
-} from '@nextui-org/react';
-import InputName from './input';
+import { Image, Button } from '@nextui-org/react';
+import InputName from '@/components/InputChangeToUser/input';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
-import { CountrySelect, CitySelect } from './SelectsProfile';
+import { CountrySelect, CitySelect } from '@/components/InputChangeToUser/SelectsProfile';
 import React, { useState } from 'react';
-import { InputAge, InputExp } from './inputExp';
+import { InputAge, InputExp } from '@/components/InputChangeToUser/inputExp';
 import { CldUploadButton } from 'next-cloudinary';
 
 export const UserProfileHeader = ({
@@ -69,7 +61,7 @@ export const UserProfileHeader = ({
 				<h1>
 					Nombre: {user?.username}
 					<Button
-					className='button'
+						className='button'
 						title='Edit  Name'
 						color='warning'
 						variant='bordered'
@@ -80,15 +72,13 @@ export const UserProfileHeader = ({
 					</Button>
 				</h1>
 			)}
-			{newImage ? <Image src={newImage?.url} alt={newImage?.id} />
-			:
-			user?.profile_img ? (
+			{newImage ? (
+				<Image src={newImage?.url} alt={newImage?.id} />
+			) : user?.profile_img ? (
 				<Image src={user?.profile_img?.secure_url} alt={user?.name} />
-			) 
-			: session?.token?.picture ? (
+			) : session?.token?.picture ? (
 				<Image src={session?.token?.picture} alt='profileImage' />
-			) 
-			: (
+			) : (
 				<Image
 					src='https://cdn.pnghd.pics/data/862/user-profile-png-15.png'
 					alt={user?.name}
@@ -113,14 +103,19 @@ export const UserProfileHeader = ({
 						onSuccess={getNewImage}
 						children={'Subir Imagen'}
 					/>
-					<Button className='buttonImg'
+					<Button
+						className='buttonImg'
 						color='warning'
 						variant='bordered'
-						size='sm' onClick={updateUserImage} disabled={!newImage?.url}>Aceptar</Button>
+						size='sm'
+						onClick={updateUserImage}
+						disabled={!newImage?.url}>
+						Aceptar
+					</Button>
 				</div>
 			) : (
 				<Button
-				className='buttonImg'
+					className='buttonImg'
 					isIconOnly
 					color='warning'
 					variant='bordered'
@@ -168,7 +163,7 @@ export const UserProfileBody = ({
 			<h2>Plan: Moderador</h2>
 		)}
 		<CountrySelect
-			user = {user}
+			user={user}
 			stringCountry={stringCountry}
 			openCountry={openCountry}
 			newCountry={newCountry}
@@ -177,7 +172,7 @@ export const UserProfileBody = ({
 			updateUserCountry={updateUserCountry}
 		/>
 		<CitySelect
-			user = {user}
+			user={user}
 			openCountry={openCountry}
 			handleChangeCountry={handleChangeCountry}
 			updateUserCountry={updateUserCountry}
@@ -196,7 +191,7 @@ export const UserProfileBody = ({
 				<select value={newSport} onChange={selectSport}>
 					{deportes.map((deporte, index) => (
 						<React.Fragment key={index}>
-						<option> {deporte}</option>
+							<option> {deporte}</option>
 						</React.Fragment>
 					))}
 				</select>
@@ -233,7 +228,7 @@ export const UserProfileBody = ({
 			<h2>
 				Años de experiencia: <InputExp getNewExp={getNewExp} newExp={newExp} />{' '}
 				<Button
-				className='button'
+					className='button'
 					color='warning'
 					variant='bordered'
 					size='sm'

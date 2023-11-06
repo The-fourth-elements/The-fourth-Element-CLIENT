@@ -10,7 +10,7 @@ import { useUserProfile } from '@/zustand/store/userProfile';
 import { getCookie } from 'cookies-next';
 import { deportes } from '@/utils/dataRegister';
 import { toastError, toastInfo } from '@/helpers/toast';
-import UserRecords from '../user-records/UserRecords';
+import UserRecords from '../../components/user-records/UserRecords';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
@@ -43,16 +43,14 @@ const UserProfile = () => {
 		if (!user.sport) {
 			// console.log('no deporte')
 		}
-		return ()=>{
-			
-		}
+		return () => {};
 	}, [user?.username, user?.id, updated]);
 	const handleChangePhoto = () => {
 		setOpenImage(!openImage);
 		setOpenCity(false);
 		setOpenName(false);
 		setOpenCountry(false);
-		setNewImage(null)
+		setNewImage(null);
 	};
 	const handleChangeCountry = () => {
 		setOpenCountry(!openCountry);
@@ -99,14 +97,12 @@ const UserProfile = () => {
 		updateUserRole(update);
 		getProfile(cookie);
 		setUpdated(true);
-
 	};
 	const updateUserExp = () => {
 		const update = { id: user?._id, expYearsSports: newExp };
 		updateUserRole(update);
 		getProfile(cookie);
 		setUpdated(true);
-
 	};
 	const updateUserCountry = () => {
 		const update = { id: user?._id, nation: newCountry, city: newCity };
@@ -115,7 +111,6 @@ const UserProfile = () => {
 		setOpenCity(false);
 		getProfile(cookie);
 		setUpdated(true);
-
 	};
 	const updateUserCity = () => {
 		const update = { id: user?._id, city: newCity };
@@ -123,14 +118,12 @@ const UserProfile = () => {
 		setOpenCity(false);
 		getProfile(cookie);
 		setUpdated(true);
-
 	};
 	const updateUserSport = () => {
 		const update = { id: user?._id, sport: newSport };
 		updateUserRole(update);
 		getProfile(cookie);
 		setUpdated(true);
-
 	};
 	const updateUserImage = async () => {
 		try {
@@ -145,7 +138,7 @@ const UserProfile = () => {
 			setUpdated(true);
 			toastInfo('Ha actualizado la foto de perfil');
 			setNewImage(null);
-			setOpenImage(false)
+			setOpenImage(false);
 		} catch (error) {
 			toastError(
 				'No se pudo cambiar la foto de perfil, contacta a un moderador si el problema persiste'
