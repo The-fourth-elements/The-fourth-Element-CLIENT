@@ -1,7 +1,5 @@
-'use client';
 import { Button } from '@nextui-org/react';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import {
 	AnimatedCountryDropdown,
 	AnimatedRegionDropdown,
@@ -18,13 +16,14 @@ export const CountrySelect = ({
 }) => (
 	<div>
 		{openCountry ? (
-				<h2>País:
+			<h2>
+				País:
 				<AnimatedCountryDropdown
 					country={newCountry}
 					onChange={selectCountry}
 					className={'max-w-full p-2 rounded-md'}
-          />
-          </h2>
+				/>
+			</h2>
 		) : (
 			<h2>
 				País: {user?.nation?.name}
@@ -97,8 +96,7 @@ export const CitySelect = ({
 					↩
 				</Button>
 				<Button color='warning' variant='bordered' onClick={updateUserCity}>
-					{' '}
-					Accept{' '}
+					Accept
 				</Button>
 			</h2>
 		) : (
