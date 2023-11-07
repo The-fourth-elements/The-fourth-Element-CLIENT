@@ -3,16 +3,18 @@ import { Select, SelectItem } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import { useFilterKnowRegister } from '@/zustand/store/filterKnowRegister';
-import FilterBetweenDates from '@/components/filters-between-dates/FilterBetweenDates';
-
-const FilterKnowRegister = () => {
+import FilterBetweenDates from '@/components/filters-know-register/FilterBetweenDates';
+import FilterByModule from '@/components/filters-know-register/FilterByModule';
+import { useModulesStore } from '@/zustand/store/modulesStore';
+//a determinar si usar el progress por id.
+const FilterKnowRegister = ({progress}) => {
 	const { filtersActive, setFilter } = useFilterKnowRegister();
+	const { modules, getModules } = useModulesStore();
 	const filters = [
 		{ id: 1, value: 'Modulo' },
 		{ id: 2, value: 'Fecha' },
 	];
 	const [selectedFilters, setSelectedFilters] = useState(new Set());
-
 	const handleSelectionChange = e => {
 		const values = e.target.value.split(',').filter(value => value != '');
 		setSelectedFilters(new Set(values));
@@ -27,6 +29,10 @@ const FilterKnowRegister = () => {
 			filterIsActive !== filterIsSelected && setFilter(value, filterIsSelected);
 		});
 	};
+	useEffect(()=>{
+		if(modules.length < 1) getModules()
+	}, [modules])
+	// console.log(modules);
 	return (
 		<div className='flex flex-col items-center'>
 			<Select
@@ -44,7 +50,8 @@ const FilterKnowRegister = () => {
 					);
 				})}
 			</Select>
-            {filtersActive.Fecha && (<FilterBetweenDates/>)}
+			{filtersActive.Fecha && <FilterBetweenDates />}
+			{filtersActive.Modulo && <FilterByModule modules={modules} />}
 		</div>
 	);
 };
