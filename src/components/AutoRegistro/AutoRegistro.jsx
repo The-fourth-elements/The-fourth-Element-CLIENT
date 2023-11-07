@@ -3,8 +3,7 @@ import './AutoRegistro.scss'
 import { useState, useEffect } from "react";
 import { useAutoRegistro } from "@/zustand/store/autoRegistroStore";
 import { useModulesStore } from "@/zustand/store/modulesStore";
-import { Button, useDisclosure, Select, SelectItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
-
+import { Select, SelectItem, Slider } from "@nextui-org/react";
 const AutoRegistro = () => {
     const {modules, getModules} = useModulesStore()
     const {createAutoRegistro} = useAutoRegistro()
@@ -103,12 +102,17 @@ const AutoRegistro = () => {
         createAutoRegistro(newSelfRegister, moduleId)
     }
 
+    // const handleChangeSlider =(e) => {
+    //     console.log(e)
+    // }
+
  
     return (
-        <main>
-            
-            <h1>Crear Autorregistro</h1>
-            <article>
+        <main className='mainAuto'>
+            <header>
+                <h1 className='titleAuto'>Crear Autorregistro</h1>
+            </header>
+            <article className='articleAuto'>
                 {selfRegister.map((section, index) => (
                     <section className='sectionContainer' key={index}>
                         <h3>Seccion {index + 1}</h3>
@@ -119,26 +123,53 @@ const AutoRegistro = () => {
                         className='nameInput'
                         />
                         <input type="text"
+                        className='sectionInput'
                         placeholder="Tipo de la seccion"
                         value={section.type}
                         onChange={e => handleWriteType(e?.target?.value, index)}
                         />
                         { section.questions.map((questions, indexQuestion) => (
                             <section className='sectionQuestions' key={indexQuestion}>
-                                 <input type="text" 
+                                <input type="text" 
+                                className='inputQuestion'
                                 placeholder="Question"
                                 value={questions.selfQuestion}
                                 onChange={e => handleWriteQuestion(e?.target?.value, index, indexQuestion)}/>
                                 <input type="text" 
-                                placeholder="Agree"
-                                value={questions.agree}
-                                onChange={e => handleWriteAgree(e?.target?.value, index, indexQuestion)}/>
-                                <input type="text" 
+                                className='inputDisagree'
                                 placeholder="Disagree"
                                 value={questions.disagree}
                                 onChange={e => handleWriteDisgree(e?.target?.value, index, indexQuestion)}/>
+                                <Slider
+                                    // onChange={handleChangeSlider}
+                                    color="success"
+                                    size="md"
+                                    step={1}
+                                    defaultValue={3}
+                                    showSteps={true} 
+                                    maxValue={5} 
+                                    minValue={1}
+                                    marks={[
+                                        {value : 1,
+                                        label : 1},
+                                        {value : 2,
+                                        label : 2},
+                                        {value : 3,
+                                        label : 3},
+                                        {value : 4,
+                                        label : 4},
+                                        {value : 5,
+                                        label : 5}
+                                    ]}
+                                    className='sliderAuto'
+                                />
+                                <input type="text" 
+                                className='inputAgree'
+                                placeholder="Agree"
+                                value={questions.agree}
+                                onChange={e => handleWriteAgree(e?.target?.value, index, indexQuestion)}/>
                                 
-                                <button onClick={() => handleDeleteQuestion(index, indexQuestion)}>
+                                <button onClick={() => handleDeleteQuestion(index, indexQuestion)} className='deleteQuestion'>
                                     Eliminar Pregunta
                                 </button>
                             </section>
@@ -146,25 +177,27 @@ const AutoRegistro = () => {
                         
                         }
                         <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
-                        <button onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
+                        <button className='deleteSect' onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
                     </section>
                 ))}
-                <button onClick={handleAddSection}>Agregar Seccion</button>
+                <footer className='footerAuto'>
+                    <button className='agregarSection' onClick={handleAddSection}>Agregar Seccion</button>
 
-                <button onClick={() => saveAutoRegistro()}>Crear Auto-Registro</button>
+                    <button className='createAuto' onClick={() => saveAutoRegistro()}>Crear Auto-Registro</button>
 
-                <Select
-					label='Modulos'
-					placeholder='Seleccione un modulo'
-					className='md:max-w-[12rem] max-w-xs '
-					onChange={handleSelect}>
-					{modules.length > 0 &&
-						modules.map(modulo => (
-							<SelectItem key={modulo._id} value={modulo._id}>
-								{modulo.name}
-							</SelectItem>
-									))}
-				</Select>
+                    <Select
+                        label='Modulos'
+                        placeholder='Seleccione un modulo'
+                        className='md:max-w-[12rem] max-w-xs '
+                        onChange={handleSelect}>
+                        {modules.length > 0 &&
+                            modules.map(modulo => (
+                                <SelectItem key={modulo._id} value={modulo._id}>
+                                    {modulo.name}
+                                </SelectItem>
+                                        ))}
+                    </Select>
+                </footer>
             </article>
 
         </main>
