@@ -1,9 +1,14 @@
-import InputRange from '@/components/input-range/InputRange'
+import FilterKnowRegister from '@/features/user/knowledge/FilterKnowRegister';
+import UserRecords from '@/features/user/knowledge/UserRecords';
+
 
 const page = () => {
   return (
-    <InputRange/>
-  )
+      <>
+        <FilterKnowRegister />
+        <UserRecords className={'w-full flex justify-center'}></UserRecords>
+      </>
+    )
 }
 
-export default page
+export default page;

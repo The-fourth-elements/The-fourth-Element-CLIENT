@@ -1,7 +1,9 @@
+'use client'
 import { useEffect } from 'react';
-import PolarChart from '../metrics/Polar';
+import PolarChart from '@/components/metrics/Polar';
+// import FilterKnowRegisterOfUser from '@components/';
 
-const UserRecords = ({ user, session }) => {
+const UserRecords = ({ user, session, className }) => {
 	useEffect(() => {
 		if (!user?.progress) {
 		}
@@ -64,9 +66,9 @@ const UserRecords = ({ user, session }) => {
 	};
 
 	return (
-		<>
+		<div className={className}>
 			<PolarChart data={data} options={options} />
-		</>
+		</div>
 	);
 };
 
