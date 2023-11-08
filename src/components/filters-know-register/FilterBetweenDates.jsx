@@ -8,7 +8,7 @@ const FilterBetweenDates = ({ className }) => {
         console.log(new Date(value), 'soy el valor de : ', name);
     }
 	return (
-		<div className='flex justify-start bg-red-50 w-auto min-w-[80%] max-w-[90%]'>
+		<div className='flex justify-start flex-col sm:flex-row gap-3 w-auto min-w-[90%] max-w-[90%] m-5'>
 			<Input
 				type='date'
                 label='Desde'
@@ -17,7 +17,7 @@ const FilterBetweenDates = ({ className }) => {
                 placeholder='Desde'
                 value={values}
                 onChange={handleChangeDate}
-				className={`w-full p-5 bg-slate-900 ${className}`}
+				className={`w-full ${className}`}
 			/>
             <Input
 				type='date'
@@ -27,7 +27,7 @@ const FilterBetweenDates = ({ className }) => {
                 onChange={handleChangeDate}
                 classNames={{label: 'text-[#ee7f0f]'}}
                 placeholder='Hasta'
-				className={`w-full p-5 bg-slate-900 ${className}`}
+				className={`w-full ${className}`}
 			/>
 		</div>
 	);

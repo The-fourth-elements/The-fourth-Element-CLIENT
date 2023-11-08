@@ -6,9 +6,8 @@ import { useFilterKnowRegister } from '@/zustand/store/filterKnowRegister';
 import FilterBetweenDates from '@/components/filters-know-register/FilterBetweenDates';
 import FilterByModule from '@/components/filters-know-register/FilterByModule';
 import { useModulesStore } from '@/zustand/store/modulesStore';
-//a determinar si usar el progress por id.
-const FilterKnowRegister = ({progress}) => {
-	const { filtersActive, setFilter } = useFilterKnowRegister();
+const FilterKnowRegister = ({ progress }) => {
+	const { filtersActive, setFilter, modulesToShowed } = useFilterKnowRegister();
 	const { modules, getModules } = useModulesStore();
 	const filters = [
 		{ id: 1, value: 'Modulo' },
@@ -29,9 +28,10 @@ const FilterKnowRegister = ({progress}) => {
 			filterIsActive !== filterIsSelected && setFilter(value, filterIsSelected);
 		});
 	};
-	useEffect(()=>{
-		if(modules.length < 1) getModules()
-	}, [modules])
+	useEffect(() => {
+		console.log(modulesToShowed);
+		if (modules.length < 1) getModules();
+	}, [modules]);
 	// console.log(modules);
 	return (
 		<div className='flex flex-col items-center'>
@@ -51,7 +51,7 @@ const FilterKnowRegister = ({progress}) => {
 				})}
 			</Select>
 			{filtersActive.Fecha && <FilterBetweenDates />}
-			{filtersActive.Modulo && <FilterByModule modules={modules} />}
+			{filtersActive.Modulo && <FilterByModule modules={modules} className={'max-w-[90%]  bg-blue-500'} />}
 		</div>
 	);
 };
