@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify'
 
 
-export const toastSuccess = (message) => {
+export const toastSuccess = (message, autoClose = 5000) => {
     toast.success(message, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: autoClose,
         pauseOnHover: false,
         hideProgressBar: false,
         closeOnClick: true,
@@ -12,10 +12,10 @@ export const toastSuccess = (message) => {
         theme: "light",
     })
 }
-export const toastError = (message) => {
+export const toastError = (message, autoClose = 6000) => {
     toast.error(message, {
         position: "top-right",
-        autoClose: 6000,
+        autoClose: autoClose,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -24,10 +24,10 @@ export const toastError = (message) => {
         theme: "light",
     })
 }
-export const toastInfo = (message) => {
+export const toastInfo = (message, autoClose = 6000) => {
     toast.info(message, {
         position: "top-right",
-        autoClose: 6000,
+        autoClose: autoClose,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

@@ -4,7 +4,7 @@ const initialModulestoShow = {};
 const initialDates = {
     start: '',
     end: '',
-}
+};
 
 export const useFilterKnowRegister = create((set, get) => ({
     filtersActive: {
@@ -15,16 +15,24 @@ export const useFilterKnowRegister = create((set, get) => ({
     dates: initialDates,
 
     setFilter: (filter, value) => {
-        set((state) => {
+        set(state => {
             if (filter === 'Fecha' && !value) {
-                // Si el filtro Fecha se desactiva, restablecer las fechas
                 return {
+                    ...state,
                     filtersActive: {
                         ...state.filtersActive,
                         [filter]: value,
                     },
                     dates: initialDates,
-                    // Resto de tus estados...
+                };
+            } else if (filter === 'Modulo' && !value) {
+                return {
+                    ...state,
+                    filtersActive: {
+                        ...state.filtersActive,
+                        [filter]: value,
+                    },
+                    modulesToShowed: initialModulestoShow,
                 };
             } else {
                 return {
@@ -32,10 +40,9 @@ export const useFilterKnowRegister = create((set, get) => ({
                         ...state.filtersActive,
                         [filter]: value,
                     },
-                    // Resto de tus estados...
                 };
             }
-        })
+        });
     },
     setModulesToShowed: (moduleId, value) => {
         set(state => ({
@@ -45,8 +52,15 @@ export const useFilterKnowRegister = create((set, get) => ({
             },
         }));
     },
-    resetFilter: filter => {
-        const l = get();
-        console.log(l);
+    setDatesRange: (startOrEnd, date) => {
+        set(state => ({
+            dates: {
+                ...state.dates,
+                [startOrEnd]: date,
+            }
+        }))
     },
+    filterKnowRegister: () => {
+
+    }
 }));
