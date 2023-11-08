@@ -4,7 +4,27 @@ import { useState, useEffect } from "react";
 import { useAutoRegistro } from "@/zustand/store/autoRegistroStore";
 import { useModulesStore } from "@/zustand/store/modulesStore";
 import { Select, SelectItem, Slider } from "@nextui-org/react";
+import * as Yup from "yup";
+
+
 const AutoRegistro = () => {
+    const autoSchema = Yup.object().shape({
+        selfRegister: Yup.array().of(
+            Yup.object().shape({
+                name: Yup.string().required('El nombre de la sección es obligatorio'),
+                type: Yup.string().required('El tipo de la sección es obligatorio'),
+                questions: Yup.array().of(
+                    Yup.object().shape({
+                        selfQuestion: Yup.string().required('La pregunta es obligatoria'),
+                        agree: Yup.string().required('La respuesta "agree" es obligatoria'),
+                        disagree: Yup.string().required('La respuesta "disagree" es obligatoria'),
+                    })
+                ),
+            })
+        ),
+    })
+    const [errors, setErrors] = useState({})
+    const width = window.innerWidth
     const {modules, getModules} = useModulesStore()
     const {createAutoRegistro} = useAutoRegistro()
     const [moduleId, setModuleId] = useState('')
@@ -95,12 +115,24 @@ const AutoRegistro = () => {
         setSelfRegister(newRegister)
     }
     
-    const saveAutoRegistro = () => {
-        const newSelfRegister = {
-            selfRegister
+    const saveAutoRegistro = async () => {
+        try {
+            await autoSchema.validate({ selfRegister }, { abortEarly: false });
+            // Los datos son válidos, puedes enviarlos al servidor
+            const newSelfRegister = { selfRegister };
+            createAutoRegistro(newSelfRegister, moduleId);
+        } catch (error) {
+            // La validación falló, manejar los errores aquí
+            const validationErrors = {};
+            error.inner.forEach((err) => {
+                const path = err.path;
+                const message = err.message;
+                validationErrors[path] = message;
+            });
+    
+            setErrors(validationErrors);
         }
-        createAutoRegistro(newSelfRegister, moduleId)
-    }
+    };
 
     // const handleChangeSlider =(e) => {
     //     console.log(e)
@@ -120,10 +152,12 @@ const AutoRegistro = () => {
                         placeholder="Nombre de la seccion"
                         value={section.name}
                         onChange={e => handleWriteName(e?.target?.value, index)}
-                        className='nameInput'
+                        className='sectionContainerInput nameInput'
                         />
+                        {errors?.selfRegister &&
+    errors?.selfRegister[index]?.name && console.log('hola')}
                         <input type="text"
-                        className='sectionInput'
+                        className='sectionContainerInput sectionInput'
                         placeholder="Tipo de la seccion"
                         value={section.type}
                         onChange={e => handleWriteType(e?.target?.value, index)}
@@ -176,8 +210,16 @@ const AutoRegistro = () => {
                         ))
                         
                         }
-                        <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
-                        <button className='deleteSect' onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
+                            <div className='sectionQuestionsDiv'>
+                                <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
+                                <button className='deleteSect' onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
+                            </div>
+                        
+                        {/* {width >= 766 && <button className='deleteSect' onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>}
+                        {width >= 766 && <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>} */}
+                        
+                        
+                        
                     </section>
                 ))}
                 <footer className='footerAuto'>
