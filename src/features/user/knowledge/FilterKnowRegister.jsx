@@ -7,7 +7,7 @@ import FilterBetweenDates from '@/components/filters-know-register/FilterBetween
 import FilterByModule from '@/components/filters-know-register/FilterByModule';
 import { useModulesStore } from '@/zustand/store/modulesStore';
 const FilterKnowRegister = ({ progress }) => {
-	const { filtersActive, setFilter, modulesToShowed } = useFilterKnowRegister();
+	const { filtersActive, setFilter, modulesToShowed, dates } = useFilterKnowRegister();
 	const { modules, getModules } = useModulesStore();
 	const filters = [
 		{ id: 1, value: 'Modulo' },
@@ -29,10 +29,8 @@ const FilterKnowRegister = ({ progress }) => {
 		});
 	};
 	useEffect(() => {
-		console.log(modulesToShowed);
 		if (modules.length < 1) getModules();
-	}, [modules]);
-	// console.log(modules);
+	}, [modules, filtersActive, modulesToShowed, dates]);
 	return (
 		<div className='flex flex-col items-center'>
 			<Select
@@ -50,8 +48,8 @@ const FilterKnowRegister = ({ progress }) => {
 					);
 				})}
 			</Select>
-			{filtersActive.Fecha && <FilterBetweenDates />}
 			{filtersActive.Modulo && <FilterByModule modules={modules} className={'max-w-[90%]  bg-blue-500'} />}
+			{filtersActive.Fecha && <FilterBetweenDates />}
 		</div>
 	);
 };

@@ -15,7 +15,7 @@ const FilterByModule = ({ className, modules }) => {
 		return <>Aun no hay modulos</>;
 	}
 	return (
-		<div className={`flex flex-wrap items-center p-3 gap-4 justify-center ${className}`}>
+		<div className={`flex flex-wrap items-center p-3 gap-4 justify-around w-full mt-5 ${className}`}>
 			{modules?.map(({ _id, name, startingDate }) => {
 				return (
 					<Checkbox
