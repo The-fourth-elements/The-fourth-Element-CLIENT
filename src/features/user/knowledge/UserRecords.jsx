@@ -9,16 +9,6 @@ const UserRecords = ({ user, session, className }) => {
 		}
 	}, []);
 
-	//valores de prueba, esto se calculara cuando obtenda los datos del usuario en el autoregistro,
-
-    //obtener los valores por fetch a la api, que nos lo calcule aaron, traer un objeto o un array que tenga los resultados calculados y que no tarde en el front, yo le envio mi id de usuario y el busca si este usuario tiene progreso, si no tiene no renderizo esto, si lo tiene hacer mapeo de los resultados que obtuvo en el objeto progreso: 
-    //seran en un total de 7 resultados, estos seran calculados a partir de los pdf que mandaron, realizar un formulario con valores dinamicos.
-    // este formulario hara una peticion al back para traer al usuario y este creara en el progreso del usuario un objeto llamado autoregistro, 
-    // los datos que te entregare del front seran los datos ya calculados, solo los guardaras.
-    // esperare la respuesta para actulizar el usuario y obtener el nuevo progreso;
-
-
-    // los datos que reciba los pusheare en el siguiente objeto data.datasets[i].data = [datos del back almacenados];
 
 
 	const data = {

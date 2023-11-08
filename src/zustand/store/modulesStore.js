@@ -8,7 +8,6 @@ export const useModulesStore = create((set, get) => ({
 	getModules: async () => {
 		try {
 			const data = await getModules(); // Espera a que se complete la función getModules
-			console.log(data)
 			set(state => ({
 				...state,
 				modules: data,
@@ -19,23 +18,23 @@ export const useModulesStore = create((set, get) => ({
 	},
 	getQuizes: () => {
 		getQuizes()
-		.then((data) => {
-			set((state) => ({
-			  ...state,
-			  allQuizes: data
-			}));
-		  });
+			.then((data) => {
+				set((state) => ({
+					...state,
+					allQuizes: data
+				}));
+			});
 	},
 	getQuiz: (id) => {
 		getQuiz(id)
-		.then((data) => {
-			set((state) => ({
-			  ...state,
-			  quiz: data
-			}));
-		  });
+			.then((data) => {
+				set((state) => ({
+					...state,
+					quiz: data
+				}));
+			});
 	},
 	addQuizToClass: (body) => {
-        addQuizToClass (body)
-    }
+		addQuizToClass(body)
+	}
 }));
