@@ -44,7 +44,7 @@ function ModulesNavigation() {
 								router
 							)
 						}
-						className='mx-auto max-w-[15rem] min-w-[15rem] px-8 py-2 h-fit bg-secondary-800 text-white text-2xl rounded-2xl'>
+						className='hover:bg-primary transition-background mx-auto max-w-[15rem] min-w-[15rem] px-8 py-2 h-fit bg-secondary-800 text-white text-2xl rounded-2xl'>
 						<h3>{item.label}</h3>
 					</Button>
 				))}
