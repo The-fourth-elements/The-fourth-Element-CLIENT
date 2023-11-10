@@ -4,15 +4,10 @@ import { Formik, Form } from 'formik';
 import {
 	Card,
 	Accordion,
-	AccordionItem,
-	accordion,
-	useDisclosure,
-	Textarea,
-	Button,
+
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { setCookie } from 'cookies-next';
-import { useModulesStore } from '@/zustand/store/modulesStore';
 import {
 	containerVideos,
 	div1,
@@ -21,16 +16,11 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
-import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
-import { useUserProfile } from '@/zustand/store/userProfile';
+
 
 import { renderMeditations, renderTrack } from './renderMeditations';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
-import { useExercisesStore } from '@/zustand/store/exercisesStore';
-import { meditations } from './mockMeditations';
-import BackToCourseBtn from '@/helpers/BackToCourseBtn';
-import useMeditationsStore from '@/zustand/store/meditationsStore';
+
 
 
 

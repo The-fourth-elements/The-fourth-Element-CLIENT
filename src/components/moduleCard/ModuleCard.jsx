@@ -40,9 +40,7 @@ function ModuleCard({ moduleName, moduleIndex, moduleId, className }) {
 					Módulo
 				</h5>
 				<Dropdown 
-					classNames={{
-						base: '',
-					}}>
+					>
 					<DropdownTrigger>
 						<Button
 						

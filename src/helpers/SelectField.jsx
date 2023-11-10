@@ -5,7 +5,7 @@ const FieldSelect = ({ name, label, options, ...props }) => {
 	const [field, meta] = useField(name);
 
 	return (
-		<div className='input-container'>
+		<div className='w-full text-area-container'>
 			<Select
 				label={label}
 				name={name}
