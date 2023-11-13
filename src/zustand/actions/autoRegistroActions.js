@@ -18,3 +18,16 @@ export const createAutoRegistro = async (body, moduleId) => {
         toastError(error);
     }
 }
+
+export const getAutoRegistro = async (id) => {
+    try {
+        const response = await fetch(`${process.env.API_BACKEND}selfR/${id}`);
+        const data = await response.json();
+        if (data.error) {
+            throw data.error;
+        }
+        return data
+    } catch (error) {
+        toastError(error);
+    }
+}
