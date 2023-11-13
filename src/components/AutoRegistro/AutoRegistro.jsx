@@ -24,7 +24,7 @@ const AutoRegistro = () => {
         ),
     })
     const [errors, setErrors] = useState({})
-    const width = window.innerWidth
+    // const width = window.innerWidth
     const {modules, getModules} = useModulesStore()
     const {createAutoRegistro} = useAutoRegistro()
     const [moduleId, setModuleId] = useState('')

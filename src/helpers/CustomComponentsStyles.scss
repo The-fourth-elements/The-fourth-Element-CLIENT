@@ -12,6 +12,17 @@
 	}
 }
 
+.text-area-container{
+	font-family: 'Input Mono';
+	text-align: center;
+	font-size: .75rem;
+	div {
+		div {
+			border-radius: .668rem;
+		}
+	}
+}
+
 @include sm {
 	.error-message {
 		position: static;

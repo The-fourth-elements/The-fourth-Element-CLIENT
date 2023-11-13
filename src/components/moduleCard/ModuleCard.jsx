@@ -39,23 +39,21 @@ function ModuleCard({ moduleName, moduleIndex, moduleId, className }) {
 					className='text-xl '>
 					Módulo
 				</h5>
-				<Dropdown isDisabled={`true`}
-					classNames={{
-						base: 'p-0 bg-background border-divider',
-					}}>
-					<DropdownTrigger className='w-full'>
+				<Dropdown 
+					>
+					<DropdownTrigger>
 						<Button
 						
 							className={`${
 								moduleNameWords >= 2 ? 'text-base' : 'text-xl w-full '
-							} ${button} w-full p-0 rounded-lg border-none  text-white`}
+							} ${button}  w-full p-0 rounded-lg border-none  text-white`}
 							variant='bordered'>
 							{moduleName}
 						</Button>
 					</DropdownTrigger>
 					<DropdownMenu
 						aria-label='Dynamic Actions'
-						className='gap-0 p-0 left-16'
+						className='gap-0 p-0'
 						itemClasses={{
 							base: [
 								'data-[hover=true]:text-foreground',
