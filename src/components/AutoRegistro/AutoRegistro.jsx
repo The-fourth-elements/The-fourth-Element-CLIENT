@@ -3,9 +3,28 @@ import './AutoRegistro.scss'
 import { useState, useEffect } from "react";
 import { useAutoRegistro } from "@/zustand/store/autoRegistroStore";
 import { useModulesStore } from "@/zustand/store/modulesStore";
-import { Button, useDisclosure, Select, SelectItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { Select, SelectItem, Slider } from "@nextui-org/react";
+import * as Yup from "yup";
+
 
 const AutoRegistro = () => {
+    const autoSchema = Yup.object().shape({
+        selfRegister: Yup.array().of(
+            Yup.object().shape({
+                name: Yup.string().required('El nombre de la sección es obligatorio'),
+                type: Yup.string().required('El tipo de la sección es obligatorio'),
+                questions: Yup.array().of(
+                    Yup.object().shape({
+                        selfQuestion: Yup.string().required('La pregunta es obligatoria'),
+                        agree: Yup.string().required('La respuesta "agree" es obligatoria'),
+                        disagree: Yup.string().required('La respuesta "disagree" es obligatoria'),
+                    })
+                ),
+            })
+        ),
+    })
+    const [errors, setErrors] = useState({})
+    // const width = window.innerWidth
     const {modules, getModules} = useModulesStore()
     const {createAutoRegistro} = useAutoRegistro()
     const [moduleId, setModuleId] = useState('')
@@ -96,19 +115,36 @@ const AutoRegistro = () => {
         setSelfRegister(newRegister)
     }
     
-    const saveAutoRegistro = () => {
-        const newSelfRegister = {
-            selfRegister
+    const saveAutoRegistro = async () => {
+        try {
+            await autoSchema.validate({ selfRegister }, { abortEarly: false });
+            // Los datos son válidos, puedes enviarlos al servidor
+            const newSelfRegister = { selfRegister };
+            createAutoRegistro(newSelfRegister, moduleId);
+        } catch (error) {
+            // La validación falló, manejar los errores aquí
+            const validationErrors = {};
+            error.inner.forEach((err) => {
+                const path = err.path;
+                const message = err.message;
+                validationErrors[path] = message;
+            });
+    
+            setErrors(validationErrors);
         }
-        createAutoRegistro(newSelfRegister, moduleId)
-    }
+    };
+
+    // const handleChangeSlider =(e) => {
+    //     console.log(e)
+    // }
 
  
     return (
-        <main>
-            
-            <h1>Crear Autorregistro</h1>
-            <article>
+        <main className='mainAuto'>
+            <header>
+                <h1 className='titleAuto'>Crear Autorregistro</h1>
+            </header>
+            <article className='articleAuto'>
                 {selfRegister.map((section, index) => (
                     <section className='sectionContainer' key={index}>
                         <h3>Seccion {index + 1}</h3>
@@ -116,55 +152,94 @@ const AutoRegistro = () => {
                         placeholder="Nombre de la seccion"
                         value={section.name}
                         onChange={e => handleWriteName(e?.target?.value, index)}
-                        className='nameInput'
+                        className='sectionContainerInput nameInput'
                         />
+                        {errors?.selfRegister &&
+    errors?.selfRegister[index]?.name && console.log('hola')}
                         <input type="text"
+                        className='sectionContainerInput sectionInput'
                         placeholder="Tipo de la seccion"
                         value={section.type}
                         onChange={e => handleWriteType(e?.target?.value, index)}
                         />
                         { section.questions.map((questions, indexQuestion) => (
                             <section className='sectionQuestions' key={indexQuestion}>
-                                 <input type="text" 
+                                <input type="text" 
+                                className='inputQuestion'
                                 placeholder="Question"
                                 value={questions.selfQuestion}
                                 onChange={e => handleWriteQuestion(e?.target?.value, index, indexQuestion)}/>
                                 <input type="text" 
-                                placeholder="Agree"
-                                value={questions.agree}
-                                onChange={e => handleWriteAgree(e?.target?.value, index, indexQuestion)}/>
-                                <input type="text" 
+                                className='inputDisagree'
                                 placeholder="Disagree"
                                 value={questions.disagree}
                                 onChange={e => handleWriteDisgree(e?.target?.value, index, indexQuestion)}/>
+                                <Slider
+                                    // onChange={handleChangeSlider}
+                                    color="success"
+                                    size="md"
+                                    step={1}
+                                    defaultValue={3}
+                                    showSteps={true} 
+                                    maxValue={5} 
+                                    minValue={1}
+                                    marks={[
+                                        {value : 1,
+                                        label : 1},
+                                        {value : 2,
+                                        label : 2},
+                                        {value : 3,
+                                        label : 3},
+                                        {value : 4,
+                                        label : 4},
+                                        {value : 5,
+                                        label : 5}
+                                    ]}
+                                    className='sliderAuto'
+                                />
+                                <input type="text" 
+                                className='inputAgree'
+                                placeholder="Agree"
+                                value={questions.agree}
+                                onChange={e => handleWriteAgree(e?.target?.value, index, indexQuestion)}/>
                                 
-                                <button onClick={() => handleDeleteQuestion(index, indexQuestion)}>
+                                <button onClick={() => handleDeleteQuestion(index, indexQuestion)} className='deleteQuestion'>
                                     Eliminar Pregunta
                                 </button>
                             </section>
                         ))
                         
                         }
-                        <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
-                        <button onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
+                            <div className='sectionQuestionsDiv'>
+                                <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>
+                                <button className='deleteSect' onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>
+                            </div>
+                        
+                        {/* {width >= 766 && <button className='deleteSect' onClick={() => handleDeleteSection(index)}>Eliminar Seccion</button>}
+                        {width >= 766 && <button className='addQuest' onClick={() => handleAddQuestion(index)}>Agregar Pregunta</button>} */}
+                        
+                        
+                        
                     </section>
                 ))}
-                <button onClick={handleAddSection}>Agregar Seccion</button>
+                <footer className='footerAuto'>
+                    <button className='agregarSection' onClick={handleAddSection}>Agregar Seccion</button>
 
-                <button onClick={() => saveAutoRegistro()}>Crear Auto-Registro</button>
+                    <button className='createAuto' onClick={() => saveAutoRegistro()}>Crear Auto-Registro</button>
 
-                <Select
-					label='Modulos'
-					placeholder='Seleccione un modulo'
-					className='md:max-w-[12rem] max-w-xs '
-					onChange={handleSelect}>
-					{modules.length > 0 &&
-						modules.map(modulo => (
-							<SelectItem key={modulo._id} value={modulo._id}>
-								{modulo.name}
-							</SelectItem>
-									))}
-				</Select>
+                    <Select
+                        label='Modulos'
+                        placeholder='Seleccione un modulo'
+                        className='md:max-w-[12rem] max-w-xs '
+                        onChange={handleSelect}>
+                        {modules.length > 0 &&
+                            modules.map(modulo => (
+                                <SelectItem key={modulo._id} value={modulo._id}>
+                                    {modulo.name}
+                                </SelectItem>
+                                        ))}
+                    </Select>
+                </footer>
             </article>
 
         </main>

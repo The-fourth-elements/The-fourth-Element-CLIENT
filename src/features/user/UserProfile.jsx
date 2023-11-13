@@ -10,7 +10,7 @@ import { useUserProfile } from '@/zustand/store/userProfile';
 import { getCookie } from 'cookies-next';
 import { deportes } from '@/utils/dataRegister';
 import { toastError, toastInfo } from '@/helpers/toast';
-import UserRecords from '../../components/user-records/UserRecords';
+import UserRecords from './knowledge/UserRecords';
 
 const UserProfile = () => {
 	const { data: session } = useSession();

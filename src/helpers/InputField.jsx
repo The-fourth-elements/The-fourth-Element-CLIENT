@@ -7,7 +7,7 @@ const InputFiled = ({ ...props }) => {
 	const { viewPassword } = props;
 
 	return (
-		<div className='input-container'>
+		<div className='w-full text-area-container'>
 			<Input
 				isRequired
 				label={words}

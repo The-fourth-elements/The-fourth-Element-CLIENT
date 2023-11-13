@@ -3,11 +3,6 @@ import { useState, useEffect } from 'react';
 import {
 	Card,
 	Accordion,
-	AccordionItem,
-	accordion,
-	useDisclosure,
-	Textarea,
-	Button,
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { setCookie } from 'cookies-next';
@@ -20,87 +15,42 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
-import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
-import { useUserProfile } from '@/zustand/store/userProfile';
+
 
 import { renderExercises, renderTextSection } from './renderExercises';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
-import { useExercisesStore } from '@/zustand/store/exercisesStore';
-import BackToCourseBtn from '@/helpers/BackToCourseBtn';
+
 
 export default function Exercises({ idModule }) {
 	const { data: session } = useSession();
 
 	const id = session?.token?.user?.id;
-	const role = session?.token?.user?.role;
+	
 	if (id) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { module, getModule } = useSelectedModule();
-	const { exercises, getExercises } = useExercisesStore();
-
-	const { user, getProfile } = useUserProfile();
-	const { modules, getModules, getQuiz } = useModulesStore();
-	const [moduleData, setModuleData] = useState([]);
 	const [exercisesDataLoaded, setExercisesDataLoaded] = useState(false);
 	const [currentQuestion, setCurrentQuestion] = useState(null);
-	const [access, setAccess] = useState(false);
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const [dataUpdated, setDataUpdated] = useState(false);
-	const [currentModule, setCurrentModule] = useState('');
-	const [firstEffectExecuted, setFirstEffectExecuted] = useState(false);
+
+
 
 	useEffect(() => {
 		getModule(idModule)
 		setExercisesDataLoaded(true)
 	}, []);
 
-	/*useEffect(() => {
-		getModule(idModule).then(() => {
-			setFirstEffectExecuted(true);
-		});
-	}, []);
+	
+	
 
-	useEffect(() => {
-		if (firstEffectExecuted) {
-			if (session) {
-				if (session?.token?.user) {
-					const { role } = session.token.user;
-					role > 2 && setAccess(true);
-					const id = session?.token?.user?.id;
-					getProfile(id);
-				}
-				console.log('condicion useEffect ', moduleData?.length);
-
-				if (moduleData?.length === 0) {
-					console.log('condicion useEffect ', moduleData?.length);
-
-					// fetchDataSingleModule(module).then(data => {
-					// 	setModuleData(data);
-					// 	setModulesDataLoaded(true);
-					// });
-				}
-
-				verifyProgressUser();
-			}
-		}
-	}, [firstEffectExecuted, module, session, dataUpdated]);
-
-	useEffect(() => {
-		if (dataUpdated) {
-			setDataUpdated(false);
-		}
-	}, [dataUpdated]);
-*/
 	const handleDataUpdate = () => {
 		setDataUpdated(true);
 	};
 
 	const renderModuleExercises = () => {
+		console.log("module ", module );
 		if (module.exercises) {
 			return module.exercises.map((elem, exerciseIndex) => {
-				console.log('elem en map', elem);
 				return renderExercises(exerciseIndex, elem, handleExerciseClick);
 			});
 		}
@@ -111,7 +61,6 @@ export default function Exercises({ idModule }) {
 	};
 
 	useEffect(() => {
-		console.log('currentQuestion ', currentQuestion);
 	}, [currentQuestion]);
 
 	return (

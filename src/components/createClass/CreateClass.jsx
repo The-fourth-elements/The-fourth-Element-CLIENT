@@ -215,7 +215,7 @@ function CreateClass() {
 
 							<Button
 								onPress={onOpen}
-								class='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3'>
+								className='transition-all bg-background text-lg rounded-lg max-w-xs hover:bg-primary p-5 py-3'>
 								Crear Quiz
 							</Button>
 
@@ -242,7 +242,7 @@ function CreateClass() {
 						<Button
 							size='md'
 							type='submit'
-							class='transition-all bg-background text-lg rounded-lg max-w-xs  mx-auto hover:bg-primary p-5 py-3'>
+							className='transition-all bg-background text-lg rounded-lg max-w-xs  mx-auto hover:bg-primary p-5 py-3'>
 							Enviar
 						</Button>
 					</Form>

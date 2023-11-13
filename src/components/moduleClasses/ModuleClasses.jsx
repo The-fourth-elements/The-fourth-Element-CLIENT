@@ -202,13 +202,7 @@ export default function ModuleClasses({ idModule }) {
 						{renderVideo(currentClass, moduleData)}
 					</div>
 					<Card className='flex p-3 bg-transparent shadow-none border-secondary-800 sm:border-r-[0.75rem]'>
-						<h3
-							className={
-								h2Title +
-								' flex p-2 text-white justify-center md:justify-start text-2xl bg-secondary-800 rounded'
-							}>
-							{currentModule?.name ? `Módulo: ${currentModule?.name}` : ''}
-						</h3>
+						
 						<Accordion>
 							<AccordionItem
 								className={
@@ -222,9 +216,9 @@ export default function ModuleClasses({ idModule }) {
 						</Accordion>
 					</Card>
 				</section>
-				<aside className={`${div2} bg-secondary-800 p-3 md:w-96 `}>
+				<aside className={`${div2} bg-secondary-800 p-[0.8rem] md:w-96 `}>
 					<nav
-						className={`${navtContainer} flex flex-col bg-secondary  rounded-lg`}>
+						className={`${navtContainer} flex flex-col bg-secondary  rounded-xl`}>
 						<ul className='m-2'>
 							{modulesDataLoaded ? (
 								<Accordion

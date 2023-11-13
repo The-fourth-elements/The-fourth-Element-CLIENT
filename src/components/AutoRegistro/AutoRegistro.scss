@@ -1,9 +1,30 @@
 @import "../../styles/base";
 
+@include md {
+.mainAuto {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  background-color: $orange-1;
+  border-radius: 20px;
+}
+
+.articleAuto {
+  display: grid;  
+  gap: 50px;
+}
 .sectionContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+
+.titleAuto {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 40px;
+  line-break: auto;
 }
 
 .sectionContainer h3 {
@@ -14,18 +35,319 @@
 .nameInput {
   grid-column-start: 1;
   grid-column-end: 4;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sectionInput {
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .sectionQuestions { 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   grid-column-start: 1;
   grid-column-end: 5;
 }
 
 .addQuest {
-  grid-column-start: 2;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: rgb(41, 62, 179);
+  // opacity: 0.75;
 }
+
+.inputQuestion{
+  grid-column-start: 1;
+  grid-column-end: -1;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.inputAgree {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.inputDisagree{
+  grid-column-start: 1;
+  grid-column-end: 2;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.deleteQuestion {
+  grid-column-start: -2;
+  background-color: $red-2;
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.deleteSect {
+  background-color: $red-2;
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.footerAuto {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.agregarSection {
+  grid-column-start: 2;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: rgb(41, 62, 179);
+  // opacity: 0.75;
+}
+
+.createAuto{
+  padding: 8px;
+  border-radius: 5px;
+  background-color: rgb(0, 171, 77);
+}
+
+.sliderAuto {
+  grid-column-start: 2;
+  grid-column-end: 3;
+
+}
+.sectionQuestionsDiv {
+  grid-column-start: 2;
+  grid-column-end: 4;
+
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+}
+
+@include lg {
+  .mainAuto {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    background-color: $orange-1;
+    border-radius: 20px;
+  }
+  
+  .articleAuto {
+    display: grid;  
+    gap: 50px;
+  }
+  .sectionContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .titleAuto {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 40px;
+    line-break: auto;
+  }
+  
+  .sectionContainer h3 {
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
+  
+  .nameInput {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .sectionInput {
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .sectionQuestions { 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+  
+  .addQuest {
+    padding: 8px;
+    border-radius: 5px;
+    background-color: rgb(41, 62, 179);
+    // opacity: 0.75;
+  }
+  
+  .inputQuestion{
+    grid-column-start: 1;
+    grid-column-end: -1;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .inputAgree {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .inputDisagree{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .deleteQuestion {
+    grid-column-start: -2;
+    background-color: $red-2;
+    border-radius: 5px;
+    padding: 6px;
+  }
+  
+  .deleteSect {
+    background-color: $red-2;
+    border-radius: 5px;
+    padding: 6px;
+  }
+  
+  .footerAuto {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  
+  .agregarSection {
+    grid-column-start: 2;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: rgb(41, 62, 179);
+    // opacity: 0.75;
+  }
+  
+  .createAuto{
+    padding: 8px;
+    border-radius: 5px;
+    background-color: rgb(0, 171, 77);
+  }
+  
+  .sliderAuto {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  
+  }
+  .sectionQuestionsDiv {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  }
+
+  @include sm {
+    .mainAuto {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      background-color: $orange-1;
+      border-radius: 20px;
+      margin: 10px;
+    }
+
+    .sectionContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+    }
+
+    .articleAuto {
+      display: flex;
+      flex-direction: column;  
+      gap: 30px;
+    }
+
+    .titleAuto {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      font-size: 30px;
+      line-break: auto;
+    }
+
+    .sectionContainerInput {
+      border-radius: 5px;
+      padding: 5px;
+      margin-bottom: 5px;
+    }
+
+    .sectionQuestions {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      // margin-bottom: 15px;
+    }
+
+    .sectionQuestionsDiv {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .sectionQuestions input {
+      border-radius: 5px;
+      padding: 5px;
+    }
+    
+    .sliderAuto {
+      display: none;
+    
+    }
+    .createAuto{
+      padding: 8px;
+      border-radius: 5px;
+      background-color: rgb(0, 171, 77);
+    }
+    .agregarSection {
+      padding: 8px;
+      border-radius: 5px;
+      background-color: rgb(41, 62, 179);
+      // opacity: 0.75;
+    }
+    .footerAuto {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .addQuest {
+      padding: 8px;
+      border-radius: 5px;
+      background-color: rgb(41, 62, 179);
+      // opacity: 0.75;
+    }
+    .deleteQuestion {
+      background-color: $red-2;
+      border-radius: 5px;
+      padding: 6px;
+    }
+    .deleteSect {
+      background-color: $red-2;
+      border-radius: 5px;
+      padding: 6px;
+      margin: 0;
+    }
+  }
 
 
