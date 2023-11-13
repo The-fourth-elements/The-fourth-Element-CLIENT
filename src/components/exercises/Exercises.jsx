@@ -17,7 +17,7 @@ import {
 } from './ModulesView.module.scss';
 
 
-import { renderExercises, renderTextSection } from './renderExercises';
+import { renderExercises, renderTextSection } from './exercisesHelpers';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
 
 
@@ -31,7 +31,7 @@ export default function Exercises({ idModule }) {
 	}
 	const { module, getModule } = useSelectedModule();
 	const [exercisesDataLoaded, setExercisesDataLoaded] = useState(false);
-	const [currentQuestion, setCurrentQuestion] = useState(null);
+	const [currentExercise, setCurrentExercise] = useState(null);
 
 
 
@@ -48,7 +48,6 @@ export default function Exercises({ idModule }) {
 	};
 
 	const renderModuleExercises = () => {
-		console.log("module ", module );
 		if (module.exercises) {
 			return module.exercises.map((elem, exerciseIndex) => {
 				return renderExercises(exerciseIndex, elem, handleExerciseClick);
@@ -56,12 +55,9 @@ export default function Exercises({ idModule }) {
 		}
 	};
 
-	const handleExerciseClick = questions => {
-		setCurrentQuestion(questions);
+	const handleExerciseClick = exercise => {
+		setCurrentExercise(exercise);
 	};
-
-	useEffect(() => {
-	}, [currentQuestion]);
 
 	return (
 		// h-[81vh]
@@ -69,7 +65,7 @@ export default function Exercises({ idModule }) {
 			<section className={div1 + ' parent  bg-foreground  mt-12'}>
 
 				<div className='  flex-col bg-primary m-3 flex' id='reproductor'>
-					{renderTextSection(currentQuestion)}
+					{renderTextSection(currentExercise)}
 				</div>
 
 				<Card className='flex p-3 bg-transparent shadow-none'>
