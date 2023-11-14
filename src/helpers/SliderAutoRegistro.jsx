@@ -5,14 +5,13 @@ const SliderAutoRegistro = ({index, responses, handleChangeResponse}) => {
     return (
         <Slider
         onChange={(event) => handleChangeResponse(event, index)}
-        color="success"
+        color={responses[index] === 3 ? "foreground" : responses[index] < 3 ? "danger" : "success"}
         size="md"
         step={1}
         defaultValue={3}
         showSteps={true} 
         maxValue={5} 
         minValue={1}
-        value={responses && responses[index]}
         marks={[
             {value : 1,
             label : 1},

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { createAutoRegistro, getAutoRegistro } from "../actions/autoRegistroActions";
+import { createAutoRegistro, getAutoRegistro, createResponseSR, addResponseSRToUser  } from "../actions/autoRegistroActions";
 
 export const useAutoRegistro = create ((set) => ({
     excersice: {},
@@ -14,5 +14,13 @@ export const useAutoRegistro = create ((set) => ({
                 excersice: data
             }))
         })
+        return true;
+    },
+    createResponseSR: (body) => {
+        createResponseSR(body)
+    },
+    addResponseSRToUser: (body) => {
+        addResponseSRToUser(body)
     }
+
 }))
