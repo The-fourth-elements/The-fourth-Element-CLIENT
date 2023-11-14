@@ -1,31 +1,92 @@
 @import "../../styles/base";
 
 .mainAutoRender{
-
+  background-color: $orange-1;
+  padding: 40px;
+  border-radius: 10px;
+  display: grid;
+  width: 90%;
+  margin: 20px;
+  grid-template-columns: repeat(4, minmax(45px, 1fr));
+  gap: 10px;
 }
 
 // ****************************HEADER*****************************************
 .mainAutoRender header {
-
+  grid-column-start: 1;
+  grid-column-end: -1;
+  // padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(45px, 1fr));
+  gap: 10px;
 }
 
 .mainAutoRender h1 {
+  background-color: blue;
+  border-radius: 6px;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  width: 100%;
+  padding: 10px;
+  text-align: start;
+}
 
+.mainAutoRender h2 {
+  background-color: blue;
+  border-radius: 6px;
+  text-align: center;
+  grid-column-start: 4;
+  grid-column-end: -1;
+  width: 100%;
+  padding: 10px;
 }
 
 // ****************************ARTICLE*****************************************
 
 .mainAutoRender article {
-
+  background-color: greenyellow;
+  border-radius: 8px;
+  grid-column-start: 1;
+  grid-column-end: -1;
+  padding: 20px;
+  display: grid;
+  gap: 20px;
 }
 
 .section1AutoRender {
-
+  background-color: rgb(190, 122, 39);
+  border-radius: 6px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(23px, 1fr));
+  gap: 10px;
 }
 
-.section2AutoRender {
-
+.autoRegistroQuestion {
+  justify-self: center;
+  grid-column-start: 2;
+  grid-column-end: 8;
 }
+
+.autoRegistroAgree {
+  justify-self: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.autoRegistroSlider {
+  justify-self: center;
+  grid-column-start: 2;
+  grid-column-end: 8;
+}
+
+.autoRegistroDisagree {
+  justify-self: center;
+  grid-column-start: 8;
+  grid-column-end: -1;
+}
+
+
 
 // ****************************FOOTER*****************************************
 
@@ -44,4 +105,95 @@
 .loading svg{
     width: 300px;
   height: 300px;
+}
+
+@include sm {
+  .mainAutoRender{
+    background-color: $orange-1;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 20px;
+    gap: 10px;
+  }
+  
+  // ****************************HEADER*****************************************
+  .mainAutoRender header {
+
+    // padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(25px, 1fr));
+    gap: 5px;
+  }
+  
+  .mainAutoRender h1 {
+    background-color: blue;
+    border-radius: 6px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    width: 100%;
+    padding: 8px;
+    text-align: start;
+    align-self: center;
+  }
+  
+  .mainAutoRender h2 {
+    background-color: blue;
+    border-radius: 6px;
+    text-align: center;
+    grid-column-start: 4;
+    grid-column-end: -1;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    align-self: center;
+  }
+  
+  // ****************************ARTICLE*****************************************
+  
+  .mainAutoRender article {
+    background-color: greenyellow;
+    border-radius: 8px;
+    padding: 10px;
+    display: grid;
+    gap: 20px;
+  }
+  
+  .section1AutoRender {
+    background-color: rgb(190, 122, 39);
+    border-radius: 6px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 20px repeat(6, 1fr) 20px;
+    gap: 10px;
+  }
+  
+  .autoRegistroQuestion {
+    justify-self: center;
+    grid-column-start: 1;
+    grid-column-end: 9;
+  }
+  
+  .autoRegistroAgree {
+    justify-self: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 13px;
+  }
+  
+  .autoRegistroSlider {
+    justify-self: center;
+    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 9;
+  }
+  
+  .autoRegistroDisagree {
+    justify-self: center;
+    grid-column-start: 6;
+    grid-column-end: 9;
+    font-size: 13px;
+  }
 }
