@@ -1,38 +1,13 @@
-'use client';
 import LandingDesktop from '../components/landing/LandingDesktop';
-import { useEffect, useState } from 'react';
-import LandingMobile from '../components/landing/LandingMobile';
 import Footer from '@/components/footer/Footer';
 
 const Landing = () => {
-	const [mobile, setMobile] = useState(undefined);
-
-	useEffect(() => {
-		const updateMobile = () => {
-			setMobile(window.innerWidth < 766 ? true : false);
-		};
-
-		window.addEventListener('resize', updateMobile);
-		updateMobile();
-
-		return () => {
-			window.removeEventListener('resize', updateMobile);
-		};
-	}, []);
-
-	return typeof mobile !== 'undefined' ? (
-		mobile ? (
-			<>
-				<LandingMobile />
-				<Footer></Footer>
-			</>
-		) : (
-			<>
-				<LandingDesktop />
-				<Footer></Footer>
-			</>
-		)
-	) : null;
+	return (
+		<>
+			<LandingDesktop />
+			<Footer></Footer>
+		</>
+	);
 };
 
 export default Landing;

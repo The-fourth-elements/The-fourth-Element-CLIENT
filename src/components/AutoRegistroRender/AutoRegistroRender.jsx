@@ -6,6 +6,7 @@ import { CircularProgress } from '@nextui-org/react'
 import { useState, useEffect } from 'react'
 import { Slider } from '@nextui-org/react'
 import { getCookie } from 'cookies-next'
+import { toastError, toastSuccess } from '@/helpers/toast'
 
 // const RenderAutoRegistro = ({id}) => {
 const RenderAutoRegistro = () => {
@@ -25,9 +26,13 @@ const RenderAutoRegistro = () => {
     }, [excersice]);
 
     const handleButton = () => {
-        console.log(excersice);
-        console.log(userResponses);
-        console.log(userId)
+        const bodyAuto ={
+            selfRegisterId: id,
+            userId,
+            response: userResponses,
+            comments: ["me senti del orto", "me senti joyita"]
+        }
+        createResponseSR(bodyAuto)
     }
 
     const handleChangeResponse = (event, index) => {
@@ -35,6 +40,28 @@ const RenderAutoRegistro = () => {
         newResponses[index] = event;
         setUserResponses(newResponses); // Actualiza el estado de las respuestas del usuario
         console.log(newResponses)
+    }
+
+    const handleSaveResponse = () => {
+        // const comments = ["Hola que tal", "Buenos dias"]
+        const comments = ["asdasdwasdwa", "Buenos dias"]
+
+        try {
+            const newComments = comments.some((coment) => coment === "" )
+            if(newComments){
+                throw new Error("Complete todos los campos");
+            }
+            const bodyAuto ={
+                selfRegisterId: id,
+                userId,
+                response: userResponses,
+                comments
+            }
+            createResponseSR(bodyAuto)
+            // console.log(newComments)
+        } catch (error) {
+            toastError(error.message)
+        }
     }
     return (
         Object.keys(excersice).length > 0 ? (
@@ -58,16 +85,11 @@ const RenderAutoRegistro = () => {
         maxValue={5} 
         minValue={1}
         marks={[
-            {value : 1,
-            label : 1},
-            {value : 2,
-            label : 2},
-            {value : 3,
-            label : 3},
-            {value : 4,
-            label : 4},
-            {value : 5,
-            label : 5}
+            {value : 1},
+            {value : 2},
+            {value : 3},
+            {value : 4},
+            {value : 5}
         ]}
         />
                             <h3 className='autoRegistroDisagree'>{question?.disagree}</h3>
@@ -75,9 +97,8 @@ const RenderAutoRegistro = () => {
                     ))}
                 </article>
                 <footer>
-                    <button className="button1FooterAutoRender"></button>
-                    <button onClick={handleButton} className="button2FooterAutoRender">
-                        clickeame
+                    <button onClick={handleSaveResponse} className="buttonFooterAutoRender">
+                        Guardar Respuestas
                     </button>
                 </footer>
             </main>
