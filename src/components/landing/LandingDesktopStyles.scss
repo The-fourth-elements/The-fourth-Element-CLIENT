@@ -265,5 +265,148 @@
 	align-items: center;
 	flex-direction: column;
 	gap: 5rem;
+}
 
+@include sm {
+	@include sharedStyles();
+	.Container{
+		&-banner {
+			display: block;
+			width: 100vw;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			> img {
+				filter: brightness(0.85);
+				width: 100%;
+				height: auto;
+				transform: scaleX(-1);
+			}
+
+			&-text {
+				width: 49vw;
+				font-weight: 500;
+				color: #ffffff;
+				text-align: right;
+				position: absolute;
+				font-size: 5vw;
+				left: 10%;
+				margin-top: 1.3em;
+			}
+		}
+
+		&-welcome-text {
+			width: 80%;
+			margin: 6vh;
+			font-size: 2vw;
+			color: $orange-1;
+
+			> p {
+				> b {
+					color: white;
+				}
+			}
+		}
+
+		&-take-a-tour-container {
+			width: 80%;
+			gap: 200px;
+
+			&-text {
+				font-size: 2vw;
+				position: relative;
+				display: inline-block;
+				padding-right: 70%;
+				color: $grey-2;
+			}
+
+			&-text::after {
+				content: '';
+				margin-left: 1%;
+				position: absolute;
+				top: 50%;
+				width: 103%;
+				height: 1px;
+				background-color: #ccc;
+			}
+
+			&-images {
+				display: flex;
+				justify-content: space-between;
+				margin: 2vw 0 4vw 0;
+				> img {
+					height: auto;
+					width: 30%;
+				}
+			}
+			&-take-a-tour-container {
+				width: 80%;
+				gap: 200px;
+	
+				&-text {
+					font-size: 2vw;
+					position: relative;
+					display: inline-block;
+					padding-right: 70%;
+					color: $grey-2;
+				}
+	
+				&-text::after {
+					content: '';
+					margin-left: 1%;
+					position: absolute;
+					top: 50%;
+					width: 103%;
+					height: 1px;
+					background-color: #ccc;
+				}
+	
+				&-images {
+					display: flex;
+					justify-content: space-between;
+					margin: 2vw 0 4vw 0;
+					> img {
+						height: auto;
+						width: 30%;
+					}
+				}
+			}
+	
+			&-buttons {
+				display: flex;
+				width: 80%;
+				justify-content: center;
+				gap: 50px;
+				> button {
+					font-family: "Input Serif";
+					font-size: 21px;
+					border-radius: 40px;
+					background-color: $orange-1;
+					color: white;
+					padding: 10px 50px;
+					border: none;
+					cursor: pointer;
+					transition: color 0.2s ease;
+					&:hover {
+						color: black;
+					}
+				}
+			}
+	
+			&-description {
+				margin: 5vw 5vw 0 5vw;
+				width: 100%;
+				padding: 5% 10% 5% 10%;
+				color: #ffffff;
+				font-size: 2.25rem;
+				background-color: $orange-landing;
+	
+				> h3 {
+					margin-bottom: 6vh;
+					font-family: "Input Serif"
+				}
+			}
+		}
+	}
 }

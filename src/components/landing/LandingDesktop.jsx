@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import landingImg from '../../assets/img/landingImg.jpg';
-import videoPlaceholder from '../../assets/img/videoPlaceholder.png';
-
 import './LandingDesktopStyles.scss';
 import Link from 'next/link';
 import ModulesCardsLanding from '../modules-card-landing/ModulesCardsLanding';
