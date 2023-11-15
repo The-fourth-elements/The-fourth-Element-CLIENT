@@ -31,9 +31,6 @@ const LandingDesktop = () => {
 
 				<div className='Container-take-a-tour-container'>
 					<div className='Container-take-a-tour-container-images'>
-						{/* <Image alt='placeholder image' src={videoPlaceholder} /> */}
-						{/* video estatico de youtube */}
-						{/* <video src={} /> */}
 						<iframe id='Staticvideo' width="" height="" src="https://www.youtube.com/embed/CQu6vs58tOg?si=uyurBDNXDWgaTdyD" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
 
 					</div>
@@ -43,7 +40,7 @@ const LandingDesktop = () => {
 						<Link href='/course'>Acceder ahora</Link>
 					</button>
 					<button>
-						<Link href='/groups'>Módulo 1 gratis</Link>
+						<Link href='/auth'>Módulo 1 gratis</Link>
 					</button>
 				</div>
 				<div className='Container-description'>
