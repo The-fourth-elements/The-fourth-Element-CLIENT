@@ -1,35 +1,28 @@
 @import '../../styles/_base';
 
 @include lg {
-	#Staticvideo{
+	#Staticvideo {
 		width: 100%;
 		height: 700px;
 	}
 }
 @include md {
-	#Staticvideo{
+	#Staticvideo {
 		width: 100%;
 		height: 350px;
 	}
 }
 
-// Mixin para estilos compartidos en todos los tamaños de pantalla
 @mixin sharedStyles {
 	.Container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		background-color: $black-1;
-	}
-}
-
-@include lg {
-	@include sharedStyles;
-	.Container {
 		&-banner {
 			width: 100%;
 			display: flex;
-			flex-direction: column;
+			flex-direction: column;	
 			align-items: center;
 
 			> img {
@@ -57,8 +50,8 @@
 			font-size: 2vw;
 			color: $orange-1;
 
-			> p {
-				> b {
+			p {
+				b {
 					color: white;
 				}
 			}
@@ -67,34 +60,6 @@
 		&-take-a-tour-container {
 			width: 80%;
 			gap: 200px;
-
-			&-text {
-				font-size: 2vw;
-				position: relative;
-				display: inline-block;
-				padding-right: 70%;
-				color: $grey-2;
-			}
-
-			&-text::after {
-				content: '';
-				margin-left: 1%;
-				position: absolute;
-				top: 50%;
-				width: 103%;
-				height: 1px;
-				background-color: #ccc;
-			}
-
-			&-images {
-				display: flex;
-				justify-content: space-between;
-				margin: 2vw 0 4vw 0;
-				> img {
-					height: auto;
-					width: 30%;
-				}
-			}
 		}
 
 		&-buttons {
@@ -102,8 +67,9 @@
 			width: 80%;
 			justify-content: center;
 			gap: 50px;
-			> button {
-				font-family: "Input Serif";
+			margin-top: 2rem;
+			button {
+				font-family: 'Input Serif';
 				font-size: 21px;
 				border-radius: 40px;
 				background-color: $orange-1;
@@ -128,10 +94,14 @@
 
 			> h3 {
 				margin-bottom: 6vh;
-				font-family: "Input Serif"
+				font-family: 'Input Serif';
 			}
 		}
 	}
+}
+
+@include lg {
+	@include sharedStyles;
 }
 
 @include md {
@@ -199,39 +169,23 @@
 				height: 1px;
 				background-color: #ccc;
 			}
-
-			// &-images {
-			// 	// display: flex;
-			// 	// flex-wrap: wrap;
-			// 	// justify-content: center;
-			// 	// gap: 3%;
-			// 	// row-gap: 3%;
-			// 	// margin: 2vw 0 4vw 0;
-
-			// 	// > img {
-			// 	// 	margin-top: 2vw;
-			// 	// 	height: auto;
-			// 	// 	width: 40%;
-			// 	// }
-			// }
-			// width: 100%;
-			// height: 100%;
-			// iframe{
-			// }
 		}
-
 		&-buttons {
 			display: flex;
+			margin-top: 1rem;
+			background: blue;
 			justify-content: center;
 			gap: 70px;
-			> button {
-				font-family: "Input Serif";
-				font-size: 18px;
-				border-radius: 40px;
-				background-color: $orange-1;
-				color: white;
-				padding: 5px 25px;
-				border: none;
+			margin: 10rem;
+			 button {
+				 font-family: 'Input Serif';
+				 font-size: 18px;
+				 border-radius: 40px;
+				 background-color: $orange-1;
+				 color: white;
+				 padding: 5px 25px;
+				 border: none;
+				 margin-top: 1rem;
 				cursor: pointer;
 				transition: color 0.2s ease;
 				&:hover {
@@ -250,12 +204,10 @@
 
 			> h3 {
 				margin-bottom: 6vh;
-				
 			}
 		}
 	}
 }
-
 
 .container-modules {
 	width: 80%;
@@ -270,143 +222,32 @@
 @include sm {
 	@include sharedStyles();
 	.Container{
-		&-banner {
-			display: block;
+		&-banner{
 			width: 100vw;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-
-			> img {
-				filter: brightness(0.85);
-				width: 100%;
-				height: auto;
-				transform: scaleX(-1);
-			}
-
-			&-text {
-				width: 49vw;
-				font-weight: 500;
-				color: #ffffff;
-				text-align: right;
-				position: absolute;
-				font-size: 5vw;
-				left: 10%;
-				margin-top: 1.3em;
-			}
+			min-width: 100vw;
 		}
-
 		&-welcome-text {
-			width: 80%;
-			margin: 6vh;
-			font-size: 2vw;
-			color: $orange-1;
-
-			> p {
-				> b {
-					color: white;
-				}
+			margin: 2rem 0;
+			width: 85%;
+		}
+		&-buttons {
+			margin: 1rem 0;
+			button{
+				font-size: .5rem;
+				padding: .3rem;
+				min-width: 40%;
 			}
 		}
-
-		&-take-a-tour-container {
-			width: 80%;
-			gap: 200px;
-
-			&-text {
-				font-size: 2vw;
-				position: relative;
-				display: inline-block;
-				padding-right: 70%;
-				color: $grey-2;
+		&-description {
+			width: 100%;
+			padding: 2.2rem 2.7rem;
+			margin: 0;
+			p {
+				font-size: 1rem;
 			}
-
-			&-text::after {
-				content: '';
-				margin-left: 1%;
-				position: absolute;
-				top: 50%;
-				width: 103%;
-				height: 1px;
-				background-color: #ccc;
-			}
-
-			&-images {
-				display: flex;
-				justify-content: space-between;
-				margin: 2vw 0 4vw 0;
-				> img {
-					height: auto;
-					width: 30%;
-				}
-			}
-			&-take-a-tour-container {
-				width: 80%;
-				gap: 200px;
-	
-				&-text {
-					font-size: 2vw;
-					position: relative;
-					display: inline-block;
-					padding-right: 70%;
-					color: $grey-2;
-				}
-	
-				&-text::after {
-					content: '';
-					margin-left: 1%;
-					position: absolute;
-					top: 50%;
-					width: 103%;
-					height: 1px;
-					background-color: #ccc;
-				}
-	
-				&-images {
-					display: flex;
-					justify-content: space-between;
-					margin: 2vw 0 4vw 0;
-					> img {
-						height: auto;
-						width: 30%;
-					}
-				}
-			}
-	
-			&-buttons {
-				display: flex;
-				width: 80%;
-				justify-content: center;
-				gap: 50px;
-				> button {
-					font-family: "Input Serif";
-					font-size: 21px;
-					border-radius: 40px;
-					background-color: $orange-1;
-					color: white;
-					padding: 10px 50px;
-					border: none;
-					cursor: pointer;
-					transition: color 0.2s ease;
-					&:hover {
-						color: black;
-					}
-				}
-			}
-	
-			&-description {
-				margin: 5vw 5vw 0 5vw;
-				width: 100%;
-				padding: 5% 10% 5% 10%;
-				color: #ffffff;
-				font-size: 2.25rem;
-				background-color: $orange-landing;
-	
-				> h3 {
-					margin-bottom: 6vh;
-					font-family: "Input Serif"
-				}
-			}
+		}
+		.container-modules {
+			width: 100%;
 		}
 	}
 }
