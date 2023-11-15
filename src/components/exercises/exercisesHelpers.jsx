@@ -29,7 +29,6 @@ const handleSubmit = async (values, exerciseId, questionsLength) => {
 
 		const answersArray = Object.values(values).filter(value => value.length > 0);
 
-		console.log("answersArray", answersArray , "questionsLength" ,questionsLength);
 
 		if (questionsLength > answersArray.length) {
 			throw new Error(`Debe responder todas las preguntas`);

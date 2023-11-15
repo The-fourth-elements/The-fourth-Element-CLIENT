@@ -34,7 +34,6 @@ export const useUsersStore = create((set, get) => ({
   },
 
   filterUsers: (nationality, plan, sport) => {
-    console.log(sport)
     const filteredUsers = get().usersFilter.filter((user) => {
         const nationalityFilter = nationality === "all" || user?.nation?._id === nationality;
         const planFilter =
