@@ -117,6 +117,17 @@ export const validationSchemaLanding = Yup.object({
 	Contenido: Yup.string().required('El contenido no puede estar vacío'),
 });
 
+export const validationSchemaAnswerExercise = (maxNumberOfQuestions) => {
+	const shape = {};
+	
+	for (let index = 0; index < maxNumberOfQuestions; index++) {
+	  shape[`answer_${index}`] = Yup.string().required('La respuesta no puede estar vacía');
+	}
+  
+	return Yup.object().shape(shape);
+  };
+
+
 export const initialValues = {
 	username: '',
 	email: '',
