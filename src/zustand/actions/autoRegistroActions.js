@@ -34,7 +34,7 @@ export const getAutoRegistro = async (id) => {
 
 export const createResponseSR = async (body) => {
     try {
-        const response = await fetch(`${process.env.API_BACKEND}responseSR/${body.selfRegisterId}/user/${body.userID}`, {
+        const response = await fetch(`${process.env.API_BACKEND}responseSR/${body.selfRegisterId}/user/${body.userId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const createResponseSR = async (body) => {
         if (data.error) {
             throw data.error;
         }
-        return data
+        toastSuccess("se ha guardado con exito tus respuestas")
     } catch (error) {
         toastError(error);
     }
@@ -64,7 +64,7 @@ export const addResponseSRToUser = async (body) => {
         if (data.error) {
             throw data.error;
         }
-        return data
+        toastSuccess("se ha guardado con exito tus respuestas")
     } catch (error) {
         toastError(error);
     }

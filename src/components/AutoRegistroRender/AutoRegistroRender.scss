@@ -22,29 +22,35 @@
 }
 
 .mainAutoRender h1 {
-  background-color: blue;
+  background-color: $black-1;
   border-radius: 6px;
   grid-column-start: 1;
   grid-column-end: 4;
   width: 100%;
   padding: 10px;
+  padding-left: 30px;
   text-align: start;
+  font-size: 35px;
+  align-self: center;
 }
 
 .mainAutoRender h2 {
-  background-color: blue;
+  background-color: $black-1;
   border-radius: 6px;
   text-align: center;
   grid-column-start: 4;
   grid-column-end: -1;
   width: 100%;
-  padding: 10px;
+  padding: 13px;
+  font-size: 30px;
+  align-self: center;
+
 }
 
 // ****************************ARTICLE*****************************************
 
 .mainAutoRender article {
-  background-color: greenyellow;
+  background-color: $black-1;
   border-radius: 8px;
   grid-column-start: 1;
   grid-column-end: -1;
@@ -54,7 +60,7 @@
 }
 
 .section1AutoRender {
-  background-color: rgb(190, 122, 39);
+  background-color: #f7a359;
   border-radius: 6px;
   padding: 10px;
   display: grid;
@@ -66,12 +72,18 @@
   justify-self: center;
   grid-column-start: 2;
   grid-column-end: 8;
+  color: black;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .autoRegistroAgree {
   justify-self: center;
   grid-column-start: 1;
   grid-column-end: 2;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .autoRegistroSlider {
@@ -84,6 +96,9 @@
   justify-self: center;
   grid-column-start: 8;
   grid-column-end: -1;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 
@@ -91,16 +106,22 @@
 // ****************************FOOTER*****************************************
 
 .mainAutoRender footer {
-    
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 25px;
 }
 
-.button1FooterAutoRender {
-
+.buttonFooterAutoRender {
+  background-color: rgb(0, 171, 77);
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: bolder;
+  border: solid 3px black;
 }
 
-.button2FooterAutoRender {
 
-}
 
 .loading svg{
     width: 300px;
