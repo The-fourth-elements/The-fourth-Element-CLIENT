@@ -76,17 +76,6 @@ export default function Meditations({ idModule }) {
 						{renderTrack(currentMeditation, currentTrackIndex, setCurrentTrackIndex)}
 						
 					</div>
-
-					<Card className='flex p-3 bg-transparent shadow-none'>
-
-						<h2
-							className={
-								h2Title +
-								' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
-							}>
-							{module?.name ? `Módulo: ${module?.name}` : ''}
-						</h2>
-					</Card>
 				</section>
 				<aside className={`${div2} bg-foreground md:w-96  mt-12`}>
 					<nav
