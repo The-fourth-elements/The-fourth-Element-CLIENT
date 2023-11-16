@@ -85,7 +85,6 @@ export default function UsersSection() {
 	
 
 	let items = React.useMemo(() => {
-		console.log("users en memo: ", users);
 		const start = (page - 1) * rowsPerPage;
 		const end = start + rowsPerPage;
 

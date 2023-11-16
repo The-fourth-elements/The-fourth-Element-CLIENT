@@ -60,9 +60,9 @@ const Filters = () => {
 		<div className='mainFilter'>
 			{Array.isArray(allCountrys) && (
 				<div className='diver'>
-					<label htmlFor=''>FILTER POR PAIS</label>
+					<label htmlFor=''>FILTRAR POR PAIS</label>
 					<select
-						className='select'
+						className='select max-w-[130px]'
 						label='Select a country'
 						onChange={handleFilterNationality}
 						value={filterNationality}>
@@ -91,7 +91,7 @@ const Filters = () => {
 				</select>
 			</div>
 			<div className='diver'>
-				<label htmlFor=''>ORDER BY NAME</label>
+				<label htmlFor=''>ORDENAR POR NOMBRE</label>
 				<select
 					className='select'
 					label='Select a name'
@@ -105,7 +105,7 @@ const Filters = () => {
 				<div className='diver'>
 					<label htmlFor=''>FILTRAR POR DEPORTE</label>
 					<select
-						className='select'
+						className='select max-w-[130px]'
 						label='Select a sport'
 						onChange={handleFilterSport}
 						value={filterSport}>
