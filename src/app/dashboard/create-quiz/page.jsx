@@ -4,8 +4,8 @@ import RenderAutoRegistro from "@/components/AutoRegistroRender/AutoRegistroRend
 const CreateQuiz = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {/* <QuizForm update={false}/> */}
-        <RenderAutoRegistro/>
+        <QuizForm update={false}/>
+        {/* <RenderAutoRegistro/> */}
         </div>
     )
 }
