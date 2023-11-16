@@ -37,11 +37,14 @@
   grid-column-end: 4;
   padding: 10px;
   border-radius: 5px;
+  align-self: center;
+    height: 70%;
 }
 
 .sectionInput {
   padding: 10px;
   border-radius: 5px;
+  width: 100%;
 }
 
 .sectionQuestions { 
@@ -165,11 +168,14 @@
     grid-column-end: 4;
     padding: 10px;
     border-radius: 5px;
+    align-self: center;
+    height: 70%;
   }
   
   .sectionInput {
     padding: 10px;
     border-radius: 5px;
+    width: 100%;
   }
   
   .sectionQuestions { 
@@ -291,6 +297,9 @@
       border-radius: 5px;
       padding: 5px;
       margin-bottom: 5px;
+      width: 100%;
+      align-self: center;
+      height: 70%;
     }
 
     .sectionQuestions {
