@@ -19,6 +19,7 @@ import {
 
 import { renderExercises, renderTextSection } from './exercisesHelpers';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
+import useExercisesResponsesStore from '@/zustand/store/ExercisesResponsesStore';
 
 
 export default function Exercises({ idModule }) {
@@ -30,7 +31,11 @@ export default function Exercises({ idModule }) {
 		setCookie('jsdklfsdjklfdsjfds', id);
 	}
 	const { module, getModule } = useSelectedModule();
+	const { userResponses, getResponses } = useExercisesResponsesStore();
+
 	const [exercisesDataLoaded, setExercisesDataLoaded] = useState(false);
+	const [responsesLoaded, setResponsesLoaded] = useState(false);
+
 	const [currentExercise, setCurrentExercise] = useState(null);
 
 
@@ -40,13 +45,21 @@ export default function Exercises({ idModule }) {
 		setExercisesDataLoaded(true)
 	}, []);
 
-	
-	
+	useEffect(() => {
+		setResponsesLoaded(false);
+		const fetchResponsesAsync = async () => {
+			  if (currentExercise) {
+				await getResponses(id, currentExercise._id);
+				setResponsesLoaded(true);
+			  }
+		
+		  };
+		
+		  fetchResponsesAsync(); // Llama a la función asincrónica inmediatamen
 
-	const handleDataUpdate = () => {
-		setDataUpdated(true);
-	};
-
+	  
+	}, [currentExercise])
+	
 	const renderModuleExercises = () => {
 		if (module.exercises) {
 			return module.exercises.map((elem, exerciseIndex) => {
@@ -61,27 +74,19 @@ export default function Exercises({ idModule }) {
 
 	return (
 		// h-[81vh]
-		<Card className={containerVideos + ' bg-white navcolor '}>
-			<section className={div1 + ' parent  bg-foreground  mt-12'}>
-
-				<div className='  flex-col bg-primary m-3 flex' id='reproductor'>
-					{renderTextSection(currentExercise)}
-				</div>
-
-				<Card className='flex p-3 bg-transparent shadow-none'>
-					<h2
-						className={
-							h2Title +
-							' flex p-2 justify-center md:justify-start text-2xl text-background bg-transparent rounded'
-						}>
-						{module?.name ? `Módulo: ${module?.name}` : ''}
-					</h2>
-					
-				</Card>
+		<Card className={containerVideos + ' bg-secondary-800  navcolor min-h-[81vh] pb-8 '}>
+			<section className={div1 + ' parent bg-secondary-800'}>
+				{ responsesLoaded ? 
+					(<div className=' flex-col m-3 flex' id='reproductor'>
+						{renderTextSection(currentExercise, userResponses)}
+					</div>) : <h1 className='p-5 text-xl'>
+								Seleccione un ejercicio
+							</h1>
+				}
 			</section>
-			<aside className={`${div2} bg-foreground md:w-96  mt-12`}>
+			<aside className={`${div2} bg-secondary-800 md:w-96 p-3`}>
 				<nav
-					className={`${navtContainer} flex flex-col bg-secondary m-3 rounded`}>
+					className={`${navtContainer} flex flex-col bg-secondary rounded-xl`}>
 					<ul className='m-2'>
 						{exercisesDataLoaded ? (
 							<Accordion
@@ -91,7 +96,7 @@ export default function Exercises({ idModule }) {
 								{renderModuleExercises()}
 							</Accordion>
 						) : (
-							<h1 className='text-black'>
+							<h1 className=''>
 								Esperando a que se carguen los datos...
 							</h1>
 						)}
