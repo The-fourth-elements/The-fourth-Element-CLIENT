@@ -201,8 +201,7 @@ export const createQuiz = body => {
 };
 
 export const updateQuiz = (body, id) => {
-	let quiz
-	console.log("id updateQuiz", id);
+	let quiz 
 	return fetch(`${process.env.API_BACKEND}quiz/${id}`, {
 		method: 'PUT',
 		headers: {

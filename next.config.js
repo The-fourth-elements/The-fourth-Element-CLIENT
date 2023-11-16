@@ -11,7 +11,8 @@ const nextConfig = {
     PASS: process.env.PASS,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET
-  }
+  },
+  images: { domains: ['res.cloudinary.com']}
 }
 
 module.exports = nextConfig

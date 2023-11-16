@@ -15,6 +15,8 @@ import {
 	acordionItem,
 	navtContainer,
 } from './ModulesView.module.scss';
+import Image from 'next/image';
+
 
 
 import { renderExercises, renderTextSection } from './exercisesHelpers';
@@ -70,14 +72,16 @@ export default function Exercises({ idModule }) {
 
 	const handleExerciseClick = exercise => {
 		setCurrentExercise(exercise);
+		console.log("currentExercise", currentExercise);
 	};
 
 	return (
 		// h-[81vh]
 		<Card className={containerVideos + ' bg-secondary-800  navcolor min-h-[81vh] pb-8 '}>
-			<section className={div1 + ' parent bg-secondary-800'}>
+			<section className={div1 + ' parent bg-secondary-800 '}>
 				{ responsesLoaded ? 
-					(<div className=' flex-col m-3 flex' id='reproductor'>
+					(<div className='aspect-video flex-col m-3 flex object-cover' id='reproductor'>
+						<Image  className='w-1/2 mx-auto ' src={currentExercise?.image?.secure_url} alt='Exercise Image' width={500} height={500} />
 						{renderTextSection(currentExercise, userResponses)}
 					</div>) : <h1 className='p-5 text-xl'>
 								Seleccione un ejercicio
@@ -87,20 +91,20 @@ export default function Exercises({ idModule }) {
 			<aside className={`${div2} bg-secondary-800 md:w-96 p-3`}>
 				<nav
 					className={`${navtContainer} flex flex-col bg-secondary rounded-xl`}>
-					<ul className='m-2'>
 						{exercisesDataLoaded ? (
-							<Accordion
-								itemClasses={{
-									title: 'text-black text-medium',
-								}}>
-								{renderModuleExercises()}
-							</Accordion>
+							
+								<Accordion
+									
+									itemClasses={{
+										title: 'text-black text-medium',
+									}}>
+									{renderModuleExercises()}
+								</Accordion>
 						) : (
 							<h1 className=''>
 								Esperando a que se carguen los datos...
 							</h1>
 						)}
-					</ul>
 				</nav>
 			</aside>
 		</Card>

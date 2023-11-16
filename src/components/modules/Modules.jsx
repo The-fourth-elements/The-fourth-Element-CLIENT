@@ -64,7 +64,6 @@ function Modules() {
 	useEffect(() => {
 		getModules();
 		setModulesLoaded(true);
-		console.log('modules de effect', modules);
 		if (id) {
 			getProfile(id);
 		}

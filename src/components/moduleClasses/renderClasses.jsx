@@ -87,7 +87,6 @@ export const renderClassSpecialRole = (
 	handleDataUpdate,
 	onOpenChange
 ) => {
-	console.log('elem en renderClassSpecialRole', elem);
 	return (
 		
 		<AccordionItem key={classIndex} textValue={elem?.name} title={elem?.name}>
