@@ -52,21 +52,23 @@ export const useUsersStore = create((set, get) => ({
     }));
   },
   orderUsersName: (orderName) => {
+    const users = get().users; // Accessing the users state using get()
+    let sortedUsers;
     if (orderName === "nameDesc") {
-      console.log("Desc", orderName)
-      set((state) => ({
-        ...state,
-        users: state.users.sort(compareAZ)
-      }))
+      console.log("Desc", orderName);
+      sortedUsers = users.slice().sort(compareAZ);
+    } else if (orderName === "nameAsc") {
+      console.log("Asc", orderName);
+      sortedUsers = users.slice().sort(compareZA);
     }
-    if (orderName === "nameAsc") {
-      console.log("Asc", orderName)
-      set((state) => ({
-        ...state,
-        users: state.users.sort(compareZA)
-      }))
-    }
+  
+    set((state) => ({
+      ...state,
+      users: sortedUsers,
+    }));
   },
+  
+  
   orderUsersPlan: (orderPlan) => {
     if (orderPlan === "payDesc") {
       set((state) => ({

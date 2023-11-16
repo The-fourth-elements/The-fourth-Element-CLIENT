@@ -7,7 +7,9 @@ import './styles.scss';
 import { useAllSports } from '@/zustand/store/allSports';
 
 const Filters = () => {
-	const { usersFilter, users, orderUsersName, getUsers } = useUsersStore();
+	const { users, orderUsersName, getDeletedUsers } = useUsersStore();
+	const [showDeletedUsers, setShowDeletedUsers] = useState(true);
+
 	const { allSports, getSports } = useAllSports();
 	let { getCountrys, allCountrys } = useAllCountrys();
 	const { filterUsers } = useUsersStore();
@@ -28,6 +30,11 @@ const Filters = () => {
 	let [filterNationality, setFilterNationality] = useState('all');
 	let [filterPlan, setFilterPlan] = useState('all');
 	let [filterSport, setFilterSport] = useState('all');
+
+	const handleGetDeletedUsers = () => {
+		setShowDeletedUsers(!showDeletedUsers);
+		getDeletedUsers(showDeletedUsers);
+	};
 
 	const handleFilterNationality = event => {
 		const selectedNationality = event.target.value;
@@ -111,6 +118,9 @@ const Filters = () => {
 					</select>
 				</div>
 			)}
+			<Button className=' select w-fit mt-5 max-h-[30px] ml-[10px]' onClick={handleGetDeletedUsers}>
+				{showDeletedUsers ? 'Ver usuarios eliminados' : 'Ver usuarios existentes'}
+			</Button>
 		</div>
 	);
 };

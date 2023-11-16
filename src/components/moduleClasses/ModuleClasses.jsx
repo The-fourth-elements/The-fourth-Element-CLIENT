@@ -60,6 +60,7 @@ export default function ModuleClasses({ idModule }) {
 		getModule(idModule).then(() => {
 			setFirstEffectExecuted(true);
 		});
+		verifyProgressUser()
 	}, []);
 
 	useEffect(() => {
@@ -67,7 +68,7 @@ export default function ModuleClasses({ idModule }) {
 			if (session) {
 				if (session?.token?.user) {
 					const { role } = session.token.user;
-					role > 2 && setAccess(true);
+					role > 1 && setAccess(true);
 					const id = session?.token?.user?.id;
 					getProfile(id);
 				}
