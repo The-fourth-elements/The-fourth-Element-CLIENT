@@ -7,7 +7,7 @@ import { getCookie } from 'cookies-next';
 export const renderExercises = (exerciseIndex, elem, handleExerciseClick) => {
 	return (
 		<AccordionItem
-		className='p-3'
+		className='p-2'
 			key={exerciseIndex}
 			textValue={elem?.name}
 			title={elem?.name}>

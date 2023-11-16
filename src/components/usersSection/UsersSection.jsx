@@ -30,7 +30,7 @@ const columns = [
 
 export default function UsersSection() {
 	const [isLoading, setIsLoading] = useState(true);
-	const { users, getUsers, deleteUser, getDeletedUsers, restoreUser } =
+	const { users, getUsers, deleteUser, restoreUser } =
 		useUsersStore();
 	
 	const [showDeletedUsers, setShowDeletedUsers] = useState(true);
@@ -70,11 +70,6 @@ export default function UsersSection() {
 		getUsers();
 	};
 
-	const handleGetDeletedUsers = () => {
-		setShowDeletedUsers(!showDeletedUsers);
-		getDeletedUsers(showDeletedUsers);
-	};
-
 	useEffect(() => {
 		getUsers();
 		setTimeout(() => {
@@ -87,7 +82,10 @@ export default function UsersSection() {
 
 	const pages = Math.ceil(users?.length / rowsPerPage);
 
-	const items = React.useMemo(() => {
+	
+
+	let items = React.useMemo(() => {
+		console.log("users en memo: ", users);
 		const start = (page - 1) * rowsPerPage;
 		const end = start + rowsPerPage;
 
@@ -96,9 +94,7 @@ export default function UsersSection() {
 
 	return (
 		<div className='mainDiv'>
-			<Button className=' px-10 w-96 sm:w-fit sm:px-5 sm:absolute sm:top-48 md:top-52 sm:left-unit-8xl md:text-base whitespace-normal md:whitespace-nowrap' onClick={handleGetDeletedUsers}>
-				{showDeletedUsers ? 'Ver usuarios eliminados' : 'Ver usuarios existentes'}
-			</Button>
+			
 			{isLoading && (
 				<Card className='h-[100vh] space-y-5 p-4' radius='2xl'>
 					<p className='uppercase font-bold'>Loading Users</p>
@@ -107,7 +103,7 @@ export default function UsersSection() {
 					</Skeleton>
 				</Card>
 			)}
-			{!isLoading &&
+			{(!isLoading) &&
 				(users?.length > 0 ? (
 					<div>
 						<Table

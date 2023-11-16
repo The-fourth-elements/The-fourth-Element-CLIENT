@@ -2,16 +2,14 @@
 
 
 .mainFilter {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     display: flex;
+    align-items: center;
     flex-direction: row;
-    width: 300px;
     padding: 0;
-    padding-bottom: 8px;
     border-top: 0;
-
+    margin: 8px 0 8px;
     @include sm () {
-        width: 225px;
         
     }
 }
@@ -26,15 +24,14 @@
 
 .select {
     font-size: 15px;
-    width: 90px;
-    height: 30px;
+    min-width:90px;
+    min-height: 30px;
     border-radius: 10px;
-    border: solid white 2px;
 
     @include sm () {
         font-size: 12px;
-        width: 80px;
-        height: 30px;
+        min-width: 80px;
+        min-height: 30px;
 
     }
 }
