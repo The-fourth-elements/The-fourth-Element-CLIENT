@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toastSuccess, toastError } from '@/helpers/toast';
 
 export const getUsers = () => {
-	return fetch(`${process.env.API_BACKEND}users`)
+	return fetch(`${process.env.API_BACKEND}users`, { credentials: "include" })
 		.then(response => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
@@ -179,7 +179,7 @@ export const restoreUser = email => {
 
 export const createQuiz = body => {
 
-	
+
 	return fetch(`${process.env.API_BACKEND}quiz`, {
 		method: 'POST',
 		headers: {
@@ -194,7 +194,7 @@ export const createQuiz = body => {
 			}
 			toastSuccess(`se ha creado con exito el quiz: ${data.name}`)
 		})
-		
+
 		.catch(error => {
 			toastError(error);
 		});
@@ -207,12 +207,12 @@ export const updateQuiz = (body, id) => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({quiz:body}),
+		body: JSON.stringify({ quiz: body }),
 	})
 		.then(response => response.json())
 		.then(data => {
 			toastSuccess(`se ha modificado con exito el quiz: ${body.name}`)
-			
+
 		})
 		.catch(error => {
 			console.error('There was a problem with the fetch operation:', error);

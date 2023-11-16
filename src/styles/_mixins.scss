@@ -115,17 +115,8 @@ $screen-lg: 1024px;
 	background-color: #000000;
 }
 
-@mixin landing-modules($cols) {
-	//dejo a disposicion si lo quieren cambiar ****
+@mixin landing-modules() {
 	.CardsContainer{
-        // display: grid;
-        // margin: 10rem;
-        // grid-template-columns: repeat($cols, calc(100% / $cols));
-        // grid-template-rows: 1fr 1fr 1fr 1fr;
-		// justify-items: center;
-		// justify-content: center;
-        // gap: 4rem;
-		// border-bottom: 1px solid #ffffff;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
