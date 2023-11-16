@@ -140,7 +140,6 @@
 			margin: 6vh;
 			font-size: 2vw;
 			color: $orange-1;
-
 			> p {
 				> b {
 					color: white;
@@ -173,10 +172,9 @@
 		&-buttons {
 			display: flex;
 			margin-top: 1rem;
-			background: blue;
 			justify-content: center;
 			gap: 70px;
-			margin: 10rem;
+			margin: 1rem;
 			 button {
 				 font-family: 'Input Serif';
 				 font-size: 18px;
@@ -229,6 +227,17 @@
 		&-welcome-text {
 			margin: 2rem 0;
 			width: 85%;
+		}
+		&-take-a-tour-container{
+			width: 100%;
+			margin: 0 auto;
+			&-images{
+				iframe{
+					width: 100%;
+					min-height: 20vh;
+				}
+
+			}
 		}
 		&-buttons {
 			margin: 1rem 0;
