@@ -3,11 +3,15 @@ import './AutoRegistro.scss'
 import { useState, useEffect } from "react";
 import { useAutoRegistro } from "@/zustand/store/autoRegistroStore";
 import { useModulesStore } from "@/zustand/store/modulesStore";
-import { Select, SelectItem, Slider } from "@nextui-org/react";
+import { Select, SelectItem, Slider, Button } from "@nextui-org/react";
 import * as Yup from "yup";
+import { useRouter } from 'next/navigation';
+import CustomModal from '@/helpers/CustomModal';
+import { toastError } from '@/helpers/toast';
 
 
 const AutoRegistro = () => {
+    const router =useRouter()
     const autoSchema = Yup.object().shape({
         selfRegister: Yup.array().of(
             Yup.object().shape({
@@ -45,7 +49,7 @@ const AutoRegistro = () => {
     const handleSelect = (e) => {
 		setModuleId(e?.target?.value)
 	}
-
+    
     const handleAddSection = () => {
         const newSection = [
             ...selfRegister,
@@ -95,6 +99,7 @@ const AutoRegistro = () => {
         const newRegister = [...selfRegister]
         newRegister[index].type = text
         setSelfRegister(newRegister)
+        console.log(newRegister[index])
     }
 
     const handleWriteQuestion = (text, index, indexQuestion) => {
@@ -117,30 +122,37 @@ const AutoRegistro = () => {
     
     const saveAutoRegistro = async () => {
         try {
+            if(moduleId === "") {throw new Error ("falta el id del Modulo")}
             await autoSchema.validate({ selfRegister }, { abortEarly: false });
             // Los datos son válidos, puedes enviarlos al servidor
             const newSelfRegister = { selfRegister };
             createAutoRegistro(newSelfRegister, moduleId);
         } catch (error) {
-            // La validación falló, manejar los errores aquí
-            const validationErrors = {};
-            error.inner.forEach((err) => {
-                const path = err.path;
-                const message = err.message;
-                validationErrors[path] = message;
-            });
-    
-            setErrors(validationErrors);
+            
+            toastError(error.message)
         }
     };
 
-    // const handleChangeSlider =(e) => {
-    //     console.log(e)
-    // }
+    const handleRouteChange = () => {
+		router.push('/dashboard/module/create');
+	}
 
- 
     return (
-        <main className='mainAuto'>
+        !Array.isArray(modules) || modules?.length === 0 ?
+		(
+			<CustomModal
+				isOpen={true}
+				title='No hay módulos creados'
+				content='Rediríjase a la creación de modulos'
+				actions={[
+					<Button autoFocus onClick={handleRouteChange}>
+						Confirmar
+					</Button>,
+				]}
+			/>
+		)
+		:
+        (<main className='mainAuto'>
             <header>
                 <h1 className='titleAuto'>Crear Autorregistro</h1>
             </header>
@@ -156,12 +168,25 @@ const AutoRegistro = () => {
                         />
                         {errors?.selfRegister &&
     errors?.selfRegister[index]?.name && console.log('hola')}
-                        <input type="text"
+                        {/* <input type="text"
                         className='sectionContainerInput sectionInput'
                         placeholder="Tipo de la seccion"
                         value={section.type}
                         onChange={e => handleWriteType(e?.target?.value, index)}
-                        />
+                        /> */}
+                        <Select
+                            radius = "lg"
+                            onChange={e => handleWriteType(e?.target?.value, index)}
+                            label="Selecciona el tipo" 
+                            className="max-w-xs sectionContainerInput sectionInput" 
+                        >
+                            <SelectItem key={"competencia"} value={"competencia"}>
+                                Competencia
+                            </SelectItem>
+                            <SelectItem key={"negligencia"} value={"negligencia"}>
+                                Negligencia
+                            </SelectItem>
+                        </Select>
                         { section.questions.map((questions, indexQuestion) => (
                             <section className='sectionQuestions' key={indexQuestion}>
                                 <input type="text" 
@@ -242,7 +267,7 @@ const AutoRegistro = () => {
                 </footer>
             </article>
 
-        </main>
+        </main>)
     )
 }
 

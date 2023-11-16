@@ -13,6 +13,7 @@ import {
 } from '@nextui-org/react';
 import { useSelectedModule } from '@/zustand/store/selectedModule';
 import { getCookie } from 'cookies-next';
+import RenderAutoRegistro from '@/components/AutoRegistroRender/AutoRegistroRender';
 
 function page() {
 	let moduleId;
@@ -55,24 +56,30 @@ function page() {
 						entendimiento del tema.
 					</p>
 				</CardBody>
-				<CardFooter>
-					{module?.selfKnowledge ? (
+				<CardFooter> 
+					{module?.selfRegister ? (
 						<>
 							<Button onClick={onOpen} className='mx-auto w-fit px-5'>
 								Resgistrar
 							</Button>
-							<RenderSelfKnowledge
-								data={module?.selfKnowledge}
+							{
+								module?.selfRegister?.map((registro) => (
+									<RenderAutoRegistro
+								id={registro?._id}
 								isOpen={isOpen}
 								onOpenChange={onOpenChange}
 								onOpen={onOpen}
 							/>
+								))
+							}
+							
 						</>
 					) : (
 						<p> No hay autorregistros en el módulo</p>
 					)}
 				</CardFooter>
 			</Card>
+			<button onClick={() => console.log(module)}> clickeame</button>
 		</div>
 	);
 }

@@ -1,38 +1,35 @@
 'use client'
 import './AutoRegistroRender.scss'
 import { useAutoRegistro } from '@/zustand/store/autoRegistroStore'
-import { CircularProgress } from '@nextui-org/react'
+import { CircularProgress,Modal, ModalContent } from '@nextui-org/react'
 // import SliderAutoRegistro from '@/helpers/SliderAutoRegistro'
 import { useState, useEffect } from 'react'
 import { Slider } from '@nextui-org/react'
 import { getCookie } from 'cookies-next'
 import { toastError, toastSuccess } from '@/helpers/toast'
 
-// const RenderAutoRegistro = ({id}) => {
-const RenderAutoRegistro = () => {
-    const id = '6545fe59cb4b95c0832e6e1f'
+const RenderAutoRegistro = ({id, isOpen, onOpen, onOpenChange, data}) => {
+// const RenderAutoRegistro = () => {
+//     const id = '65553d59a581cd345efee567'
     const { getAutoRegistro, excersice, createResponseSR, addResponseSRToUser} = useAutoRegistro()
     const userId = getCookie('jsdklfsdjklfdsjfds');
     const [userResponses, setUserResponses] = useState([]);
-    const [value, setValue] = useState()
+    const [comments, setComments] = useState("")
     useEffect(() => {
-        if(Object.keys(excersice).length === 0){
+        if(excersice) {
+            if(Object.keys(excersice).length === 0){
             const data = getAutoRegistro(id); // Llama a getAutoRegistro de manera síncrona
+        }  
         }
-        if (excersice.questions) {
+        
+        if (excersice?.questions) {
             // console.log("holas")
             setUserResponses(excersice.questions.map(() => 3));
         }
     }, [excersice]);
 
-    const handleButton = () => {
-        const bodyAuto ={
-            selfRegisterId: id,
-            userId,
-            response: userResponses,
-            comments: ["me senti del orto", "me senti joyita"]
-        }
-        createResponseSR(bodyAuto)
+    const handleChangeComments = (event) => {
+        setComments(event.target.value)
     }
 
     const handleChangeResponse = (event, index) => {
@@ -44,11 +41,8 @@ const RenderAutoRegistro = () => {
 
     const handleSaveResponse = () => {
         // const comments = ["Hola que tal", "Buenos dias"]
-        const comments = ["asdasdwasdwa", "Buenos dias"]
-
         try {
-            const newComments = comments.some((coment) => coment === "" )
-            if(newComments){
+            if(comments === ""){
                 throw new Error("Complete todos los campos");
             }
             const bodyAuto ={
@@ -64,7 +58,10 @@ const RenderAutoRegistro = () => {
         }
     }
     return (
-        Object.keys(excersice).length > 0 ? (
+       excersice && Object.keys(excersice).length > 0 ? (
+        <Modal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} size='5xl' backdrop='blur' scrollBehavior="inside">
+            <ModalContent>
+                {onClose => (
             <main className="mainAutoRender">
                 <header>
                     <h1>{excersice?.name}</h1>
@@ -91,10 +88,12 @@ const RenderAutoRegistro = () => {
             {value : 4},
             {value : 5}
         ]}
+        
         />
                             <h3 className='autoRegistroDisagree'>{question?.disagree}</h3>
                         </section>
                     ))}
+                    <textarea className='textAutoRegistro' onChange={handleChangeComments} name="" id="" cols="30" rows="10" placeholder='¿Por que te sentiste asi?'/>
                 </article>
                 <footer>
                     <button onClick={handleSaveResponse} className="buttonFooterAutoRender">
@@ -102,6 +101,9 @@ const RenderAutoRegistro = () => {
                     </button>
                 </footer>
             </main>
+            )}
+            </ModalContent>
+            </Modal>
         ) : (
             <CircularProgress className='loading' label='Loading...' color='warning' />
         )
