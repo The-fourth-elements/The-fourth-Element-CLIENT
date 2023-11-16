@@ -35,22 +35,22 @@ export const useUsersStore = create((set, get) => ({
 
   filterUsers: (nationality, plan, sport) => {
     console.log(sport)
-    const filteredUsers = get().usersFilter.filter((user) => {
-        const nationalityFilter = nationality === "all" || user?.nation?._id === nationality;
-        const planFilter =
-            plan === "all" ||
-            (plan === "free" && user?.role === 0) ||
-            (plan === "pay" && user?.role === 1) ||
-            (plan === "moderators" && user?.role === 2);
-        const sportFilter = sport === "all" || user?.sport?._id === sport
-        return nationalityFilter && planFilter && sportFilter;
+    const filteredUsers = get().usersFilter?.filter((user) => {
+      const nationalityFilter = nationality === "all" || user?.nation?._id === nationality;
+      const planFilter =
+        plan === "all" ||
+        (plan === "free" && user?.role === 0) ||
+        (plan === "pay" && user?.role === 1) ||
+        (plan === "moderators" && user?.role === 2);
+      const sportFilter = sport === "all" || user?.sport?._id === sport
+      return nationalityFilter && planFilter && sportFilter;
     });
 
     set((state) => ({
-        ...state,
-        users: filteredUsers,
+      ...state,
+      users: filteredUsers,
     }));
-},
+  },
   orderUsersName: (orderName) => {
     if (orderName === "nameDesc") {
       console.log("Desc", orderName)
