@@ -1,7 +1,7 @@
 import LandingDesktop from '../components/landing/LandingDesktop';
-import Footer from '@/components/footer/Footer';
+import Footer from '@/components/footer/FooterDesktop';
 
-const Landing = () => {
+const ServerComponent = () => {
 	return (
 		<>
 			<LandingDesktop />
@@ -10,4 +10,4 @@ const Landing = () => {
 	);
 };
 
-export default Landing;
+export default ServerComponent;

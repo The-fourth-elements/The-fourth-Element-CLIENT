@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
 
-import './FooterStyles.scss';
+import {Footer, Footer_Container, Footer_Container_list, Footer_Container_list_item, Footer_Container_list_inputItem,} from './styles.module.scss';
 
 const FooterDesktop = () => {
 	const links = [
@@ -30,31 +30,28 @@ const FooterDesktop = () => {
 	];
 	return (
 		<>
-			<div className='footerLinksContainer w-full' id='os'>
-				<div className='linksContainer w-full'>
-					<ul className='footerLinks w-full'>
+			<footer className={Footer}>
+				<div className={Footer_Container}>
+					<ul className={Footer_Container_list}>
 						{links.map(({ label, route }) => (
-							<li key={route}>
+							<li key={route} className={Footer_Container_list_item}>
 								<Link href={route}>{label}</Link>
 							</li>
 						))}
 					</ul>
-					<ul className='footerLinks'>
+					<ul className={Footer_Container_list}>
 						{links2.map(({ label, route }) => (
-							<li key={route}>
+							<li key={route} className={Footer_Container_list_item}>
 								<Link href={route}>{label}</Link>
 							</li>
 						))}
-						<li>
-							<div className='flex flex-col space-y-4'>
-							<input
-								placeholder='Your email address'
-								className='inputFooter'></input>
-							</div>
+						<li className={Footer_Container_list_inputItem}>
+							<label htmlFor="emailr"></label>
+							<input id="emailr" name="emailr" placeholder='Ingrese su email'></input>
 						</li>
 					</ul>
 				</div>
-			</div>
+			</footer>
 		</>
 	);
 };
