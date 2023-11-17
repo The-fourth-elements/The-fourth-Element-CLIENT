@@ -7,7 +7,6 @@ async function getLandingData() {
 
 export default async function CounterOfCourse() {
 	const datafethc = await getLandingData();
-	console.log(datafethc, 'soy la data');
 	// const data = [10, 240, 76, 57, 47, 55];
 	const dataString = [
 		'Módulos',
@@ -25,8 +24,8 @@ export default async function CounterOfCourse() {
 		'#F27922',
 		'#F2B822',
 	];
-	if(datafethc?.length < 1){
-		return <>holi</>
+	if(Object.values(datafethc)?.length < 1){
+		return <h3 className='bg-black'>Ocurrio un error obteniendo los datos</h3>
 	}
 	return (
 		<div className='flex flex-wrap justify-center w-full gap-[1rem] '>
@@ -45,5 +44,3 @@ export default async function CounterOfCourse() {
 		</div>
 	);
 }
-
-// export default CounterOfCourse;
