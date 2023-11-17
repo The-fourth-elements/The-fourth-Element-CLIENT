@@ -1,8 +1,8 @@
-const Module1 = () => {
+const Module1 = ({ width, height }) => {
 	return (
 		<svg
-			width='97'
-			height='97'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 97 97'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -32,11 +32,11 @@ const Module1 = () => {
 	);
 };
 
-const Module2 = () => {
+const Module2 = ({ width, height }) => {
 	return (
 		<svg
-			width='95'
-			height='95'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 95 95'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -64,11 +64,11 @@ const Module2 = () => {
 	);
 };
 
-const Module3 = () => {
+const Module3 = ({ width, height }) => {
 	return (
 		<svg
-			width='94'
-			height='94'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 94 94'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -100,11 +100,11 @@ const Module3 = () => {
 		</svg>
 	);
 };
-const Module4 = () => {
+const Module4 = ({ width, height }) => {
 	return (
 		<svg
-			width='97'
-			height='97'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 97 97'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -127,11 +127,11 @@ const Module4 = () => {
 		</svg>
 	);
 };
-const Module5 = () => {
+const Module5 = ({ width, height }) => {
 	return (
 		<svg
-			width='94'
-			height='94'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 94 94'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -154,11 +154,11 @@ const Module5 = () => {
 		</svg>
 	);
 };
-const Module6 = () => {
+const Module6 = ({ width, height }) => {
 	return (
 		<svg
-			width='98'
-			height='81'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 98 81'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -181,11 +181,11 @@ const Module6 = () => {
 		</svg>
 	);
 };
-const Module7 = () => {
+const Module7 = ({ width, height }) => {
 	return (
 		<svg
-			width='103'
-			height='103'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 103 103'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -212,11 +212,11 @@ const Module7 = () => {
 		</svg>
 	);
 };
-const Module8 = () => {
+const Module8 = ({ width, height }) => {
 	return (
 		<svg
-			width='96'
-			height='96'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 96 96'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -245,11 +245,11 @@ const Module8 = () => {
 	);
 };
 
-const Module9 = () => {
+const Module9 = ({ width, height }) => {
 	return (
 		<svg
-			width='101'
-			height='83'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 101 83'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -272,11 +272,11 @@ const Module9 = () => {
 		</svg>
 	);
 };
-const Module10 = () => {
+const Module10 = ({ width, height }) => {
 	return (
 		<svg
-			width='96'
-			height='96'
+			width={width || '97px'}
+			height={height || '97px'}
 			viewBox='0 0 96 96'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
@@ -311,16 +311,16 @@ const Module10 = () => {
 };
 
 const moduleIcons = {
-    Module1,
-    Module2,
-    Module3,
-    Module4,
-    Module5,
-    Module6,
-    Module7,
-    Module8,
-    Module9,
-    Module10,
-}
+	Module1,
+	Module2,
+	Module3,
+	Module4,
+	Module5,
+	Module6,
+	Module7,
+	Module8,
+	Module9,
+	Module10,
+};
 
 export default moduleIcons;

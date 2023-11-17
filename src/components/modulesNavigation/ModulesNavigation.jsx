@@ -6,11 +6,15 @@ import { useRouter } from 'next/navigation';
 import { handleCategoryClick } from '@/helpers/handleCategoryClick';
 import { getCookie } from 'cookies-next';
 import { useState, useEffect } from 'react';
+import { modulesSvg } from '@/utils/modules-svg';
+
 
 function ModulesNavigation() {
 	const router = useRouter();
 
 	const [moduleData, setModuleData] = useState({});
+	const [dataLoaded, setDataLoaded] = useState(false);
+
 
 	useEffect(() => {
 		setModuleData({
@@ -18,18 +22,19 @@ function ModulesNavigation() {
 			moduleIndex: getCookie('moduleIndex'),
 			moduleName: getCookie('moduleName'),
 		});
+		setDataLoaded(true)
 	}, []);
 
 
 	return (
 		<div className='flex flex-col items-center space-y-4 mb-10'>
-			<ModuleCard
-			
+			{ dataLoaded && <ModuleCard
+				moduleImg={modulesSvg[moduleData?.moduleIndex-1]}
 				moduleName={moduleData?.moduleName}
 				moduleId={moduleData?.moduleId}
 				moduleIndex={moduleData?.moduleIndex}
 				className={'lg:max-w-[1265px] w-[90vw]'}
-			/>
+			/>}
 
 			<div className='grid min-[1100px]:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-y-4 lg:max-w-[1265px] w-[90vw]'>
 				{items.map((item, index) => (

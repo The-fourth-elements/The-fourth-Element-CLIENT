@@ -11,9 +11,15 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { items } from '@/utils/categoryItems';
 import { handleCategoryClick } from '@/helpers/handleCategoryClick';
-import { button } from './ModuleCard.module.scss'
+import { button } from './ModuleCard.module.scss';
 
-function ModuleCard({ moduleName, moduleIndex, moduleId, className }) {
+function ModuleCard({
+	moduleName,
+	moduleIndex,
+	moduleId,
+	className,
+	moduleImg,
+}) {
 	const moduleNameWords = moduleName?.split(' ').length;
 	const router = useRouter();
 
@@ -21,32 +27,29 @@ function ModuleCard({ moduleName, moduleIndex, moduleId, className }) {
 		<div
 			className={
 				!className
-					? `flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 `
+					? ` justify-start flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 `
 					: `flex h-full max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 ${className}`
 			}>
+			<div className='px-5'>{moduleImg({ width: '65px', heigth: '65px' })}</div>
 			<h3
 				style={{ fontWeight: 700 }}
 				className={
 					className
-						? 'bg-secondary-700 max-w-full px-4 rounded-xl sm:mx-16 text-6xl text-secondary-900'
-						: 'max-w-full px-10 sm:px-16 p-3 text-7xl text-secondary-900'
+						? 'bg-secondary-700 max-w-full px-4 rounded-xl text-6xl text-secondary-900'
+						: 'max-w-full px-0 sm:px-5 p-3 text-6xl text-secondary-900'
 				}>
 				{moduleIndex}
 			</h3>
-			<div className='max-w-full my-3 flex flex-col gap-1'>
-				<h5
-					
-					className='text-xl '>
-					Módulo
-				</h5>
-				<Dropdown 
-					>
+			<div className='max-w-fit  px-5 my-3 flex flex-col gap-1'>
+				<h5 className='text-xl '>Módulo</h5>
+				<Dropdown>
 					<DropdownTrigger>
 						<Button
-						
 							className={`${
-								moduleNameWords >= 2 ? 'text-base' : 'text-xl w-full '
-							} ${button}  w-full p-0 rounded-lg border-none  text-white`}
+								moduleNameWords >= 2
+									? ' text-[4vw] min-[370px]:text-base whitespace-normal'
+									:  moduleName?.length > 10 ? 'text-ellipsis min-[430px]:text-xl' : 'text-xl'
+							} ${button} break-all break-words text-start p-0 rounded-lg border-none  text-white`}
 							variant='bordered'>
 							{moduleName}
 						</Button>
