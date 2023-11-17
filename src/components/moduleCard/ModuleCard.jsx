@@ -30,7 +30,7 @@ function ModuleCard({
 					? ` justify-start flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 `
 					: `flex h-full max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 ${className}`
 			}>
-			<div className='px-5'>{moduleImg({ width: '65px', heigth: '65px' })}</div>
+			<div className='px-5'>{moduleImg( '65px','65px' )}</div>
 			<h3
 				style={{ fontWeight: 700 }}
 				className={

@@ -1,4 +1,4 @@
-const Module1 = ({ width, height }) => {
+const Module1 = ( width, height ) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -32,7 +32,7 @@ const Module1 = ({ width, height }) => {
 	);
 };
 
-const Module2 = ({ width, height }) => {
+const Module2 = ( width, height ) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -64,7 +64,7 @@ const Module2 = ({ width, height }) => {
 	);
 };
 
-const Module3 = ({ width, height }) => {
+const Module3 = ( width, height ) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -100,7 +100,7 @@ const Module3 = ({ width, height }) => {
 		</svg>
 	);
 };
-const Module4 = ({ width, height }) => {
+const Module4 = (width, height ) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -127,7 +127,7 @@ const Module4 = ({ width, height }) => {
 		</svg>
 	);
 };
-const Module5 = ({ width, height }) => {
+const Module5 = (width, height) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -154,7 +154,7 @@ const Module5 = ({ width, height }) => {
 		</svg>
 	);
 };
-const Module6 = ({ width, height }) => {
+const Module6 = (width, height ) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -181,7 +181,7 @@ const Module6 = ({ width, height }) => {
 		</svg>
 	);
 };
-const Module7 = ({ width, height }) => {
+const Module7 = ( width, height ) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -212,7 +212,7 @@ const Module7 = ({ width, height }) => {
 		</svg>
 	);
 };
-const Module8 = ({ width, height }) => {
+const Module8 = (width, height) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -245,7 +245,7 @@ const Module8 = ({ width, height }) => {
 	);
 };
 
-const Module9 = ({ width, height }) => {
+const Module9 = (width, height) => {
 	return (
 		<svg
 			width={width || '97px'}
@@ -272,7 +272,7 @@ const Module9 = ({ width, height }) => {
 		</svg>
 	);
 };
-const Module10 = ({ width, height }) => {
+const Module10 = ( width, height) => {
 	return (
 		<svg
 			width={width || '97px'}
