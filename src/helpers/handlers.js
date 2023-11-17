@@ -1,4 +1,4 @@
-import { postData } from '../hooks/postData';
+import { postData } from '../hooks/fetchData';
 import axios from 'axios';
 
 export const handleSubmitRegister = async (

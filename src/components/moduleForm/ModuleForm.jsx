@@ -12,7 +12,7 @@ import Image from 'next/image';
 import back from '@/assets/svg/arrowBack.svg';
 import { useRouter } from 'next/navigation';
 import useFetch from '@/hooks/useFetch';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import FormFrases from '../FormFrases/FormFrases';
 import { useState, useEffect } from 'react';
 import { useExcersices } from '@/zustand/store/ExcersicesStore';

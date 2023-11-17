@@ -15,7 +15,7 @@ import './CreateClassStyles.scss';
 
 import { validationSchemaCreateClass } from '@/helpers/validations';
 import { toastError, toastSuccess } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
 import ModalEditQuiz from '@/helpers/ModalEditQuiz';
 import { all } from 'axios';

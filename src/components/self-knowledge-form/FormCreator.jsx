@@ -14,7 +14,7 @@ import Question from './Question';
 import PreviewSelf from '../preview-self-knowledge/PreviewSelf';
 import SelectModule from '@/helpers/select-module/SelectModule';
 import { addQuestion, saveQuestion } from './form-creator-self-knowledge';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { toastError, toastSuccess } from '@/helpers/toast';
 
 const FormCreator = () => {
