@@ -6,7 +6,7 @@ import { Button, Card, CardBody } from '@nextui-org/react';
 import InputField from '@/helpers/InputField';
 import TextAreaField from '@/helpers/TextAreaField';
 import { toastError, toastSuccess } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { useModulesStore } from '@/zustand/store/modulesStore';
 import { CldUploadButton } from 'next-cloudinary'; // Importa el botón de carga de Cloudinary
 import {

@@ -4,7 +4,7 @@ import React from 'react';
 import './styles.scss';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { postData } from '../../hooks/postData';
+import { postData } from '../../hooks/fetchData';
 import { validationSchemaRecovery } from '../../helpers/validations';
 import { toastError, toastSuccess } from '../../helpers/toast';
 import { Button, Card, CardBody } from '@nextui-org/react';

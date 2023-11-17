@@ -1,4 +1,4 @@
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import {NextResponse} from 'next/server';
 
 // ruta que hara de intermediario entre el back en node y este front
