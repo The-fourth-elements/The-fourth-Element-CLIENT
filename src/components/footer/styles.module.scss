@@ -1,0 +1,82 @@
+@import '../../styles/_mixins';
+@import '../../styles/_variables';
+
+@mixin defaultFooter() {
+	.Footer {
+		background: $black-1;
+		border-top: 1px solid #282828;
+		padding: 1rem 0;
+		max-width: 100%;
+		&_Container {
+			background: black;
+			&_list {
+				display: flex;
+				gap: 1rem;
+				flex-direction: column;
+				flex-wrap: wrap;
+				&_item {
+					margin: 0 auto;
+					color: #d6d6d6;
+					min-width: 50%;
+					max-width: 50%;
+					border-bottom: #fff solid 1px;
+					a {
+						cursor: pointer;
+						&:hover {
+							color: rgb(255, 255, 255);
+						}
+					}
+				}
+				&_inputItem {
+					margin: 0 auto;
+					input {
+						border-radius: 0.5rem;
+						padding: 0.5rem;
+					}
+				}
+			}
+		}
+	}
+}
+@include lg() {
+	@include defaultFooter();
+	.Footer {
+		&_Container {
+			display: flex;
+			justify-content: center;
+			&_list {
+				gap: 2rem;
+				&_item {
+					border: none;
+				}
+				// &_inputItem{
+
+				// }
+			}
+		}
+	}
+}
+
+@include md() {
+	@include defaultFooter();
+	.Footer {
+		&_Container {
+			display: flex;
+			justify-content: space-around;
+			&_list {
+				&_item {
+					display: flex;
+					justify-content: center;
+					text-align: center;
+				}
+				// &_inputItem{
+
+				// }
+			}
+		}
+	}
+}
+
+@include sm() {
+	@include defaultFooter();
+}
