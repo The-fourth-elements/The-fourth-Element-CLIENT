@@ -1,0 +1,104 @@
+@import "../../styles/base";
+
+.articleAutoView {
+    display: grid;
+    width: 95%;
+    justify-content: center;
+    background-color: $orange-1;
+    padding: 20px;
+    border-radius: 10px;
+    border: solid 3px white;
+    gap: 10px;
+    grid-template-columns: repeat(11, minmax(20px, 1fr));
+}
+
+.articleAutoView header {
+    background-color: blue;
+    padding: 10px;
+    border-radius: 8px;
+    grid-column-start: 3;
+    grid-column-end: -3;
+    width: 100%;
+}
+
+.articleAutoView h2 {
+    text-align: center;
+    font-size: 40px;
+}
+
+.articleAutoView section {
+    display: grid;
+    background-color: red;
+    padding: 10px;
+    border-radius: 8px;
+    grid-template-columns: repeat(9, minmax(20px, 1fr));
+    grid-column-start: 2;
+    grid-column-end: -2;
+}
+
+.sectionCompetencia{
+    grid-column-end: 5;
+    grid-column-start: 1;
+    border: solid 3px black;
+    border-radius: 5px;
+
+    &:hover{
+        cursor: pointer;
+    }
+
+    @include sm {
+        grid-column-end: 1;
+    grid-column-start: -1;
+    }
+}
+
+.sectionEntrenamiento {
+    grid-column-end: 6;
+    grid-column-start: -1;
+    border: solid 3px black;
+    border-radius: 5px;
+
+    &:hover{
+        cursor: pointer;
+    }
+
+    @include sm {
+        grid-column-end: 1;
+    grid-column-start: -1;
+    }
+}
+
+p{
+    padding: 5px;
+    padding-top: 10px;
+    width: 100%;
+
+    @include sm {
+        font-size: 10px;
+        word-break: break-all;
+    }
+}
+
+.buttonCompetencia {
+    background-color: black;
+    padding: 10px;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.buttonEntrenamiento {
+    background-color: black;
+    padding: 10px;
+    border-radius: 3px;
+    width: 100%;
+}
+
+// .modalContent {
+//     background-color: blue;
+//     display: ;
+//     height: 100vh;
+// }
+// .renderAutoRegistro {
+//     grid-column-end: 5;
+//     grid-column-start: -1;
+// }
