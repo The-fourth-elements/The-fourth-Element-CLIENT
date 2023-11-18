@@ -86,7 +86,7 @@ export default function ModuleClasses({ idModule }) {
 		if (dataUpdated) {
 			setDataUpdated(false);
 		}
-	}, [dataUpdated]);
+	}, [dataUpdated, user]);
 
 	const handleDataUpdate = () => {
 		setDataUpdated(true);
