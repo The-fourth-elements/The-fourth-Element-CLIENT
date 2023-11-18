@@ -5,9 +5,11 @@ import { useState } from 'react';
 import './QuizRender.scss';
 import { putData } from '@/hooks/fetchData';
 import { getCookie } from 'cookies-next';
+import { useUserProfile } from '@/zustand/store/userProfile';
 const QuizRender = ({ quiz, onClose, classId }) => {
 	const userId = getCookie('jsdklfsdjklfdsjfds');
 	const moduleId = getCookie('moduleId');
+	const { updateUserProgress } = useUserProfile()
 	const [selectedAnswers, setSelectedAnswers] = useState(
 		new Array(quiz?.quest?.length).fill(null)
 	);
@@ -33,6 +35,9 @@ const QuizRender = ({ quiz, onClose, classId }) => {
 		const correctPercentage = (correctCount / totalQuestions) * 100;
 		if (correctPercentage >= 100) {
 			const response = await putData(`${process.env.API_BACKEND}approve/user/${userId}/module/${moduleId}/class/${classId}`);
+			if(response?.data){
+				updateUserProgress(response.data)
+			}
 			toastSuccess('Aprobado');
 			onClose()
 		} else {
