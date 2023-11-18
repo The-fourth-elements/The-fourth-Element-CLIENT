@@ -62,8 +62,8 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
     }
     return (
        excersice && Object.keys(excersice).length > 0 && (
-        <Modal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} size='5xl' backdrop='blur' scrollBehavior="inside">
-            <ModalContent>
+        <Modal  isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} size='5xl' backdrop='blur' scrollBehavior="inside">
+            <ModalContent className='modalContent'>
                 {onClose => (
             <main className="mainAutoRender">
                 {excersice?.map((exer) =>
