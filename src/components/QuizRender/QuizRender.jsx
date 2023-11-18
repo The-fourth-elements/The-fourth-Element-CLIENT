@@ -3,13 +3,16 @@
 import { toastSuccess, toastError } from '@/helpers/toast';
 import { useState } from 'react';
 import './QuizRender.scss';
-const QuizRender = ({ quiz, onClose }) => {
-
-  console.log(quiz)
+import { putData } from '@/hooks/fetchData';
+import { getCookie } from 'cookies-next';
+import { useUserProfile } from '@/zustand/store/userProfile';
+const QuizRender = ({ quiz, onClose, classId }) => {
+	const userId = getCookie('jsdklfsdjklfdsjfds');
+	const moduleId = getCookie('moduleId');
+	const { updateUserProgress } = useUserProfile()
 	const [selectedAnswers, setSelectedAnswers] = useState(
 		new Array(quiz?.quest?.length).fill(null)
 	);
-	const [correctQuestions, setCorrectQuestions] = useState(0);
 
 	const totalQuestions = quiz[0]?.quest?.length;
 
@@ -18,7 +21,7 @@ const QuizRender = ({ quiz, onClose }) => {
 		newSelectedAnswers[questionIndex] = selectedAnswerIndex;
 		setSelectedAnswers(newSelectedAnswers);
 	};
-	const handleSendQuiz = () => {
+	const handleSendQuiz = async() => {
 		let correctCount = 0;
 
 		for (let i = 0; i < quiz[0]?.quest?.length; i++) {
@@ -30,7 +33,11 @@ const QuizRender = ({ quiz, onClose }) => {
 			}
 		}
 		const correctPercentage = (correctCount / totalQuestions) * 100;
-		if (correctPercentage >= 60) {
+		if (correctPercentage >= 100) {
+			const response = await putData(`${process.env.API_BACKEND}approve/user/${userId}/module/${moduleId}/class/${classId}`);
+			if(response?.data){
+				updateUserProgress(response.data)
+			}
 			toastSuccess('Aprobado');
 			onClose()
 		} else {

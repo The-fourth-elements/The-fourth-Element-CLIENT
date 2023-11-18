@@ -12,6 +12,13 @@ export const useUserProfile = create((set, get) => ({
             }))
         }
         ),
-
+    updateUserProgress: (newProgress) => {
+        set((state) => ({
+            user: {
+                ...state.user,
+                progress: newProgress
+            }
+        }))
+    }
 })
 )

@@ -19,7 +19,7 @@ import {
 	navtContainer,
 } from './ModulesView.module.scss';
 import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { useUserProfile } from '@/zustand/store/userProfile';
 import { fetchData, renderVideo, renderDescription } from './fetchDataModules';
 import {

@@ -19,7 +19,7 @@ import {
 	navtContainer,
 } from './ModulesView.module.scss';
 import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { useUserProfile } from '@/zustand/store/userProfile';
 import {
 	fetchDataSingleModule,
@@ -56,11 +56,10 @@ export default function ModuleClasses({ idModule }) {
 	const [firstEffectExecuted, setFirstEffectExecuted] = useState(false);
 
 	useEffect(() => {
-		
 		getModule(idModule).then(() => {
 			setFirstEffectExecuted(true);
 		});
-		verifyProgressUser()
+		verifyProgressUser();
 	}, []);
 
 	useEffect(() => {
@@ -73,13 +72,12 @@ export default function ModuleClasses({ idModule }) {
 					getProfile(id);
 				}
 
+				fetchDataSingleModule(module).then(data => {
+					setModuleData(data);
+					setModulesDataLoaded(true);
+				});
 
-					fetchDataSingleModule(module).then(data => {
-						setModuleData(data);
-						setModulesDataLoaded(true);
-					})
-
-				// verifyProgressUser()
+				verifyProgressUser();
 			}
 		}
 	}, [firstEffectExecuted, module, session, dataUpdated]);
@@ -93,12 +91,10 @@ export default function ModuleClasses({ idModule }) {
 	const handleDataUpdate = () => {
 		setDataUpdated(true);
 	};
-
 	const renderModuleClasses = moduleData => {
 		if (moduleData) {
 			return moduleData.map((elem, classIndex) => {
 				if (access) {
-					// Render clases con acceso especial
 					return renderClassSpecialRole(
 						classIndex,
 						elem,
@@ -109,24 +105,18 @@ export default function ModuleClasses({ idModule }) {
 						onOpenChange
 					);
 				} else {
-					
 					if (user) {
 						const modulesUser = user?.progress?.modules;
-						const moduleProgress = modulesUser?.map(module => {
-							return module?.classes;
-						});
+						const moduleProgress = modulesUser?.map(module => module?.classes);
 
-						const classInfo = moduleProgress?.map(module => {
-							return module?.find(classItem => {
-								return classItem.name === elem.name;
-							});
-						});
-						const classe = classInfo?.filter(clase => clase !== undefined);
-						if (!moduleProgress) {
-							// Este modulo aun no se ha iniciado.
-							return renderClassNotProgress(classIndex, elem);
+						const classInfo = moduleProgress?.map(module =>
+							module?.find(classItem => classItem?.name === elem?.name)
+						);
+						const classIsInProgress = classInfo?.some(c => c !== undefined);
+
+						if (!moduleProgress || !classIsInProgress) {
+							return renderClassLock(classIndex, elem);
 						}
-						
 						return renderClassDefault(
 							isOpen,
 							onOpen,
@@ -144,41 +134,19 @@ export default function ModuleClasses({ idModule }) {
 
 	const verifyProgressUser = async () => {
 		try {
-		  const modulesProgress = user?.progress?.modules;
-		  const totalClasses = module.classModule.length;
-
-	  
-		  if (user?.role < 2) {
-			if (!user?.progress) {
-
-			  const progress = await postData(
-				`${process.env.API_BACKEND}startCourse/${id}`
-			  );
-			  toastSuccess(progress?.message);
-			  getProfile(id);
-			} else {
-
-			  const countClassesUser = modulesProgress
-				.find((elem) => elem._id === module._id)
-				?.classes?.length;
-
-	  
-			  if (totalClasses !== countClassesUser) {
-
-				const progress = await postData(
-				  `${process.env.API_BACKEND}startCourse/${id}`
-				);
-
-				toastInfo(progress?.message);
-				getProfile(id);
-			  }
+			if (user?.role < 2) {
+				if (!user?.progress) {
+					const progress = await postData(
+						`${process.env.API_BACKEND}startCourse/${id}`
+					);
+					toastSuccess(progress?.message);
+					getProfile(id);
+				}
 			}
-		  }
 		} catch (error) {
-		  toastError(error);
+			toastError(error);
 		}
-	  };
-	  
+	};
 
 	const handleClassClick = className => {
 		setCurrentClass(className);
@@ -191,49 +159,47 @@ export default function ModuleClasses({ idModule }) {
 		}
 	};
 
-	return (  
-			<Card className={containerVideos + ' bg-secondary-700 navcolor '}>
-				<section
-					className={
-						div1 + '  parent grid grid-rows-1 md:grid-rows-2'
-					}>
-					<div
-						className='  border-[0.75rem] border-secondary-800 bg-secondary-800 h-unit-8xl flex justify-center'
-						id='reproductor'>
-						{renderVideo(currentClass, moduleData)}
-					</div>
-					<Card className='flex p-3 bg-transparent shadow-none border-secondary-800 sm:border-r-[0.75rem]'>
-						
-						<Accordion>
-							<AccordionItem
-								className={
-									acordionItem +
-									' p-2 m-1 bg-secondary-800 rounded md:m-0 text-white'
-								}
-								title='Recursos'
-								textValue={`${accordion}`}>
-								{renderDescription(currentClass, moduleData)}
-							</AccordionItem>
-						</Accordion>
-					</Card>
-				</section>
-				<aside className={`${div2} bg-secondary-800 p-[0.8rem] md:w-96 `}>
-					<nav
-						className={`${navtContainer} flex flex-col bg-secondary  rounded-xl`}>
-						<ul className='m-2'>
-							{modulesDataLoaded ? (
-								<Accordion
-									itemClasses={{
-										title: 'text-black text-medium',
-									}}>
-									{renderModuleClasses(moduleData)}
-								</Accordion>
-							) : (
-								<h1 className='text-black'>Esperando a que se carguen los datos...</h1>
-							)}
-						</ul>
-					</nav>
-				</aside>
-			</Card>
+	return (
+		<Card className={containerVideos + ' bg-secondary-700 navcolor '}>
+			<section className={div1 + '  parent grid grid-rows-1 md:grid-rows-2'}>
+				<div
+					className='  border-[0.75rem] border-secondary-800 bg-secondary-800 h-unit-8xl flex justify-center'
+					id='reproductor'>
+					{renderVideo(currentClass, moduleData)}
+				</div>
+				<Card className='flex p-3 bg-transparent shadow-none border-secondary-800 sm:border-r-[0.75rem]'>
+					<Accordion>
+						<AccordionItem
+							className={
+								acordionItem +
+								' p-2 m-1 bg-secondary-800 rounded md:m-0 text-white'
+							}
+							title='Recursos'
+							textValue={`${accordion}`}>
+							{renderDescription(currentClass, moduleData)}
+						</AccordionItem>
+					</Accordion>
+				</Card>
+			</section>
+			<aside className={`${div2} bg-secondary-800 p-[0.8rem] md:w-96 `}>
+				<nav
+					className={`${navtContainer} flex flex-col bg-secondary  rounded-xl`}>
+					<ul className='m-2'>
+						{modulesDataLoaded ? (
+							<Accordion
+								itemClasses={{
+									title: 'text-black text-medium',
+								}}>
+								{renderModuleClasses(moduleData)}
+							</Accordion>
+						) : (
+							<h1 className='text-black'>
+								Esperando a que se carguen los datos...
+							</h1>
+						)}
+					</ul>
+				</nav>
+			</aside>
+		</Card>
 	);
 }

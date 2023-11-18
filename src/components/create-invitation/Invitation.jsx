@@ -13,7 +13,7 @@ import {
 } from '@nextui-org/react';
 import { Formik, Form } from 'formik';
 import { validationSchemaInvitation } from '@/helpers/validations';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
 
 const Invitation = ({ isOpen, onOpen, onOpenChange }) => {

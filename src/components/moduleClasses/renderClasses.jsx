@@ -9,6 +9,7 @@ import {
 import QuizRender from '../QuizRender/QuizRender';
 import { EditIcon } from '@/assets/svg-jsx/EditIcon';
 import ModalEditClass from '@/helpers/ModalEditClass';
+import { getCookies, setCookie } from 'cookies-next';
 
 export const renderClassDefault = (
 	isOpen,
@@ -43,7 +44,7 @@ export const renderClassDefault = (
 						{onClose => (
 							<>
 								<ModalBody>
-									<QuizRender quiz={elem?.quiz} onClose={onClose}></QuizRender>
+									<QuizRender quiz={elem?.quiz} classId={elem?._id} onClose={onClose}></QuizRender>
 								</ModalBody>
 								<ModalFooter>
 									<Button color='danger' variant='light' onPress={onClose}>
@@ -72,7 +73,7 @@ export const renderClassLock = (classIndex, elem, unlockDate) => {
 				</Button>
 			</div>
 			<span>
-				Clase bloqueada hasta {unlockDate.toLocaleString().slice(0, -3)}
+				Clase bloqueada, resuelve el quiz de la clase anterior
 			</span>
 		</AccordionItem>
 	);
