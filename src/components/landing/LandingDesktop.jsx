@@ -36,12 +36,12 @@ const LandingDesktop = () => {
 					</div>
 				</div>
 				<div className='Container-buttons'>
-					<button>
+					{/* <button> */}
 						<Link href='/course'>Acceder ahora</Link>
-					</button>
-					<button>
+					{/* </button> */}
+					{/* <button> */}
 						<Link href='/auth'>Módulo 1 gratis</Link>
-					</button>
+					{/* </button>/ */}
 				</div>
 				<div className='Container-description'>
 					<p>
