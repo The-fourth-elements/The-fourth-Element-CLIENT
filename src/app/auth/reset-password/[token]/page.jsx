@@ -1,5 +1,5 @@
 'use client';
-import { postData } from '../../../../hooks/postData';
+import { postData } from '../../../../hooks/fetchData';
 import '@/components/recoveryPassword/styles.scss';
 import { Form, Formik } from 'formik';
 import { Button, Card, CardBody } from '@nextui-org/react';

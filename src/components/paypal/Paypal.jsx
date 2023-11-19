@@ -1,5 +1,5 @@
 'use client'
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import React from 'react';
 import './styles.scss';

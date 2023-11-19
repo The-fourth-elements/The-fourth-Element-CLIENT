@@ -1,6 +1,6 @@
 'use client';
 import { toastError } from '@/helpers/toast';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import Paypal from '../paypal/Paypal';
 import { useState, useEffect } from 'react';

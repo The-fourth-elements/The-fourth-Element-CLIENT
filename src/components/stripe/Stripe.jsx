@@ -6,7 +6,7 @@ import Image from 'next/image';
 import stripe from '@/assets/img/stripe.png';
 import { toastError, toastInfo } from '@/helpers/toast';
 import { CircularProgress } from '@nextui-org/react';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { getCookie } from 'cookies-next';
 
 const Stripe = () => {

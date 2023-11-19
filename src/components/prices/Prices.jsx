@@ -70,17 +70,9 @@ const PrecioCard = () => {
 										<p>Cuestionarios Autoevaluativos</p>
 									</li>
 								</ul>
-
-								<button
-									type='submit'
-									title='Submit'
-									className='block w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800'>
-									<span className='text-white font-semibold'>
-										<a href='mailto:thefourthelement@gmail.com'>
+										<a href='mailto:thefourthelement@gmail.com' className='text-white font-semibold block w-full py-3 px-6 text-center rounded-xl transition bg-primary hover:bg-gray-800'>
 											Envíanos un email
 										</a>
-									</span>
-								</button>
 							</div>
 						</div>
 

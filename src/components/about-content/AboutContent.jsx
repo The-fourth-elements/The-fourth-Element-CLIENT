@@ -15,7 +15,7 @@ import {
 	ModalFooter,
 } from '@nextui-org/react';
 import TextAreaField from '@/helpers/TextAreaField';
-import { postData } from '@/hooks/postData';
+import { postData } from '@/hooks/fetchData';
 import { toastError, toastInfo, toastSuccess } from '@/helpers/toast';
 import { useRouter } from 'next/navigation';
 import {useContent} from '@/zustand/store/updateContent';
