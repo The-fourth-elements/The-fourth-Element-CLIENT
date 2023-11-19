@@ -68,7 +68,7 @@
 			justify-content: center;
 			gap: 50px;
 			margin-top: 2rem;
-			button {
+			a {
 				font-family: 'Input Serif';
 				font-size: 21px;
 				border-radius: 40px;
@@ -241,7 +241,8 @@
 		}
 		&-buttons {
 			margin: 1rem 0;
-			button{
+			a{
+				text-align: center;
 				font-size: .5rem;
 				padding: .3rem;
 				min-width: 40%;
