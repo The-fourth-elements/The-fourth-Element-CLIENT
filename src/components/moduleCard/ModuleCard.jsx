@@ -28,9 +28,9 @@ function ModuleCard({
 			className={
 				!className
 					? ` justify-start flex sm:min-w-[450px] w-[95vw] lg:w-[45vw] md:w-[624px] h-full max-w-[550px] max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 `
-					: `flex h-full max-h-[110px] bg-secondary-800 items-center px-3 pr-6 rounded-xl py-3 m-0 ${className}`
+					: `flex h-full max-h-[110px] bg-secondary-800 items-center rounded-xl m-0 ${className}`
 			}>
-			<div className='px-5'>{moduleImg( '65px','65px' )}</div>
+			<div className='sm:px-5 px-2'>{moduleImg( '65px','65px' )}</div>
 			<h3
 				style={{ fontWeight: 700 }}
 				className={
@@ -40,7 +40,7 @@ function ModuleCard({
 				}>
 				{moduleIndex}
 			</h3>
-			<div className='max-w-fit  px-5 my-3 flex flex-col gap-1'>
+			<div className='max-w-fit  px-2 sm:px-5 my-3 flex flex-col gap-1'>
 				<h5 className='text-xl '>Módulo</h5>
 				<Dropdown>
 					<DropdownTrigger>
