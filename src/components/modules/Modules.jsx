@@ -10,10 +10,13 @@ import { useUserProfile } from '@/zustand/store/userProfile';
 import React, { useEffect, useState } from 'react';
 import { setCookie } from 'cookies-next';
 import ModuleCard from '../moduleCard/ModuleCard';
+import { modulesSvg } from '@/utils/modules-svg';
+
 
 function modulesList(modules, userPlan) {
 	const freeModules = modules.filter(module => !module.paid);
 
+	
 
 	 if (userPlan === 0) {
 	 	return (
@@ -21,6 +24,7 @@ function modulesList(modules, userPlan) {
 	 		{freeModules.map((module, index) => (
 	 			<ModuleCard
 	 				key={index}
+					moduleImg={modulesSvg[index]}
 	 				moduleName={module.name}
 	 				moduleId={module._id}
 	 				moduleIndex={index + 1}
@@ -36,6 +40,7 @@ function modulesList(modules, userPlan) {
 			{modules.map((module, index) => (
 				<ModuleCard
 					key={index}
+					moduleImg={modulesSvg[index]}
 					moduleName={module.name}
 					moduleId={module._id}
 					moduleIndex={index + 1}
