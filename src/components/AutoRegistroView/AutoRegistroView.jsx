@@ -50,7 +50,7 @@ const AutoRegistroView = () => {
 							<div className='sectionEntrenamiento' onClick={() => {onOpen()
 									setType("negligencia")}}>
 							<button  className='buttonEntrenamiento'>
-								Resgistrar Negligencia
+								Resgistrar Entrenamiento
 							</button>
 							<p>En esta seccion podras guardar el registro de tu rendimiento en los entrenamientos y las razones de ello</p>
 							</div>
@@ -69,9 +69,9 @@ const AutoRegistroView = () => {
 						
 					)}
 				</section>
-				<footer> 
-				</footer>
-			<button onClick={() => console.log(module)}> clickeame</button>
+				{/* <footer> 
+				</footer> */}
+			{/* <button onClick={() => console.log(module)}> clickeame</button> */}
 		</article>
 	);
 }
