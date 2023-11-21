@@ -158,7 +158,7 @@ const UserProfile = () => {
 		setNewSport(event.target.value);
 	};
 	return (
-		<article className='flex flex-col justify-center items-center gap-2'>
+		<article className='w-fit mx-auto bg-secondary-800 mt-6 flex flex-col justify-center items-center gap-2'>
 			{user && user?._id && Object.keys(user).length > 0 ? (
 				<div className='main'>
 					<UserProfileHeader

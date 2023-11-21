@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang='es' className='modern'>
 			<title>The fourth element</title>
-			<body>
+			<body className='bg-secondary-700 min-h-[100vh]'>
 				<AuthContextProvider>
 					<Provider>
 						<Nav />

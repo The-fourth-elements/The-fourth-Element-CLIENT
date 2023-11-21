@@ -62,7 +62,7 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
     }
     return (
        excersice && Object.keys(excersice).length > 0 && (
-        <Modal className='mainModalAuto'  isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} size='5xl' backdrop='blur' scrollBehavior="inside">
+        <Modal className=''  isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} size='5xl' backdrop='blur' scrollBehavior="inside">
             <ModalContent className='modalContent'>
                 {onClose => (
             <div className="mainAutoRender">
@@ -78,6 +78,12 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
                             <h3 className='autoRegistroQuestion'>{question?.selfQuestion}</h3>
                             <h3 className='autoRegistroAgree'>{question?.agree}</h3>
                             <Slider className='autoRegistroSlider'
+                            
+                            fillOffset={1}
+                            classNames={{
+                                base: "max-w-md gap-3",
+                         
+                              }}
         onChange={(event) => handleChangeResponse(event, index)}
         color={userResponses[index] === 3 ? "foreground" : userResponses[index] < 3 ? "danger" : "success"}
         size="md"
