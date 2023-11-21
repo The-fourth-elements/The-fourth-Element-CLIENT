@@ -72,7 +72,7 @@ export const routes = [
 		),
 	},
 	{
-		to: '/dashboard/knowledge',
+		to: '/dashboard/create-autoregistro',
 		text: 'Crear autorregistro',
 		svg: (
 			<BrainIcon />
