@@ -11,6 +11,7 @@ import { getCookie } from 'cookies-next';
 import { deportes } from '@/utils/dataRegister';
 import { toastError, toastInfo } from '@/helpers/toast';
 import UserRecords from './knowledge/UserRecords';
+import AutoRegistroFilters from '@/components/AutoRegistroFilters/AutoRegistroFilters';
 
 const UserProfile = () => {
 	const { data: session } = useSession();
@@ -43,6 +44,7 @@ const UserProfile = () => {
 		if (!user.sport) {
 			// console.log('no deporte')
 		}
+		console.log(user)
 		return () => {};
 	}, [user?.username, user?.id, updated]);
 	const handleChangePhoto = () => {
@@ -198,6 +200,7 @@ const UserProfile = () => {
 						handleChangeCity={handleChangeCity}
 						updateUserCity={updateUserCity}
 					/>
+					<AutoRegistroFilters responses = {user?.responsesSR}/>
 				</div>
 			) : (
 				<div className='centered'>
