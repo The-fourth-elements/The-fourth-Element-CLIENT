@@ -152,7 +152,7 @@ const AutoRegistro = () => {
 			/>
 		)
 		:
-        (<main className='mainAuto'>
+        (<main className='mainAuto mt-8'>
             <header>
                 <h1 className='titleAuto'>Crear Autorregistro</h1>
             </header>

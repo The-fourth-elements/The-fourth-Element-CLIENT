@@ -188,7 +188,7 @@ export const UserProfileBody = ({
 		{!user?.sport ? (
 			<h2>
 				Deporte:
-				<select value={newSport} onChange={selectSport}>
+				<select className='bg-secondary-600' value={newSport} onChange={selectSport}>
 					{deportes.map((deporte, index) => (
 						<React.Fragment key={index}>
 							<option> {deporte}</option>

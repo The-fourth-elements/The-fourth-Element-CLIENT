@@ -1,8 +1,26 @@
 @import "../../styles/base";
 
+.modalContent {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.modalContent button {
+  background-color: $grey-1;
+  z-index: 999999999;
+
+  @include sm {
+      // position: absolute;
+      // top: -10px;
+  }
+
+}
+
 .mainAutoRender{
-  background-color: $orange-1;
-  padding: 40px;
+  background-color: $grey-1;
+  padding: 20px;
   border-radius: 10px;
   display: grid;
   width: 90%;
@@ -55,17 +73,15 @@
 // ****************************ARTICLE*****************************************
 
 .mainAutoRender article {
-  background-color: $black-1;
   border-radius: 8px;
   grid-column-start: 1;
   grid-column-end: -1;
-  padding: 20px;
   display: grid;
   gap: 20px;
 }
 
 .section1AutoRender {
-  background-color: #f7a359;
+  background-color: $grey-4;
   border-radius: 6px;
   padding: 10px;
   display: grid;
@@ -77,7 +93,6 @@
   justify-self: center;
   grid-column-start: 2;
   grid-column-end: 8;
-  color: black;
   font-weight: bold;
   font-size: 25px;
 }
@@ -86,7 +101,6 @@
   justify-self: center;
   grid-column-start: 1;
   grid-column-end: 2;
-  color: black;
   font-weight: bold;
   font-size: 20px;
 }
@@ -101,15 +115,13 @@
   justify-self: center;
   grid-column-start: 8;
   grid-column-end: -1;
-  color: black;
   font-weight: bold;
   font-size: 20px;
 }
 
 .textAutoRegistro {
   padding: 20px;
-  background-color: #fbd0aa;
-  color: black;
+  background-color: $grey-4;
   font-size: 25px;
   font-weight: bold;
   height: 300px;
@@ -189,9 +201,7 @@
   // ****************************ARTICLE*****************************************
   
   .mainAutoRender article {
-    background-color: $black-1;
     border-radius: 8px;
-    padding: 10px;
     display: grid;
     gap: 20px;
   }
