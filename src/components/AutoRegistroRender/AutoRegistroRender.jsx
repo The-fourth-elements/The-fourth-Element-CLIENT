@@ -65,7 +65,7 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
         <Modal className='mainModalAuto'  isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} size='5xl' backdrop='blur' scrollBehavior="inside">
             <ModalContent className='modalContent'>
                 {onClose => (
-            <main className="mainAutoRender">
+            <div className="mainAutoRender">
                 {excersice?.map((exer) =>
                 <>
                 <header>
@@ -106,7 +106,7 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
                         Guardar Respuestas
                     </button>
                 </footer>
-            </main>
+            </div>
             )}
             </ModalContent>
             </Modal>
