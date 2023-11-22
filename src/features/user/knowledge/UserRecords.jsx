@@ -1,50 +1,27 @@
-'use client'
-import { useEffect } from 'react';
-import PolarChart from '@/components/metrics/Polar';
-// import FilterKnowRegisterOfUser from '@components/';
+import { Radar } from 'react-chartjs-2';
+import {
+	Chart as ChartJS,
+	ArcElement,
+	Tooltip,
+	Legend,
+	RadialLinearScale,
+    PointElement,
+    LineElement
+} from 'chart.js';
+import './UserRecords.scss'
 
-const UserRecords = ({ user, session, className }) => {
-	useEffect(() => {
-		if (!user?.progress) {
-		}
-	}, []);
-
-
+const UserRecords = ({ datasets }) => {
 
 	const data = {
 		labels: [
-			'Eating',
-			'Drinking',
-			'Sleeping',
-			'Designing',
-			'Coding',
-			'Cycling',
-			'Running',
+			'muy bien',
+			'bien',
+			'regular',
+			'mal',
+			'muy mal'
 		],
-		datasets: [
-			{
-				label: 'My First Dataset',
-				data: [7,3,5,2,2,5,5],
-				fill: true,
-				backgroundColor: 'rgba(255, 99, 132, 0.2)',
-				borderColor: 'rgb(255, 99, 132)',
-				pointBackgroundColor: 'rgb(255, 99, 132)',
-				pointBorderColor: '#fff',
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: 'rgb(67, 21, 31)',
-			},
-			{
-				label: 'My Second Dataset',
-				data: [1, 5, 2, 2, 6, 7, 1],
-				fill: true,
-				backgroundColor: 'rgba(54, 162, 235, 0.2)',
-				borderColor: 'rgb(54, 162, 235)',
-				pointBackgroundColor: 'rgb(54, 162, 235)',
-				pointBorderColor: '#fff',
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: 'rgb(54, 162, 235)',
-			},
-		],
+
+		datasets
 	};
 
 	const options = {
@@ -55,10 +32,10 @@ const UserRecords = ({ user, session, className }) => {
 		},
 	};
 
+	ChartJS.register( LineElement, PointElement, RadialLinearScale, Tooltip, Legend);
+
 	return (
-		<div className={className}>
-			<PolarChart data={data} options={options} />
-		</div>
+			<div className='userRecordAutoRegistro'><Radar data={data} options={options} /></div>
 	);
 };
 

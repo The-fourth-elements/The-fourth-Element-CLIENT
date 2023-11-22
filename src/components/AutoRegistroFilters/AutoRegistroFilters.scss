@@ -1,0 +1,43 @@
+
+@import "../../styles/base";
+
+.autoRegistroFilters {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(50px, 1fr));
+    padding: 20px;
+    gap: 10px;
+}
+
+.autoRegistroFilters header {
+    display: grid;
+    grid-column-start: 1;
+    grid-column-end: -2;
+    width: 100%;
+}
+
+.autoRegistroFilters header h2 {
+    place-self: center;
+    text-align: center;
+    font-size: 40px;
+    width: fit-content;
+    padding: 8px;
+}
+
+.divForSelect {
+    display: grid;
+    gap: 5px;
+    padding: 8px;
+}
+.autoRegistroFilters label {
+    font-size: 20px;
+}
+
+.divForGraphic {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    // height: 300px;
+    padding: 20px;
+    display: grid;
+    
+}

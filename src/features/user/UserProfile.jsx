@@ -160,6 +160,7 @@ const UserProfile = () => {
 	return (
 		<article className='w-fit mx-auto bg-secondary-800 mt-6 flex flex-col justify-center items-center gap-2'>
 			{user && user?._id && Object.keys(user).length > 0 ? (
+				<>
 				<div className='main'>
 					<UserProfileHeader
 						newImage={newImage}
@@ -200,8 +201,9 @@ const UserProfile = () => {
 						handleChangeCity={handleChangeCity}
 						updateUserCity={updateUserCity}
 					/>
-					<AutoRegistroFilters responses = {user?.responsesSR}/>
 				</div>
+					<AutoRegistroFilters responses = {user?.responsesSR}/>
+				</>
 			) : (
 				<div className='centered'>
 					<CircularProgress
@@ -211,7 +213,7 @@ const UserProfile = () => {
 					/>
 				</div>
 			)}
-			<UserRecords user={user} session={session} />
+			{/* <UserRecords user={user} session={session} /> */}
 		</article>
 	);
 };
