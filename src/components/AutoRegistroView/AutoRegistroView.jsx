@@ -31,10 +31,10 @@ const AutoRegistroView = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	return (
-		<article className='articleAutoView'>
+		<article className='articleAutoView bg-black'>
 				<header>
-					<h2 className=''>
-						Autoregistro de tu rendimiento
+					<h2 className='bg-secondary-600 w-full py-4 mb-9'>
+						Autoregistro
 					</h2>
 				</header>
 				<section className=''>
@@ -45,7 +45,7 @@ const AutoRegistroView = () => {
 							<button  className='buttonCompetencia'>
 								Resgistrar Competencia
 							</button>
-							<p>En esta seccion podras guardar el registro de tu rendimiento en las competencias y las razones de ello</p>
+							<p className=''>En esta seccion podras guardar el registro de tu rendimiento en las competencias y las razones de ello</p>
 							</div>	
 							<div className='sectionEntrenamiento' onClick={() => {onOpen()
 									setType("negligencia")}}>

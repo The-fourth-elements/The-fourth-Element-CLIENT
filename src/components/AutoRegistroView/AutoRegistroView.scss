@@ -4,38 +4,26 @@
     display: grid;
     width: 95%;
     justify-content: center;
-    background-color: $orange-1;
-    padding: 20px;
-    border-radius: 10px;
-    border: solid 3px white;
-    gap: 10px;
+    background-color: $grey-4;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 36px;
     grid-template-columns: repeat(11, minmax(20px, 1fr));
 }
 
 .articleAutoView header {
-    background-color: red;
-    padding: 10px;
     border-radius: 8px;
-    border: solid 3px white;
-    grid-column-start: 3;
-    grid-column-end: -3;
+    grid-column-start: 1;
+    grid-column-end: -1;
     width: 100%;
 
-    @include md {
-        grid-column-start: 2;
-        grid-column-end: -2;
-    }
 
-    @include sm {
-        grid-column-start: 1;
-        grid-column-end: -1;
-    }
 }
 
 .articleAutoView h2 {
     text-align: center;
     font-size: 40px;
-
+    border-radius: 20px 20px 0 0;
+    
     @include md{
         font-size: 30px;
     }
@@ -48,8 +36,7 @@
 .articleAutoView section {
     display: grid;
     // background-color: red;
-    padding: 10px;
-    border-radius: 8px;
+   border-radius: 8px;
     grid-template-columns: repeat(9, minmax(20px, 1fr));
     grid-column-start: 2;
     grid-column-end: -2;
@@ -64,9 +51,9 @@
 .sectionCompetencia{
     grid-column-end: 5;
     grid-column-start: 1;
-    border: solid 3px black;
     border-radius: 5px;
-    background-color: red;
+
+    background-color: $grey-1;
 
     &:hover{
         cursor: pointer;
@@ -81,9 +68,10 @@
 .sectionEntrenamiento {
     grid-column-end: 6;
     grid-column-start: -1;
-    border: solid 3px black;
     border-radius: 5px;
-    background-color: red;
+
+    background-color: $grey-1;
+
     &:hover{
         cursor: pointer;
     }
@@ -95,15 +83,12 @@
 }
 
 p{
-    padding: 5px;
-    padding-top: 10px;
-    padding-bottom: 15px;
+    padding: 20px;
+
     width: 100%;
 
 
     @include sm {
-        font-size: 10px;
-        word-break: break-all;
     }
 }
 
@@ -112,6 +97,7 @@ p{
     padding: 10px;
     border-radius: 3px;
     width: 100%;
+
 }
 
 .buttonEntrenamiento {
@@ -121,37 +107,5 @@ p{
     width: 100%;
 }
 
-.modalContent {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-}
 
-.modalContent button {
-    background-color: red;
-    z-index: 999999999;
 
-    @include sm {
-        // position: absolute;
-        // top: -10px;
-    }
-
-}
-
-// .modalContent section:first-child {
-
-//     @include sm {
-//         position: relative;
-//         top: -100px;
-//     }
-
-// }
-
-// .mainModalAuto section {
-//     background-color: blue;
-// }
-// .renderAutoRegistro {
-//     grid-column-end: 5;
-//     grid-column-start: -1;
-// }
