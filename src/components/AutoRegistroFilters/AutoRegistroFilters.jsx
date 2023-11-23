@@ -11,12 +11,11 @@ const AutoRegistroFilters = (responses) => {
     const [valueSelect, setValueSelect] = useState("todos")
     // const [fecha, setFecha] = useState(null)
     let [responsesToShow, setResponsesToShow] = useState(responses?.responses)
-    
+    let [responsesToCheck, setResponsesToCheck] =useState(responses?.responses)
     const datasets = responsesToShow?.map((response) => {
 		const fecha = new Date (response?.date)
 		const dia = fecha.getDate();
 		const mes = fecha.getMonth() + 1;
-
 		return {
                 label: "",
                 data: response?.response,
@@ -28,8 +27,13 @@ const AutoRegistroFilters = (responses) => {
                 pointHoverBackgroundColor: '#fff',
                 pointHoverBorderColor: 'rgb(255, 99, 132)'
     };
+})
 
-	})
+        const handleToCheckAutoRegistro = (id) => {
+            const responsesFiltered = responses?.responses?.filter((newResponse) => newResponse._id === id)
+            setResponsesToShow(responsesFiltered)
+            setValueSelect("")
+        }
     return(
         responsesToShow?.length > 0 ? (<section className="autoRegistroFilters">
             <header>
@@ -37,7 +41,7 @@ const AutoRegistroFilters = (responses) => {
             </header>
             <div className="divForSelect">
                 <label htmlFor="select">Filtros</label>
-            <Select className="selectAutoRegistros" label="Filtrar Autoregistros" onChange={(event) => handleSelectFilterAuto(event, responses, setResponsesToShow, setValueSelect)}>
+            <Select value={valueSelect} className="selectAutoRegistros" label="Filtrar Autoregistros" onChange={(event) => handleSelectFilterAuto(event, responses, setResponsesToShow, setValueSelect)}>
                 <SelectItem key="ultimosDiez" value="ultimosDiez">ultimos 10 auto registros</SelectItem>
                 <SelectItem key="ultimaSemana" value="ultimaSemana">autoregistros de la ultima semana</SelectItem>
                 <SelectItem key="ultimoMes" value="ultimoMes">autoregistros del ultimo mes</SelectItem>
@@ -50,11 +54,12 @@ const AutoRegistroFilters = (responses) => {
                 
             </div>
             <div className="divForShowAutoRegistros">
-                    {   responsesToShow?.map((response) => {
+                    {   responsesToCheck?.map((response, index) => {
                             const fecha = new Date (response?.date)
                             const dia = fecha.getDate();
                             const mes = fecha.getMonth() + 1;
-                            return (<h3>
+                            return (
+                            <h3 onClick={() => handleToCheckAutoRegistro(response?._id)}>
                                 {`Registro dia ${dia}/${mes}`}
                             </h3>)
                             }
@@ -69,10 +74,6 @@ const AutoRegistroFilters = (responses) => {
                     <h3>Parece que aun no has hecho ningun autoregistro</h3>
                 </section>
             )
-            
-
-
-        
     )
 }
 
