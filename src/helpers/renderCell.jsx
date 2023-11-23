@@ -9,20 +9,7 @@ import { DeleteIcon } from '../assets/svg-jsx/DeleteIcon';
 import { EyeIcon } from '../assets/svg-jsx/EyeIcon';
 import Image from 'next/image';
 import RestoreIcon from '../assets/svg/RestoreIcon.svg';
-
-const statusColorMap = {
-	active: 'success',
-	paused: 'danger',
-	vacation: 'warning',
-};
-
-const userRoles = {
-	0: 'Free',
-	1: 'Paid',
-	2: 'Moderator',
-	3: 'Administrator',
-};
-
+import { userRoles } from './userRoles';
 
 function renderCell(user, columnKey, deleteHandler, restoreHandler, handleClick) {
 	const cellValue = user[columnKey];
