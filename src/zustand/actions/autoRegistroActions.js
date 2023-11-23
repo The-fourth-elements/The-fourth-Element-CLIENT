@@ -13,7 +13,7 @@ export const createAutoRegistro = async (body, moduleId) => {
         if (data.error) {
             throw data.error;
         }
-        toastSuccess("se ha creado con exito el Auto-Registro");
+        toastSuccess("Se ha creado con éxito el Auto-Registro");
     } catch (error) {
         toastError(error);
     }
@@ -45,7 +45,7 @@ export const createResponseSR = async (body) => {
         if (data.error) {
             throw data.error;
         }
-        toastSuccess("se ha guardado con exito tus respuestas")
+        toastSuccess("Tus respuestas han sido guardadas con éxito")
     } catch (error) {
         toastError(error);
     }
@@ -64,7 +64,7 @@ export const addResponseSRToUser = async (body) => {
         if (data.error) {
             throw data.error;
         }
-        toastSuccess("se ha guardado con exito tus respuestas")
+        toastSuccess("Tus respuestas se han guardado con éxito")
     } catch (error) {
         toastError(error);
     }

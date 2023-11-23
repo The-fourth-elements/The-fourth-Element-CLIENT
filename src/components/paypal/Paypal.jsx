@@ -36,7 +36,7 @@ const Paypal = () => {
 				});
 				const parsedResponse = await response.json();
 				console.log(parsedResponse);
-				toastSuccess('Usted compro el curso');
+				toastSuccess('Usted compró el curso');
 				router.push('/paid-success');
 				// await signOut();
 				return;

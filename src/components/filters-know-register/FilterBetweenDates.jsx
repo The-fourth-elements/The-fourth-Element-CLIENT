@@ -26,11 +26,11 @@ const FilterBetweenDates = ({ className }) => {
 
 	const handleFilterDates = () => {
 		if (!startDate || !endDate) {
-			toastError('Ingrese las fechas entre las que quire filtrar');
+			toastError('Ingrese las fechas entre las que quiere filtrar');
 			return;
 		}
 		if (new Date(startDate) > new Date(endDate)) {
-			toastError('La fecha de inicio no puede ser posterior a la fecha de fin');
+			toastError('La fecha de inicio no puede ser posterior a la fecha de finalización');
 			return;
 		}
 		setDatesRange('start', startDate);

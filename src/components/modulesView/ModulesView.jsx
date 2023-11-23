@@ -177,7 +177,7 @@ export default function ModuleView() {
 		if (module) {
 			setCurrentModule(module);
 		} else {
-			toastError('Algo ocurrio, porfavor contactese con un administrador');
+			toastError('Algo ocurrió, por favor contáctese con un administrador');
 		}
 	};
 

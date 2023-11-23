@@ -49,7 +49,7 @@ export default function Nav() {
 			await signOut();
 			router.push('/auth');
 		} catch (error) {
-			toastError('Ocurrio un error en el cierre de sesión');
+			toastError('Ocurrió un error en el cierre de sesión');
 		}
 	};
 	let routesNav = [

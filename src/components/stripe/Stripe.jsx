@@ -33,7 +33,7 @@ const Stripe = () => {
 			return;
 		} catch (error) {
 			toastError(error.message);
-			toastError('no se pudo crear la orden de compra');
+			toastError('No se pudo crear la orden de compra');
 		}
 	};
 

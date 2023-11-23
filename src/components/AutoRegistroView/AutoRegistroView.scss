@@ -82,14 +82,9 @@
     }
 }
 
-p{
+.description{
     padding: 20px;
-
     width: 100%;
-
-
-    @include sm {
-    }
 }
 
 .buttonCompetencia {

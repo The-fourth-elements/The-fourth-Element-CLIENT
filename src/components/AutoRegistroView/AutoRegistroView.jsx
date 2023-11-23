@@ -45,14 +45,14 @@ const AutoRegistroView = () => {
 							<button  className='buttonCompetencia'>
 								Resgistrar Competencia
 							</button>
-							<p className=''>En esta seccion podras guardar el registro de tu rendimiento en las competencias y las razones de ello</p>
+							<p className='description'>En esta seccion podras guardar el registro de tu rendimiento en las competencias y las razones de ello</p>
 							</div>	
 							<div className='sectionEntrenamiento' onClick={() => {onOpen()
 									setType("negligencia")}}>
 							<button  className='buttonEntrenamiento'>
 								Resgistrar Entrenamiento
 							</button>
-							<p>En esta seccion podras guardar el registro de tu rendimiento en los entrenamientos y las razones de ello</p>
+							<p className='description'>En esta seccion podras guardar el registro de tu rendimiento en los entrenamientos y las razones de ello</p>
 							</div>
 							
 							<RenderAutoRegistro
