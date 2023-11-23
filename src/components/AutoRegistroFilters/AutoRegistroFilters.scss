@@ -1,0 +1,74 @@
+
+@import "../../styles/base";
+
+.autoRegistroFilters {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(50px, 1fr));
+    padding: 20px;
+    // gap: 10px;
+}
+
+.autoRegistroFilters header {
+    display: grid;
+    grid-column-start: 1;
+    grid-column-end: -2;
+    width: 100%;
+}
+
+.autoRegistroFilters header h2 {
+    place-self: center;
+    text-align: center;
+    font-size: 40px;
+    width: fit-content;
+    padding: 8px;
+}
+
+.divForSelect {
+    display: grid;
+    gap: 5px;
+    padding: 8px;
+}
+.autoRegistroFilters label {
+    font-size: 20px;
+}
+
+.divForGraphic {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    // height: 300px;
+    // display: grid;
+    margin: 10px;
+    margin-right: 0;
+}
+
+.divForShowAutoRegistros {
+    padding: 10px;
+    padding-left: 20px;
+    display: grid;
+    gap: 7px;
+}
+
+.divForShowAutoRegistros h3 {
+    background-color: rgb(255, 136, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+
+    &:hover {
+        scale: 1.08;
+        cursor: pointer;
+    }
+}
+
+.sectionNoResponses {
+    padding: 30px;
+    width: 100%;
+}
+
+.sectionNoResponses h2 {
+    font-size: 40px;
+}
+
+.sectionNoResponses h3 {
+    font-size: 80px;
+}

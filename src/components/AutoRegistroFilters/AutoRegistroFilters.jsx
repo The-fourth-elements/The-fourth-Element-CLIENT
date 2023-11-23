@@ -1,48 +1,78 @@
 'use client'
+import "./AutoRegistroFilters.scss"
 import { useState } from "react"
+import { handleSelectFilterAuto } from "@/helpers/handleSelectAutoFilters"
+import { Select, SelectItem } from "@nextui-org/react"
+import UserRecords from "@/features/user/knowledge/UserRecords"
 
 const AutoRegistroFilters = (responses) => {
-    console.log("responses:", responses)
+    // console.log("responses:", responses)
+    // const responses = []
     const [valueSelect, setValueSelect] = useState("todos")
     // const [fecha, setFecha] = useState(null)
-    let responsesToShow;
-    const handleSelectFilterAuto = (event) => {
-        setValueSelect(event?.target?.value)
-        if(valueSelect === "ultimosDiez") {
-            responsesToShow = responses?.responses?.slice(-10)
-        }
-        if(event?.target?.value === "ultimaSemana"){
-            console.log(responses?.responses)
-            const fecha = new Date (Date.now())
-            const year = fecha.getFullYear()
-            console.log(year)
-            const yearMatched = responses?.responses?.filter((response) => 
-                parseInt(response?.date) === 20
-            )
-            console.log("todos: ", yearMatched)
-        }
-        if(valueSelect === "ultimoMes") {
+    let [responsesToShow, setResponsesToShow] = useState(responses?.responses)
     
-        }
-        if(valueSelect === "todos"){
-    
-        }
-    }
+    const datasets = responsesToShow?.map((response) => {
+		const fecha = new Date (response?.date)
+		const dia = fecha.getDate();
+		const mes = fecha.getMonth() + 1;
+
+		return {
+                label: "",
+                data: response?.response,
+                fill: false,
+                backgroundColor: 'none',
+                borderColor: 'rgb(255, 99, 132)',
+                pointBackgroundColor: 'rgb(255, 99, 132)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(255, 99, 132)'
+    };
+
+	})
     return(
-        <section>
-            <select name="" id="" onChange={handleSelectFilterAuto}>
-                <option value="ultimosDiez">ultimos 10 auto registros</option>
-                <option value="ultimaSemana">autoregistros de la ultima semana</option>
-                <option value="ultimoMes">autoregistros del ultimo mes</option>
-                <option value="todos">todos los autoregistros</option>
-            </select>
-
-
-            <div>
-                {valueSelect}
-                {/* {fecha} */}
+        responsesToShow?.length > 0 ? (<section className="autoRegistroFilters">
+            <header>
+                <h2>Conoce tus autoregistros</h2>
+            </header>
+            <div className="divForSelect">
+                <label htmlFor="select">Filtros</label>
+            <Select className="selectAutoRegistros" label="Filtrar Autoregistros" onChange={(event) => handleSelectFilterAuto(event, responses, setResponsesToShow, setValueSelect)}>
+                <SelectItem key="ultimosDiez" value="ultimosDiez">ultimos 10 auto registros</SelectItem>
+                <SelectItem key="ultimaSemana" value="ultimaSemana">autoregistros de la ultima semana</SelectItem>
+                <SelectItem key="ultimoMes" value="ultimoMes">autoregistros del ultimo mes</SelectItem>
+                <SelectItem key="todos" value="todos">todos los autoregistros</SelectItem>
+            </Select>
             </div>
-        </section>
+             <div className="divForGraphic">
+                <UserRecords datasets = {datasets}/>
+                {/* <button  onClick={() => {console.log(datasets)}}>showREsponses</button> */}
+                
+            </div>
+            <div className="divForShowAutoRegistros">
+                    {   responsesToShow?.map((response) => {
+                            const fecha = new Date (response?.date)
+                            const dia = fecha.getDate();
+                            const mes = fecha.getMonth() + 1;
+                            return (<h3>
+                                {`Registro dia ${dia}/${mes}`}
+                            </h3>)
+                            }
+                        )
+                    }
+            </div>
+            </section>)
+            :
+            (
+                <section className="sectionNoResponses">
+                    <h2>Conoce tus autoregistros</h2>
+                    <h3>Parece que aun no has hecho ningun autoregistro</h3>
+                </section>
+            )
+            
+
+
+        
     )
 }
 
