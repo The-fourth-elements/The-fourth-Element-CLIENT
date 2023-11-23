@@ -44,7 +44,6 @@ const UserProfile = () => {
 		if (!user.sport) {
 			// console.log('no deporte')
 		}
-		console.log(user)
 		return () => {};
 	}, [user?.username, user?.id, updated]);
 	const handleChangePhoto = () => {
