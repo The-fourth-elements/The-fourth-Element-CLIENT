@@ -24,18 +24,18 @@ const UserRecords = ({ datasets }) => {
 		datasets
 	};
 
-	const options = {
-		elements: {
-			line: {
-				borderWidth: 3,
-			},
-		},
-	};
+	// const options = {
+	// 	elements: {
+	// 		line: {
+	// 			borderWidth: 3,
+	// 		},
+	// 	},
+	// };
 
 	ChartJS.register( LineElement, PointElement, RadialLinearScale, Tooltip, Legend);
 
 	return (
-			<div className='userRecordAutoRegistro'><Radar data={data} options={options} /></div>
+			<div className='userRecordAutoRegistro'><Radar data={data}  /></div>
 	);
 };
 

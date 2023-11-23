@@ -6,20 +6,22 @@ import { Select, SelectItem } from "@nextui-org/react"
 import UserRecords from "@/features/user/knowledge/UserRecords"
 
 const AutoRegistroFilters = (responses) => {
-    console.log("responses:", responses)
+    // console.log("responses:", responses)
+    // const responses = []
     const [valueSelect, setValueSelect] = useState("todos")
     // const [fecha, setFecha] = useState(null)
     let [responsesToShow, setResponsesToShow] = useState(responses?.responses)
     
-    const datasets = responsesToShow.map((response) => {
+    const datasets = responsesToShow?.map((response) => {
 		const fecha = new Date (response?.date)
 		const dia = fecha.getDate();
 		const mes = fecha.getMonth() + 1;
 
-		return {label: `${dia}/${mes}`,
+		return {
+                label: "",
                 data: response?.response,
-                fill: true,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: false,
+                backgroundColor: 'none',
                 borderColor: 'rgb(255, 99, 132)',
                 pointBackgroundColor: 'rgb(255, 99, 132)',
                 pointBorderColor: '#fff',
@@ -29,7 +31,7 @@ const AutoRegistroFilters = (responses) => {
 
 	})
     return(
-        <section className="autoRegistroFilters">
+        responsesToShow?.length > 0 ? (<section className="autoRegistroFilters">
             <header>
                 <h2>Conoce tus autoregistros</h2>
             </header>
@@ -42,14 +44,35 @@ const AutoRegistroFilters = (responses) => {
                 <SelectItem key="todos" value="todos">todos los autoregistros</SelectItem>
             </Select>
             </div>
-            <div className="divForGraphic">
+             <div className="divForGraphic">
                 <UserRecords datasets = {datasets}/>
                 {/* <button  onClick={() => {console.log(datasets)}}>showREsponses</button> */}
+                
             </div>
+            <div className="divForShowAutoRegistros">
+                    {   responsesToShow?.map((response) => {
+                            const fecha = new Date (response?.date)
+                            const dia = fecha.getDate();
+                            const mes = fecha.getMonth() + 1;
+                            return (<h3>
+                                {`Registro dia ${dia}/${mes}`}
+                            </h3>)
+                            }
+                        )
+                    }
+            </div>
+            </section>)
+            :
+            (
+                <section className="sectionNoResponses">
+                    <h2>Conoce tus autoregistros</h2>
+                    <h3>Parece que aun no has hecho ningun autoregistro</h3>
+                </section>
+            )
+            
 
 
-
-        </section>
+        
     )
 }
 
