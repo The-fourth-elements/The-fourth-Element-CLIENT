@@ -43,7 +43,7 @@ export const getFrases = (id) => {
 			if (data.error) {
 				throw data.error;
 			}
-			toastSuccess("se ha creado con exito el excersice")
+			toastSuccess("Se ha creado con éxito el ejercicio")
 		})
 		
 		.catch(error => {
@@ -64,7 +64,7 @@ export const getFrases = (id) => {
 			if (data.error) {
 				throw data.error;
 			}
-			toastSuccess("se ha creado con exito el excersice")
+			toastSuccess("Se ha creado con éxito el ejercicio")
 		})
 		
 		.catch(error => {
@@ -85,7 +85,7 @@ export const getFrases = (id) => {
 				  if (data.error) {
 					  throw data.error;
 				  }
-				  toastSuccess("se ha agregado el ejercicio con exito")
+				  toastSuccess("Se ha agregado el ejercicio con éxito")
 			  })
 			  
 			  .catch(error => {

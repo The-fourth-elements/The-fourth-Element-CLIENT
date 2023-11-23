@@ -47,13 +47,13 @@ const Invitation = ({ isOpen, onOpen, onOpenChange }) => {
 												return;
 											}
 											if (response.successful) {
-												toastSuccess('Se envio la invitacion al usuario');
+												toastSuccess('Se envió la invitacion al usuario');
 												onClose();
 												return;
 											}
 										} catch (error) {
 											console.log(error);
-											toastError('Ocurrio un error al invitar a este usuario')
+											toastError('Ocurrió un error al invitar a este usuario')
 											toastError(error)
 										}
 									}}>

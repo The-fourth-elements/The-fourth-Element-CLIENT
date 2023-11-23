@@ -27,7 +27,7 @@ const RecoveryPass = () => {
 						router.push('/');
 						toastSuccess('Verifique su bandeja de entrada');
 					} catch (error) {
-						toastError('Algo salio mal');
+						toastError('Algo salió mal');
 					}
 				}}>
 				{({ errors }) => (

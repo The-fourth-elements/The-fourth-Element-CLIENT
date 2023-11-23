@@ -16,7 +16,7 @@ export const fetchData = async (modules) => {
                     `Error al obtener datos de clase para el módulo ${module.id}:`,
                     error
                 );
-                toastError('No se pudieron obtener los modulos');
+                toastError('No se pudieron obtener los módulos');
             }
         }
         fetchedModuleData[module.name] = classDataArray;

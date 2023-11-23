@@ -155,7 +155,7 @@ export default function ModuleClasses({ idModule }) {
 		if (moduleData) {
 			setCurrentModule(module);
 		} else {
-			toastError('Algo ocurrio, por favor contacte a un administrador');
+			toastError('Algo ocurrió, por favor contacte a un administrador');
 		}
 	};
 

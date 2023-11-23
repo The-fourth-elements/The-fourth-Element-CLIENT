@@ -192,7 +192,7 @@ export const createQuiz = body => {
 			if (data.error) {
 				throw data.error;
 			}
-			toastSuccess(`se ha creado con exito el quiz: ${data.name}`)
+			toastSuccess(`Se ha creado con éxito el quiz: ${data.name}`)
 		})
 
 		.catch(error => {
@@ -211,7 +211,7 @@ export const updateQuiz = (body, id) => {
 	})
 		.then(response => response.json())
 		.then(data => {
-			toastSuccess(`se ha modificado con exito el quiz: ${body.name}`)
+			toastSuccess(`Se ha modificado con éxito el quiz: ${body.name}`)
 
 		})
 		.catch(error => {
