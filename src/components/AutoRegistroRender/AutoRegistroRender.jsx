@@ -9,9 +9,7 @@ import { getCookie } from 'cookies-next'
 import { toastError, toastSuccess } from '@/helpers/toast'
 
 const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
-// const RenderAutoRegistro = () => {
-    const id = '65553d59a581cd345efee567'
-    const { getAutoRegistro,  createResponseSR, addResponseSRToUser} = useAutoRegistro()
+    const {createResponseSR} = useAutoRegistro()
     const userId = getCookie('jsdklfsdjklfdsjfds');
     const [userResponses, setUserResponses] = useState([]);
     const [comments, setComments] = useState("")
@@ -26,7 +24,6 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
         // }
         
         if (excersice?.questions) {
-            // console.log("holas")
             setUserResponses(excersice?.questions?.map(() => 3));
         }
     }, [excersice]);
@@ -49,13 +46,12 @@ const RenderAutoRegistro = ({isOpen, onOpen, onOpenChange, data, type}) => {
                 throw new Error("Complete todos los campos");
             }
             const bodyAuto ={
-                selfRegisterId: id,
+                selfRegisterId: excersice[0]._id,
                 userId,
                 response: userResponses,
                 comments
             }
             createResponseSR(bodyAuto)
-            // console.log(newComments)
         } catch (error) {
             toastError(error.message)
         }
