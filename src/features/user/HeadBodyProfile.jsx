@@ -6,6 +6,7 @@ import { CountrySelect, CitySelect } from '@/components/InputChangeToUser/Select
 import React, { useState } from 'react';
 import { InputAge, InputExp } from '@/components/InputChangeToUser/inputExp';
 import { CldUploadButton } from 'next-cloudinary';
+import { userRoles } from '@/helpers/userRoles';
 
 export const UserProfileHeader = ({
 	user,
@@ -155,13 +156,8 @@ export const UserProfileBody = ({
 }) => (
 	<div className='elBody'>
 		<h2>Email: {user?.email}</h2>
-		{user?.role === 0 ? (
-			<h2>Plan: Gratuito</h2>
-		) : user?.role === 1 ? (
-			<h2>Plan: Pago</h2>
-		) : (
-			<h2>Plan: Moderador</h2>
-		)}
+		<h2>Plan: {userRoles[user?.role]}</h2>
+		
 		<CountrySelect
 			user={user}
 			stringCountry={stringCountry}
