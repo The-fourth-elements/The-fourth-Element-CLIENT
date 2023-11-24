@@ -14,6 +14,11 @@
     grid-column-start: 1;
     grid-column-end: -2;
     width: 100%;
+
+    @include sm{
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
 }
 
 .autoRegistroFilters header h2 {
@@ -28,6 +33,11 @@
     display: grid;
     gap: 5px;
     padding: 8px;
+
+    @include sm{
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
 }
 .autoRegistroFilters label {
     font-size: 20px;
@@ -36,10 +46,16 @@
 .divForGraphic {
     grid-column-start: 1;
     grid-column-end: 3;
-    // height: 300px;
-    // display: grid;
     margin: 10px;
     margin-right: 0;
+    max-width: 750px;
+    min-width: 40vw;
+    overflow-x: scroll;
+
+    @include sm{
+        grid-column-start: 1;
+    grid-column-end: 4;
+    }
 }
 
 .divForShowAutoRegistros {
